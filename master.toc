@@ -1,0 +1,10 @@
+\contentsline {chapter}{List of Tables}{ix}{section*.3}
+\contentsline {chapter}{List of Figures}{xi}{section*.5}
+\contentsline {chapter}{\numberline {1}Equalizer Equations}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Overview}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Equations}{1}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}The Solving Equalizers}{1}{subsection.1.2.1}
+\contentsline {subsubsection}{The Zero-Forcing Equalizer}{1}{section*.7}
+\contentsline {subsubsection}{MMSE Equalizer}{3}{section*.8}
+\contentsline {subsection}{\numberline {1.2.2}The Iterative Equalizer}{5}{subsection.1.2.2}
+\contentsline {subsubsection}{The Constant Modulus Algorithm}{5}{section*.9}

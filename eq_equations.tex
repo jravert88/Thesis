@@ -1,0 +1,226 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% GPU
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \cleardoublepage
+\chapter{Equalizer Equations}
+\label{sec:eq_eq}
+
+\section{Overview}
+There are 3 different kinds of equalizers I run
+1. the solving ones!!!  They are equations like Ax=b where I have A and b but I need x
+2. the initialized then iterative ones. CMA is initialized with MMSE then runs as many times a possible
+3. the multiply ones! the FDEs are a simple multiply in the frequency domain
+
+\section{Equations}
+
+\subsection{The Solving Equalizers}
+
+
+\subsubsection{The Zero-Forcing Equalizer}
+The ZF equalizer was studied in the PAQ Phase 1 Final Report in ~equation 324
+\begin{equation}
+\mathbf{c}_\text{ZF} = (\mathbf{H}^\dagger \mathbf{H})^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}
+\label{eq:c_ZF_pinv}
+\end{equation}
+where $\mathbf{c}_\text{ZF}$ is a $L_{eq} \times 1$ vector of equalizer coefficients computed to invert the channel estimate $\mathbf{h}$.
+The channel estimate is used to build the $L_{eq}+N_1+N_2 \times L_{eq}$ convolution matrix
+\begin{equation}
+\mathbf{H} = 
+		\begin{bmatrix}
+		h(-N_1)		&  			& 		 	&  			\\
+		h(-N_1+1) 	& h(-N_1)	& 		 	&  			\\
+		\vdots	 	& \vdots	& \ddots 	&  			\\
+		h(N_2)		& h(N_2-1) 	&  			& h(-N_1)  	\\
+		 			& h(N_2) 	&  			& h(-N_1+1) \\
+		 			&  	   		&  			& \vdots	\\
+		 			&  	   		&  			& h(N_2)	\\
+	\end{bmatrix}.
+\end{equation}
+and $\mathbf{u}_{n_0}$ is the desired channel impulse response centered on $n0 = N_1+L_1+1$
+\begin{equation}
+\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$n_0-1$ zeros}
+		\\ \\
+		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
+		\end{matrix*}.
+\end{equation}
+The computation of the coefficients in Equation \eqref{eq:c_ZF_pinv} can be simplified in a couple of ways: First the matrix multiplication of $\mathbf{H}^\dagger$ and $\mathbf{H}$ is the autocorrelation matrix of the channel
+\begin{equation}
+\mathbf{R}_{h} = 
+\mathbf{H}^\dagger \mathbf{H} = 
+		\begin{bmatrix}
+		r_{h}(0)		& r^\ast_{h}(1)	& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
+		r_{h}(1) 		& r_{h}(0)		& \cdots 	& r^\ast_{h}(L_{eq}-2)  	\\
+		\vdots	 			& \vdots				& \ddots 	&  							\\
+		r_{h}(L_{eq}-1)	& r_{h}(L_{eq}-2)	& \cdots	& r_{h}(0)  			
+	\end{bmatrix}
+	\label{eq:R_h}
+\end{equation}
+where
+\begin{equation}
+r_{h}(k) = \sum_{n=-N_1}^{N_2} h(n) h^\ast(n-k).
+\end{equation}
+Second the matrix vector multiplication of $\mathbf{H}^\dagger$ and $\mathbf{u}_{n_0}$ is simply the $n_0$th row of $\mathbf{H}^\dagger$ or the conjugated $n_0$th column of $\mathbf{H}$.
+A new vector $\mathbf{h}_{n_0}$ is defined by
+\begin{equation}
+\mathbf{h}_{n_0} = \mathbf{H}^\dagger \mathbf{u}_{n_0} = 
+\begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}.
+\label{eq:h_no}
+\end{equation}
+Replacing the matrix multiplication $\mathbf{H}^\dagger \mathbf{H}$ and $\mathbf{H}^\dagger \mathbf{u}_{n_0}$ simplifies Equation \eqref{eq:c_ZF_pinv} to
+\begin{equation}
+\mathbf{c}_\text{ZF} = \mathbf{R}^{-1}_{h} \mathbf{h}_{n_0}.
+\label{eq:c_ZF_R_h}
+\end{equation}
+
+Computing the inverse of $\mathbf{R}_{h}$ is computationally heavy because an inverse is an $N^3$ operation.
+To avoid an inverse, $\mathbf{R}_{h}$ is moved to the left side and $\mathbf{c}_\text{ZF}$ is found by solving a system of linear equations. 
+Note that $r_{h}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{h}$ sparse or $\%63$ zeros.
+The sparseness of $\mathbf{R}_{h}$ can be leveraged to reduce computation drastically.
+The Zero-Forcing Equalizer coefficients are computed by solving
+\begin{equation}
+\mathbf{R}_h \mathbf{c}_\text{ZF} = \mathbf{h}_{n_0}.
+\label{eq:c_ZF_solve}
+\end{equation}
+
+
+\subsubsection{MMSE Equalizer}
+The MMSE equalizer was studied in the PAQ Phase 1 Final Report in ~equation 330.
+\begin{equation}
+\mathbf{c}_{MMSE} = \big[ \mathbf{G}\mathbf{G}^\dagger + \frac{\sigma_w^2}{\sigma_s^2}\mathbf{I}_{L_1+L_2+1} \big] \mathbf{g}^\dagger
+\label{eq:MMSE_start}
+\end{equation}
+where
+\begin{equation}
+\mathbf{G} = 
+		\begin{bmatrix}
+		h(N_2)		& \cdots	& h(-N_1) 	&  			\\
+					& h(N_2)	& \cdots 	& h(-N_1)	\\
+				 	& 			& \ddots 	&  			& \ddots	\\
+		 			&  	   		&  			& h(N_2)	& \cdots	& h(-N_1)	\\
+	\end{bmatrix}
+\end{equation}
+and
+\begin{equation}
+\mathbf{g} = \begin{bmatrix} h(L_1) \cdots h(-L_2) \end{bmatrix}.
+\end{equation}
+The matrix multiplication $\mathbf{G}\mathbf{G}^\dagger$ is the same autocorrelation matrix $\mathbf{R}_h$ as Equation \eqref{eq:R_h}.
+The vector $\mathbf{g}^\dagger$ is also the same vector as $\mathbf{h}_{n_0}$.
+The signal-to-noise ratio estimate $\frac{1}{2\hat{\sigma^2_w}}$ is substituted in for the fraction $\frac{\sigma_w^2}{\sigma_s^2}$ using Equation 333 Rice's report.
+Equation \eqref{eq:MMSE_start} can be reformulated to
+\begin{equation}
+\big[ \mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1} \big] \mathbf{c}_\text{MMSE} = \mathbf{h}_{n_0}.
+\label{eq:c_MMSE_solve1}
+\end{equation}
+The MMSE Equalizer coefficients are solved for in a similar fashion to Zero-Forcing is in Equation \eqref{eq:c_ZF_solve}.
+The only difference between Equation \eqref{eq:c_MMSE_solve1} and \eqref{eq:c_ZF_solve} is the noise variance is added down the diagonal of $\mathbf{R}_h$.
+The matrix $\mathbf{R}_{hw}$ is defined to make the computation of the MMSE Equalizer coefficients the same as the Zero-Forcing Equalizer coefficients by adding the noise variance to the diagonal of $\mathbf{R}_h$
+\begin{equation}
+\mathbf{R}_{hw} = 
+\mathbf{H}^\dagger \mathbf{H} = 
+		\begin{bmatrix}
+		r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}	& r^\ast_{h}(1)							& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
+		r_{h}(1) 								& r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}& \cdots 	& r^\ast_{h}(L_{eq}-2)  	\\
+		\vdots	 								& \vdots								& \ddots 	&  							\\
+		r_{h}(L_{eq}-1)							& r_{h}(L_{eq}-2)						& \cdots	& r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}  			
+	\end{bmatrix}.
+	\label{eq:R_MMSE}
+\end{equation}
+The MMSE Equalizer coefficients are computed by solving
+\begin{equation}
+\mathbf{R}_{hw}\mathbf{c}_\text{MMSE} = \mathbf{h}_{n_0}.
+\label{eq:c_MMSE_solve}
+\end{equation}
+\clearpage
+\subsection{The Iterative Equalizer}
+
+\subsubsection{The Constant Modulus Algorithm}
+CMA is a steepest decent algorithm.
+\begin{equation}
+\mathbf{c}_{b+1} = \mathbf{c}_{b}-\mu \nabla \mathbf{J}
+\end{equation}
+The vector $\mathbf{J}$ is the cost function and $\nabla \mathbf{J}$ is the cost function gradient defined in the PAQ report 352 by
+\begin{equation}
+	\nabla \mathbf{J} = \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right]
+	y(n)  \mathbf{r}^\ast(n).
+\label{eq:DelJcma-approx}
+\end{equation}
+where the constant $2N_b$ from the report is the number of samples in a packet $L_{pkt}$.
+The term $y(n)$ is a sample of the equalized signal using the equalizer $\mathbf{c}_{b}$. The vector $\mathbf{r}(n)$ is the received samples that have been derotated to compensate for frequency offset but unequalized defined in the PAQ report by 
+\begin{equation}
+\mathbf{r}(n) = \begin{bmatrix} r(n+L_1) \\ r(n+L_1-1) \\ \vdots \\ r(n+1) \\ r(n) \\ r(n-1) \\ \vdots \\ r(n-L_2) \end{bmatrix}.
+\end{equation}
+Note the PAQ report defines the vector $\mathbf{r}(n)$ in reverse order.
+
+The cost function gradient in Equation \eqref{eq:DelJcma-approx} can be reformulated to look like a convolution.
+To use convolution to compute $\nabla \mathbf{J}$, the output of the convolution and an input is time reversed.
+To show this, the equation is first reformulated into a simpler summation then an input and the output is time reversed.
+
+To reform Equation \eqref{eq:DelJcma-approx} into a simpler summation, the scalar $z(n)$ is substituted in by
+\begin{equation}
+z(n) = 	\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right] y(n)
+\end{equation} 
+making the computation of $\nabla \mathbf{J}$ to be
+\begin{equation}
+	\nabla \mathbf{J} \approx \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	z(n)
+	\mathbf{r}^\ast(n).
+	\label{eq:delJ_sub}
+\end{equation}
+Equation \eqref{eq:delJ_sub} is simply a summation of scaled vectors.
+Expanding and writing out the summation for $\nabla \mathbf{J}$ gives
+\begin{multline}
+\begin{bmatrix} \nabla J(0) \\ \nabla J(1) \\ \vdots \\ \nabla J(k-1) \\ \nabla J(k) \\ \nabla J(k+1) \\ \vdots \\ \nabla J(L_{pkt}-1) \end{bmatrix}
+	= 
+	z(0)
+	\begin{bmatrix} r^\ast(L_1) \\ r^\ast(L_1-1) \\ \vdots \\ r^\ast(L_1-(k-1)) \\ r^\ast(L_1-k) \\ r^\ast(L_1-(k+1)) \\ \vdots \\ r^\ast(-L_2) \end{bmatrix} +
+	z(1)
+	\begin{bmatrix} r^\ast(1+L_1) \\ r^\ast(1+L_1-1) \\ \vdots \\ r^\ast(1+L_1-(k-1)) \\ r^\ast(1+L_1-k) \\ r^\ast(1+L_1-(k+1)) \\ \vdots \\ r^\ast(1-L_2) \end{bmatrix} + \cdots
+%	\\
+%	+ 
+%			z(n)
+%	\begin{bmatrix} r^\ast(n+L_1) \\ r^\ast(n+L_1-1) \\ \vdots \\ r^\ast(n+L_1-(k-1)) \\ r^\ast(n+L_1-k) \\ r^\ast(n+L_1-(k+1)) \\ \vdots \\ r^\ast(n-L_2) \end{bmatrix} 
+%	+
+%	\cdots 
+%	+ 
+%			z(L_{pkt}-1)
+%	\begin{bmatrix} r^\ast(L_{pkt}-1+L_1) \\ r^\ast(L_{pkt}-1+L_1-1) \\ \vdots \\ r^\ast(L_{pkt}-1+L_1-(k-1)) \\ r^\ast(L_{pkt}-1+L_1-k) \\ r^\ast(L_{pkt}-1+L_1-(k+1)) \\ \vdots \\ r^\ast(L_{pkt}-1-L_2) \end{bmatrix}.
+\label{eq:delJ_writeout}.
+\end{multline}
+The expansion of \eqref{eq:delJ_sub} shows a new summation can be formed to compute a single index of $\nabla \mathbf{J}$ to be. 
+\begin{equation}
+	\nabla J(k) = \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1} z(n) r^\ast(n+L_1-k).
+	\label{eq:delJ_reformed_z}
+\end{equation}
+
+Now that the computation of an element of $\nabla \mathbf{J}$ is a summation, Equation \eqref{eq:delJ_reformed_z} can be massaged to look something like a convolution of the vectors $\mathbf{z}$ and $\mathbf{r}^\ast$
+\begin{equation}
+\nabla J(k) = \sum_{n=0}^{N-1} z(n) r^\ast(k-n+C)
+\label{eq:conv}
+\end{equation}
+where $C$ is a constant. 
+
+To make the computation of $\nabla J(k)$ in Equation \eqref{eq:delJ_reformed_z} to look like the convolution in Equation \eqref{eq:conv}, the signs on $n$ and $k$ in the index for $r^\ast$ must be changed.
+To change the signs on $k$ and $n$, the vectors $\mathbf{r}^\ast$ and $\nabla \mathbf{J}$ are time reversed.
+To time reverse the $L_{eq}$ long output vector $\nabla \mathbf{J}$, the index $k$ is substituted with $L_{eq} - k$ in $\mathbf{r}^\ast$ and $\nabla J(k)$. 
+To time reverse the $L_{pkt}$ long input vector $\mathbf{r}^\ast$, the index $n$ is substituted with $L_{pkt} - n$ in only $\mathbf{r}^\ast$. 
+
+Time reversing $\mathbf{r}^\ast$ and $\nabla \mathbf{J}$ in Equation \eqref{eq:delJ_reformed_z} results in 
+\begin{align}
+	\nabla J(L_{eq} - k) 	&= \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1} z(n) r^\ast((L_{pkt} - n)+L_1-(L_{eq} - k))\nonumber\\
+							&= \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1} z(n) r^\ast(k-n+C)
+	\label{eq:delJ_reversed_rearranged}
+\end{align}
+where $C = L_1+L_{pkt}-L_{eq}$.
+Equation \eqref{eq:delJ_reversed_rearranged} now looks just like \eqref{eq:conv} and it shows the time reversed $\nabla \mathbf{J}$ can be computed using a scaled convolution of the vectors $\mathbf{z}$ and time reversed $\mathbf{r}^\ast$.
+
+%\subsection{The Frequency Multiply Equalizers}
+%
+%\subsubsection{The Frequency Domain Equalizer One}

@@ -1,0 +1,162 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\citation{wikipedia-gpu:2015}
+\citation{wikipedia-cuda:2015}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Signal Processing with GPUs}{1}{chapter.1}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{sec:gpu}{{1}{1}{Signal Processing with GPUs}{chapter.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Overview}{1}{section.1.1}}
+\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{1}{1.1}{section.1.1}}}
+\@writefile{brf}{\backcite{wikipedia-cuda:2015}{{1}{1.1}{section.1.1}}}
+\@writefile{lot}{\contentsline {table}{\numberline {1.1}{\ignorespaces The computational resources available with three Nvidia GPUs used in this project (1x Tesla k40 2x Tesla K20).}}{2}{table.1.1}}
+\newlabel{tab:gpu-resources}{{1.1}{2}{Overview}{table.1.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{3}{figure.1.1}}
+\newlabel{fig:signal-flow-gpu}{{1.1}{3}{Overview}{figure.1.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces A block diagram illustrating algorithm flow}}{4}{figure.1.2}}
+\newlabel{fig:software-algorithmBlockDiagramSimple}{{1.2}{4}{GPU Algorithm Implementation}{figure.1.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}GPU Algorithm Implementation}{4}{section.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}Convolution GPU Implementation}{4}{subsection.1.2.1}}
+\newlabel{eq:time-convolution}{{1.1}{4}{Convolution GPU Implementation}{equation.1.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.3}{\ignorespaces The convolution of the vector $\mathbf  {x}$ with the vector $\mathbf  {h}$ results in the vector $\mathbf  {y}$. The grey desired portion of $\mathbf  {y}$ is from $n_0$ to $n_0+L_y$.}}{5}{figure.1.3}}
+\newlabel{fig:conv-n_0}{{1.3}{5}{Convolution GPU Implementation}{figure.1.3}{}}
+\newlabel{eq:conv-matrix}{{1.2}{5}{Convolution GPU Implementation}{equation.1.2.2}{}}
+\newlabel{eq:matrix_conv}{{1.3}{5}{Convolution GPU Implementation}{equation.1.2.3}{}}
+\citation{nvidia-CUDAdoc:2015}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.4}{\ignorespaces Block diagram showing how the convolution of two vectors can be done using FFTs.}}{6}{figure.1.4}}
+\newlabel{fig:conv_FFT_block}{{1.4}{6}{Convolution GPU Implementation}{figure.1.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Block diagram showing how the convolution of three vectors can be done using FFTs.}}{6}{figure.1.5}}
+\newlabel{fig:conv_FFT_block3}{{1.5}{6}{Convolution GPU Implementation}{figure.1.5}{}}
+\newlabel{eq:fft-conv}{{1.4}{6}{Convolution GPU Implementation}{equation.1.2.4}{}}
+\@writefile{brf}{\backcite{nvidia-CUDAdoc:2015}{{6}{1.2.1}{equation.1.2.4}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Instead of showing Figure \ref  {fig:conv_FFT_block} or \ref  {fig:conv_FFT_block3}, the single block convolution is shown.}}{7}{figure.1.6}}
+\newlabel{fig:conv_simple_block}{{1.6}{7}{Convolution GPU Implementation}{figure.1.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.7}{\ignorespaces The iNET packet structure.}}{7}{figure.1.7}}
+\newlabel{fig:packet}{{1.7}{7}{Frame Synchronization}{figure.1.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.2}Estimator GPU Implementation}{7}{subsection.1.2.2}}
+\@writefile{toc}{\contentsline {subsubsection}{Frame Synchronization}{7}{section*.7}}
+\newlabel{eq:gpu-L-4}{{1.5}{8}{Frame Synchronization}{equation.1.2.5}{}}
+\newlabel{eq:gpu-L-pedone-geoghegan-2}{{1.6}{8}{Frame Synchronization}{equation.1.2.6}{}}
+\newlabel{eq:gpu-L-pedone-geoghegan-3}{{1.7}{8}{Frame Synchronization}{equation.1.2.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.8}{\ignorespaces The block diagram for the frame synchronization implementation.}}{9}{figure.1.8}}
+\newlabel{fig:preambleBlock}{{1.8}{9}{Frame Synchronization}{figure.1.8}{}}
+\newlabel{eq:gpu-L-pedone-geoghegan-4}{{1.8}{9}{Frame Synchronization}{equation.1.2.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.9}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{10}{figure.1.9}}
+\newlabel{fig:L_2_packets}{{1.9}{10}{Frame Synchronization}{figure.1.9}{}}
+\newlabel{eq:preamble_det_i_hat}{{1.9}{11}{Frame Synchronization}{equation.1.2.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.10}{\ignorespaces Detailed view of $L(u)$. (a): correlation peaks of a distortion free and noiseless signal; (b): correlation peaks of a distortion free but noisy signal with $E_b/N_0 = 0$dB; (c): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB; (d): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB}}{12}{figure.1.10}}
+\newlabel{fig:L_corr_creepy}{{1.10}{12}{Frame Synchronization}{figure.1.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.11}{\ignorespaces Safe search windows defined to search only one preamble correlation peak.}}{13}{figure.1.11}}
+\newlabel{fig:L_windows}{{1.11}{13}{Frame Synchronization}{figure.1.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.12}{\ignorespaces The starting sample index for each packet in the batch.}}{14}{figure.1.12}}
+\newlabel{fig:packets_in_batch}{{1.12}{14}{Frame Synchronization}{figure.1.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.13}{\ignorespaces The packetized structure of the received signals after the frame synchronization step.}}{14}{figure.1.13}}
+\newlabel{fig:packetized}{{1.13}{14}{Frame Synchronization}{figure.1.13}{}}
+\citation{nvidia-CUDAdoc:2015}
+\@writefile{toc}{\contentsline {subsubsection}{Frequency Offset Compensation}{15}{section*.8}}
+\newlabel{sec:jeffs_frequencyoffsetestimator}{{1.2.2}{15}{Frequency Offset Compensation}{section*.8}{}}
+\newlabel{eq:jeff-ML-w-final3}{{1.11}{15}{Frequency Offset Compensation}{equation.1.2.11}{}}
+\newlabel{eq:jeff-ML-w-final3_reformed}{{1.12}{15}{Frequency Offset Compensation}{equation.1.2.12}{}}
+\newlabel{eq:freq_offset_r1}{{1.13}{15}{Frequency Offset Compensation}{equation.1.2.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.14}{\ignorespaces The block diagram for the Frequency Offset estimator and sample rotation implementation.}}{16}{figure.1.14}}
+\newlabel{fig:frequencyOffsetBlock}{{1.14}{16}{Frequency Offset Compensation}{figure.1.14}{}}
+\@writefile{brf}{\backcite{nvidia-CUDAdoc:2015}{{16}{1.2.2}{equation.1.2.14}}}
+\newlabel{eq:jeff-Omega_0-matrix1}{{1.15}{16}{Frequency Offset Compensation}{equation.1.2.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.15}{\ignorespaces The block diagram for the Channel estimator.}}{17}{figure.1.15}}
+\newlabel{fig:channelBlock}{{1.15}{17}{Channel Estimation}{figure.1.15}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Channel Estimation}{17}{section*.9}}
+\newlabel{eq:jeff-ML-h-final2}{{1.17}{17}{Channel Estimation}{equation.1.2.17}{}}
+\newlabel{eq:channel_reformed_no_freq}{{1.18}{17}{Channel Estimation}{equation.1.2.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.16}{\ignorespaces The block diagram for the Noise Variance estimator.}}{18}{figure.1.16}}
+\newlabel{fig:noiseBlock}{{1.16}{18}{Noise Variance Estimation}{figure.1.16}{}}
+\newlabel{eq:channel_reformed_final}{{1.20}{18}{Channel Estimation}{equation.1.2.20}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Noise Variance Estimation}{18}{section*.10}}
+\newlabel{eq:jeff-ML-s2-final3}{{1.21}{18}{Noise Variance Estimation}{equation.1.2.21}{}}
+\newlabel{eq:noise_var_reformed}{{1.23}{19}{Noise Variance Estimation}{equation.1.2.23}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.3}Equalizer GPU Implementation}{19}{subsection.1.2.3}}
+\@writefile{toc}{\contentsline {subsubsection}{Zero-Forcing Equalizer}{19}{section*.11}}
+\newlabel{eq:jeff-spike-solution}{{1.25}{19}{Zero-Forcing Equalizer}{equation.1.2.25}{}}
+\newlabel{eq:jeff-zf-H-matrix}{{1.26}{20}{Zero-Forcing Equalizer}{equation.1.2.26}{}}
+\newlabel{eq:jeff-cu-vector-def}{{1.27}{20}{Zero-Forcing Equalizer}{equation.1.2.27}{}}
+\newlabel{eq:hhh}{{1.28}{20}{Zero-Forcing Equalizer}{equation.1.2.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.17}{\ignorespaces The block diagram for the Zero Forcing equalizer implementation.}}{21}{figure.1.17}}
+\newlabel{fig:ZFblock}{{1.17}{21}{Zero-Forcing Equalizer}{figure.1.17}{}}
+\newlabel{eq:hun0-vector-def}{{1.30}{21}{Zero-Forcing Equalizer}{equation.1.2.30}{}}
+\newlabel{eq:jeff-spike-solution-reformed}{{1.31}{22}{Zero-Forcing Equalizer}{equation.1.2.31}{}}
+\newlabel{eq:jeff-spike-solution-reformed_vectors}{{1.32}{22}{Zero-Forcing Equalizer}{equation.1.2.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.18}{\ignorespaces The block diagram for the MMSE equalizer implementation.}}{23}{figure.1.18}}
+\newlabel{fig:MMSEblock}{{1.18}{23}{MMSE Equalizer}{figure.1.18}{}}
+\@writefile{toc}{\contentsline {subsubsection}{MMSE Equalizer}{23}{section*.12}}
+\newlabel{eq:jeff-copt-Ri}{{1.33}{23}{MMSE Equalizer}{equation.1.2.33}{}}
+\newlabel{eq:jeff-ZF-vectors}{{1.37}{24}{MMSE Equalizer}{equation.1.2.37}{}}
+\@writefile{toc}{\contentsline {subsubsection}{CMA Equalizer}{24}{section*.13}}
+\newlabel{eq:jeff-DelJcma-approx}{{1.38}{24}{CMA Equalizer}{equation.1.2.38}{}}
+\newlabel{eq:jeff-cma-update-summary}{{1.39}{24}{CMA Equalizer}{equation.1.2.39}{}}
+\newlabel{eq:jeff-DelJcma-approx}{{1.40}{24}{CMA Equalizer}{equation.1.2.40}{}}
+\newlabel{eq:jeff-cma-update-summary}{{1.41}{24}{CMA Equalizer}{equation.1.2.41}{}}
+\newlabel{eq:toy-delj}{{1.44}{25}{CMA Equalizer}{equation.1.2.44}{}}
+\newlabel{eq:toy-conv}{{1.45}{25}{CMA Equalizer}{equation.1.2.45}{}}
+\newlabel{eq:y_portion}{{1.46}{27}{CMA Equalizer}{equation.1.2.46}{}}
+\newlabel{eq:y_reverse}{{1.47}{27}{CMA Equalizer}{equation.1.2.47}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer 1}{27}{section*.14}}
+\newlabel{eq:FDE1}{{1.48}{27}{Frequency Domain Equalizer 1}{equation.1.2.48}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.19}{\ignorespaces The computation of $\nabla \mathbf  {J}$ can be done with a convolution of directly.}}{28}{figure.1.19}}
+\newlabel{fig:delJ_convORsum}{{1.19}{28}{CMA Equalizer}{figure.1.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.20}{\ignorespaces The block diagram showing how the GPU implements the CMA algorithm.}}{28}{figure.1.20}}
+\newlabel{fig:CMA_block}{{1.20}{28}{CMA Equalizer}{figure.1.20}{}}
+\citation{NO_perrins}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.21}{\ignorespaces The block diagram showing how the GPU calculates the $\text  {FDE}_1$ equalizer.}}{29}{figure.1.21}}
+\newlabel{fig:FDE1_block}{{1.21}{29}{Frequency Domain Equalizer 1}{figure.1.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.22}{\ignorespaces The block diagram showing how the GPU calculates the $\text  {FDE}_2$ equalizer.}}{29}{figure.1.22}}
+\newlabel{fig:FDE2_block}{{1.22}{29}{Frequency Domain Equalizer 2}{figure.1.22}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer 2}{29}{section*.15}}
+\newlabel{eq:FDE2}{{1.49}{29}{Frequency Domain Equalizer 2}{equation.1.2.49}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.23}{\ignorespaces The block diagram showing how the GPU applies an FIR equlizer and the Numerically Optimized Perrins detection filter.}}{30}{figure.1.23}}
+\newlabel{fig:apply_FIR_equalizer}{{1.23}{30}{FIR Equalizer Application}{figure.1.23}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.4}Filter Application GPU Implementation}{30}{subsection.1.2.4}}
+\@writefile{brf}{\backcite{NO_perrins}{{30}{1.2.4}{subsection.1.2.4}}}
+\@writefile{toc}{\contentsline {subsubsection}{FIR Equalizer Application}{30}{section*.16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.24}{\ignorespaces The block diagram showing how the GPU applies $\text  {FDE}_1$ and the Numerically Optimized Perrins detection filter.}}{31}{figure.1.24}}
+\newlabel{fig:apply_FDE1}{{1.24}{31}{Frequency Domain Equalizer Application}{figure.1.24}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer Application}{31}{section*.17}}
+\newlabel{eq:apply_FDE1}{{1.50}{31}{Frequency Domain Equalizer Application}{equation.1.2.50}{}}
+\newlabel{eq:apply_FDE2}{{1.51}{31}{Frequency Domain Equalizer Application}{equation.1.2.51}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.25}{\ignorespaces The block diagram showing how the GPU applies $\text  {FDE}_2$ with $\mathbf  {\Psi }$ and the Numerically Optimized Perrins detection filter.}}{32}{figure.1.25}}
+\newlabel{fig:apply_FDE2}{{1.25}{32}{Frequency Domain Equalizer Application}{figure.1.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.5}GPU OQPSK Demodulator Implementation}{33}{subsection.1.2.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.26}{\ignorespaces The block diagram showing how the GPU applies the demodulator to equalized received samples to obtain the bit decisions.}}{34}{figure.1.26}}
+\newlabel{fig:demod_block}{{1.26}{34}{GPU OQPSK Demodulator Implementation}{figure.1.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.27}{\ignorespaces The block diagram showing the OQPSK demodulator from Figure \ref  {fig:demod_block}. The $\mathaccentV {hat}05E{a}(k)$ is data-aided for $k<L_p+L_{asm}$ and decision directed when $k\geq L_p+L_{asm}$.}}{34}{figure.1.27}}
+\newlabel{fig:demod_loop}{{1.27}{34}{GPU OQPSK Demodulator Implementation}{figure.1.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.28}{\ignorespaces The bit stream vector $\mathaccentV {hat}05E{\mathbf  {s}}_{FPGA}$ is array chars. The bit streams are interleaved and each char contains 8 bit decisions from a single bit stream.}}{35}{figure.1.28}}
+\newlabel{fig:bit_inter}{{1.28}{35}{GPU OQPSK Demodulator Implementation}{figure.1.28}{}}
+\@setckpt{gpu}{
+\setcounter{page}{36}
+\setcounter{equation}{53}
+\setcounter{enumi}{3}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{0}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{1}
+\setcounter{section}{2}
+\setcounter{subsection}{5}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{28}
+\setcounter{table}{1}
+\setcounter{parentequation}{0}
+\setcounter{cp@cnt}{0}
+\setcounter{cp@tempcnt}{0}
+\setcounter{subfigure}{0}
+\setcounter{lofdepth}{1}
+\setcounter{subtable}{0}
+\setcounter{lotdepth}{1}
+\setcounter{Item}{3}
+\setcounter{Hfootnote}{0}
+\setcounter{bookmark@seq@number}{13}
+\setcounter{section@level}{1}
+}
