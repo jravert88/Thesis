@@ -221,6 +221,6 @@ Time reversing $\mathbf{r}^\ast$ and $\nabla \mathbf{J}$ in Equation \eqref{eq:d
 where $C = L_1+L_{pkt}-L_{eq}$.
 Equation \eqref{eq:delJ_reversed_rearranged} now looks just like \eqref{eq:conv} and it shows the time reversed $\nabla \mathbf{J}$ can be computed using a scaled convolution of the vectors $\mathbf{z}$ and time reversed $\mathbf{r}^\ast$.
 
-%\subsection{The Frequency Multiply Equalizers}
+%\subsection{The Fre quency Multiply Equalizers}
 %
 %\subsubsection{The Frequency Domain Equalizer One}
