@@ -221,6 +221,71 @@ Time reversing $\mathbf{r}^\ast$ and $\nabla \mathbf{J}$ in Equation \eqref{eq:d
 where $C = L_1+L_{pkt}-L_{eq}$.
 Equation \eqref{eq:delJ_reversed_rearranged} now looks just like \eqref{eq:conv} and it shows the time reversed $\nabla \mathbf{J}$ can be computed using a scaled convolution of the vectors $\mathbf{z}$ and time reversed $\mathbf{r}^\ast$.
 
-%\subsection{The Fre quency Multiply Equalizers}
-%
-%\subsubsection{The Frequency Domain Equalizer One}
+\subsubsection{The Constant Modulus Algorithm Revamp}
+CMA uses a steepest decent algorithm.
+\begin{equation}
+\mathbf{c}_{b+1} = \mathbf{c}_{b}-\mu \nabla \mathbf{J}
+\end{equation}
+The vector $\mathbf{J}$ is the cost function and $\nabla J$ is the cost function gradient defined in the PAQ report 352 by
+\begin{equation}
+	\nabla J = \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right]
+	y(n)  \mathbf{r}^\ast(n).
+\label{eq:DelJcma-approxr}
+\end{equation}
+where
+\begin{equation}
+\mathbf{r}(n) = \begin{bmatrix} r(n+L_1) \\ \vdots \\ r(n) \\ \vdots \\ r(n-L_2) \end{bmatrix}.
+\end{equation}
+This means $\nabla J$ is of the form
+\begin{equation}
+\nabla J = \begin{bmatrix} \nabla J(-L_1) \\ \vdots \\ \nabla J(0) \\ \vdots \\ \nabla J(L_2) \end{bmatrix}.
+\end{equation}
+To Leverage computational efficiency of FFT, re-express the elements of $\nabla J$ as a convolution.
+
+To begin define
+\begin{equation}
+z(n) = 	2\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right] y(n)
+\end{equation} 
+so that $\nabla J$ may be expressed as
+\begin{multline}
+\nabla J
+	= 
+	\frac{z(0)}{L_{pkt}}
+		\begin{bmatrix} r^\ast(L_1) \\ \vdots \\ r^\ast(0) \\ \vdots \\ r^\ast(L_2) \end{bmatrix} +
+	\frac{z(1)}{L_{pkt}}
+		\begin{bmatrix} r^\ast(1+L_1) \\ \vdots \\ r^\ast(1) \\ \vdots \\ r^\ast(1-L_2) \end{bmatrix} + \cdots
+	\frac{z(L_{pkt}-1)}{L_{pkt}}
+		\begin{bmatrix} r^\ast(L_{pkt}-1+L_1) \\ \vdots \\ r^\ast(L_{pkt}-1) \\ \vdots \\ r^\ast(L_{pkt}-1-L_2) \end{bmatrix}
+\label{eq:delJ_writeoutr}.
+\end{multline}
+The $k$th value of $\nabla J$ is
+\begin{equation}
+\nabla J(k) = \frac{1}{L_{pkt}} \sum^{L_{pkt}-1}_{m=0}  z(m) r^\ast(m-k), \quad -L_1 \leq k \leq L_2.
+\end{equation}
+The summation almost looks like a convolution.
+To put the summation in convolution form, define
+\begin{equation}
+\rho(n) = r^\ast(n).
+\end{equation}
+Now
+\begin{equation}
+\nabla J(k) = \frac{1}{L_{pkt}} \sum^{L_{pkt}-1}_{m=0}  z(m) \rho(k-m)
+\label{eq:CMA_delJ_rice_reformed}
+\end{equation}
+Because $z(n)$ has support on $0 \leq n \leq L_{pkt}-1$ and $\rho(n)$ has support on $-L_{pkt}+1 \leq n \leq 0$, 
+the result of the convolution sum $b(n)$ has support on $-L_{pkt}+1 \leq n \leq L_{pkt}-1$.
+Putting all the pieces together, we have
+\begin{align}
+b(n) &= \sum^{L_{pkt}-1}_{m=0} z(m) \rho(n-m) \nonumber \\
+	 &= \sum^{L_{pkt}-1}_{m=0} z(mr^\ast(m-n)
+	 \label{eq:CMA_conv_z_rho}
+\end{align}
+Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rho} shows that 
+\begin{equation}
+\nabla J(k) = \frac{1}{L_{pkt}} b(k), \quad -L_1 \leq k \leq L_2.
+\label{eq:CMA_delJ_donzo}
+\end{equation}
+The values of interest are shown in Figure Foo!!!!(c)
+
+This suggest the following algorithm for computing the gradient vector $\nabla J$:
