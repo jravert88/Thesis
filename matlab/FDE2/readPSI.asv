@@ -1,7 +1,0 @@
-fileID = fopen('FreqTestFileFromMatlabPSI_r.txt','r');
-formatSpec = '%f';
-A = fscanf(fileID,formatSpec);
-whos A
-fclose(fileID);
-axis = -2
-plot(fftshift(A))

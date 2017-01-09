@@ -237,6 +237,10 @@ C_\text{FDE2}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{\P
 \end{equation}
 FDE2 almost identical to FDE1.
 The only difference is term $\Psi(\omega)$ in the denominator. 
-The term $\Psi(\omega)$ is the average spectrum of SPQOSK-TG shown in Figure Blah.
-
+The term $\Psi(\omega)$ is the average spectrum of SPQOSK-TG shown in Figure \ref{fig:SOQPSK_spectrum}.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/equations/FDE2_spectrum_PSI.eps}
+	\caption{A block diagram illustrating organization of the algorithms in the GPU.}
+	\label{fig:SOQPSK_spectrum}
+\end{figure}
 FDE1 needs no massaging because Equation \eqref{eq:FDE1} is easily implemented in the GPU and it is computationally efficient.
