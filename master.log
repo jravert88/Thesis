@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  6 JAN 2017 13:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  9 JAN 2017 10:26
 entering extended mode
 **master.tex
 (master.tex
@@ -576,30 +576,25 @@ Chapter 1.
 
 ] [2] [3] [4] [5
 
-])
-Overfull \hbox (1.2336pt too wide) in paragraph at lines 210--172
-[]\OT1/ptm/m/n/12 This sug-gest the fol-low-ing al-go-rithm for com-put-ing the
- gra-di-ent vec-tor $\OMS/cmsy/m/n/12 r\OML/cmm/m/it/12 J$\OT1/ptm/m/n/12 : Mat
--lab Code!!! 
- []
+] [6]) [7
 
-[6]
+]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 202.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 202.
  (master.aux (eq_equations.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 202.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 202.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: 5A27439BE38E41B38EA9A30A7CBB68E7;577.
+(rerunfilecheck)             Checksum: 4C23CA57420A9C5A4763C9A5E918EFA1;661.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 202.
  )
 (\end occurred when \iffalse on line 161 was incomplete)
 (\end occurred when \iffalse on line 161 was incomplete) 
 Here is how much of TeX's memory you used:
- 8285 strings out of 493636
- 124388 string characters out of 3141310
- 215853 words of memory out of 3000000
- 11421 multiletter control sequences out of 15000+200000
+ 8294 strings out of 493636
+ 124498 string characters out of 3141310
+ 215985 words of memory out of 3000000
+ 11424 multiletter control sequences out of 15000+200000
  18027 words of font info for 53 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  59i,17n,91p,329b,342s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -616,9 +611,9 @@ amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfon
 ts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a
 .pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on master.pdf (18 pages, 162007 bytes).
+Output written on master.pdf (19 pages, 168612 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
- 61 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 250 PDF objects out of 1000 (max. 8388607)
+ 67 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 

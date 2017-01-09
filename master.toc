@@ -8,3 +8,6 @@
 \contentsline {subsubsection}{MMSE Equalizer}{3}{section*.8}
 \contentsline {subsection}{\numberline {1.2.2}The Iterative Equalizer}{5}{subsection.1.2.2}
 \contentsline {subsubsection}{The Constant Modulus Algorithm}{5}{section*.9}
+\contentsline {subsection}{\numberline {1.2.3}The Multiply Equalizers}{7}{subsection.1.2.3}
+\contentsline {subsubsection}{The Frequency Domain Equalizer One}{7}{section*.10}
+\contentsline {subsubsection}{The Frequency Domain Equalizer One}{7}{section*.11}

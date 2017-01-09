@@ -207,5 +207,36 @@ Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rh
 \end{equation}
 The values of interest are shown in Figure Foo!!!!(c)
 
-This suggest the following algorithm for computing the gradient vector $\nabla J$:
+This suggest the following algorithm for computing the gradient vector $\nabla J$
 Matlab Code!!!
+
+\clearpage
+\subsection{The Multiply Equalizers}
+
+\subsubsection{The Frequency Domain Equalizer One}
+The Frequency Domain Equalizer One (FDE1) is the MMSE or wiener filter applied in the frequency domain.
+Ian E. Williams and M. Saquib derived FDE1 for this project in a paper called Linear Frequency Domain Equalization of SOQPSK-TG for Wideband Aeronautical Telemetry.
+The FDE1 equalizer is defined in Equation (11) as
+\begin{equation}
+C_\text{FDE1}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{1}{\hat{\sigma}^2}}
+\label{eq:FDE1}
+\end{equation}
+The term $C_\text{FDE1}(\omega)$ is the Frequency Domain Equalizer One frequency response at $\omega$.
+The term $\hat{H}(\omega)$ is the channel estimate frequency response at $\omega$.
+The term $\hat{\sigma}^2$ is the noise variance estimate, this term is completely independent of frequency because the noise is assumed to be white or spectrally flat.
+
+FDE1 needs no massaging because Equation \eqref{eq:FDE1} is easily implemented in the GPU and it is computationally efficient.
+
+\subsubsection{The Frequency Domain Equalizer One}
+The Frequency Domain Equalizer Twe (FDE2) is the MMSE or wiener filter applied in the frequency domain.
+Ian E. Williams and M. Saquib derived FDE1 for this project in a paper called Linear Frequency Domain Equalization of SOQPSK-TG for Wideband Aeronautical Telemetry.
+The FDE2 equalizer is defined in Equation (12) as
+\begin{equation}
+C_\text{FDE2}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{\Psi(\omega)}{\hat{\sigma}^2}}
+\label{eq:FDE2}
+\end{equation}
+FDE2 almost identical to FDE1.
+The only difference is term $\Psi(\omega)$ in the denominator. 
+The term $\Psi(\omega)$ is the average spectrum of SPQOSK-TG shown in Figure Blah.
+
+FDE1 needs no massaging because Equation \eqref{eq:FDE1} is easily implemented in the GPU and it is computationally efficient.
