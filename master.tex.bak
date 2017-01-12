@@ -168,17 +168,19 @@
 %  Note: the introduction is considered Chapter 1.
 %\include{intro}
 %\include{chapter2}
-%\include{gpu}
+\include{gpu}
+\include{systemOverview}
+
 \include{eq_equations}
 
 
 
 
 %%%%%%%%%%%%% begin Bibliography %%%%%%%%%%%%%%%%%
-%\phantomsection %Forces a new section prior to setting the bibliography reference point
-%\bibliographystyle{IEEEtran}
-%\addcontentsline{toc}{chapter}{Bibliography}
-%\bibliography{refs}
+\phantomsection %Forces a new section prior to setting the bibliography reference point
+\bibliographystyle{IEEEtran}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{refs}
 
 % Bibliographies are best created and maintained using BibTeX
 % To use Bibtex, create a bibliography file, e.g., refs.bib

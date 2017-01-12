@@ -1,13 +1,36 @@
 \contentsline {chapter}{List of Tables}{ix}{section*.3}
 \contentsline {chapter}{List of Figures}{xi}{section*.5}
-\contentsline {chapter}{\numberline {1}Equalizer Equations}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Overview}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Equations}{1}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}The Solving Equalizers}{1}{subsection.1.2.1}
-\contentsline {subsubsection}{The Zero-Forcing Equalizer}{1}{section*.7}
-\contentsline {subsubsection}{MMSE Equalizer}{3}{section*.8}
-\contentsline {subsection}{\numberline {1.2.2}The Iterative Equalizer}{5}{subsection.1.2.2}
-\contentsline {subsubsection}{The Constant Modulus Algorithm}{5}{section*.9}
-\contentsline {subsection}{\numberline {1.2.3}The Multiply Equalizers}{7}{subsection.1.2.3}
-\contentsline {subsubsection}{The Frequency Domain Equalizer One}{7}{section*.10}
-\contentsline {subsubsection}{The Frequency Domain Equalizer One}{7}{section*.11}
+\contentsline {chapter}{\numberline {1}Signal Processing with GPUs}{1}{chapter.1}
+\contentsline {subsubsection}{Frame Synchronization}{1}{section*.7}
+\contentsline {subsubsection}{Frequency Offset Compensation}{9}{section*.8}
+\contentsline {subsubsection}{Channel Estimation}{11}{section*.9}
+\contentsline {subsubsection}{Noise Variance Estimation}{12}{section*.10}
+\contentsline {subsection}{\numberline {1.0.1}Equalizer GPU Implementation}{13}{subsection.1.0.1}
+\contentsline {subsubsection}{Zero-Forcing Equalizer}{13}{section*.11}
+\contentsline {subsubsection}{MMSE Equalizer}{17}{section*.12}
+\contentsline {subsubsection}{CMA Equalizer}{18}{section*.13}
+\contentsline {subsubsection}{Frequency Domain Equalizer 1}{21}{section*.14}
+\contentsline {subsubsection}{Frequency Domain Equalizer 2}{23}{section*.15}
+\contentsline {subsection}{\numberline {1.0.2}Filter Application GPU Implementation}{24}{subsection.1.0.2}
+\contentsline {subsubsection}{FIR Equalizer Application}{24}{section*.16}
+\contentsline {subsubsection}{Frequency Domain Equalizer Application}{25}{section*.17}
+\contentsline {subsection}{\numberline {1.0.3}GPU OQPSK Demodulator Implementation}{27}{subsection.1.0.3}
+\contentsline {chapter}{\numberline {2}System Overview}{31}{chapter.2}
+\contentsline {section}{\numberline {2.1}Overview}{31}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Preamble Detection}{31}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Frequency Offset Estimation and Compensation}{40}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Channel Estimation}{40}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Noise Variance Estimation}{40}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}OQPSK Detector}{40}{subsection.2.1.5}
+\contentsline {chapter}{\numberline {3}Equalizer Equations}{41}{chapter.3}
+\contentsline {section}{\numberline {3.1}Overview}{41}{section.3.1}
+\contentsline {section}{\numberline {3.2}Equations}{41}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}The Solving Equalizers}{41}{subsection.3.2.1}
+\contentsline {subsubsection}{The Zero-Forcing Equalizer}{41}{section*.18}
+\contentsline {subsubsection}{MMSE Equalizer}{43}{section*.19}
+\contentsline {subsection}{\numberline {3.2.2}The Iterative Equalizer}{45}{subsection.3.2.2}
+\contentsline {subsubsection}{The Constant Modulus Algorithm}{45}{section*.20}
+\contentsline {subsection}{\numberline {3.2.3}The Multiply Equalizers}{47}{subsection.3.2.3}
+\contentsline {subsubsection}{The Frequency Domain Equalizer One}{47}{section*.21}
+\contentsline {subsubsection}{The Frequency Domain Equalizer One}{47}{section*.22}
+\contentsline {chapter}{Bibliography}{49}{section*.23}

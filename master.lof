@@ -1,2 +1,34 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{8}{figure.1.1}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces The iNET packet structure.}}{1}{figure.1.1}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces The block diagram for the frame synchronization implementation.}}{3}{figure.1.2}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{4}{figure.1.3}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Detailed view of $L(u)$. (a): correlation peaks of a distortion free and noiseless signal; (b): correlation peaks of a distortion free but noisy signal with $E_b/N_0 = 0$dB; (c): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB; (d): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB}}{6}{figure.1.4}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Safe search windows defined to search only one preamble correlation peak.}}{7}{figure.1.5}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces The starting sample index for each packet in the batch.}}{8}{figure.1.6}
+\contentsline {figure}{\numberline {1.7}{\ignorespaces The packetized structure of the received signals after the frame synchronization step.}}{8}{figure.1.7}
+\contentsline {figure}{\numberline {1.8}{\ignorespaces The block diagram for the Frequency Offset estimator and sample rotation implementation.}}{10}{figure.1.8}
+\contentsline {figure}{\numberline {1.9}{\ignorespaces The block diagram for the Channel estimator.}}{11}{figure.1.9}
+\contentsline {figure}{\numberline {1.10}{\ignorespaces The block diagram for the Noise Variance estimator.}}{12}{figure.1.10}
+\contentsline {figure}{\numberline {1.11}{\ignorespaces The block diagram for the Zero Forcing equalizer implementation.}}{15}{figure.1.11}
+\contentsline {figure}{\numberline {1.12}{\ignorespaces The block diagram for the MMSE equalizer implementation.}}{17}{figure.1.12}
+\contentsline {figure}{\numberline {1.13}{\ignorespaces The computation of $\nabla \mathbf {J}$ can be done with a convolution of directly.}}{22}{figure.1.13}
+\contentsline {figure}{\numberline {1.14}{\ignorespaces The block diagram showing how the GPU implements the CMA algorithm.}}{22}{figure.1.14}
+\contentsline {figure}{\numberline {1.15}{\ignorespaces The block diagram showing how the GPU calculates the $\text {FDE}_1$ equalizer.}}{23}{figure.1.15}
+\contentsline {figure}{\numberline {1.16}{\ignorespaces The block diagram showing how the GPU calculates the $\text {FDE}_2$ equalizer.}}{23}{figure.1.16}
+\contentsline {figure}{\numberline {1.17}{\ignorespaces The block diagram showing how the GPU applies an FIR equlizer and the Numerically Optimized Perrins detection filter.}}{24}{figure.1.17}
+\contentsline {figure}{\numberline {1.18}{\ignorespaces The block diagram showing how the GPU applies $\text {FDE}_1$ and the Numerically Optimized Perrins detection filter.}}{25}{figure.1.18}
+\contentsline {figure}{\numberline {1.19}{\ignorespaces The block diagram showing how the GPU applies $\text {FDE}_2$ with $\mathbf {\Psi }$ and the Numerically Optimized Perrins detection filter.}}{26}{figure.1.19}
+\contentsline {figure}{\numberline {1.20}{\ignorespaces The block diagram showing how the GPU applies the demodulator to equalized received samples to obtain the bit decisions.}}{28}{figure.1.20}
+\contentsline {figure}{\numberline {1.21}{\ignorespaces The block diagram showing the OQPSK demodulator from Figure \ref {fig:demod_block}. The $\mathaccentV {hat}05E{a}(k)$ is data-aided for $k<L_p+L_{asm}$ and decision directed when $k\geq L_p+L_{asm}$.}}{28}{figure.1.21}
+\contentsline {figure}{\numberline {1.22}{\ignorespaces The bit stream vector $\mathaccentV {hat}05E{\mathbf {s}}_{FPGA}$ is array chars. The bit streams are interleaved and each char contains 8 bit decisions from a single bit stream.}}{29}{figure.1.22}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{32}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces The iNET packet structure.}}{32}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces The block diagram for the frame synchronization implementation.}}{34}{figure.2.3}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{35}{figure.2.4}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Detailed view of $L(u)$. (a): correlation peaks of a distortion free and noiseless signal; (b): correlation peaks of a distortion free but noisy signal with $E_b/N_0 = 0$dB; (c): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB; (d): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB}}{37}{figure.2.5}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Safe search windows defined to search only one preamble correlation peak.}}{38}{figure.2.6}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces The starting sample index for each packet in the batch.}}{39}{figure.2.7}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces The packetized structure of the received signals after the frame synchronization step.}}{39}{figure.2.8}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{48}{figure.3.1}
