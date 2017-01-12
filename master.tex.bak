@@ -134,6 +134,8 @@
 \newcommand{\re}{\mathbb{R}} % real numbers
 \newcommand{\OMIT}[1]{{}} % omit sections of text
 \newcommand{\pd}[2]{\ensuremath{\frac{\partial #1}{\partial #2}}} % partial derivative
+\newcommand{\rpkt}{\mathbf{r}_\text{pkt}}
+\newcommand{\Lpkt}{\mathbf{L}_\text{pkt}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                End Macros
@@ -168,7 +170,7 @@
 %  Note: the introduction is considered Chapter 1.
 %\include{intro}
 %\include{chapter2}
-\include{gpu}
+%\include{gpu}
 \include{systemOverview}
 
 \include{eq_equations}
