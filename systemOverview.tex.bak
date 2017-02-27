@@ -13,7 +13,7 @@
 This thesis gives and overview of the the GPU implementation and performance of data aided equalizes.
 but the focus of this thesis is on the computation and application of the equalizers.
 Before data-aided equalizers can be computed and applied: the preambles must found, the signal packetized, the signal "de-rotated" then the channel and noise variance estimated from the de-rotated signal.
-The equalizers are then computed and applied using the de-rotated signal and the estimated channel and noise variance.
+The equalizers are then computed and applied using the de-rotated signal, estimated channel and noise variance.
 After the equalizers have been applied a OQPSK detector is applied to the output of each equalizer.
 A simple block Diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
 \begin{figure}
@@ -52,17 +52,17 @@ The explanation of the GPU implantation of the equalizers will be explained in m
 
 \subsection{Preamble Detection}
 \label{sec:preamble_detection}
-The received samples in the project has the iNET packet structure shown in Figure \ref{fig:packet}.
+The received samples in this project has the iNET packet structure shown in Figure \ref{fig:packet}.
 The iNET packet consists of a preamble and ASM periodically inserted into the data stream.
-In this project the iNET preamble and ASM bits are inserted every 6144 data bits.
-The received signal is sampled at 2 samples/bit, making a iNET packet $12672$ samples long or $\Lpkt$.
-The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field is
+The iNET preamble and ASM bits are inserted every 6144 data bits.
+The received signal is sampled at 2 samples/bit, making a iNET packet $\Lpkt$ long or $12672$ samples.
+The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field
 \begin{equation}
 034776C72728950B0_\text{hex}
 \end{equation}
 The iNET packet and received sample structure is shown in Figure\ref{fig:packet}.
 \begin{figure}
-	\centering\includegraphics[width=\textwidth]{figures/gpu/packet.png}
+	\centering\includegraphics[width=\textwidth/10*11]{figures/gpu/packet.png}
 	\caption{The iNET packet structure.}
 	\label{fig:packet}
 \end{figure}
@@ -237,12 +237,11 @@ The vector $\hat{\mathbf{i}}$ is a vector of rough estimates of where the preamb
 The windows in the GPU search kernel are centered on elements of $\hat{\mathbf{i}}$ as shown in Figure \ref{fig:L_windows}.
 Adjustments are made to the peak index vector $\hat{\mathbf{i}}$ is checked for $\Lpkt$ spacing.
 
+\clearpage
 \subsubsection{Packetizing the Samples}
 Finally, with the best estimate of the preamble starting locations, the received samples can be packetized.
-%Figure \ref{fig:packets_in_batch} shows the relationship of $\hat{\mathbf{i}}$ and $r(n)$.
 Using $\hat{\mathbf{i}}$, the GPU launches one thread per received sample to packetize $r(n)$ into $\mathbf{r}_\text{pkt}$ as shown in Figure \ref{fig:packetized}. 
 The structure of $\mathbf{r}_\text{pkt}$ majorly simplifies indexing and removes the need for $\hat{\mathbf{i}}$.
-With the vector $\mathbf{r}_\text{pkt}$ built, estimators can now easily use the preamble to estimate various parameters.
 \begin{equation}
 \mathbf{r}_\text{pkt} = 
 \begin{bmatrix}
@@ -258,23 +257,15 @@ r(\hat{i}_{3103}+12670)\\
 r(\hat{i}_{3103}+12671)\\
 \end{bmatrix}
 \end{equation}
-%\begin{figure}
-%	\centering\includegraphics[width=\textwidth/10*9]{figures/gpu/packets_in_batch.png}
-%	\caption{The starting sample index for each packet in the batch.}
-%	\label{fig:packets_in_batch}
-%\end{figure}
 \begin{figure}
 	\centering\includegraphics[width=\textwidth/10*9]{figures/gpu/packetized.png}
 	\caption{The packetized structure of the received signals after the frame synchronization step.}
 	\label{fig:packetized}
 \end{figure}
 
-
-%\clearpage
-
-
 \subsection{Frequency Offset Estimation and Compensation}
 \label{sec:frequency_offset_estimation_and_compensation}
+With the vector $\mathbf{r}_\text{pkt}$ built, estimators can now easily use the preamble to estimate various parameters.
 
 \subsection{Channel Estimation}
 \label{sec:channel_estimation}
@@ -285,179 +276,6 @@ r(\hat{i}_{3103}+12671)\\
 \subsection{OQPSK Detector}
 \label{sec:oqpsk_detector}
 
-
-%Once I Compute and apply the equalizers I need to run OQPSK demodulator or detector.
-%
-%This section will be asdf;lkasjf;lkas
-%\begin{figure}
-%	\centering\includegraphics[width=5in]{figures/systemOverview/gearPic.jpg}
-%	\caption{This is our gear.}
-%	\label{fig:gear_picture}
-%\end{figure}
-%
-%
-%\begin{equation}
-%	L(u) = \sum_{m=0}^{7}
-%		\left[ I^2(n,m) + Q^2(n,m) \right]
-%	\label{eq:gpu-L-4}
-%\end{equation}
-%where
-%\begin{multline}
-%	I(n,m) \approx \sum_{\ell\in\mathcal{L}_1}r_R(\ell+32m+n)
-%			- \sum_{\ell\in\mathcal{L}_2}r_R(\ell+32m+n)
-%			+ \sum_{\ell\in\mathcal{L}_3}r_I(\ell+32m+n)
-%			- \sum_{\ell\in\mathcal{L}_4}r_I(\ell+32m+n)
-%			\\
-%			+ 0.7071 \left[
-%				\sum_{\ell\in\mathcal{L}_5}r_R(\ell+32m+n)
-%				- \sum_{\ell\in\mathcal{L}_6}r_R(\ell+32m+n)
-%			\right. \\
-%			\left.
-%				+ \sum_{\ell\in\mathcal{L}_7}r_I(\ell+32m+n)
-%				- \sum_{\ell\in\mathcal{L}_8}r_I(\ell+32m+n)
-%			\right],
-%	\label{eq:gpu-L-pedone-geoghegan-2}
-%\end{multline}
-%\begin{multline}
-%	Q(n,m) \approx \sum_{\ell\in\mathcal{L}_1}r_I(\ell+32m+n)
-%			- \sum_{\ell\in\mathcal{L}_2}r_I(\ell+32m+n)
-%			\\
-%			- \sum_{\ell\in\mathcal{L}_3}r_R(\ell+32m+n)
-%			+ \sum_{\ell\in\mathcal{L}_4}r_R(\ell+32m+n)
-%			\\
-%			+ 0.7071 \left[
-%				\sum_{\ell\in\mathcal{L}_5}r_I(\ell+32m+n)
-%				- \sum_{\ell\in\mathcal{L}_6}r_I(\ell+32m+n)
-%			\right. \\
-%			\left.
-%				- \sum_{\ell\in\mathcal{L}_7}r_R(\ell+32m+n)
-%				+ \sum_{\ell\in\mathcal{L}_8}r_R(\ell+32m+n)
-%			\right]
-%		\label{eq:gpu-L-pedone-geoghegan-3}
-%\end{multline}
-%with
-%\begin{equation}
-%	\begin{split}
-%	\mathcal{L}_1 &= \{ 0, 8, 16, 24 \}\\
-%	\mathcal{L}_2 &= \{ 4, 20 \}\\
-%	\mathcal{L}_3 &= \{ 2, 10, 14, 22 \}\\
-%	\mathcal{L}_4 &= \{ 6, 18, 26, 30 \}\\
-%	\mathcal{L}_5 &= \{ 1, 7,  9, 15, 17, 23, 25, 31 \}\\
-%	\mathcal{L}_6 &= \{ 3, 5, 11, 12, 13, 19, 21, 27, 28, 29 \}\\
-%	\mathcal{L}_7 &= \{ 1, 3,  9, 11, 12, 13, 15, 21, 23 \}\\
-%	\mathcal{L}_8 &= \{ 5, 7, 17, 19, 25, 27, 28, 29, 31 \}.
-%\end{split}
-%\label{eq:gpu-L-pedone-geoghegan-4}
-%\end{equation}
-%
-%
-%\begin{equation}
-%	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \sum_{n=i+2L_q}^{i+7L_q-1} r(n)r^\ast(n-L_q)\right\}
-%	\label{eq:jeff-ML-w-final3}
-%\end{equation}
-%\begin{equation}
-%	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \mathbf{r}_{p1}^T \mathbf{r}^\ast_{p2}  \right\}.
-%	\label{eq:jeff-ML-w-final3_reformed}
-%\end{equation}
-%where 
-%\begin{align}
-%\mathbf{r}_{p1}
-%=     
-%\begin{bmatrix}
-%r_p(2L_q) 			\\
-%r_p(2L_q+1) 		\\
-%\vdots			\\
-%r_p(7L_q - 2)\\
-%r_p(7L_q - 1)
-%\end{bmatrix}
-%\label{eq:freq_offset_r1}
-%\end{align}
-%\begin{align}
-%\mathbf{r}^\ast_{p2}
-%=     
-%\begin{bmatrix}
-%r^\ast_p(L_q) 			\\
-%r^\ast_p(L_q+1) 		\\
-%\vdots			\\
-%r^\ast_p(6L_q - 2)\\
-%r^\ast_p(6L_q - 1)
-%\end{bmatrix}
-%\end{align}
-%
-%\begin{equation}
-%	\hat{\mathbf{h}} = \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag\hat{\boldsymbol{\Omega}}_0^\dag \mathbf{r}
-%\label{eq:jeff-ML-h-final2}
-%\end{equation}
-%\begin{equation}
-%	\hat{\mathbf{h}} = \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag \mathbf{r}_{r1}.
-%\label{eq:channel_reformed_no_freq}
-%\end{equation}
-%where
-%\begin{align}
-%\mathbf{r}_{r1}
-%=     
-%\begin{bmatrix}
-%r_r(N_2) 		\\
-%r_r(N_2+1) 		\\
-%\vdots			\\
-%r_r(L_p - N_1 - 2)\\
-%r_r(L_p - N_1 - 1)
-%\end{bmatrix}
-%\end{align}
-%The matrix $\mathbf{X}$ is the $(L_p+L_a-N_1-N_2)\times (N_1+N_2+1)$ convolution matrix
-%formed from the iNet preamble and ASM samples. 
-%The psnudo inverse of $\mathbf{X}$, $\left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag$ is computed once and saved as $\mathbf{X}_{pi}$.
-%Equipped with $\mathbf{X}_{pi}$ the channel estimator can be reformed again into
-%\begin{equation}
-%	\hat{\mathbf{h}} = \mathbf{X}_{pi} \mathbf{r}_{r1}.
-%\label{eq:channel_reformed_final}
-%\end{equation}
-%
-%
-%\begin{equation}
-%	\hat{\sigma}_w^2 = \frac{1}{2\rho} \left| \mathbf{r}-\hat{\boldsymbol{\Omega}}_0\mathbf{X}\hat{\mathbf{h}}\right|^2
-%	\label{eq:jeff-ML-s2-final3}
-%\end{equation}
-%where
-%\begin{equation}
-%	\rho = {\rm Trace} \left\{ \mathbf{I} -  \mathbf{X}\left(\mathbf{X}^\dag\mathbf{X}\right)^{-1}\mathbf{X}^\dag \right\}.
-%\end{equation}
-%
-%Once again, $\boldsymbol{\Omega}_0$ is included in \eqref{eq:jeff-ML-s2-final3} assuming the vector $\mathbf{r}$ has a frequency offset.
-%The vector $\mathbf{r}_{r1}$ are received samples with the frequency offset compensated for, $\mathbf{r}_{r1}$ is the same vector from the channel estimator.
-%The noise variance estimator is reformulated replacing $\mathbf{r}$ and removing $\boldsymbol{\Omega}_0$.
-%\begin{equation}
-%	\hat{\sigma}_w^2 = \frac{1}{2\rho} \left| \mathbf{r}_{r1}-\mathbf{X}\hat{\mathbf{h}}\right|^2.
-%	\label{eq:noise_var_reformed}
-%\end{equation}
-%
-%
-%
-%
-%\begin{equation*}
-%e(k)
-%= 
-%\begin{cases}
-%0 &\text{$k$ even} \\
-%\hat{a}(k-1)\mathbb{I}\{y_r(k-1)\} -  \hat{a}(k)\mathbb{R}\{y_r(k)\}  &\text{$k$ odd}\\
-%\end{cases}.
-%\end{equation*}
-%\begin{equation}
-%\hat{a}(k)= \begin{cases}
-%p(k) &k<L_p+L_{asm} \\
-%sgn(\mathbb{R}\{y_{r}(k)\})&k\geq L_p+L_{asm} \quad \& \quad \text{$k$ even}\\
-%sgn(\mathbb{I}\{y_{r}(k)\})&k\geq L_p+L_{asm} \quad \& \quad \text{$k$ odd}\\
-%\end{cases}.
-%\end{equation}
-%\begin{equation}
-%\hat{b}(n)
-%= 
-%\begin{cases}
-%0 &\hat{a}(n)>0 \\
-%1 &\hat{a}(n)<0\\
-%\end{cases}.
-%\end{equation}
-%
 %\section{System Pictures}
 %
 %\section{Block Diagram}

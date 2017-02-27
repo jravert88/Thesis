@@ -13,7 +13,7 @@
 This thesis gives and overview of the the GPU implementation and performance of data aided equalizes.
 but the focus of this thesis is on the computation and application of the equalizers.
 Before data-aided equalizers can be computed and applied: the preambles must found, the signal packetized, the signal "de-rotated" then the channel and noise variance estimated from the de-rotated signal.
-The equalizers are then computed and applied using the de-rotated signal and the estimated channel and noise variance.
+The equalizers are then computed and applied using the de-rotated signal, estimated channel and noise variance.
 After the equalizers have been applied a OQPSK detector is applied to the output of each equalizer.
 A simple block Diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
 \begin{figure}
@@ -52,17 +52,17 @@ The explanation of the GPU implantation of the equalizers will be explained in m
 
 \subsection{Preamble Detection}
 \label{sec:preamble_detection}
-The received samples in the project has the iNET packet structure shown in Figure \ref{fig:packet}.
+The received samples in this project has the iNET packet structure shown in Figure \ref{fig:packet}.
 The iNET packet consists of a preamble and ASM periodically inserted into the data stream.
-In this project the iNET preamble and ASM bits are inserted every 6144 data bits.
-The received signal is sampled at 2 samples/bit, making a iNET packet $12672$ samples long or $\Lpkt$.
-The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field is
+The iNET preamble and ASM bits are inserted every 6144 data bits.
+The received signal is sampled at 2 samples/bit, making a iNET packet $\Lpkt$ long or $12672$ samples.
+The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field
 \begin{equation}
 034776C72728950B0_\text{hex}
 \end{equation}
 The iNET packet and received sample structure is shown in Figure\ref{fig:packet}.
 \begin{figure}
-	\centering\includegraphics[width=\textwidth]{figures/gpu/packet.png}
+	\centering\includegraphics[width=\textwidth/10*11]{figures/gpu/packet.png}
 	\caption{The iNET packet structure.}
 	\label{fig:packet}
 \end{figure}
@@ -257,11 +257,6 @@ r(\hat{i}_{3103}+12670)\\
 r(\hat{i}_{3103}+12671)\\
 \end{bmatrix}
 \end{equation}
-%\begin{figure}
-%	\centering\includegraphics[width=\textwidth/10*9]{figures/gpu/packets_in_batch.png}
-%	\caption{The starting sample index for each packet in the batch.}
-%	\label{fig:packets_in_batch}
-%\end{figure}
 \begin{figure}
 	\centering\includegraphics[width=\textwidth/10*9]{figures/gpu/packetized.png}
 	\caption{The packetized structure of the received signals after the frame synchronization step.}

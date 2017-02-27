@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  12 JAN 2017 14:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  27 FEB 2017 12:16
 entering extended mode
 **master.tex
 (master.tex
@@ -590,8 +590,14 @@ File: figures/gpu/packet.png Graphic file (type png)
 
 <use figures/gpu/packet.png>
 Package pdftex.def Info: figures/gpu/packet.png used on input line 65.
-(pdftex.def)             Requested size: 469.75499pt x 96.716pt.
- [2 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png>] [3]
+(pdftex.def)             Requested size: 516.73044pt x 106.389pt.
+
+Overfull \hbox (46.97545pt too wide) in paragraph at lines 65--66
+ [][] 
+ []
+
+[2 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png>]
+[3]
 Package epstopdf Info: Source file: <figures/gpu/L_2_packets.eps>
 (epstopdf)                    date: 2016-10-05 15:17:55
 (epstopdf)                    size: 350845 bytes
@@ -604,7 +610,7 @@ df>
 (epstopdf)             \includegraphics on input line 155.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu/L_2_packets-eps-converted-to.pdf, id=222, 327.2225pt x 343.2825pt>
+<figures/gpu/L_2_packets-eps-converted-to.pdf, id=221, 327.2225pt x 343.2825pt>
 File: figures/gpu/L_2_packets-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/gpu/L_2_packets-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu/L_2_packets-eps-converted-to.pdf used on i
@@ -716,18 +722,18 @@ u/L_windows-eps-converted-to.pdf>] <figures/gpu/packetized.png, id=329, 531.425
 File: figures/gpu/packetized.png Graphic file (type png)
 
 <use figures/gpu/packetized.png>
-Package pdftex.def Info: figures/gpu/packetized.png used on input line 267.
+Package pdftex.def Info: figures/gpu/packetized.png used on input line 261.
 (pdftex.def)             Requested size: 422.77945pt x 73.59523pt.
 ) [9
 
- <./figures/gpu/packetized.png>]
-(eq_equations.tex [10
-
-
-
-]
+ <./figures/gpu/packetized.png>] [10]
+(eq_equations.tex
 Chapter 2.
-[11] [12] [13] [14] [15
+[11
+
+
+
+] [12] [13] [14] [15
 
 ] [16]
 Package epstopdf Info: Source file: <figures/equations/FDE2_spectrum_PSI.eps>
@@ -778,7 +784,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 206.
 Here is how much of TeX's memory you used:
  8460 strings out of 493636
  128236 string characters out of 3141310
- 217467 words of memory out of 3000000
+ 217470 words of memory out of 3000000
  11518 multiletter control sequences out of 15000+200000
  24884 words of font info for 67 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
@@ -799,7 +805,7 @@ cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program
  Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on master.pdf (31 pages, 1117968 bytes).
+Output written on master.pdf (31 pages, 1117902 bytes).
 PDF statistics:
  508 PDF objects out of 1000 (max. 8388607)
  106 named destinations out of 1000 (max. 500000)
