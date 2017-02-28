@@ -26,8 +26,19 @@ The ZF equalizer was studied in the PAQ Phase 1 Final Report in ~equation 324
 \mathbf{c}_\text{ZF} = (\mathbf{H}^\dagger \mathbf{H})^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}
 \label{eq:c_ZF_pinv}
 \end{equation}
-where $\mathbf{c}_\text{ZF}$ is a $L_{eq} \times 1$ vector of equalizer coefficients computed to invert the channel estimate $\mathbf{h}$.
-The channel estimate is used to build the $L_{eq}+N_1+N_2 \times L_{eq}$ convolution matrix
+where $\mathbf{c}_\text{ZF}$ is a $L_{eq} \times 1$ vector of equalizer coefficients computed to invert the channel estimate $\mathbf{h}$
+and $\mathbf{u}_{n_0}$ is the desired channel impulse response centered on $n0 = N_1+L_1+1$
+\begin{equation}
+\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$n_0-1$ zeros}
+		\\ \\
+		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
+		\end{matrix*}.
+		\label{eq:un0_ZF}
+\end{equation}
+The $L_{eq}+N_1+N_2 \times L_{eq}$ convolution matrix $\mathbf{H}$ is built using the channel estimate $\mathbf{h}$
 \begin{equation}
 \mathbf{H} = 
 		\begin{bmatrix}
@@ -39,16 +50,6 @@ The channel estimate is used to build the $L_{eq}+N_1+N_2 \times L_{eq}$ convolu
 		 			&  	   		&  			& \vdots	\\
 		 			&  	   		&  			& h(N_2)	\\
 	\end{bmatrix}.
-\end{equation}
-and $\mathbf{u}_{n_0}$ is the desired channel impulse response centered on $n0 = N_1+L_1+1$
-\begin{equation}
-\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
-	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
-		\text{$n_0-1$ zeros}
-		\\ \\
-		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
-		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
-		\end{matrix*}.
 \end{equation}
 The computation of the coefficients in Equation \eqref{eq:c_ZF_pinv} can be simplified in a couple of ways: First the matrix multiplication of $\mathbf{H}^\dagger$ and $\mathbf{H}$ is the autocorrelation matrix of the channel
 \begin{equation}
@@ -73,7 +74,7 @@ A new vector $\mathbf{h}_{n_0}$ is defined by
 \begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}.
 \label{eq:h_no}
 \end{equation}
-Replacing the matrix multiplication $\mathbf{H}^\dagger \mathbf{H}$ and $\mathbf{H}^\dagger \mathbf{u}_{n_0}$ simplifies Equation \eqref{eq:c_ZF_pinv} to
+To simplify, Equations \eqref{eq:R_h} and \eqref{eq:h_no} are substituted into Equation \eqref{eq:c_ZF_pinv} resulting in 
 \begin{equation}
 \mathbf{c}_\text{ZF} = \mathbf{R}^{-1}_{h} \mathbf{h}_{n_0}.
 \label{eq:c_ZF_R_h}
@@ -82,7 +83,7 @@ Replacing the matrix multiplication $\mathbf{H}^\dagger \mathbf{H}$ and $\mathbf
 Computing the inverse of $\mathbf{R}_{h}$ is computationally heavy because an inverse is an $N^3$ operation.
 To avoid an inverse, $\mathbf{R}_{h}$ is moved to the left side and $\mathbf{c}_\text{ZF}$ is found by solving a system of linear equations. 
 Note that $r_{h}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{h}$ sparse or $\%63$ zeros.
-The sparseness of $\mathbf{R}_{h}$ can be leveraged to reduce computation drastically.
+The sparseness of $\mathbf{R}_{h}$ is leveraged to reduce computation drastically.
 The Zero-Forcing Equalizer coefficients are computed by solving
 \begin{equation}
 \mathbf{R}_h \mathbf{c}_\text{ZF} = \mathbf{h}_{n_0}.
@@ -91,7 +92,8 @@ The Zero-Forcing Equalizer coefficients are computed by solving
 
 
 \subsubsection{MMSE Equalizer}
-The MMSE equalizer was studied in the PAQ Phase 1 Final Report in ~equation 330.
+The MMSE equalizer has the same form as the Zero-Forcing equalizer. 
+The MMSE equalizer was also studied in the PAQ Phase 1 Final Report in ~equation 330.
 \begin{equation}
 \mathbf{c}_{MMSE} = \big[ \mathbf{G}\mathbf{G}^\dagger + \frac{\sigma_w^2}{\sigma_s^2}\mathbf{I}_{L_1+L_2+1} \big] \mathbf{g}^\dagger
 \label{eq:MMSE_start}
@@ -110,20 +112,19 @@ and
 \begin{equation}
 \mathbf{g} = \begin{bmatrix} h(L_1) \cdots h(-L_2) \end{bmatrix}.
 \end{equation}
-The matrix multiplication $\mathbf{G}\mathbf{G}^\dagger$ is the same autocorrelation matrix $\mathbf{R}_h$ as Equation \eqref{eq:R_h}.
-The vector $\mathbf{g}^\dagger$ is also the same vector as $\mathbf{h}_{n_0}$.
-The signal-to-noise ratio estimate $\frac{1}{2\hat{\sigma^2_w}}$ is substituted in for the fraction $\frac{\sigma_w^2}{\sigma_s^2}$ using Equation 333 Rice's report.
-Equation \eqref{eq:MMSE_start} can be reformulated to
+The vector $\mathbf{g}^\dagger$ is also the same vector as $\mathbf{h}_{n_0}$ in Equation \eqref{eq:un0_ZF}.
+The matrix multiplication $\mathbf{G}\mathbf{G}^\dagger$ is also the same autocorrelation matrix $\mathbf{R}_h$ as Equation \eqref{eq:R_h}.
+The fraction $\frac{1}{2\hat{\sigma^2_w}}$ is substituted in for the fraction $\frac{\sigma_w^2}{\sigma_s^2}$ using Equation 333 Rice's report.
+MMSE only differs from Zero-Forcing by adding the signal-to-noise ratio estimate down the diagonal of the autocorrelation matrix $\mathbf{R}_h$.
+Substituting in all these similarities in to Equation \eqref{eq:MMSE_start} results in
 \begin{equation}
 \big[ \mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1} \big] \mathbf{c}_\text{MMSE} = \mathbf{h}_{n_0}.
 \label{eq:c_MMSE_solve1}
 \end{equation}
-The MMSE Equalizer coefficients are solved for in a similar fashion to Zero-Forcing is in Equation \eqref{eq:c_ZF_solve}.
-The only difference between Equation \eqref{eq:c_MMSE_solve1} and \eqref{eq:c_ZF_solve} is the noise variance is added down the diagonal of $\mathbf{R}_h$.
-The matrix $\mathbf{R}_{hw}$ is defined to make the computation of the MMSE Equalizer coefficients the same as the Zero-Forcing Equalizer coefficients by adding the noise variance to the diagonal of $\mathbf{R}_h$
+To further simplify the notation, $\mathbf{R}_{hw}$ is substituted in for $\mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1}$ where
 \begin{equation}
 \mathbf{R}_{hw} = 
-\mathbf{H}^\dagger \mathbf{H} = 
+\mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1} = 
 		\begin{bmatrix}
 		r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}	& r^\ast_{h}(1)							& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
 		r_{h}(1) 								& r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}& \cdots 	& r^\ast_{h}(L_{eq}-2)  	\\
@@ -132,7 +133,8 @@ The matrix $\mathbf{R}_{hw}$ is defined to make the computation of the MMSE Equa
 	\end{bmatrix}.
 	\label{eq:R_MMSE}
 \end{equation}
-The MMSE Equalizer coefficients are computed by solving
+
+The MMSE equalizer coefficients are solved for in a similar fashion to the Zero-Forcing equalizer coefficients in Equation \eqref{eq:c_ZF_solve}.
 \begin{equation}
 \mathbf{R}_{hw}\mathbf{c}_\text{MMSE} = \mathbf{h}_{n_0}.
 \label{eq:c_MMSE_solve}
@@ -160,13 +162,19 @@ This means $\nabla J$ is of the form
 \begin{equation}
 \nabla J = \begin{bmatrix} \nabla J(-L_1) \\ \vdots \\ \nabla J(0) \\ \vdots \\ \nabla J(L_2) \end{bmatrix}.
 \end{equation}
-To Leverage computational efficiency of FFT, re-express the elements of $\nabla J$ as a convolution.
+To leverage the computational efficiency of the Fast Fourier Transform (FFT), Equation \eqref{eq:DelJcma-approxr} is re-expressed as a convolution.
 
-To begin define
+To begin messaging $\nabla J$ 
 \begin{equation}
 z(n) = 	2\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right] y(n)
 \end{equation} 
-so that $\nabla J$ may be expressed as
+is defined to make the expression of $\nabla J$ to be
+\begin{equation}
+	\nabla J = \frac{1}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	z(n)  \mathbf{r}^\ast(n).
+\label{eq:DelJcma-midMassage}
+\end{equation}
+then writing the summation out in vector form
 \begin{multline}
 \nabla J
 	= 
@@ -197,7 +205,7 @@ the result of the convolution sum $b(n)$ has support on $-L_{pkt}+1 \leq n \leq 
 Putting all the pieces together, we have
 \begin{align}
 b(n) &= \sum^{L_{pkt}-1}_{m=0} z(m) \rho(n-m) \nonumber \\
-	 &= \sum^{L_{pkt}-1}_{m=0} z(mr^\ast(m-n)
+	 &= \sum^{L_{pkt}-1}_{m=0} z(m) r^\ast(m-n)
 	 \label{eq:CMA_conv_z_rho}
 \end{align}
 Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rho} shows that 
@@ -243,4 +251,4 @@ The term $\Psi(\omega)$ is the average spectrum of SPQOSK-TG shown in Figure \re
 	\caption{A block diagram illustrating organization of the algorithms in the GPU.}
 	\label{fig:SOQPSK_spectrum}
 \end{figure}
-FDE1 needs no massaging because Equation \eqref{eq:FDE1} is easily implemented in the GPU and it is computationally efficient.
+FDE2 needs no massaging because Equation \eqref{eq:FDE2} is easily implemented in the GPU and is computationally efficient.

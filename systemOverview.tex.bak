@@ -10,27 +10,24 @@
 \label{sec:systemOverview}
 
 \section{Overview}
-This thesis gives and overview of the the GPU implementation and performance of data aided equalizes.
-but the focus of this thesis is on the computation and application of the equalizers.
-Before data-aided equalizers can be computed and applied: the preambles must found, the signal packetized, the signal "de-rotated" then the channel and noise variance estimated from the de-rotated signal.
-The equalizers are then computed and applied using the de-rotated signal, estimated channel and noise variance.
-After the equalizers have been applied a OQPSK detector is applied to the output of each equalizer.
+This chapter gives a high lever overview of the the algorithms implemented into the GPU.
+A block diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
+The algorithms implemented in GPUs will briefly be explained.
+Chapter \ref{sec:eq_eq} explains the computation and application of the equalizers at a lower level.
 A simple block Diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
+
+This chapter will proceed as follows, 
+section \ref{sec:preamble_detection} will explain the algorithm used to find the preambles and packetize the received signal,
+section \ref{sec:frequency_offset_estimation_and_compensation} will explain the frequency offset estimator and frequency offset compensation,
+section \ref{sec:channel_estimation} will explain channel channel estimation,
+section \ref{sec:noise_variance_estimation} will explain noise variance,
+section \ref{sec:oqpsk_detector} will explain the GPU implementation of the OQPSK detector.
+The explanation of the GPU implantation of the equalizers will be explained in much detail in Chapter \ref{sec:eq_eq}.
 \begin{figure}
 	\centering\includegraphics[width=6in]{figures/systemOverview/blockDiagram.pdf}
 	\caption{This a simple block diagram of what the GPU does.}
 	\label{fig:simpleBlockDiagram}
 \end{figure}
-
-This chapter will proceed as follows, 
-section \ref{sec:preamble_detection} will explain the GPU implementation of the finding the preambles and packetizing the received signal,
-section \ref{sec:frequency_offset_estimation_and_compensation} will explain the GPU implementation of estimating the frequency offset and de-rotating the signal,
-section \ref{sec:channel_estimation} will explain the GPU implementation of estimating the channel,
-section \ref{sec:noise_variance_estimation} will explain the GPU implementation of estimating the noise variance,
-section \ref{sec:oqpsk_detector} will explain the GPU implementation of the OQPSK detector.
-The explanation of the GPU implantation of the equalizers will be explained in much detail in Chapter \ref{sec:eq_eq}.
-
-
 
 
 
@@ -60,31 +57,17 @@ The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98
 \begin{equation}
 034776C72728950B0_\text{hex}
 \end{equation}
-The iNET packet and received sample structure is shown in Figure\ref{fig:packet}.
 \begin{figure}
 	\centering\includegraphics[width=\textwidth/10*11]{figures/gpu/packet.png}
 	\caption{The iNET packet structure.}
 	\label{fig:packet}
 \end{figure}
 
-To compute data-aided preamble assisted equalizers, preambles in the received signal are found to estimate various parameters.
-The goal of the preamble detection step is to "packetize" the received samples into vectors with the packet structure shown in Figure \ref{fig:packet}.
-Before the received samples can be packetized, the preambles are found using a preamble detector to locate the iNET preambles. 
-The preamble detector used in this project is the algorithm explained in \cite{preamble_detector}.
-Peaks in the preamble detector output indicate the start a preamble.
-Using the index of these peaks the received samples can be packetized.
+To compute data-aided preamble assisted equalizers, preambles in the received signal are found then used to estimate various parameters.
+The goal of the preamble detection step is to "packetize" the received samples into vectors with the packet structure shown in Figure \ref{fig:packet}. Each packet of received samples contains a $\Lp$ preamble samples, $\Lasm$ ASM samples and $\Lasm$ data samples.
 
-When the received samples are packetized, $\rpkt$ shown in Figure \ref{fig:simpleBlockDiagram} contains one packet worth of samples with the packet structure shown in Figure \ref{fig:packet}.
-The received samples are packetized by running the preamble detector and searching the output for peaks.
-Starting at each peak index a vector $\rpkt$ is built for each packet.
-
-\subsubsection{The Preamble Detector}
-To find the preambles in the batch, the preamble detector computes the sample correlation function between the received samples and a stored local copy of the known samples of the iNET preamble. 
-A peak in the correlation function indicates the start of a preamble in the received samples. 
-The preamble detector output peaks are found be searching for local peaks that are about $\Lpkt$ samples apart.
-
-The preamble detector detailed in \cite{preamble_detector} is a highly optimized correlator used to compute to how a signal correlates with the iNET preamble eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$.
-The preamble detector outer summation is
+Before the received samples can be packetized, the preambles are found using a preamble detector explained in \cite{preamble_detector}.
+The preamble detector output $L(u)$ is computed by 
 \begin{equation}
 	L(u) = \sum_{m=0}^{7}
 		\left[ I^2(n,m) + Q^2(n,m) \right]
@@ -139,133 +122,228 @@ with
 \end{split}
 \label{eq:gpu-L-pedone-geoghegan-4}
 \end{equation}
-
-The preamble detector in Equations \eqref{eq:gpu-L-4}-\eqref{eq:gpu-L-pedone-geoghegan-4} are easily implemented into a GPU.
-Two GPU kernels compute the preamble detector output .
-The first kernel computes the inner summations and the second computes the outer summation.
-In both kernels, one thread to received signal is launched.
-
-\subsubsection{Searching for the Starting Indices}
-Equipped with the preamble detector output, $L(u)$ is searched for local maximums or peaks to find the starting index for each preamble.
-Figure \ref{fig:L_2_packets} shows $2\times L_{pkt} $ samples of $L(u)$.
-The local peaks of $L(u)$ in indicate a preamble starts at the peak's sample index.
-A packet starts at sample index $7040$ and $19712$.
-The difference between these sample indices is $\Lpkt$, this difference agrees with the packet length shown in Figure \ref{fig:packet}.
+Figure \ref{fig:L_2_packets} shows $2\Lpkt$ samples of the preamble detector output $L(u)$.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu/L_2_packets.eps}
 	\caption{The output of the Preamble Detector $L(u)$.}
 	\label{fig:L_2_packets}
 \end{figure}
+The start of a preamble is indicated by a local maximum of the preamble detector output.
+Using the index of the local maximums, the received samples are packetized.
+The vector $\rpkt$ as shown in Figure \ref{fig:simpleBlockDiagram} contains $12672$ samples of data with the packet structure shown in Figure \ref{fig:packet}.
 
-Because of the repetitive structure of the preamble, the preamble detector output $L(u)$ has some unique properties.
-The Figures in \ref{fig:L_corr_creepy} show the correlation function around a correlation peak.
-The correlation functions have peaks every 32 samples because the repeated $\text{CD98}_\text{hex}$ pattern.
+The preamble detection algoritm in Equations \eqref{eq:gpu-L-4}-\eqref{eq:gpu-L-pedone-geoghegan-4} and the local maximum search algorithms are easily implemented into GPUs.
+The GPU implementation of these algorithms wont be explained here.
 
-With ideal received samples, 512 samples of $L(u)$ looks like Figure \ref{fig:L_corr_creepy}(a).
-The structure of the correlation peaks still occur when the signal to noise ratio is low, as shown in Figure \ref{fig:L_corr_creepy}(b).
-But when the signal to noise ratio is low and major multipath distortion happen, the correlation peaks look like Figures \ref{fig:L_corr_creepy}(c) and (d).
-The structure of the correlation peaks can cause a local maximum 32 samples off of the start of a preamble.
+%To find the preambles in the batch, the preamble detector computes the sample correlation function between the received samples and a stored local copy of the known samples of the iNET preamble. 
+%The correlation function output is searched for local maximums. 
+%In ideal conditions, the local maximums are seperated by $\Lpkt$ samples.
+%
+%The preamble detector detailed in \cite{preamble_detector} is a highly optimized correlator used to compute to how a signal correlates with the iNET preamble eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$.
+%%The preamble detector outer summation is
+%
+%Equations \eqref{eq:gpu-L-4}-\eqref{eq:gpu-L-pedone-geoghegan-4} produce the preamble detector output $L(u)$.
+%The equations are easily implemented into GPUs in two steps.
+%First launching one thread to compute the inner sums $I(n,m)$ and $Q(n,m)$ for each received sample.
+%Second, with the inner sums computed, one thread is launched to compute the outer sum $L(u)$ for each received sample.
+%Figure \ref{fig:L_2_packets} shows $2\Lpkt$ samples of the preamble detector output $L(u)$.
+%\begin{figure}
+%	\centering\includegraphics[width=5in]{figures/gpu/L_2_packets.eps}
+%	\caption{The output of the Preamble Detector $L(u)$.}
+%	\label{fig:L_2_packets}
+%\end{figure}
+%
+%\subsubsection{Searching for the Starting Indices}
+%Equipped with the preamble detector output, $L(u)$ is searched for local maximums or peaks to find the starting index for each preamble.
+%The first maximum or peak in Figure \ref{fig:L_2_packets} shows the first packet starts at sample index $7040$ and the second at $19712$.
+%The difference between these sample indices is $\Lpkt$, this difference agrees with the packet length shown in Figure \ref{fig:packet}.
+%
+%With ideal received samples, 512 samples of $L(u)$ looks like Figure \ref{fig:L_corr_creepy}(a).
+%The structure of the correlation peaks still occur when the signal to noise ratio is low, as shown in Figure \ref{fig:L_corr_creepy}(b).
+%But when the signal to noise ratio is low and major multipath distortion happen, the correlation peaks look like Figures \ref{fig:L_corr_creepy}(c) and (d).
+%
+%The preamble detector output $L(u)$ has unique properties because the 16-bit sequence $\text{CD98}_\text{hex}$ sampled at 2 samples/bit.
+%A local maximum occurs when $u$ is the starting index of a preamble. 
+%Side peaks occur because the samples of the preamble are highly correlated when offset by 32 samples.
+%The preamble detector output has seven side peaks separated by 32 samples because the repeated 32 sample pattern.
+%The Figures in \ref{fig:L_corr_creepy} show $L(u)$ around correlation peaks.
+%
+%The preamble detector output is searched for local maximums separated by $\Lpkt$.
+%To ensure only one set of correlation peaks is searched for a local maximum, $\Lpkt$ samples are searched using windows that are centered on one correlation peak set.
+%
+%If the search windows aren't centered on the correlation peaks, the $\Lpkt$ samples searched could find an adjacent side peak rather than the desired local maximum.
+%The side peaks in Figure \ref{fig:L_corr_creepy}(a) are much larger than the main correlation peaks in Figures \ref{fig:L_corr_creepy}(c) or (d).
+%\begin{figure}
+%	\begin{center}
+%		\begin{tabular}{cc}
+%			\begin{minipage}[c]{3in}
+%				\includegraphics[width=3in]{figures/gpu/L_corr_8_clean.eps}
+%			\end{minipage} 
+%			&  
+%			\begin{minipage}[c]{3in}
+%				\includegraphics[width=3in]{figures/gpu/L_corr_8_noise.eps}
+%			\end{minipage} \\[12pt]
+%			
+%			\quad\quad\quad\quad(a)
+%			&
+%			\quad\quad\quad\quad(b) \\[12pt]
+%			
+%			\begin{minipage}[c]{3in}
+%				\includegraphics[width=3in]{figures/gpu/L_corr_17_creepy.eps}
+%			\end{minipage} 
+%			&  
+%			\begin{minipage}[c]{3in}
+%				\includegraphics[width=3in]{figures/gpu/L_corr_18_creepy.eps}
+%			\end{minipage} \\[12pt]
+%			
+%			\quad\quad\quad\quad(c)
+%			&
+%			\quad\quad\quad\quad(d)
+%			
+%		\end{tabular}
+%	\end{center}
+%	\caption{Detailed view of $L(u)$. 
+%			(a): correlation peaks of a distortion free and noiseless signal; 
+%			(b): correlation peaks of a distortion free but noisy signal with $E_b/N_0 = 0$dB; 
+%			(c): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB;
+%			(d): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB}
+%	\label{fig:L_corr_creepy}
+%\end{figure}
+%
+%To center the search windows, an initial search is done on the first $2\Lpkt$ $L(u)$ samples to estimate the index of the first preamble $\hat{i}_0$.
+%Figure \ref{fig:L_windows} shows an example of safe search windows centered on expected preamble starting locations.
+%One GPU thread per search window is launched to parallelize the search.
+%\begin{figure}
+%	\centering\includegraphics[width=5in]{figures/gpu/L_windows.eps}
+%	\caption{Safe search windows defined to search only one preamble correlation peak.}
+%	\label{fig:L_windows}
+%\end{figure}
+%The vector
+%\begin{align}
+%\hat{\mathbf{i}}
+%=     
+%\begin{bmatrix}
+%\hat{i}_0 	\\
+%\hat{i}_1	\\
+%\vdots		\\
+%\hat{i}_{3103}	\\
+%\hat{i}_{3104}  		
+%\end{bmatrix}
+%\label{eq:preamble_det_i_hat}
+%\end{align}
+%is built by the GPU window search kernel.
+%The vector $\hat{\mathbf{i}}$ is a vector of rough estimates of where the preambles should be located.
+%The windows in the GPU search kernel are centered on elements of $\hat{\mathbf{i}}$ as shown in Figure \ref{fig:L_windows}.
+%Adjustments are made to the peak index vector $\hat{\mathbf{i}}$ is checked for $\Lpkt$ spacing.
+%
+%\clearpage
+%\subsubsection{Packetizing the Samples}
+%Finally, with the best estimate of the preamble starting locations, the received samples can be packetized.
+%Using $\hat{\mathbf{i}}$, the GPU launches one thread per received sample to packetize $r(n)$ into $\mathbf{r}_\text{pkt}$ as shown in Figure \ref{fig:packetized}. 
+%The structure of $\mathbf{r}_\text{pkt}$ majorly simplifies indexing and removes the need for $\hat{\mathbf{i}}$.
+%\begin{equation}
+%\mathbf{r}_\text{pkt} = 
+%\begin{bmatrix}
+%r(\hat{i}_0) 			\\
+%r(\hat{i}_0+1) 		\\
+%\vdots			\\
+%r(\hat{i}_0+12670)\\
+%r(\hat{i}_0+12671)\\
+%r(\hat{i}_1) 			\\
+%r(\hat{i}_1+1) 		\\
+%\vdots			\\
+%r(\hat{i}_{3103}+12670)\\
+%r(\hat{i}_{3103}+12671)\\
+%\end{bmatrix}
+%\end{equation}
+%\begin{figure}
+%	\centering\includegraphics[width=\textwidth/10*9]{figures/gpu/packetized.png}
+%	\caption{The packetized structure of the received signals after the frame synchronization step.}
+%	\label{fig:packetized}
+%\end{figure}
 
-The preamble detector output is searched for the peak indices using $\Lpkt$ sample windows to ensure only one correlation peak is searched.
-The peak indices are checked to ensure each peak index is $\Lpkt$ away from adjacent peak indices.
-One GPU kernel searches $L(u)$ for peaks to find the the starting index of each packet.
-A thread per $\Lpkt$ received samples is launched to search a window for a local maximum or correlation peak.
+%\subsection{Frequency Offset Estimation and Compensation}
+%\label{sec:frequency_offset_estimation_and_compensation}
+%With the vector $\mathbf{r}_\text{pkt}$ built, estimators can now easily use the preamble to estimate various parameters.
 
-In the worst case scenario, a simple algorithm might find an incorrect preamble index by searching a poorly placed search window.
-A poorly placed window might search the large side correlation peaks from Figure \ref{fig:L_corr_creepy}(a) and the small main correlation peaks from Figures \ref{fig:L_corr_creepy}(c) or (d).
-Because the first three side peaks in Figure \ref{fig:L_corr_creepy}(a) are much taller than the main peak in Figures \ref{fig:L_corr_creepy}(c) and (d), an incorrect preamble starting indices will result if search windows are not defined safely.
-\begin{figure}
-	\begin{center}
-		\begin{tabular}{cc}
-			\begin{minipage}[c]{3in}
-				\includegraphics[width=3in]{figures/gpu/L_corr_8_clean.eps}
-			\end{minipage} 
-			&  
-			\begin{minipage}[c]{3in}
-				\includegraphics[width=3in]{figures/gpu/L_corr_8_noise.eps}
-			\end{minipage} \\[12pt]
-			
-			\quad\quad\quad\quad(a)
-			&
-			\quad\quad\quad\quad(b) \\[12pt]
-			
-			\begin{minipage}[c]{3in}
-				\includegraphics[width=3in]{figures/gpu/L_corr_17_creepy.eps}
-			\end{minipage} 
-			&  
-			\begin{minipage}[c]{3in}
-				\includegraphics[width=3in]{figures/gpu/L_corr_18_creepy.eps}
-			\end{minipage} \\[12pt]
-			
-			\quad\quad\quad\quad(c)
-			&
-			\quad\quad\quad\quad(d)
-			
-		\end{tabular}
-	\end{center}
-	\caption{Detailed view of $L(u)$. 
-			(a): correlation peaks of a distortion free and noiseless signal; 
-			(b): correlation peaks of a distortion free but noisy signal with $E_b/N_0 = 0$dB; 
-			(c): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB;
-			(d): correlation peaks of a distorted and noisy signal with $E_b/N_0 = 0$dB}
-	\label{fig:L_corr_creepy}
-\end{figure}
-
-To prevent searching multiple sets of preamble correlation peaks, search windows should only search the correlation peak of one preamble.
-Windows are safely defined by centering them on an initial search is done on $2\Lpkt$ received samples to find the estimated index of the first preamble $\hat{i}_0$.
-Figure \ref{fig:L_windows} shows an example of safe search windows centered on expected preamble starting locations.
-\begin{figure}
-	\centering\includegraphics[width=5in]{figures/gpu/L_windows.eps}
-	\caption{Safe search windows defined to search only one preamble correlation peak.}
-	\label{fig:L_windows}
-\end{figure}
-The vector
+\subsubsection{Frequency Offset Compensation}
+\label{sec:jeffs_frequencyoffsetestimator}
+The frequency offset estimator shown in Figure \ref{fig:simpleBlockDiagram} is an algorithm taken from blah.
+With the notation adjusted slightly, the frequency offset estimate is
+\begin{equation}
+	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \sum_{n=i+2L_q}^{i+7L_q-1} r(n)r^\ast(n-L_q)\right\}
+	\label{eq:jeff-ML-w-final3}
+\end{equation}
+where a frequency offset estimate is produced for every packet in $\rpkt$.
+The summation in equation \eqref{eq:jeff-ML-w-final3} can be reformulated into a matrix inner product
+\begin{equation}
+	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \rpk1^T \mathbf{r}^\ast_{p2}  \right\}.
+	\label{eq:jeff-ML-w-final3_reformed}
+\end{equation}
+where 
 \begin{align}
-\hat{\mathbf{i}}
+\rpkt1
 =     
 \begin{bmatrix}
-\hat{i}_0 	\\
-\hat{i}_1	\\
-\vdots		\\
-\hat{i}_{3103}	\\
-\hat{i}_{3104}  		
+r_p(2L_q) 			\\
+r_p(2L_q+1) 		\\
+\vdots			\\
+r_p(7L_q - 2)\\
+r_p(7L_q - 1)
 \end{bmatrix}
-\label{eq:preamble_det_i_hat}
+\label{eq:freq_offset_r1}
 \end{align}
-is built by the GPU search kernel.
-The vector $\hat{\mathbf{i}}$ is a vector of rough estimates of where the preambles should be located.
-The windows in the GPU search kernel are centered on elements of $\hat{\mathbf{i}}$ as shown in Figure \ref{fig:L_windows}.
-Adjustments are made to the peak index vector $\hat{\mathbf{i}}$ is checked for $\Lpkt$ spacing.
-
-\clearpage
-\subsubsection{Packetizing the Samples}
-Finally, with the best estimate of the preamble starting locations, the received samples can be packetized.
-Using $\hat{\mathbf{i}}$, the GPU launches one thread per received sample to packetize $r(n)$ into $\mathbf{r}_\text{pkt}$ as shown in Figure \ref{fig:packetized}. 
-The structure of $\mathbf{r}_\text{pkt}$ majorly simplifies indexing and removes the need for $\hat{\mathbf{i}}$.
-\begin{equation}
-\mathbf{r}_\text{pkt} = 
+\begin{align}
+\mathbf{r}^\ast_{p2}
+=     
 \begin{bmatrix}
-r(\hat{i}_0) 			\\
-r(\hat{i}_0+1) 		\\
+r^\ast_p(L_q) 			\\
+r^\ast_p(L_q+1) 		\\
 \vdots			\\
-r(\hat{i}_0+12670)\\
-r(\hat{i}_0+12671)\\
-r(\hat{i}_1) 			\\
-r(\hat{i}_1+1) 		\\
-\vdots			\\
-r(\hat{i}_{3103}+12670)\\
-r(\hat{i}_{3103}+12671)\\
+r^\ast_p(6L_q - 2)\\
+r^\ast_p(6L_q - 1)
 \end{bmatrix}
-\end{equation}
+\end{align}
+
+Reformulating the estimator into an inner product isn't only simpler, it is also much faster in the GPU.
+The GPU uses an extremely fast and efficient CUDA Basic Linear Algebra Subprogram (CUBLAS) library to compute the inner product \cite{nvidia-CUDAdoc:2015}.
+Figure \ref{fig:frequencyOffsetBlock} shows how equation \eqref{eq:jeff-ML-w-final3_reformed} is implemented in GPU kernels.
+The GPU strips $\mathbf{r}_{p1}$ and $\mathbf{r}^\ast_{p2}$ from the received packetized samples by launching one thread per packetized sample.
 \begin{figure}
-	\centering\includegraphics[width=\textwidth/10*9]{figures/gpu/packetized.png}
-	\caption{The packetized structure of the received signals after the frame synchronization step.}
-	\label{fig:packetized}
+	\centering\includegraphics[width=\textwidth/10*8]{figures/gpu/frequencyOffsetBlock.png}
+	\caption{The block diagram for the Frequency Offset estimator and sample rotation implementation.}
+	\label{fig:frequencyOffsetBlock}
 \end{figure}
 
-\subsection{Frequency Offset Estimation and Compensation}
-\label{sec:frequency_offset_estimation_and_compensation}
-With the vector $\mathbf{r}_\text{pkt}$ built, estimators can now easily use the preamble to estimate various parameters.
+The GPU computes the inner product of $\mathbf{r}_{p1}$ and $\mathbf{r}^\ast_{p2}$ using a batched CUBLAS operation.
+The arg and scale GPU kernel launches one thread per packet to compute the scaled angle of the inner product for each packet.
+The scaled angle of each packet is saved in the vector $\hat{\boldsymbol{\omega}}_0$.
+
+In aeronautical telemetry, the frequency offset can be assumed to be constant over two seconds.
+Because of this assumption, one frequency offset estimate is obtained by averaging all the offsets in a batch.
+The GPU launches one thread to compute the average of the vector $\hat{\boldsymbol{\omega}}_0$ and save the average in the scalar value $\hat{\omega}^\prime_0$.
+
+The averaged frequency offset $\hat{\omega}^\prime_0$ is used to compensate for the frequency offset.
+The frequency offset compensation can be done with the matrix $\boldsymbol{\Omega}_r$ the rotations due to the frequency offset are in matrix notation using 
+\begin{equation}
+	\boldsymbol{r}_r = \boldsymbol{\Omega}_r \boldsymbol{r}_p = 
+	\begin{bmatrix} e^{-j\hat{\omega}^\prime_0(0)} & & \\ & \ddots & \\ & & e^{-j\hat{\omega}^\prime_0(3103\times L_{pkt} -1)} \end{bmatrix}
+\begin{bmatrix}
+r_p(0) 			\\
+\vdots			\\
+r_p(3103\times L_{pkt} -1)
+\end{bmatrix}.
+	\label{eq:jeff-Omega_0-matrix1}
+\end{equation}
+
+Implementing equation \eqref{eq:jeff-Omega_0-matrix1} in GPUs would use an extreme amount of memory and computation because of the size and dimension of $\boldsymbol{\Omega}_r$.
+Instead, the GPU launches one thread per packetized sample to rotate the packetized sample by $-\hat{\omega}^\prime_0$.
+\begin{equation}
+r_r(n) = r_p(n) \times e^{-j \hat{\omega}^\prime_0 n}
+\end{equation}
+
+With the frequency offset compensation done, the samples are transferred over the PCIe bus from the Tesla k40 GPU to the two Tesla k20 GPUs, shown as the last block in Figure \ref{fig:frequencyOffsetBlock}.
+
 
 \subsection{Channel Estimation}
 \label{sec:channel_estimation}

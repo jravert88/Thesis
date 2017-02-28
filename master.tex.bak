@@ -135,7 +135,11 @@
 \newcommand{\OMIT}[1]{{}} % omit sections of text
 \newcommand{\pd}[2]{\ensuremath{\frac{\partial #1}{\partial #2}}} % partial derivative
 \newcommand{\rpkt}{\mathbf{r}_\text{pkt}}
-\newcommand{\Lpkt}{\mathbf{L}_\text{pkt}}
+\newcommand{\rpkt1}{\mathbf{r}_\text{pkt}1}
+\newcommand{\rpkt2}{\mathbf{r}_\text{pkt}2}
+\newcommand{\Lpkt}{L_\text{pkt}}
+\newcommand{\Lp}{L_\text{p}}
+\newcommand{\Lasm}{L_\text{ASM}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                End Macros

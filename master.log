@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  27 FEB 2017 12:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  28 FEB 2017 16:27
 entering extended mode
 **master.tex
 (master.tex
@@ -435,21 +435,21 @@ Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 118.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 118.
 
 (master.aux (systemOverview.aux) (eq_equations.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 154.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 156.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
@@ -493,9 +493,9 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \JustifyingParindent=\skip84
 )
 Package caption Info: hyperref package v6.74m (or newer) detected on input line
- 154.
+ 156.
 \AtBeginShipoutBox=\box31
-Package hyperref Info: Link coloring OFF on input line 154.
+Package hyperref Info: Link coloring OFF on input line 156.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -505,20 +505,20 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count132
 )
-LaTeX Info: Redefining \ref on input line 154.
-LaTeX Info: Redefining \pageref on input line 154.
-LaTeX Info: Redefining \nameref on input line 154.
+LaTeX Info: Redefining \ref on input line 156.
+LaTeX Info: Redefining \pageref on input line 156.
+LaTeX Info: Redefining \nameref on input line 156.
 
 (master.out) (master.out)
 \@outlinefile=\write3
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 163.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 165.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 163.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 165.
  [1
 
 {C:/Users/ecestudent/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
@@ -531,7 +531,7 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
 
 ]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 163.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 165.
  (master.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
@@ -572,31 +572,35 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ] (systemOverview.tex
 Chapter 1.
 
-<figures/systemOverview/blockDiagram.pdf, id=174, 4237.27034pt x 2836.13582pt>
+LaTeX Warning: Reference `sec:frequency_offset_estimation_and_compensation' on 
+page 1 undefined on input line 21.
+
+
+<figures/systemOverview/blockDiagram.pdf, id=165, 4237.27034pt x 2836.13582pt>
 File: figures/systemOverview/blockDiagram.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/blockDiagram.pdf>
 Package pdftex.def Info: figures/systemOverview/blockDiagram.pdf used on input 
-line 20.
+line 27.
 (pdftex.def)             Requested size: 433.62pt x 290.20813pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 21.
- [1
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 
-
-]
-<figures/gpu/packet.png, id=189, 737.154pt x 151.767pt>
+<figures/gpu/packet.png, id=167, 737.154pt x 151.767pt>
 File: figures/gpu/packet.png Graphic file (type png)
 
 <use figures/gpu/packet.png>
-Package pdftex.def Info: figures/gpu/packet.png used on input line 65.
+Package pdftex.def Info: figures/gpu/packet.png used on input line 61.
 (pdftex.def)             Requested size: 516.73044pt x 106.389pt.
 
-Overfull \hbox (46.97545pt too wide) in paragraph at lines 65--66
+Overfull \hbox (46.97545pt too wide) in paragraph at lines 61--62
  [][] 
  []
 
-[2 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png>]
+[1
+
+
+] [2 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png>]
 [3]
 Package epstopdf Info: Source file: <figures/gpu/L_2_packets.eps>
 (epstopdf)                    date: 2016-10-05 15:17:55
@@ -607,135 +611,24 @@ df>
 (epstopdf)                    size: 44452 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu/L_2_packets-eps
 -converted-to.pdf figures/gpu/L_2_packets.eps>
-(epstopdf)             \includegraphics on input line 155.
+(epstopdf)             \includegraphics on input line 127.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu/L_2_packets-eps-converted-to.pdf, id=221, 327.2225pt x 343.2825pt>
+<figures/gpu/L_2_packets-eps-converted-to.pdf, id=201, 327.2225pt x 343.2825pt>
 File: figures/gpu/L_2_packets-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/gpu/L_2_packets-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu/L_2_packets-eps-converted-to.pdf used on i
-nput line 155.
+nput line 127.
 (pdftex.def)             Requested size: 361.34999pt x 379.0838pt.
- [4] [5 <./figures/gpu/L_2_packets-eps-converted-to.pdf>]
-Package epstopdf Info: Source file: <figures/gpu/L_corr_8_clean.eps>
-(epstopdf)                    date: 2016-09-28 16:25:23
-(epstopdf)                    size: 186473 bytes
-(epstopdf)             Output file: <figures/gpu/L_corr_8_clean-eps-converted-t
-o.pdf>
-(epstopdf)                    date: 2016-09-28 16:26:41
-(epstopdf)                    size: 9454 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/gpu/L_corr_8_clean-
-eps-converted-to.pdf figures/gpu/L_corr_8_clean.eps>
-(epstopdf)             \includegraphics on input line 181.
-Package epstopdf Info: Output file is already uptodate.
+) [4] [5 <./figures/gpu/L_2_packets-eps-converted-to.pdf>] (eq_equations.tex [6
 
-<figures/gpu/L_corr_8_clean-eps-converted-to.pdf, id=257, 197.73875pt x 214.802
-5pt>
-File: figures/gpu/L_corr_8_clean-eps-converted-to.pdf Graphic file (type pdf)
- <use figures/gpu/L_corr_8_clean-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu/L_corr_8_clean-eps-converted-to.pdf used o
-n input line 181.
-(pdftex.def)             Requested size: 216.81pt x 235.52307pt.
-Package epstopdf Info: Source file: <figures/gpu/L_corr_8_noise.eps>
-(epstopdf)                    date: 2016-09-28 16:25:06
-(epstopdf)                    size: 186472 bytes
-(epstopdf)             Output file: <figures/gpu/L_corr_8_noise-eps-converted-t
-o.pdf>
-(epstopdf)                    date: 2016-09-28 16:26:42
-(epstopdf)                    size: 9512 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/gpu/L_corr_8_noise-
-eps-converted-to.pdf figures/gpu/L_corr_8_noise.eps>
-(epstopdf)             \includegraphics on input line 185.
-Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu/L_corr_8_noise-eps-converted-to.pdf, id=258, 197.73875pt x 214.802
-5pt>
-File: figures/gpu/L_corr_8_noise-eps-converted-to.pdf Graphic file (type pdf)
- <use figures/gpu/L_corr_8_noise-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu/L_corr_8_noise-eps-converted-to.pdf used o
-n input line 185.
-(pdftex.def)             Requested size: 216.81pt x 235.52307pt.
-Package epstopdf Info: Source file: <figures/gpu/L_corr_17_creepy.eps>
-(epstopdf)                    date: 2016-09-20 13:38:05
-(epstopdf)                    size: 186484 bytes
-(epstopdf)             Output file: <figures/gpu/L_corr_17_creepy-eps-converted
--to.pdf>
-(epstopdf)                    date: 2016-09-20 13:40:26
-(epstopdf)                    size: 9526 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/gpu/L_corr_17_creep
-y-eps-converted-to.pdf figures/gpu/L_corr_17_creepy.eps>
-(epstopdf)             \includegraphics on input line 193.
-Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu/L_corr_17_creepy-eps-converted-to.pdf, id=259, 197.73875pt x 214.8
-025pt>
-File: figures/gpu/L_corr_17_creepy-eps-converted-to.pdf Graphic file (type pdf)
-
- <use figures/gpu/L_corr_17_creepy-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu/L_corr_17_creepy-eps-converted-to.pdf used
- on input line 193.
-(pdftex.def)             Requested size: 216.81pt x 235.52307pt.
-Package epstopdf Info: Source file: <figures/gpu/L_corr_18_creepy.eps>
-(epstopdf)                    date: 2016-09-20 13:39:27
-(epstopdf)                    size: 186485 bytes
-(epstopdf)             Output file: <figures/gpu/L_corr_18_creepy-eps-converted
--to.pdf>
-(epstopdf)                    date: 2016-09-20 13:40:27
-(epstopdf)                    size: 9491 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/gpu/L_corr_18_creep
-y-eps-converted-to.pdf figures/gpu/L_corr_18_creepy.eps>
-(epstopdf)             \includegraphics on input line 197.
-Package epstopdf Info: Output file is already uptodate.
-
-<figures/gpu/L_corr_18_creepy-eps-converted-to.pdf, id=260, 197.73875pt x 214.8
-025pt>
-File: figures/gpu/L_corr_18_creepy-eps-converted-to.pdf Graphic file (type pdf)
-
- <use figures/gpu/L_corr_18_creepy-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu/L_corr_18_creepy-eps-converted-to.pdf used
- on input line 197.
-(pdftex.def)             Requested size: 216.81pt x 235.52307pt.
-Package epstopdf Info: Source file: <figures/gpu/L_windows.eps>
-(epstopdf)                    date: 2016-10-07 17:22:28
-(epstopdf)                    size: 367389 bytes
-(epstopdf)             Output file: <figures/gpu/L_windows-eps-converted-to.pdf
->
-(epstopdf)                    date: 2016-10-07 17:23:04
-(epstopdf)                    size: 48289 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/gpu/L_windows-eps-c
-onverted-to.pdf figures/gpu/L_windows.eps>
-(epstopdf)             \includegraphics on input line 218.
-Package epstopdf Info: Output file is already uptodate.
-
-<figures/gpu/L_windows-eps-converted-to.pdf, id=262, 324.21124pt x 343.2825pt>
-File: figures/gpu/L_windows-eps-converted-to.pdf Graphic file (type pdf)
-
-<use figures/gpu/L_windows-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu/L_windows-eps-converted-to.pdf used on inp
-ut line 218.
-(pdftex.def)             Requested size: 361.34999pt x 382.62996pt.
- [6] [7 <./figures/gpu/L_corr_8_clean-eps-converted-to.pdf> <./figures/gpu/L_co
-rr_8_noise-eps-converted-to.pdf> <./figures/gpu/L_corr_17_creepy-eps-converted-
-to.pdf> <./figures/gpu/L_corr_18_creepy-eps-converted-to.pdf>] [8 <./figures/gp
-u/L_windows-eps-converted-to.pdf>] <figures/gpu/packetized.png, id=329, 531.425
-4pt x 92.5056pt>
-File: figures/gpu/packetized.png Graphic file (type png)
-
-<use figures/gpu/packetized.png>
-Package pdftex.def Info: figures/gpu/packetized.png used on input line 261.
-(pdftex.def)             Requested size: 422.77945pt x 73.59523pt.
-) [9
-
- <./figures/gpu/packetized.png>] [10]
-(eq_equations.tex
+]
 Chapter 2.
-[11
+[7] [8] [9] [10] [11
 
-
-
-] [12] [13] [14] [15
-
-] [16]
+] [12] [13]
 Package epstopdf Info: Source file: <figures/equations/FDE2_spectrum_PSI.eps>
 (epstopdf)                    date: 2017-01-09 13:06:18
 (epstopdf)                    size: 424818 bytes
@@ -745,50 +638,54 @@ nverted-to.pdf>
 (epstopdf)                    size: 109225 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/equations/FDE2_spec
 trum_PSI-eps-converted-to.pdf figures/equations/FDE2_spectrum_PSI.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=407, 319.1925pt x
+<figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=312, 319.1925pt x
  333.245pt>
 File: figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf Graphic file (ty
 pe pdf)
  <use figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>
 Package pdftex.def Info: figures/equations/FDE2_spectrum_PSI-eps-converted-to.p
-df used on input line 242.
+df used on input line 250.
 (pdftex.def)             Requested size: 361.34999pt x 377.25908pt.
 )
-[17
+[14
 
-] [18 <./figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>]
+] [15 <./figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>]
 (master.bbl (master.brf)
 \tf@brf=\write7
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 206.
- [19
+ [16
 
 
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 206.
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 208.
+ [17]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 208.
  (master.aux (systemOverview.aux)
 (eq_equations.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 206.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 206.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 208.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 208.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: 6D519FDB1723FBE6F3A020547ECB395D;1248.
+(rerunfilecheck)             Checksum: F55C8B0F01EC39B33B2F98F74980EF5B;1143.
 Package rerunfilecheck Info: File `master.brf' has not changed.
-(rerunfilecheck)             Checksum: 850C6CDA0640D03959B44C84FE20969C;110.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 206.
+(rerunfilecheck)             Checksum: 1093350A26DD0991CA84C9B102DC3DB0;55.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 208.
  )
-(\end occurred when \iffalse on line 163 was incomplete)
-(\end occurred when \iffalse on line 163 was incomplete) 
+(\end occurred when \iffalse on line 165 was incomplete)
+(\end occurred when \iffalse on line 165 was incomplete) 
 Here is how much of TeX's memory you used:
- 8460 strings out of 493636
- 128236 string characters out of 3141310
- 217470 words of memory out of 3000000
- 11518 multiletter control sequences out of 15000+200000
- 24884 words of font info for 67 fonts, out of 3000000 for 9000
+ 8421 strings out of 493636
+ 126880 string characters out of 3141310
+ 217370 words of memory out of 3000000
+ 11494 multiletter control sequences out of 15000+200000
+ 24576 words of font info for 66 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 59i,17n,91p,479b,441s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 59i,17n,91p,329b,347s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)
 /MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
@@ -805,9 +702,9 @@ cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program
  Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on master.pdf (31 pages, 1117902 bytes).
+Output written on master.pdf (29 pages, 1017012 bytes).
 PDF statistics:
- 508 PDF objects out of 1000 (max. 8388607)
- 106 named destinations out of 1000 (max. 500000)
- 203 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 415 PDF objects out of 1000 (max. 8388607)
+ 98 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 
