@@ -18,6 +18,18 @@
 \fi
 #2}}
 
+\bibitem{wikipedia-gpu:2015}
+\BIBentryALTinterwordspacing
+Wikipedia, ``Graphics processing unit,'' 2015. [Online]. Available:
+  \url{http://en.wikipedia.org/wiki/Graphics_processing_unit}
+\BIBentrySTDinterwordspacing
+
+\bibitem{wikipedia-cuda:2015}
+\BIBentryALTinterwordspacing
+------, ``{CUDA},'' 2015. [Online]. Available:
+  \url{http://en.wikipedia.org/wiki/CUDA}
+\BIBentrySTDinterwordspacing
+
 \bibitem{preamble_detector}
 M.~Rice and A.~Mcmurdie, ``On frame synchronization in aeronautical
   telemetry,'' \emph{IEEE Transactions on Aerospace and Electronic Systems},

@@ -1,14 +1,15 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: master.aux
-A level-1 auxiliary file: gpu.aux
+A level-1 auxiliary file: introduction.aux
+A level-1 auxiliary file: problem_statment.aux
+A level-1 auxiliary file: gpu_intro.aux
 A level-1 auxiliary file: systemOverview.aux
 A level-1 auxiliary file: eq_equations.aux
+A level-1 auxiliary file: eq_performance.aux
+A level-1 auxiliary file: final_summary.aux
 The style file: IEEEtran.bst
 Database file #1: refs.bib
-Warning--I didn't find a database entry for "nvidia-CUDAdoc:2015"
-Warning--I didn't find a database entry for "NO_perrins"
 -- IEEEtran.bst version 1.11 (2003/04/02) by Michael Shell.
 -- http://www.ctan.org/tex-archive/macros/latex/contrib/supported/IEEEtran/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-(There were 2 warnings)
