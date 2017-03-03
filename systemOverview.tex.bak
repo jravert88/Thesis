@@ -10,7 +10,7 @@
 \label{sec:systemOverview}
 
 \section{Overview}
-This chapter gives a high lever overview of the the algorithms implemented into the GPU.
+This chapter gives a high lever overview of the the algorithms implemented into the GPU. 
 A block diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
 The algorithms implemented in GPUs will briefly be explained.
 Chapter \ref{sec:eq_eq} explains the computation and application of the equalizers at a lower level.
@@ -47,7 +47,7 @@ The explanation of the GPU implantation of the equalizers will be explained in m
 
 
 
-\subsection{Preamble Detection}
+\section{Preamble Detection}
 \label{sec:preamble_detection}
 The received samples in this project has the iNET packet structure shown in Figure \ref{fig:packet}.
 The iNET packet consists of a preamble and ASM periodically inserted into the data stream.
@@ -59,7 +59,7 @@ The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98
 \end{equation}
 Each 16-bit sequence $\text{CD98}_\text{hex}$ sampled at two samples/bit are 32 or $L_q$ samples long.
 \begin{figure}
-	\centering\includegraphics[width=\textwidth/10*11]{figures/gpu/packet.png}
+	\centering\includegraphics[width=\textwidth/10*10]{figures/gpu/packet.png}
 	\caption{The iNET packet structure.}
 	\label{fig:packet}
 \end{figure}
@@ -139,8 +139,8 @@ The vector $\rpkt$ as shown in Figure \ref{fig:simpleBlockDiagram} contains $126
 The preamble detection algoritm in Equations \eqref{eq:gpu-L-4}-\eqref{eq:gpu-L-pedone-geoghegan-4} and the local maximum search algorithms are easily implemented into GPUs.
 The GPU implementation of these algorithms wont be explained here.
 
-\subsubsection{Frequency Offset Compensation}
-\label{sec:jeffs_frequencyoffsetestimator}
+\section{Frequency Offset Compensation}
+\label{sec:frequency_offset_estimation_and_compensation}
 The frequency offset estimator shown in Figure \ref{fig:simpleBlockDiagram} is an algorithm taken from blah.
 With the notation adjusted slightly, the frequency offset estimate is
 \begin{equation}
@@ -157,11 +157,11 @@ The frequency offset is compensated for by derotating the packetized samples by 
 \end{equation}
 Equations \eqref{eq:jeff-ML-w-final3} and \eqref{eq:frequency_compensation} are easily implemented into GPUs. 
 
-\subsection{Channel Estimation}
+\section{Channel Estimation}
 \label{sec:channel_estimation}
 The channel estimator is the ML estimator taken from blah.
 \begin{equation}
-\hat{\mathbf{h}} = \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag\mathbf{r}
+\hat{\mathbf{h}} = \underbrace{ \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag}_{\mathbf{P}_{ix}}\mathbf{r}
 \end{equation}
 where $\mathbf{X}$ is a convolution matrix formed from the ideal preamble and ASM samples.
 The matrix $\mathbf{P}_\text{ix}$ is
@@ -175,7 +175,7 @@ making the channel estimate simply
 The matrix multiplication is easily implemented into GPUs.
 
 
-\subsection{Noise Variance Estimation}
+\section{Noise Variance Estimation}
 \label{sec:noise_variance_estimation}
 The noise variance estimator is the algorithm taken from blah.
 The algorithm is
@@ -190,19 +190,16 @@ where $\rho$ is the pre-computed constant
 Equation \eqref{eq:ML-s2-final3} is easily implemented into GPUs.
 	
 
-\subsection{SxS Detector}
-\label{sec:SxS_detector}
+\section{SxS Detector}
+\label{sec:oqpsk_detector}
+The Symbol by Symbol (SxS) detector block in Figure \ref{fig:simpleBlockDiagram} is a Offset Quadtriture Phase Shift Keying (OQPSK) detector.
+Using the simple OQPSK detector in place of the complex MLSE SOQPSK-TG detector leads to less than $1$ dB in bit error rate blah.
+\begin{figure}
+	\centering\includegraphics[width=6in]{figures/systemOverview/OQPSK.pdf}
+	\caption{Offset Quadriture Phase Shift Keying symbol by symbol detector.}
+	\label{fig:OQPSK}
+\end{figure}
 
-
-%\section{System Pictures}
-%
-%\section{Block Diagram}
-%
-%\section{Equations}
-%
-%\subsection{Estimators}
-%\subsubsection{Preamble Detector}
-%
-%\subsection{Equalizers}
-%
-%\subsection{Decisions}
+The Phase Lock Loop (PLL) in the SxS OQPSK detector cannot be parallelized to be implemented into GPUs because of the feedback loop. Feedback loops are inherently serial.
+Although the OQPSK detector cannot be parallelized on a sample by sample basis, it can be parallelized on a packet by packet basis.
+Running the PLL and detector serially through a full packet of data is still relatively fast because each iteration of the PLL and detector is computationally light.

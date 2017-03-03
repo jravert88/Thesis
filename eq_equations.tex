@@ -15,12 +15,54 @@ There are 3 different kinds of equalizers I run
 2. the initialized then iterative ones. CMA is initialized with MMSE then runs as many times a possible
 3. the multiply ones! the FDEs are a simple multiply in the frequency domain
 
-\section{Equations}
+\section{Zero-Forcing and MMSE Equalizers}
 
-\subsection{The Solving Equalizers}
+The Zero-Forcing (ZF) and MMSE equalizers are treated together here because they have many common features\ldots
 
+The ZF equalizer is an FIR filter defined by the coefficients
+\begin{equation}
+\begin{matrix}
+c_\text{ZF}(-L_1) & \cdots & c_\text{ZF}(0) & \cdots & c_\text{ZF}(L_2).
+\end{matrix}
+\end{equation}
+The filter coefficients are the solution to the matrix vector equation \cite[eq. (324)]{PAQ-phase1}
+\begin{equation}
+\mathbf{H} \mathbf{c}_\text{ZF} = \mathbf{u}_{n_0}
+\label{eq:c_hayes}
+\end{equation}
+where
+\begin{equation}
+\mathbf{c}_\text{ZF} = 
+\begin{bmatrix}
+c_\text{ZF}(-L_1) \\ \vdots \\ c_\text{ZF}(0) \\ \vdots \\ c_\text{ZF}(L_2)
+\end{bmatrix},
+\end{equation}
+\begin{equation}
+\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$n_0-1$ zeros}
+		\\ \\
+		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
+		\end{matrix*},
+		\label{eq:un0_ZF}
+\end{equation}
+and
+\begin{equation}
+\mathbf{H} = 
+		\begin{bmatrix}
+		h(-N_1)		&  			& 		 	&  			\\
+		h(-N_1+1) 	& h(-N_1)	& 		 	&  			\\
+		\vdots	 	& \vdots	& \ddots 	&  			\\
+		h(N_2)		& h(N_2-1) 	&  			& h(-N_1)  	\\
+		 			& h(N_2) 	&  			& h(-N_1+1) \\
+		 			&  	   		&  			& \vdots	\\
+		 			&  	   		&  			& h(N_2)	\\
+	\end{bmatrix}.
+\end{equation}
 
-\subsubsection{The Zero-Forcing Equalizer}
+Jeff explains how cuda solvers handle this equation.
+
 The ZF equalizer was studied in the PAQ Phase 1 Final Report in ~equation 324
 \begin{equation}
 \mathbf{c}_\text{ZF} = (\mathbf{H}^\dagger \mathbf{H})^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}

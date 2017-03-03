@@ -161,7 +161,7 @@ Equations \eqref{eq:jeff-ML-w-final3} and \eqref{eq:frequency_compensation} are 
 \label{sec:channel_estimation}
 The channel estimator is the ML estimator taken from blah.
 \begin{equation}
-\hat{\mathbf{h}} = \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag\mathbf{r}
+\hat{\mathbf{h}} = \underbrace{ \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag}_{\mathbf{P}_{ix}}\mathbf{r}
 \end{equation}
 where $\mathbf{X}$ is a convolution matrix formed from the ideal preamble and ASM samples.
 The matrix $\mathbf{P}_\text{ix}$ is

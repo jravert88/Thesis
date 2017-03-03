@@ -9,6 +9,12 @@ figure(1); clf;
 plot(myAxis,10*log10((fftshift(A)))-4,'--')
 % whos myAxis 
 
+
+% data_bits = randi([0 1],nfft*2,1);
+% % data_bits = data_bits(1:6144);
+% ss = SOQPSK_modulator(10,data_bits);
+% RR = pwelch(ss,blackman(nfft),nfft/2,nfft,'twosided')*1000000;
+
 load('RR1.mat')
 % rr = ifft(RR);
 % rr = resample(rr,100,1);

@@ -12,26 +12,6 @@
 Important concepts that I use in my project
 
 
-Outline 
-
-GPU architecture
-
-GPU memory
-
-CUDA
-
-Libraries
-
-Kernels
-
-Threads
-
-Bad things to do in CUDA
-
-Good things to do in CUDA
-
-Massaging algorithms to map to a GPU well
-
 
 \section{memory access}
 	A nice linear ``coalesced'' memory access pattern is much better than a random access pattern. A GPU doesnt only grab one byte of memory at a time, it grabs 32 bytes, this is called a warp.
@@ -43,38 +23,15 @@ Massaging algorithms to map to a GPU well
 	Global memory accesses take from 400-800 clock cycles 
 	If an algorithm wants to grab every 10 indicies, that kernel will be slow, but if the memory was reorganized so all the desired memory is coalesced or not strided, a major speed up will occur.	
 	
-\section{Things to avoid}
-Thread Divergence
-Thread Branching
-same code path for each thread
-Going to Global memory alot
-Inplace opperations that are dependent on other threads
-
-
-\section{Things to do}
-Massage algorithms so GPU librarys can be used.
-If libraries cant be used, write customs Kernels that have linear access patterns. (steps to get an algorithm ready for the GPU)
-Coellessing linear memory access
-Threads per block optimization
-Access Global Memory as little as possible
-Use shared memory if many threads use the same array.
-Program with warps in mind
-Optimize global memory access first, then do other optimizations.
-Have the CPU launch GPU kernels then do something. The CPU literally sit and waits for the GPU to finish.
-Trade work for steps (if you can decrease the number of steps by increasing the work...GPUs will go faster) (small little steps that can be massively parallel)
-
-
-
 \section{number of threads}
 	Kernels can speed up drastically when the optimal number of threads are used 
 	Show some plots of this
-	Sometimes memory access patters of algorithms cannot optimized perfectly, at this point we just turn to finding the optimal number of threads per block to launch.
+	Sometimes memory access patters of algorithms cannot optimized perfectly, at this point we just turn to finding the optimal number of threads pre block to launch.
 	If too many threads are launched, the GPU will be attepting to fetch too much memory. If not enough threads are launched, then the threads will be waiting for other threads to be done.
 	The number of threads should saturate the bus, but not request too much.
-	The optimum number of threads can be found experimentally. There is a finite number of threads per block that are possible (1:1024). So just build a for loop that runs the number of threads pre block from 1 to 1024 and time the kernel...which ever one is fastest is the optimum number of threads per block.
+	The optimum number of threads can be found experimental. There is a finite number of threads per block that are possible (1:1024). So just build a for loop that runs the number of threads pre block from 1 to 1024 and time the kernel...which ever one is fastest is the optimum number of threads per block.
 	Most of the time this optimum number will be a multiple of 32 because of the warp or memory access architecture of the GPU.
-	No Thread divergence! Thread divergence is when a kernel has an if statment that causes Programming GPU Kernels should be written so every thread has the same structure or flow. 
-	
+
 \section{libraries}
 	Nvidia builds CUDA libraries to do common operations like Basic Linear Algebra Subprograms (BLAS), Fast Fourier Transforms (FFT) and system solvers. These libraries were written and optimized by the Nvidia Ninjas. Who can beat a Ninja? Right, no one can. So, when you can use a library, DO!
 	The Ninjas give the user no control over how many threads per block are launched, really the library looks like a serial library but the library kernels are massively parallel.
