@@ -8,8 +8,10 @@ A level-1 auxiliary file: eq_performance.aux
 A level-1 auxiliary file: final_summary.aux
 The style file: IEEEtran.bst
 Database file #1: refs.bib
+Warning--I didn't find a database entry for "PAQ-phase1"
 -- IEEEtran.bst version 1.11 (2003/04/02) by Michael Shell.
 -- http://www.ctan.org/tex-archive/macros/latex/contrib/supported/IEEEtran/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
+(There was 1 warning)
