@@ -6,7 +6,7 @@
 \BOOKMARK [0][]{chapter.1}{1 Introduction}{}% 6
 \BOOKMARK [0][]{chapter.2}{2 Problem Statement}{}% 7
 \BOOKMARK [0][]{chapter.3}{3 Signal Processing with GPUs}{}% 8
-\BOOKMARK [1][-]{section.3.1}{3.1 GPU kernels}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.1}{3.1 GPU kernels and memory}{chapter.3}% 9
 \BOOKMARK [1][-]{section.3.2}{3.2 NVIDIA Telsa GPU architecture}{chapter.3}% 10
 \BOOKMARK [1][-]{section.3.3}{3.3 CUDA programming}{chapter.3}% 11
 \BOOKMARK [0][]{chapter.4}{4 System Overview}{}% 12

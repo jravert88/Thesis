@@ -1,15 +1,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{8}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{9}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Block diagram of Tesla GPU microarchitecture. The dashed box indicates what blocks are located on the GPU chip. The dash dotted box indicates what blocks are located off the GPU chip.}}{10}{figure.3.3}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation time including memcpy from host to device and device to host.}}{11}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation.}}{11}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation. Note: time is in $\mu $s.}}{12}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{13}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{13}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Block diagram of Tesla GPU microarchitecture. The dashed box indicates what blocks are located on the GPU chip. The dash dotted box indicates what blocks are located off the GPU chip.}}{14}{figure.3.6}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{16}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces The iNET packet structure.}}{16}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{19}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{21}{figure.4.4}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{18}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces The iNET packet structure.}}{18}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{21}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{23}{figure.4.4}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{32}{figure.5.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{34}{figure.5.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

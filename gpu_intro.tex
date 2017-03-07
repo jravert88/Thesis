@@ -25,8 +25,175 @@ The purpose of this overview is to provide context for the contributions of this
 As such this overview is not a tutorial.
 For a full explination of CUDA programming please see the CUDA toolkit documentation \cite{CUDA_toolkit_doc}.
 
-\section{GPU kernels}
+\section{GPU kernels and memory}
 If a programmer has some C++ experience, understanding how to write a GPU kernel comes fairly easily.
+Codes still runs top to bottom, memory still has to be allocated and vectors still have to be initialized.
+The only real differences are where the memory physically is and how functions or kernels run on GPUs.
+To run kernels on GPUs, the memory must be copied from the host (CPU) to the device (GPU).
+Once the memory has been copied, the parallel GPU kernels can be called.
+After the GPU kernels have finished, the resulting memory has to be copied back from the device (GPU) to the host (CPU).
+
+Listing \ref{code:GPUvsCPU} shows a simple program that sums to vectors together
+\begin{equation}
+\mathbf{C} = \mathbf{A} + \mathbf{B}
+\end{equation}
+where each vector is numPoints$ = 1024$ long.
+The program computes $\mathbf{C}$ in two ways
+\begin{enumerate}
+  \item CPU: 
+     \begin{itemize}
+     \item Allocate memory for $\mathbf{A}_1$ and $\mathbf{B}_1$.
+     \item Initialize $\mathbf{A}_1$ and $\mathbf{B}_1$.
+     \item Compute $\mathbf{C}_1$ by calling a CPU function that uses a serial for loop.
+   \end{itemize}
+  \item GPU: 
+     \begin{itemize}
+     \item Allocate memory for $\mathbf{A}_2$ and $\mathbf{B}_2$ on the device (GPU).
+     \item Copy $\mathbf{A}_1$ and $\mathbf{B}_1$ to $\mathbf{A}_2$ and $\mathbf{B}_2$ from host (CPU) to the device (GPU).
+     \item Compute $\mathbf{C}_2$ by launching a GPU kernel with numPoints threads that run in parallel.
+     \item Copy $\mathbf{C}_2$ from the device (GPU) to the host (CPU).
+   \end{itemize}
+\end{enumerate}
+
+\singlespacing
+\clearpage
+\begin{lstlisting}[caption={Comparison of CPU verse GPU code.},label={code:GPUvsCPU}]
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+
+void VecAdd_CPU(int* destination,int* source0,int* source1,int myLength){
+	for(int i = 0; i < myLength; i++)
+		destination[i] = source0[i] + source1[i];
+}
+
+__global__ void VecAdd_GPU(int* destination, int* source0, int* source1, int lastThread){
+	int i = blockIdx.x*blockDim.x + threadIdx.x;
+	
+	// don't access elements out of bounds
+	if(i >= lastThread)
+		return;
+	
+	destination[i] = source0[i] + source1[i];
+}
+
+int main(){
+	int numPoints = 1024;
+	/*--------------------------------------------------------------------
+                               	   CPU Start
+	--------------------------------------------------------------------*/
+	// allocate memory on host
+	int *A1;
+	int *B1;
+	int *C1;
+	A1 = (int*) malloc (numPoints*sizeof(int));
+	B1 = (int*) malloc (numPoints*sizeof(int));
+	C1 = (int*) malloc (numPoints*sizeof(int));
+
+	// Initialize vectors 0-99
+	for(int i = 0; i < numPoints; i++){
+		A1[i] = rand()%100;
+		B1[i] = rand()%100;
+	}
+
+	// vector sum C1 = A1 + B1
+	VecAdd_CPU(C1, A1, B1, numPoints);
+	/*--------------------------------------------------------------------
+                               	   CPU End
+	--------------------------------------------------------------------*/
+	
+
+	/*--------------------------------------------------------------------
+                               	   GPU End
+	--------------------------------------------------------------------*/
+	// allocate memory on host for result
+	int *C2;
+	C2 = (int*) malloc (numPoints*sizeof(int));
+
+	// allocate memory on device for computation
+	int *A2_gpu;
+	int *B2_gpu;
+	int *C2_gpu;
+	cudaMalloc(&A2_gpu, sizeof(int)*numPoints);
+	cudaMalloc(&B2_gpu, sizeof(int)*numPoints);
+	cudaMalloc(&C2_gpu, sizeof(int)*numPoints);
+
+	// Copy vectors A and B from host to device
+	cudaMemcpy(A2_gpu, A1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
+	cudaMemcpy(B2_gpu, B1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
+
+	// Set optimal number of threads per block
+	int numTreadsPerBlock = 32;
+
+	// Compute number of blocks for set number of threads
+	int numBlocks = numPoints/numTreadsPerBlock;
+
+	// If there are left over points, run an extra block
+	if(numPoints % numTreadsPerBlock > 0)
+		numBlocks++;
+
+	// Run computation on device
+	VecAdd_GPU<<<numBlocks, numTreadsPerBlock>>>(C2_gpu, A2_gpu, B2_gpu, numPoints);
+
+	// Copy vector C2 from device to host
+	cudaMemcpy(C2, C2_gpu, sizeof(int)*numPoints, cudaMemcpyDeviceToHost);
+	/*--------------------------------------------------------------------
+                               	   GPU End
+	--------------------------------------------------------------------*/
+
+	// Compare C2 to C1
+	bool equal = true;
+	for(int i = 0; i < numPoints; i++)
+		if(C1[i] != C2[i])
+			equal = false;
+	if(equal)
+		cout << "C2 is equal to C1." << endl;
+	else
+		cout << "C2 is NOT equal to C1." << endl;
+
+	// Free vectors on CPU
+	free(A1);
+	free(B1);
+	free(C1);
+	free(C2);
+
+	// Free vectors on GPU
+	cudaFree(A2_gpu);
+	cudaFree(B2_gpu);
+	cudaFree(C2_gpu);
+}
+\end{lstlisting}
+\doublespacing
+
+
+a simple program similarities can be seen between CPU and GPU coding.
+The main difference between CPU and GPU coding is how computations are done.
+The CPU function on line 40 (defined on lines 5-8) is called once and it runs once.
+The GPU kernel on line 76 (defined on lines 10-18) is called once but it runs numBlocks$\times$numTreadsPerBlock times in parallel.
+
+Each thread that executes the kernel is given a threadIdx and a blockDim with a blockIdx.
+Each of these integers are three dimensional, but only one dimension is used in this thesis.
+The integer threadIdx is the index of the thread inside the block.
+The integer blockDim is the number of threads per block launched.
+The integer blockIdx is the index of the block.
+
+\begin{figure}
+	\centering\includegraphics[width=4in]{figures/gpu_intro/CPUvsGPUwithMemcpy.eps}
+	\caption{A comparison of CPU computation time verse GPU kernel computation time including memcpy from host to device and device to host.}
+	\label{fig:CPUvsGPUwithMemcpy}
+\end{figure}
+\begin{figure}
+	\centering\includegraphics[width=4in]{figures/gpu_intro/CPUvsGPU.eps}
+	\caption{A comparison of CPU computation time verse GPU kernel computation.}
+	\label{fig:CPUvsGPU}
+\end{figure}
+\begin{figure}
+	\centering\includegraphics[width=4in]{figures/gpu_intro/CPUvsGPUzoomed.eps}
+	\caption{A comparison of CPU computation time verse GPU kernel computation. Note: time is in $\mu$s.}
+	\label{fig:CPUvsGPUzoomed}
+\end{figure}
+
+
 
 
 \section{NVIDIA Telsa GPU architecture}
@@ -75,112 +242,6 @@ Registers, L1 cache and L2 cache are handled and controlled by CUDA.
 \end{figure}
 
 \section{CUDA programming}
-
-\clearpage
-\begin{lstlisting}
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
-
-// Kernel definition
-__global__ void VecAdd(int* destination, int* source0, int* source1, int lastThread){
-	int i = blockIdx.x*blockDim.x + threadIdx.x;
-	// don't access elements out of bounds
-	if(i >= lastThread)
-		return;
-	destination[i] = source0[i] + source1[i];
-}
-
-int main(){
-	int numPoints = 1024;
-
-	/*--------------------------------------------------------------------
-                               	   CPU Start
-	--------------------------------------------------------------------*/
-
-	// allocate memory on host
-	int *A1;
-	int *B1;
-	int *C1;
-	A1 = (int*) malloc (numPoints*sizeof(int));
-	B1 = (int*) malloc (numPoints*sizeof(int));
-	C1 = (int*) malloc (numPoints*sizeof(int));
-
-	// Initialize vectors 0-99
-	for(int i = 0; i < numPoints; i++){
-		A1[i] = rand()%100;
-		B1[i] = rand()%100;
-	}
-
-	// vector sum C1 = A1 + B1
-	for(int i = 0; i < numPoints; i++)
-		C1[i] = A1[i] + B1[i];
-	/*--------------------------------------------------------------------
-                               	   CPU End
-	--------------------------------------------------------------------*/
-
-
-
-
-
-	/*--------------------------------------------------------------------
-                               	   GPU End
-	--------------------------------------------------------------------*/
-	// allocate memory on host for result
-	int *C2;
-	C2 = (int*) malloc (numPoints*sizeof(int));
-
-	// allocate memory on device for computation
-	int *A2_gpu;
-	int *B2_gpu;
-	int *C2_gpu;
-	cudaMalloc(&A2_gpu, sizeof(int)*numPoints);
-	cudaMalloc(&B2_gpu, sizeof(int)*numPoints);
-	cudaMalloc(&C2_gpu, sizeof(int)*numPoints);
-
-	// Copy vectors A and B from host to device
-	cudaMemcpy(A2_gpu, A1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
-	cudaMemcpy(B2_gpu, B1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
-
-	// Set optimal number of threads per block
-	int numTreadsPerBlock = 32;
-	// Compute number of blocks for set number of threads
-	int numBlocks = numPoints/numTreadsPerBlock;
-	// If there are left over points, run an extra block
-	if(numPoints % numTreadsPerBlock > 0)
-		numBlocks++;
-	// Run computation on device
-	VecAdd<<<numBlocks, numTreadsPerBlock>>>(C2_gpu, A2_gpu, B2_gpu, numPoints);
-
-	// Copy vector C2 from device to host
-	cudaMemcpy(C2, C2_gpu, sizeof(int)*numPoints, cudaMemcpyDeviceToHost);
-	/*--------------------------------------------------------------------
-                               	   GPU End
-	--------------------------------------------------------------------*/
-
-	// Compare C2 to C1
-	bool equal = true;
-	for(int i = 0; i < numPoints; i++)
-		if(C1[i] != C2[i])
-			equal = false;
-	if(equal)
-		cout << "C2 is equal to C1." << endl;
-	else
-		cout << "C2 is NOT equal to C1." << endl;
-
-	// Free vectors on CPU
-	free(A1);
-	free(B1);
-	free(C1);
-	free(C2);
-
-	// Free vectors on GPU
-	cudaFree(A2_gpu);
-	cudaFree(B2_gpu);
-	cudaFree(C2_gpu);
-}
-\end{lstlisting}
-
 A GPU cannot be programmed like a CPU because the architecture is totally different
 
 When a kernel brings memory on chip from the off chip SRAM it takes 400-800 clock cycles.
