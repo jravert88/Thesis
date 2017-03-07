@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  3 MAR 2017 16:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  6 MAR 2017 13:36
 entering extended mode
 **master.tex
 (master.tex
@@ -340,9 +340,14 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 )
+LaTeX Info: Redefining \emph on input line 78.
+
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
@@ -478,12 +483,12 @@ File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
 \c@bookmark@seq@number=\count133
 \Hy@SectionHShift=\skip70
 )
-Package hyperref Info: Option `breaklinks' set `false' on input line 125.
-Package hyperref Info: Option `linktocpage' set `false' on input line 125.
-Package hyperref Info: Option `colorlinks' set `false' on input line 125.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 125.
+Package hyperref Info: Option `breaklinks' set `false' on input line 169.
+Package hyperref Info: Option `linktocpage' set `false' on input line 169.
+Package hyperref Info: Option `colorlinks' set `false' on input line 169.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 169.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 125.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 169.
 
 (master.aux (introduction.aux) (problem_statment.aux) (gpu_intro.aux)
 (systemOverview.aux) (eq_equations.aux
@@ -491,21 +496,21 @@ Package hyperref Info: Option `bookmarksopen' set `true' on input line 125.
 LaTeX Warning: Label `eq:un0_ZF' multiply defined.
 
 ) (eq_performance.aux) (final_summary.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 164.
-LaTeX Font Info:    ... okay on input line 164.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 164.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 208.
+LaTeX Font Info:    ... okay on input line 208.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 208.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
@@ -549,12 +554,12 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \JustifyingParindent=\skip84
 )
 Package caption Info: hyperref package v6.74m (or newer) detected on input line
- 164.
-Package caption Info: listings package v1.2 (or newer) detected on input line 1
-64.
+ 208.
+Package caption Info: listings package v1.2 (or newer) detected on input line 2
+08.
 \c@lstlisting=\count140
 \AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring OFF on input line 164.
+Package hyperref Info: Link coloring OFF on input line 208.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -564,20 +569,20 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count141
 )
-LaTeX Info: Redefining \ref on input line 164.
-LaTeX Info: Redefining \pageref on input line 164.
-LaTeX Info: Redefining \nameref on input line 164.
+LaTeX Info: Redefining \ref on input line 208.
+LaTeX Info: Redefining \pageref on input line 208.
+LaTeX Info: Redefining \nameref on input line 208.
 
 (master.out) (master.out)
 \@outlinefile=\write3
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 173.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 217.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 173.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 217.
  [1
 
 {C:/Users/ecestudent/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
@@ -590,7 +595,7 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
 
 ]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 173.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 217.
  (master.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
@@ -658,34 +663,46 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 
 ]
 Chapter 3.
-<figures/gpu_intro/k40c_k20c.jpg, id=248, 542.025pt x 440.847pt>
+<figures/gpu_intro/k40c_k20c.jpg, id=253, 542.025pt x 440.847pt>
 File: figures/gpu_intro/k40c_k20c.jpg Graphic file (type jpg)
 
 <use figures/gpu_intro/k40c_k20c.jpg>
-Package pdftex.def Info: figures/gpu_intro/k40c_k20c.jpg used on input line 33.
+Package pdftex.def Info: figures/gpu_intro/k40c_k20c.jpg used on input line 38.
 
 (pdftex.def)             Requested size: 361.34999pt x 293.90623pt.
 
-<figures/gpu_intro/Kepler_box.png, id=249, 681.2652pt x 305.943pt>
+<figures/gpu_intro/Kepler_box.png, id=254, 681.2652pt x 305.943pt>
 File: figures/gpu_intro/Kepler_box.png Graphic file (type png)
 
 <use figures/gpu_intro/Kepler_box.png>
-Package pdftex.def Info: figures/gpu_intro/Kepler_box.png used on input line 38
+Package pdftex.def Info: figures/gpu_intro/Kepler_box.png used on input line 43
 .
 (pdftex.def)             Requested size: 469.75499pt x 210.96083pt.
- [7] [8 <./figures/gpu_intro/k40c_k20c.jpg> <./figures/gpu_intro/Kepler_box.png
->]
-<figures/gpu_intro/GPU_blockDiagram.png, id=264, 776.1798pt x 401.8212pt>
+ [7] [8 <./figures/gpu_intro/k40c_k20c.jpg>] <figures/gpu_intro/GPU_blockDiagra
+m.png, id=268, 776.1798pt x 401.8212pt>
 File: figures/gpu_intro/GPU_blockDiagram.png Graphic file (type png)
 
 <use figures/gpu_intro/GPU_blockDiagram.png>
 Package pdftex.def Info: figures/gpu_intro/GPU_blockDiagram.png used on input l
-ine 67.
+ine 72.
 (pdftex.def)             Requested size: 361.34999pt x 187.07178pt.
- [9 <./figures/gpu_intro/GPU_blockDiagram.png>]) [10] (systemOverview.tex
+ [9 <./figures/gpu_intro/Kepler_box.png>] [10 <./figures/gpu_intro/GPU_blockDia
+gram.png>]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 80.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+) [11
+
+] [12])
+[13] (systemOverview.tex [14
+
+
+
+]
 Chapter 4.
 
-<figures/systemOverview/blockDiagram.pdf, id=283, 4237.27034pt x 2836.13582pt>
+<figures/systemOverview/blockDiagram.pdf, id=408, 4237.27034pt x 2836.13582pt>
 File: figures/systemOverview/blockDiagram.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/blockDiagram.pdf>
@@ -693,18 +710,14 @@ Package pdftex.def Info: figures/systemOverview/blockDiagram.pdf used on input
 line 27.
 (pdftex.def)             Requested size: 433.62pt x 290.20813pt.
 
-<figures/gpu/packet.png, id=285, 737.154pt x 151.767pt>
+<figures/gpu/packet.png, id=410, 737.154pt x 151.767pt>
 File: figures/gpu/packet.png Graphic file (type png)
 
 <use figures/gpu/packet.png>
 Package pdftex.def Info: figures/gpu/packet.png used on input line 62.
 (pdftex.def)             Requested size: 469.75494pt x 96.716pt.
- [11
-
-
-
-] [12 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png>] [
-13]
+ [15] [16 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png
+>] [17]
 Package epstopdf Info: Source file: <figures/gpu/L_2_packets.eps>
 (epstopdf)                    date: 2016-10-05 15:17:55
 (epstopdf)                    size: 350845 bytes
@@ -717,32 +730,32 @@ df>
 (epstopdf)             \includegraphics on input line 131.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu/L_2_packets-eps-converted-to.pdf, id=319, 327.2225pt x 343.2825pt>
+<figures/gpu/L_2_packets-eps-converted-to.pdf, id=443, 327.2225pt x 343.2825pt>
 File: figures/gpu/L_2_packets-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/gpu/L_2_packets-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu/L_2_packets-eps-converted-to.pdf used on i
 nput line 131.
 (pdftex.def)             Requested size: 361.34999pt x 379.0838pt.
- [14] [15 <./figures/gpu/L_2_packets-eps-converted-to.pdf>]
-<figures/systemOverview/OQPSK.pdf, id=360, 4097.23717pt x 2603.49666pt>
+ [18] [19 <./figures/gpu/L_2_packets-eps-converted-to.pdf>]
+<figures/systemOverview/OQPSK.pdf, id=485, 4097.23717pt x 2603.49666pt>
 File: figures/systemOverview/OQPSK.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/OQPSK.pdf>
 Package pdftex.def Info: figures/systemOverview/OQPSK.pdf used on input line 19
 8.
 (pdftex.def)             Requested size: 433.62pt x 275.50056pt.
-) [16] [17 <./figures/systemOverview/OQPSK.pdf>] (eq_equations.tex [18
+) [20] [21 <./figures/systemOverview/OQPSK.pdf>] (eq_equations.tex [22
 
 
 
 ]
 Chapter 5.
 
-LaTeX Warning: Citation `PAQ-phase1' on page 19 undefined on input line 28.
+LaTeX Warning: Citation `PAQ-phase1' on page 23 undefined on input line 28.
 
-[19] [20] [21] [22] [23] [24
+[23] [24] [25] [26] [27] [28
 
-] [25] [26]
+] [29] [30]
 Package epstopdf Info: Source file: <figures/equations/FDE2_spectrum_PSI.eps>
 (epstopdf)                    date: 2017-01-09 13:06:18
 (epstopdf)                    size: 424818 bytes
@@ -755,7 +768,7 @@ trum_PSI-eps-converted-to.pdf figures/equations/FDE2_spectrum_PSI.eps>
 (epstopdf)             \includegraphics on input line 292.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=460, 319.1925pt x
+<figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=584, 319.1925pt x
  333.245pt>
 File: figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf Graphic file (ty
 pe pdf)
@@ -764,39 +777,39 @@ Package pdftex.def Info: figures/equations/FDE2_spectrum_PSI-eps-converted-to.p
 df used on input line 292.
 (pdftex.def)             Requested size: 361.34999pt x 377.25908pt.
 )
-[27
+[31
 
-] [28 <./figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>]
+] [32 <./figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>]
 (eq_performance.tex
 Chapter 6.
-) [29
+) [33
 
 
 
-] (final_summary.tex [30
+] (final_summary.tex [34
 
 
 
 ]
 Chapter 7.
-) [31] (master.bbl (master.brf)
+) [35] (master.bbl (master.brf)
 \tf@brf=\write7
- [32
+ [36
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 217.
- [33]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 217.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 261.
+ [37]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 261.
  (master.aux (introduction.aux)
 (problem_statment.aux) (gpu_intro.aux) (systemOverview.aux) (eq_equations.aux)
 (eq_performance.aux) (final_summary.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 217.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 217.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 261.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 261.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: ACB41E2FF93B8944422409B183876B30;1555.
+(rerunfilecheck)             Checksum: 928B1F822B8F8381AEE0273117A5FCA5;1618.
 Package rerunfilecheck Info: File `master.brf' has not changed.
-(rerunfilecheck)             Checksum: E084397BE76B349617B5A699042BE247;308.
+(rerunfilecheck)             Checksum: 2A5472778462DF5E3F00A1FC1CB81328;308.
 
 
 LaTeX Warning: There were undefined references.
@@ -804,18 +817,18 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 217.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 261.
  )
-(\end occurred when \iffalse on line 173 was incomplete)
-(\end occurred when \iffalse on line 173 was incomplete) 
+(\end occurred when \iffalse on line 217 was incomplete)
+(\end occurred when \iffalse on line 217 was incomplete) 
 Here is how much of TeX's memory you used:
- 10230 strings out of 493636
- 152785 string characters out of 3141310
- 255428 words of memory out of 3000000
- 13192 multiletter control sequences out of 15000+200000
- 24576 words of font info for 66 fonts, out of 3000000 for 9000
+ 10679 strings out of 493636
+ 158688 string characters out of 3141310
+ 371166 words of memory out of 3000000
+ 13527 multiletter control sequences out of 15000+200000
+ 25091 words of font info for 68 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 59i,17n,97p,421b,360s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 59i,17n,122p,421b,1869s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)
 /MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
@@ -830,12 +843,13 @@ msfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
 cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-sy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:
-/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Fi
-les (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on master.pdf (45 pages, 3229609 bytes).
+sy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><
+C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on master.pdf (49 pages, 3266201 bytes).
 PDF statistics:
- 597 PDF objects out of 1000 (max. 8388607)
- 142 named destinations out of 1000 (max. 500000)
- 241 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 748 PDF objects out of 1000 (max. 8388607)
+ 249 named destinations out of 1000 (max. 500000)
+ 249 words of extra memory for PDF output out of 10000 (max. 10000000)
 

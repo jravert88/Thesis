@@ -5,15 +5,13 @@ A = fscanf(fileID,formatSpec);
 fclose(fileID);
 myAxis = -2:4/length(A):2-1/length(A);
 
+
+
+% RR = pwelch(ss,blackman(nfft),nfft/2,nfft,'twosided')*1000000;
+
 figure(1); clf;
 plot(myAxis,10*log10((fftshift(A)))-4,'--')
 % whos myAxis 
-
-
-% data_bits = randi([0 1],nfft*2,1);
-% % data_bits = data_bits(1:6144);
-% ss = SOQPSK_modulator(10,data_bits);
-% RR = pwelch(ss,blackman(nfft),nfft/2,nfft,'twosided')*1000000;
 
 load('RR1.mat')
 % rr = ifft(RR);
@@ -25,8 +23,8 @@ plot(myAxis,10*log10(fftshift(RR))-65-5)
 grid on
 hold off
 
-marge = axis;
-axis([-2 2 -50 10])
+% marge = axis;
+% axis([-2 2 -50 10])
 
 latexWidth = 5;
 latexHeight = 4;
@@ -43,3 +41,26 @@ ylabel('Magintude (dB)')
 legend('\Psi','SOQPSK Power Spectrum','Location','South')
 print(ff, '-depsc', ['file_name']) %save as eps a 
 
+
+
+
+
+
+data_bits = randi([0 1],2^14*2,1);
+data_bits = data_bits(1:6144);
+ss = SOQPSK_modulator(10,data_bits);
+s = ss(100:5:end-100);
+[myXcorr lags] = xcorr(s);
+myXcorr = myXcorr/max(abs(myXcorr));
+
+figure(2); clf
+subplot(211)
+plot(lags,real(myXcorr)); grid on; hold on
+myI = find(real(myXcorr)>0.04);
+plot(lags(myI),real(myXcorr(myI)),'bo'); grid on; hold on
+% axis
+% axis
+subplot(212)
+plot(lags,imag(myXcorr),'b'); grid on; hold on
+plot(lags,imag(myXcorr),'bo'); grid on; hold on
+% axis = marge;

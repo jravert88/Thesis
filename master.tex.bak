@@ -28,11 +28,55 @@
 \usepackage{mathtools}
 \usepackage{listings}
 \usepackage{xcolor}
-\lstset { %
-    language=C++,
-    backgroundcolor=\color{black!5}, % set backgroundcolor
-    basicstyle=\footnotesize,% basic font setting
+% source code listing
+\newcommand{\axpy}{{\ttfamily axpy}\xspace}
+\newcommand{\extra}{{\bfseries extra}:\xspace}
+%\newcommand{\lst}[1]{\colorbox{white!90!blue}{\lstinline!#1!}}
+\newcommand{\lst}[1]{\colorbox{white!20!black}{\lstinline!#1!}}
+\newcommand{\lstfont}[1]{\color{#1}\scriptsize\ttfamily}
+\newcommand{\lsttinyfont}[1]{\color{#1}\fontsize{7}{7}\ttfamily}
+\newcommand{\lstinlinefont}[1]{\color{#1}\scriptsize\ttfamily}
+\definecolor{mygray}{rgb}{0.97,0.97,0.97}
+
+% set indent to a more reasonable level (so that itemize can be used in columns)
+\setlength{\leftmargini}{20pt}
+
+\lstset{
+    language=[ANSI]C++,
+    showstringspaces=false,
+    backgroundcolor=\color{mygray},
+    basicstyle=\lstfont{black},
+    identifierstyle=\lstfont{black},
+    keywordstyle=\lstfont{magenta},
+    numberstyle=\lstfont{black},
+    stringstyle=\lstfont{cyan},
+    commentstyle=\lstfont{yellow!30!black},
+    moredelim=[is][\lstfont{green!50!black}]{@}{@},
+    emph={
+        cudaMalloc, cudaFree,
+        cudaMallocHost, cudaFreeHost,
+        cudaMemcpyAsync, cudaMemcpy, cudaMemcpyHostToDevice, cudaMemcpyDeviceToHost,
+        cudaSuccess, cudaGetLastError, cudaGetErrorString,
+        cudaErrorMemoryAllocation, cudaError_t,
+        cudaOccupancyMaxPotentialBlockSize,
+        __global__, __shared__, __device__, __host__,
+        __syncthreads,
+        cudaEvent_t, cudaStream_t,
+        cudaEventCreate, cudaEventSynchronize, cudaEventDestroy,
+        cudaEventElapsedTime, cudaEventQuery, cudaEventRecord,
+        cudaStreamWaitEvent,
+        threadIdx, blockIdx, blockDim, gridDim,
+        cudaStream_t, cudaStreamCreate, cudaStreamDestroy,
+        cudaMemcpyDeviceToDevice, cudaMemcpyHostToHost,
+    },
+    emphstyle={\lstfont{green!50!black}},
+    breaklines=true
 }
+\definecolor{codenumber}{rgb}{0.5,0.5,0.5}
+\definecolor{codekeyword}{rgb}{0.9,0.4,0.7}
+\definecolor{codeCUDA}{rgb}{1.0,0.6,0.6}
+\DeclareTextFontCommand{\emph}{\bfseries\color{blue!70!black}}
+
 % Setup the byu style sheet
 \byustylesetup{%
     %

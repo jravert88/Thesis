@@ -15,15 +15,19 @@ A Graphics Processing Unit (GPU) is a computational unit with a highly-parallel 
 In the past, GPUs were used to process graphics data.
 Recently, general purpose GPUs are being used for high performance computing in computer vision, deep learning, artificial intelligence and signal processing \cite{wikipedia-gpu:2015}.
 
-GPUs cannot be programmed the say as a CPU. 
-NVIDIA released a extention to C, C++ and Fortran called CUDA (Compute Unified Device Architecture).
+GPUs cannot be programmed the way as a CPU. 
+NVIDIA released a extension to C, C++ and Fortran called CUDA (Compute Unified Device Architecture).
 CUDA allows a programmer to write C++ like functions that are massively parallel called \textit{kernels}.
-To invoke parallelism, a GPU kernel is called $N$ times and mapped to $N$ threads that run concurrently.
-To achieve the full potential of high performance GPUs, kenels must be written with some basic concepts about GPU architecture and memory in mind.
+To invoke parallelism, a GPU kernel is called $N$ times and mapped to $N$ \textit{threads} that run concurrently.
+To achieve the full potential of high performance GPUs, kernels must be written with some basic concepts about GPU architecture and memory in mind.
 
 The purpose of this overview is to provide context for the contributions of this thesis.
 As such this overview is not a tutorial.
 For a full explination of CUDA programming please see the CUDA toolkit documentation \cite{CUDA_toolkit_doc}.
+
+\section{GPU kernels}
+If a programmer has some C++ experience, understanding how to write a GPU kernel comes fairly easily.
+
 
 \section{NVIDIA Telsa GPU architecture}
 A little bit of GPU architecture knowledge goes a long way.
@@ -72,23 +76,110 @@ Registers, L1 cache and L2 cache are handled and controlled by CUDA.
 
 \section{CUDA programming}
 
-%Text before \dots
-%\begin{lstlisting}
-%// Kernel definition 
-%__global__ void VecAdd(float* result, float* arg1, float* arg2) { 
-%int i = threadIdx.x; 
-%C[i] = A[i] + B[i]; 
-%} 
-%
-%int main() { 
-%// Kernel invocation with N threads 
-%... 
-%// Kernel invocation with N threads 
-%VecAdd<<<1, N>>>(A, B, C); 
-%... 
-%}
-%\end{lstlisting}
-%Text after it \dots
+\clearpage
+\begin{lstlisting}
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+
+// Kernel definition
+__global__ void VecAdd(int* destination, int* source0, int* source1, int lastThread){
+	int i = blockIdx.x*blockDim.x + threadIdx.x;
+	// don't access elements out of bounds
+	if(i >= lastThread)
+		return;
+	destination[i] = source0[i] + source1[i];
+}
+
+int main(){
+	int numPoints = 1024;
+
+	/*--------------------------------------------------------------------
+                               	   CPU Start
+	--------------------------------------------------------------------*/
+
+	// allocate memory on host
+	int *A1;
+	int *B1;
+	int *C1;
+	A1 = (int*) malloc (numPoints*sizeof(int));
+	B1 = (int*) malloc (numPoints*sizeof(int));
+	C1 = (int*) malloc (numPoints*sizeof(int));
+
+	// Initialize vectors 0-99
+	for(int i = 0; i < numPoints; i++){
+		A1[i] = rand()%100;
+		B1[i] = rand()%100;
+	}
+
+	// vector sum C1 = A1 + B1
+	for(int i = 0; i < numPoints; i++)
+		C1[i] = A1[i] + B1[i];
+	/*--------------------------------------------------------------------
+                               	   CPU End
+	--------------------------------------------------------------------*/
+
+
+
+
+
+	/*--------------------------------------------------------------------
+                               	   GPU End
+	--------------------------------------------------------------------*/
+	// allocate memory on host for result
+	int *C2;
+	C2 = (int*) malloc (numPoints*sizeof(int));
+
+	// allocate memory on device for computation
+	int *A2_gpu;
+	int *B2_gpu;
+	int *C2_gpu;
+	cudaMalloc(&A2_gpu, sizeof(int)*numPoints);
+	cudaMalloc(&B2_gpu, sizeof(int)*numPoints);
+	cudaMalloc(&C2_gpu, sizeof(int)*numPoints);
+
+	// Copy vectors A and B from host to device
+	cudaMemcpy(A2_gpu, A1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
+	cudaMemcpy(B2_gpu, B1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
+
+	// Set optimal number of threads per block
+	int numTreadsPerBlock = 32;
+	// Compute number of blocks for set number of threads
+	int numBlocks = numPoints/numTreadsPerBlock;
+	// If there are left over points, run an extra block
+	if(numPoints % numTreadsPerBlock > 0)
+		numBlocks++;
+	// Run computation on device
+	VecAdd<<<numBlocks, numTreadsPerBlock>>>(C2_gpu, A2_gpu, B2_gpu, numPoints);
+
+	// Copy vector C2 from device to host
+	cudaMemcpy(C2, C2_gpu, sizeof(int)*numPoints, cudaMemcpyDeviceToHost);
+	/*--------------------------------------------------------------------
+                               	   GPU End
+	--------------------------------------------------------------------*/
+
+	// Compare C2 to C1
+	bool equal = true;
+	for(int i = 0; i < numPoints; i++)
+		if(C1[i] != C2[i])
+			equal = false;
+	if(equal)
+		cout << "C2 is equal to C1." << endl;
+	else
+		cout << "C2 is NOT equal to C1." << endl;
+
+	// Free vectors on CPU
+	free(A1);
+	free(B1);
+	free(C1);
+	free(C2);
+
+	// Free vectors on GPU
+	cudaFree(A2_gpu);
+	cudaFree(B2_gpu);
+	cudaFree(C2_gpu);
+}
+\end{lstlisting}
 
 A GPU cannot be programmed like a CPU because the architecture is totally different
 
