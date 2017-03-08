@@ -1,18 +1,25 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation time including memcpy from host to device and device to host.}}{11}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation.}}{11}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation. Note: time is in $\mu $s.}}{12}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{13}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{13}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Block diagram of Tesla GPU microarchitecture. The dashed box indicates what blocks are located on the GPU chip. The dash dotted box indicates what blocks are located off the GPU chip.}}{14}{figure.3.6}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{8}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{8}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{11}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{11}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{12}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{13}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{13}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation time including memcpy from host to device and device to host.}}{15}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation.}}{15}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation. Note: time is in $\mu $s.}}{16}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{16}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{17}{figure.3.12}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Block diagram of Tesla GPU microarchitecture. The dashed box indicates what blocks are located on the GPU chip. The dash dotted box indicates what blocks are located off the GPU chip.}}{18}{figure.3.13}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{18}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces The iNET packet structure.}}{18}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{21}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{23}{figure.4.4}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{20}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces The iNET packet structure.}}{20}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{23}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{25}{figure.4.4}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{34}{figure.5.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{36}{figure.5.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  7 MAR 2017 00:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  7 MAR 2017 17:19
 entering extended mode
 **master.tex
 (master.tex
@@ -151,6 +151,18 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen114
 \Gin@req@width=\dimen115
 )
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\rotating\rotating.sty"
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count101
+\rotFPtop=\skip57
+\rotFPbot=\skip58
+\rot@float@box=\box28
+\rot@mess@toks=\toks21
+)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\epstopdf.sty"
 Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
 
@@ -207,8 +219,8 @@ department.
  (xkeyval.sty
 Package: xkeyval 2005/11/25 v2.5e package option processing (HA)
  (xkeyval.tex
-\XKV@toks=\toks21
-\XKV@depth=\count101
+\XKV@toks=\toks22
+\XKV@depth=\count102
 File: xkeyval.tex 2005/11/25 v2.5e key=value parser (HA)
 )) (caption.sty
 Package: caption 2006/03/21 v3.0j Customising captions (AR)
@@ -220,16 +232,19 @@ Package: caption3 2006/03/16 v3.0j caption3 kernel (AR)
 \captionindent=\dimen119
 \captionparindent=\dimen120
 \captionhangindent=\dimen121
-))
+)
+Package caption Info: rotating package v2.0 (or newer) detected on input line 3
+79.
+)
 (chngpage.sty
 Package: chngpage 2003/08/10 v1.2 change page layout
-\c@cp@cnt=\count102
-\c@cp@tempcnt=\count103
+\c@cp@cnt=\count103
+\c@cp@tempcnt=\count104
 ) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\afterpage.sty"
 Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
-\AP@output=\toks22
-\AP@partial=\box28
-\AP@footins=\box29
+\AP@output=\toks23
+\AP@partial=\box29
+\AP@footins=\box30
 )) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
 Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \heavyrulewidth=\dimen122
@@ -242,38 +257,35 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \cmidrulesep=\dimen129
 \cmidrulekern=\dimen130
 \defaultaddspace=\dimen131
-\@cmidla=\count104
-\@cmidlb=\count105
+\@cmidla=\count105
+\@cmidlb=\count106
 \@aboverulesep=\dimen132
 \@belowrulesep=\dimen133
-\@thisruleclass=\count106
-\@lastruleclass=\count107
+\@thisruleclass=\count107
+\@lastruleclass=\count108
 \@thisrulewidth=\dimen134
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\units\nicefrac.sty"
 Package: nicefrac 1998/08/04 v0.9b Nice fractions
-\L@UnitsRaiseDisplaystyle=\skip57
-\L@UnitsRaiseTextstyle=\skip58
-\L@UnitsRaiseScriptstyle=\skip59
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-))
+\L@UnitsRaiseDisplaystyle=\skip59
+\L@UnitsRaiseTextstyle=\skip60
+\L@UnitsRaiseScriptstyle=\skip61
+)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\mathtools\mathtools.sty"
 Package: mathtools 2015/06/17 v1.17 mathematical typesetting tools
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\calc.sty"
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count108
-\calc@Bcount=\count109
+\calc@Acount=\count109
+\calc@Bcount=\count110
 \calc@Adimen=\dimen135
 \calc@Bdimen=\dimen136
-\calc@Askip=\skip60
-\calc@Bskip=\skip61
+\calc@Askip=\skip62
+\calc@Bskip=\skip63
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count110
-\calc@Cskip=\skip62
+\calc@Ccount=\count111
+\calc@Cskip=\skip64
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\mathtools\mhsetup.sty"
 Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
@@ -282,9 +294,9 @@ LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count111
+\g_MT_multlinerow_int=\count112
 \l_MT_multwidth_dim=\dimen137
-\origjot=\skip63
+\origjot=\skip65
 \l_MT_shortvdotswithinadjustabove_dim=\dimen138
 \l_MT_shortvdotswithinadjustbelow_dim=\dimen139
 \l_MT_above_intertext_sep=\dimen140
@@ -293,24 +305,24 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_below_shortintertext_sep=\dimen143
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.sty"
-\lst@mode=\count112
-\lst@gtempboxa=\box30
-\lst@token=\toks23
-\lst@length=\count113
+\lst@mode=\count113
+\lst@gtempboxa=\box31
+\lst@token=\toks24
+\lst@length=\count114
 \lst@currlwidth=\dimen144
-\lst@column=\count114
-\lst@pos=\count115
+\lst@column=\count115
+\lst@pos=\count116
 \lst@lostspace=\dimen145
 \lst@width=\dimen146
-\lst@newlines=\count116
-\lst@lineno=\count117
+\lst@newlines=\count117
+\lst@lineno=\count118
 \lst@maxwidth=\dimen147
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count118
-\lst@skipnumbers=\count119
-\lst@framebox=\box31
+\c@lstnumber=\count119
+\lst@skipnumbers=\count120
+\lst@framebox=\box32
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.cfg"
 File: listings.cfg 2015/06/04 1.6 listings configuration
@@ -346,7 +358,7 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 )
-LaTeX Info: Redefining \emph on input line 84.
+LaTeX Info: Redefining \emph on input line 85.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
@@ -360,23 +372,23 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\subfigure\subfigure.sty"
 Package: subfigure 2002/07/30 v2.1.4 subfigure package
-\subfigtopskip=\skip64
-\subfigcapskip=\skip65
+\subfigtopskip=\skip66
+\subfigcapskip=\skip67
 \subfigcaptopadj=\dimen148
-\subfigbottomskip=\skip66
+\subfigbottomskip=\skip68
 \subfigcapmargin=\dimen149
-\subfiglabelskip=\skip67
-\c@subfigure=\count120
-\c@lofdepth=\count121
-\c@subtable=\count122
-\c@lotdepth=\count123
+\subfiglabelskip=\skip69
+\c@subfigure=\count121
+\c@lofdepth=\count122
+\c@subtable=\count123
+\c@lotdepth=\count124
 
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\subfigure\subfigure.cfg")
-\subfig@top=\skip68
-\subfig@bottom=\skip69
+\subfig@top=\skip70
+\subfig@bottom=\skip71
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -422,13 +434,13 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen150
-\Hy@linkcounter=\count124
-\Hy@pagecounter=\count125
+\Hy@linkcounter=\count125
+\Hy@pagecounter=\count126
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count126
+\Hy@SavedSpaceFactor=\count127
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -450,7 +462,7 @@ Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 ))
-\c@Hy@tempcnt=\count127
+\c@Hy@tempcnt=\count128
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip11
@@ -458,7 +470,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen151
-\Fld@menulength=\count128
+\Fld@menulength=\count129
 \Field@Width=\dimen152
 \Fld@charsize=\dimen153
 Package hyperref Info: Hyper figures OFF on input line 6295.
@@ -470,47 +482,53 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count129
-\c@Item=\count130
-\c@Hfootnote=\count131
+\Hy@abspage=\count130
+\c@Item=\count131
+\c@Hfootnote=\count132
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count132
-\c@bookmark@seq@number=\count133
-\Hy@SectionHShift=\skip70
+\Fld@listcount=\count133
+\c@bookmark@seq@number=\count134
+\Hy@SectionHShift=\skip72
 )
-Package hyperref Info: Option `breaklinks' set `false' on input line 175.
-Package hyperref Info: Option `linktocpage' set `false' on input line 175.
-Package hyperref Info: Option `colorlinks' set `false' on input line 175.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 175.
+Package hyperref Info: Option `breaklinks' set `false' on input line 176.
+Package hyperref Info: Option `linktocpage' set `false' on input line 176.
+Package hyperref Info: Option `colorlinks' set `false' on input line 176.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 176.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 175.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 176.
 
-(master.aux (introduction.aux) (problem_statment.aux) (gpu_intro.aux)
-(systemOverview.aux) (eq_equations.aux
+(master.aux (introduction.aux) (problem_statment.aux) (gpu_intro.aux
+
+LaTeX Warning: Label `fig:GPUpicture' multiply defined.
+
+
+LaTeX Warning: Label `fig:GPUarch' multiply defined.
+
+) (systemOverview.aux) (eq_equations.aux
 
 LaTeX Warning: Label `eq:un0_ZF' multiply defined.
 
 ) (eq_performance.aux) (final_summary.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 214.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 215.
+LaTeX Font Info:    ... okay on input line 215.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 215.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
@@ -518,17 +536,17 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count134
+\scratchcounter=\count135
 \scratchdimen=\dimen154
-\scratchbox=\box32
-\nofMPsegments=\count135
-\nofMParguments=\count136
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count137
+\scratchbox=\box33
+\nofMPsegments=\count136
+\nofMParguments=\count137
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count138
 \MPscratchDim=\dimen155
-\MPnumerator=\count138
-\makeMPintoPDFobject=\count139
-\everyMPtoPDFconversion=\toks25
+\MPnumerator=\count139
+\makeMPintoPDFobject=\count140
+\everyMPtoPDFconversion=\toks26
 ) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ms\ragged2e.sty"
 Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
 
@@ -538,28 +556,28 @@ Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
 ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 126.
 )
-\CenteringLeftskip=\skip71
-\RaggedLeftLeftskip=\skip72
-\RaggedRightLeftskip=\skip73
-\CenteringRightskip=\skip74
-\RaggedLeftRightskip=\skip75
-\RaggedRightRightskip=\skip76
-\CenteringParfillskip=\skip77
-\RaggedLeftParfillskip=\skip78
-\RaggedRightParfillskip=\skip79
-\JustifyingParfillskip=\skip80
-\CenteringParindent=\skip81
-\RaggedLeftParindent=\skip82
-\RaggedRightParindent=\skip83
-\JustifyingParindent=\skip84
+\CenteringLeftskip=\skip73
+\RaggedLeftLeftskip=\skip74
+\RaggedRightLeftskip=\skip75
+\CenteringRightskip=\skip76
+\RaggedLeftRightskip=\skip77
+\RaggedRightRightskip=\skip78
+\CenteringParfillskip=\skip79
+\RaggedLeftParfillskip=\skip80
+\RaggedRightParfillskip=\skip81
+\JustifyingParfillskip=\skip82
+\CenteringParindent=\skip83
+\RaggedLeftParindent=\skip84
+\RaggedRightParindent=\skip85
+\JustifyingParindent=\skip86
 )
 Package caption Info: hyperref package v6.74m (or newer) detected on input line
- 214.
+ 215.
 Package caption Info: listings package v1.2 (or newer) detected on input line 2
-14.
-\c@lstlisting=\count140
-\AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring OFF on input line 214.
+15.
+\c@lstlisting=\count141
+\AtBeginShipoutBox=\box34
+Package hyperref Info: Link coloring OFF on input line 215.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -567,22 +585,22 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count141
+\c@section@level=\count142
 )
-LaTeX Info: Redefining \ref on input line 214.
-LaTeX Info: Redefining \pageref on input line 214.
-LaTeX Info: Redefining \nameref on input line 214.
+LaTeX Info: Redefining \ref on input line 215.
+LaTeX Info: Redefining \pageref on input line 215.
+LaTeX Info: Redefining \nameref on input line 215.
 
 (master.out) (master.out)
 \@outlinefile=\write3
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 223.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 224.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 223.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 224.
  [1
 
 {C:/Users/ecestudent/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
@@ -595,7 +613,7 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
 
 ]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 223.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 224.
  (master.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
@@ -626,15 +644,14 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] [10
 
-] (master.lof)
+] (master.lof [11
+
+])
 \tf@lof=\write6
- [11
-
-] [12
-
-] (introduction.tex
+ [12] (introduction.tex
 Chapter 1.
 ) [1
+
 
 
 ] (problem_statment.tex [2
@@ -663,14 +680,83 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 
 ]
 Chapter 3.
-[7] [8]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 60.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
+[7]
+<figures/gpu_intro/CPUaddBlockDiagram.pdf, id=295, 1505.78563pt x 1465.87653pt>
+File: figures/gpu_intro/CPUaddBlockDiagram.pdf Graphic file (type pdf)
+<use figures/gpu_intro/CPUaddBlockDiagram.pdf>
+Package pdftex.def Info: figures/gpu_intro/CPUaddBlockDiagram.pdf used on input
+ line 48.
+(pdftex.def)             Requested size: 126.0025pt x 122.6407pt.
+
+<figures/gpu_intro/GPUaddBlockDiagram.pdf, id=296, 2194.67928pt x 829.6857pt>
+File: figures/gpu_intro/GPUaddBlockDiagram.pdf Graphic file (type pdf)
+
+<use figures/gpu_intro/GPUaddBlockDiagram.pdf>
+Package pdftex.def Info: figures/gpu_intro/GPUaddBlockDiagram.pdf used on input
+ line 53.
+(pdftex.def)             Requested size: 186.41975pt x 70.46538pt.
+ [8 <./figures/gpu_intro/CPUaddBlockDiagram.pdf> <./figures/gpu_intro/GPUaddBlo
+ckDiagram.pdf>]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 59.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-[9
+) [9
 
 ]
+Overfull \hbox (4.82806pt too wide) in paragraph at lines 157--165
+[]\OT1/ptm/m/n/12 A GPU ker-nel is ex-e-cuted on a GPU by launch-ing numTreadsP
+erBlock$\OMS/cmsy/m/n/12 $\OT1/ptm/m/n/12 numBlocks threads.
+ []
+
+
+Overfull \hbox (21.70753pt too wide) in paragraph at lines 157--165
+\OT1/ptm/m/n/12 signed. block-Dim is the num-ber of threads as-signed per block
+, in fact block-Dim $\OT1/cmr/m/n/12 =$ \OT1/ptm/m/n/12 numTreadsPerBlock.
+ []
+
+<figures/gpu_intro/threadsBlocks32.pdf, id=390, 1866.41284pt x 516.4836pt>
+File: figures/gpu_intro/threadsBlocks32.pdf Graphic file (type pdf)
+
+<use figures/gpu_intro/threadsBlocks32.pdf>
+Package pdftex.def Info: figures/gpu_intro/threadsBlocks32.pdf used on input li
+ne 171.
+(pdftex.def)             Requested size: 158.9936pt x 43.99115pt.
+
+<figures/gpu_intro/threadsBlocks36.pdf, id=391, 2321.91464pt x 516.4836pt>
+File: figures/gpu_intro/threadsBlocks36.pdf Graphic file (type pdf)
+
+<use figures/gpu_intro/threadsBlocks36.pdf>
+Package pdftex.def Info: figures/gpu_intro/threadsBlocks36.pdf used on input li
+ne 176.
+(pdftex.def)             Requested size: 198.74222pt x 44.20393pt.
+ [10]
+<figures/gpu_intro/fullGPUmemBlockDiagram.png, id=424, 713.064pt x 448.5558pt>
+File: figures/gpu_intro/fullGPUmemBlockDiagram.png Graphic file (type png)
+
+<use figures/gpu_intro/fullGPUmemBlockDiagram.png>
+Package pdftex.def Info: figures/gpu_intro/fullGPUmemBlockDiagram.png used on i
+nput line 196.
+(pdftex.def)             Requested size: 357.73582pt x 225.04391pt.
+
+<figures/gpu_intro/k40c_k20c.jpg, id=428, 542.025pt x 440.847pt>
+File: figures/gpu_intro/k40c_k20c.jpg Graphic file (type jpg)
+
+<use figures/gpu_intro/k40c_k20c.jpg>
+Package pdftex.def Info: figures/gpu_intro/k40c_k20c.jpg used on input line 209
+.
+(pdftex.def)             Requested size: 361.34999pt x 293.90623pt.
+
+<figures/gpu_intro/Kepler_box.png, id=429, 681.2652pt x 305.943pt>
+File: figures/gpu_intro/Kepler_box.png Graphic file (type png)
+
+<use figures/gpu_intro/Kepler_box.png>
+Package pdftex.def Info: figures/gpu_intro/Kepler_box.png used on input line 21
+4.
+(pdftex.def)             Requested size: 469.75499pt x 210.96083pt.
+ [11 <./figures/gpu_intro/threadsBlocks32.pdf> <./figures/gpu_intro/threadsBloc
+ks36.pdf>] [12 <./figures/gpu_intro/fullGPUmemBlockDiagram.png>] [13 <./figures
+/gpu_intro/k40c_k20c.jpg> <./figures/gpu_intro/Kepler_box.png>]
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPUwithMemcpy.eps>
 (epstopdf)                    date: 2017-03-07 00:53:18
 (epstopdf)                    size: 83289 bytes
@@ -680,16 +766,16 @@ onverted-to.pdf>
 (epstopdf)                    size: 5900 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPUw
 ithMemcpy-eps-converted-to.pdf figures/gpu_intro/CPUvsGPUwithMemcpy.eps>
-(epstopdf)             \includegraphics on input line 181.
+(epstopdf)             \includegraphics on input line 242.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.pdf, id=347, 284.06125pt
+<figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.pdf, id=458, 284.06125pt
  x 216.81pt>
 File: figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.pdf Graphic file (t
 ype pdf)
  <use figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.
-pdf used on input line 181.
+pdf used on input line 242.
 (pdftex.def)             Requested size: 289.07999pt x 220.66026pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU.eps>
 (epstopdf)                    date: 2017-03-07 00:53:19
@@ -700,15 +786,15 @@ o.pdf>
 (epstopdf)                    size: 5767 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU-
 eps-converted-to.pdf figures/gpu_intro/CPUvsGPU.eps>
-(epstopdf)             \includegraphics on input line 186.
+(epstopdf)             \includegraphics on input line 247.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/CPUvsGPU-eps-converted-to.pdf, id=348, 262.9825pt x 216.81pt
+<figures/gpu_intro/CPUvsGPU-eps-converted-to.pdf, id=459, 262.9825pt x 216.81pt
 >
 File: figures/gpu_intro/CPUvsGPU-eps-converted-to.pdf Graphic file (type pdf)
  <use figures/gpu_intro/CPUvsGPU-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU-eps-converted-to.pdf used o
-n input line 186.
+n input line 247.
 (pdftex.def)             Requested size: 289.07999pt x 238.33624pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPUzoomed.eps>
 (epstopdf)                    date: 2017-03-07 00:53:19
@@ -719,52 +805,43 @@ rted-to.pdf>
 (epstopdf)                    size: 11721 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPUz
 oomed-eps-converted-to.pdf figures/gpu_intro/CPUvsGPUzoomed.eps>
-(epstopdf)             \includegraphics on input line 191.
+(epstopdf)             \includegraphics on input line 252.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/CPUvsGPUzoomed-eps-converted-to.pdf, id=349, 262.9825pt x 21
+<figures/gpu_intro/CPUvsGPUzoomed-eps-converted-to.pdf, id=460, 262.9825pt x 21
 6.81pt>
 File: figures/gpu_intro/CPUvsGPUzoomed-eps-converted-to.pdf Graphic file (type 
 pdf)
  <use figures/gpu_intro/CPUvsGPUzoomed-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPUzoomed-eps-converted-to.pdf 
-used on input line 191.
+used on input line 252.
 (pdftex.def)             Requested size: 289.07999pt x 238.33624pt.
-
-<figures/gpu_intro/k40c_k20c.jpg, id=352, 542.025pt x 440.847pt>
 File: figures/gpu_intro/k40c_k20c.jpg Graphic file (type jpg)
 
 <use figures/gpu_intro/k40c_k20c.jpg>
-Package pdftex.def Info: figures/gpu_intro/k40c_k20c.jpg used on input line 205
+Package pdftex.def Info: figures/gpu_intro/k40c_k20c.jpg used on input line 266
 .
 (pdftex.def)             Requested size: 361.34999pt x 293.90623pt.
-
-<figures/gpu_intro/Kepler_box.png, id=353, 681.2652pt x 305.943pt>
 File: figures/gpu_intro/Kepler_box.png Graphic file (type png)
-
-<use figures/gpu_intro/Kepler_box.png>
-Package pdftex.def Info: figures/gpu_intro/Kepler_box.png used on input line 21
-0.
+ <use figures/gpu_intro/Kepler_box.png>
+Package pdftex.def Info: figures/gpu_intro/Kepler_box.png used on input line 27
+1.
 (pdftex.def)             Requested size: 469.75499pt x 210.96083pt.
- [10] [11 <./figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.pdf> <./figu
-res/gpu_intro/CPUvsGPU-eps-converted-to.pdf>] [12 <./figures/gpu_intro/CPUvsGPU
-zoomed-eps-converted-to.pdf>] [13 <./figures/gpu_intro/k40c_k20c.jpg> <./figure
-s/gpu_intro/Kepler_box.png>]
-<figures/gpu_intro/GPU_blockDiagram.png, id=438, 776.1798pt x 401.8212pt>
+
+[14] [15 <./figures/gpu_intro/CPUvsGPUwithMemcpy-eps-converted-to.pdf> <./figur
+es/gpu_intro/CPUvsGPU-eps-converted-to.pdf>] [16 <./figures/gpu_intro/CPUvsGPUz
+oomed-eps-converted-to.pdf>]
+<figures/gpu_intro/GPU_blockDiagram.png, id=502, 776.1798pt x 401.8212pt>
 File: figures/gpu_intro/GPU_blockDiagram.png Graphic file (type png)
 
 <use figures/gpu_intro/GPU_blockDiagram.png>
 Package pdftex.def Info: figures/gpu_intro/GPU_blockDiagram.png used on input l
-ine 239.
+ine 300.
 (pdftex.def)             Requested size: 361.34999pt x 187.07178pt.
- [14 <./figures/gpu_intro/GPU_blockDiagram.png>]) [15] (systemOverview.tex [16
-
-
-
-]
+ [17]) [18 <./figures/gpu_intro/GPU_blockDiagram.png>] (systemOverview.tex
 Chapter 4.
 
-<figures/systemOverview/blockDiagram.pdf, id=461, 4237.27034pt x 2836.13582pt>
+<figures/systemOverview/blockDiagram.pdf, id=521, 4237.27034pt x 2836.13582pt>
 File: figures/systemOverview/blockDiagram.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/blockDiagram.pdf>
@@ -772,14 +849,18 @@ Package pdftex.def Info: figures/systemOverview/blockDiagram.pdf used on input
 line 27.
 (pdftex.def)             Requested size: 433.62pt x 290.20813pt.
 
-<figures/gpu/packet.png, id=463, 737.154pt x 151.767pt>
+<figures/gpu/packet.png, id=523, 737.154pt x 151.767pt>
 File: figures/gpu/packet.png Graphic file (type png)
 
 <use figures/gpu/packet.png>
 Package pdftex.def Info: figures/gpu/packet.png used on input line 62.
 (pdftex.def)             Requested size: 469.75494pt x 96.716pt.
- [17] [18 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png
->] [19]
+ [19
+
+
+
+] [20 <./figures/systemOverview/blockDiagram.pdf> <./figures/gpu/packet.png>] [
+21]
 Package epstopdf Info: Source file: <figures/gpu/L_2_packets.eps>
 (epstopdf)                    date: 2016-10-05 15:17:55
 (epstopdf)                    size: 350845 bytes
@@ -792,32 +873,32 @@ df>
 (epstopdf)             \includegraphics on input line 131.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu/L_2_packets-eps-converted-to.pdf, id=496, 327.2225pt x 343.2825pt>
+<figures/gpu/L_2_packets-eps-converted-to.pdf, id=555, 327.2225pt x 343.2825pt>
 File: figures/gpu/L_2_packets-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/gpu/L_2_packets-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu/L_2_packets-eps-converted-to.pdf used on i
 nput line 131.
 (pdftex.def)             Requested size: 361.34999pt x 379.0838pt.
- [20] [21 <./figures/gpu/L_2_packets-eps-converted-to.pdf>]
-<figures/systemOverview/OQPSK.pdf, id=532, 4097.23717pt x 2603.49666pt>
+ [22] [23 <./figures/gpu/L_2_packets-eps-converted-to.pdf>]
+<figures/systemOverview/OQPSK.pdf, id=590, 4097.23717pt x 2603.49666pt>
 File: figures/systemOverview/OQPSK.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/OQPSK.pdf>
 Package pdftex.def Info: figures/systemOverview/OQPSK.pdf used on input line 19
 8.
 (pdftex.def)             Requested size: 433.62pt x 275.50056pt.
-) [22] [23 <./figures/systemOverview/OQPSK.pdf>] (eq_equations.tex [24
+) [24] [25 <./figures/systemOverview/OQPSK.pdf>] (eq_equations.tex [26
 
 
 
 ]
 Chapter 5.
 
-LaTeX Warning: Citation `PAQ-phase1' on page 25 undefined on input line 28.
+LaTeX Warning: Citation `PAQ-phase1' on page 27 undefined on input line 28.
 
-[25] [26] [27] [28] [29] [30
+[27] [28] [29] [30] [31] [32
 
-] [31] [32]
+] [33] [34]
 Package epstopdf Info: Source file: <figures/equations/FDE2_spectrum_PSI.eps>
 (epstopdf)                    date: 2017-01-09 13:06:18
 (epstopdf)                    size: 424818 bytes
@@ -830,7 +911,7 @@ trum_PSI-eps-converted-to.pdf figures/equations/FDE2_spectrum_PSI.eps>
 (epstopdf)             \includegraphics on input line 292.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=635, 319.1925pt x
+<figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=693, 319.1925pt x
  333.245pt>
 File: figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf Graphic file (ty
 pe pdf)
@@ -839,39 +920,39 @@ Package pdftex.def Info: figures/equations/FDE2_spectrum_PSI-eps-converted-to.p
 df used on input line 292.
 (pdftex.def)             Requested size: 361.34999pt x 377.25908pt.
 )
-[33
+[35
 
-] [34 <./figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>]
+] [36 <./figures/equations/FDE2_spectrum_PSI-eps-converted-to.pdf>]
 (eq_performance.tex
 Chapter 6.
-) [35
+) [37
 
 
 
-] (final_summary.tex [36
+] (final_summary.tex [38
 
 
 
 ]
 Chapter 7.
-) [37] (master.bbl (master.brf)
+) [39] (master.bbl (master.brf)
 \tf@brf=\write7
- [38
+ [40
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 267.
- [39]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 267.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 268.
+ [41]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 268.
  (master.aux (introduction.aux)
 (problem_statment.aux) (gpu_intro.aux) (systemOverview.aux) (eq_equations.aux)
 (eq_performance.aux) (final_summary.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 267.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 267.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 268.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 268.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: B580940EB82F8AE7608FAC7FE8369A40;1629.
+(rerunfilecheck)             Checksum: 936EF4E329AD53B092C0093AC6E7A328;1786.
 Package rerunfilecheck Info: File `master.brf' has not changed.
-(rerunfilecheck)             Checksum: E2EF2C5D04BA642997795612FA907689;308.
+(rerunfilecheck)             Checksum: FDBC83F26D6553CD5264B272FC253B66;308.
 
 
 LaTeX Warning: There were undefined references.
@@ -879,15 +960,15 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 267.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 268.
  )
-(\end occurred when \iffalse on line 223 was incomplete)
-(\end occurred when \iffalse on line 223 was incomplete) 
+(\end occurred when \iffalse on line 224 was incomplete)
+(\end occurred when \iffalse on line 224 was incomplete) 
 Here is how much of TeX's memory you used:
- 10720 strings out of 493636
- 159873 string characters out of 3141310
- 403886 words of memory out of 3000000
- 13553 multiletter control sequences out of 15000+200000
+ 10796 strings out of 493636
+ 161682 string characters out of 3141310
+ 410206 words of memory out of 3000000
+ 13622 multiletter control sequences out of 15000+200000
  25399 words of font info for 69 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  59i,17n,122p,421b,1891s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -909,9 +990,9 @@ sy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><
 C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)
 /MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on master.pdf (51 pages, 3293004 bytes).
+Output written on master.pdf (53 pages, 3793532 bytes).
 PDF statistics:
- 801 PDF objects out of 1000 (max. 8388607)
- 260 named destinations out of 1000 (max. 500000)
- 264 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 858 PDF objects out of 1000 (max. 8388607)
+ 258 named destinations out of 1000 (max. 500000)
+ 305 words of extra memory for PDF output out of 10000 (max. 10000000)
 
