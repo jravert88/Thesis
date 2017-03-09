@@ -2,52 +2,54 @@
 \providecommand\hyper@newdestlabel[2]{}
 \citation{wikipedia-gpu:2015}
 \citation{CUDA_toolkit_doc}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Signal Processing with GPUs}{7}{chapter.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Signal Processing with GPUs}{5}{chapter.3}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sec:gpu}{{3}{7}{Signal Processing with GPUs}{chapter.3}{}}
-\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{7}{3}{chapter.3}}}
-\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{7}{3}{chapter.3}}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Simple GPU code example}{7}{section.3.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{8}{figure.3.1}}
-\newlabel{fig:CPUaddBlockDiagram}{{3.1}{8}{Simple GPU code example}{figure.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{8}{figure.3.2}}
-\newlabel{fig:GPUaddBlockDiagram}{{3.2}{8}{Simple GPU code example}{figure.3.2}{}}
-\newlabel{code:GPUvsCPU}{{3.1}{9}{Comparison of CPU verse GPU code}{lstlisting.3.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}Comparison of CPU verse GPU code.}{9}{lstlisting.3.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}GPU kernel using threads and thread blocks}{10}{section.3.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{11}{figure.3.3}}
-\newlabel{fig:threadsBlocks32}{{3.3}{11}{GPU kernel using threads and thread blocks}{figure.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{11}{figure.3.4}}
-\newlabel{fig:threadsBlocks36}{{3.4}{11}{GPU kernel using threads and thread blocks}{figure.3.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}GPU memory}{11}{section.3.3}}
-\newlabel{RF1}{12}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{12}{figure.3.5}}
-\newlabel{fig:fullGPUmemBlockDiagram}{{3.5}{12}{GPU memory}{figure.3.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{13}{figure.3.6}}
-\newlabel{fig:GPUpicture}{{3.6}{13}{GPU memory}{figure.3.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{13}{figure.3.7}}
-\newlabel{fig:GPUarch}{{3.7}{13}{GPU memory}{figure.3.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}NVIDIA Telsa GPU architecture}{14}{section.3.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation time including memcpy from host to device and device to host.}}{15}{figure.3.8}}
-\newlabel{fig:CPUvsGPUwithMemcpy}{{3.8}{15}{GPU memory}{figure.3.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation.}}{15}{figure.3.9}}
-\newlabel{fig:CPUvsGPU}{{3.9}{15}{GPU memory}{figure.3.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces A comparison of CPU computation time verse GPU kernel computation. Note: time is in $\mu $s.}}{16}{figure.3.10}}
-\newlabel{fig:CPUvsGPUzoomed}{{3.10}{16}{GPU memory}{figure.3.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{16}{figure.3.11}}
-\newlabel{fig:GPUpicture}{{3.11}{16}{NVIDIA Telsa GPU architecture}{figure.3.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{17}{figure.3.12}}
-\newlabel{fig:GPUarch}{{3.12}{17}{NVIDIA Telsa GPU architecture}{figure.3.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{17}{table.3.1}}
-\newlabel{tab:gpu-resources_jeffs}{{3.1}{17}{NVIDIA Telsa GPU architecture}{table.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}CUDA programming}{17}{section.3.5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces Block diagram of Tesla GPU microarchitecture. The dashed box indicates what blocks are located on the GPU chip. The dash dotted box indicates what blocks are located off the GPU chip.}}{18}{figure.3.13}}
-\newlabel{fig:GPU_blockDiagram}{{3.13}{18}{NVIDIA Telsa GPU architecture}{figure.3.13}{}}
+\newlabel{sec:gpu}{{3}{5}{Signal Processing with GPUs}{chapter.3}{}}
+\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{5}{3}{chapter.3}}}
+\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{5}{3}{chapter.3}}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Simple GPU code example}{5}{section.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{6}{figure.3.1}}
+\newlabel{fig:CPUaddBlockDiagram}{{3.1}{6}{Simple GPU code example}{figure.3.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{6}{figure.3.2}}
+\newlabel{fig:GPUaddBlockDiagram}{{3.2}{6}{Simple GPU code example}{figure.3.2}{}}
+\newlabel{code:GPUvsCPU}{{3.1}{7}{Comparison of CPU verse GPU code}{lstlisting.3.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}Comparison of CPU verse GPU code.}{7}{lstlisting.3.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}GPU kernel using threads and thread blocks}{8}{section.3.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{9}{figure.3.3}}
+\newlabel{fig:threadsBlocks32}{{3.3}{9}{GPU kernel using threads and thread blocks}{figure.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{9}{figure.3.4}}
+\newlabel{fig:threadsBlocks36}{{3.4}{9}{GPU kernel using threads and thread blocks}{figure.3.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}GPU memory}{9}{section.3.3}}
+\newlabel{RF1}{10}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{10}{figure.3.5}}
+\newlabel{fig:fullGPUmemBlockDiagram}{{3.5}{10}{GPU memory}{figure.3.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{11}{figure.3.6}}
+\newlabel{fig:GPUpicture}{{3.6}{11}{GPU memory}{figure.3.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{11}{table.3.1}}
+\newlabel{tab:gpu-resources_jeffs}{{3.1}{11}{GPU memory}{table.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Cuda Libraries}{11}{section.3.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{12}{figure.3.7}}
+\newlabel{fig:GPUarch}{{3.7}{12}{GPU memory}{figure.3.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Cuda Convolution}{13}{section.3.5}}
+\newlabel{eq:simple_conv}{{3.2}{13}{Cuda Convolution}{equation.3.5.2}{}}
+\citation{Cooley-Tukey_old}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison of complex convolution in on CPU to GPU with varying signal lengths.}}{14}{figure.3.8}}
+\newlabel{fig:CPUvsGPU}{{3.8}{14}{Cuda Convolution}{figure.3.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing when CPU convolution is faster than GPU convolution.}}{15}{figure.3.9}}
+\newlabel{fig:CPUvsGPU_CPUtoGPU}{{3.9}{15}{Cuda Convolution}{figure.3.9}{}}
+\@writefile{brf}{\backcite{Cooley-Tukey_old}{{15}{3.5}{figure.3.9}}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Thread Optimization}{15}{section.3.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing trade offs with convolution in GPUs.}}{16}{figure.3.10}}
+\newlabel{fig:CPUvsGPU_GPUtoGPU}{{3.10}{16}{Cuda Convolution}{figure.3.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}}{16}{table.3.2}}
+\newlabel{tab:CPUvsGPUtable}{{3.2}{16}{Cuda Convolution}{table.3.2}{}}
+\newlabel{code:convFun}{{3.2}{18}{CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU}{lstlisting.3.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU.}{18}{lstlisting.3.2}}
 \@setckpt{gpu_intro}{
-\setcounter{page}{19}
-\setcounter{equation}{1}
-\setcounter{enumi}{3}
+\setcounter{page}{22}
+\setcounter{equation}{2}
+\setcounter{enumi}{0}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
@@ -55,25 +57,25 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{3}
-\setcounter{section}{5}
+\setcounter{section}{6}
 \setcounter{subsection}{0}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{13}
-\setcounter{table}{1}
+\setcounter{figure}{10}
+\setcounter{table}{2}
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{1}
 \setcounter{cp@cnt}{0}
 \setcounter{cp@tempcnt}{0}
-\setcounter{lstnumber}{94}
+\setcounter{lstnumber}{258}
 \setcounter{subfigure}{0}
 \setcounter{lofdepth}{1}
 \setcounter{subtable}{0}
 \setcounter{lotdepth}{1}
-\setcounter{Item}{3}
+\setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{13}
-\setcounter{lstlisting}{1}
+\setcounter{bookmark@seq@number}{14}
+\setcounter{lstlisting}{2}
 \setcounter{section@level}{1}
 }
