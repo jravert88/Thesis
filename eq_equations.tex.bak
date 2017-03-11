@@ -42,10 +42,10 @@ The ZF equalizer is an FIR filter defined by the coefficients
 c_\text{ZF}(-L_1) & \cdots & c_\text{ZF}(0) & \cdots & c_\text{ZF}(L_2).
 \end{matrix}
 \end{equation}
-The filter coefficients are the solution to the matrix vector equation \cite[eq. (324)]{PAQ-phase1}
+The filter coefficients are the solution to the matrix vector equation \cite[eq. (311)]{PAQ-phase1}
 \begin{equation}
-\mathbf{H} \mathbf{c}_\text{ZF} = \mathbf{u}_{n_0}
-\label{eq:c_hayes}
+\mathbf{c}_\text{ZF} = \big(\mathbf{H}^\dagger\mathbf{H}\big)^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}
+\label{eq:c_ZF_direct}
 \end{equation}
 where
 \begin{equation}
@@ -65,7 +65,7 @@ c_\text{ZF}(-L_1) \\ \vdots \\ c_\text{ZF}(0) \\ \vdots \\ c_\text{ZF}(L_2)
 		\label{eq:un0_ZF}
 \end{equation}
 and
-\begin{equation}
+\begin{equation} 
 \mathbf{H} = 
 		\begin{bmatrix}
 		h(-N_1)		&  			& 		 	&  			\\
@@ -78,39 +78,15 @@ and
 	\end{bmatrix}.
 \end{equation}
 
-Jeff explains how cuda solvers handle this equation.
-
-The ZF equalizer was studied in the PAQ Phase 1 Final Report in ~equation 324
-\begin{equation}
-\mathbf{c}_\text{ZF} = (\mathbf{H}^\dagger \mathbf{H})^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}
-\label{eq:c_ZF_pinv}
-\end{equation}
-where $\mathbf{c}_\text{ZF}$ is a $L_{eq} \times 1$ vector of equalizer coefficients computed to invert the channel estimate $\mathbf{h}$
-and $\mathbf{u}_{n_0}$ is the desired channel impulse response centered on $n0 = N_1+L_1+1$
-\begin{equation}
-\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
-	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
-		\text{$n_0-1$ zeros}
-		\\ \\
-		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
-		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
-		\end{matrix*}.
-		\label{eq:un0_ZF}
-\end{equation}
-The $L_{eq}+N_1+N_2 \times L_{eq}$ convolution matrix $\mathbf{H}$ is built using the channel estimate $\mathbf{h}$
-\begin{equation}
-\mathbf{H} = 
-		\begin{bmatrix}
-		h(-N_1)		&  			& 		 	&  			\\
-		h(-N_1+1) 	& h(-N_1)	& 		 	&  			\\
-		\vdots	 	& \vdots	& \ddots 	&  			\\
-		h(N_2)		& h(N_2-1) 	&  			& h(-N_1)  	\\
-		 			& h(N_2) 	&  			& h(-N_1+1) \\
-		 			&  	   		&  			& \vdots	\\
-		 			&  	   		&  			& h(N_2)	\\
-	\end{bmatrix}.
-\end{equation}
-The computation of the coefficients in Equation \eqref{eq:c_ZF_pinv} can be simplified in a couple of ways: First the matrix multiplication of $\mathbf{H}^\dagger$ and $\mathbf{H}$ is the autocorrelation matrix of the channel
+Calculating Equation \eqref{eq:c_ZF_direct} would give the desired result but the computation is heavy.
+The heaviest computation is the $\mathcal{O}(n^3)$ inverse operation followed by the $\mathcal{O}(n^2)$ matrix matrix multiplies.
+Rather than performing a heavy inverse, multiplying $\mathbf{H}^\dagger \mathbf{H}$ on both sides of equation \eqref{eq:c_ZF_direct} results in
+\begin{align}
+\mathbf{H}^\dagger\mathbf{H} \mathbf{c}_\text{ZF} &= \mathbf{H}^\dagger \mathbf{u}_{n_0} \nonumber \\
+\mathbf{R}_{h} \mathbf{c}_\text{ZF} &= \mathbf{h}_{n_0}
+\label{eq:c_ZF_solve}
+\end{align}
+where
 \begin{equation}
 \mathbf{R}_{h} = 
 \mathbf{H}^\dagger \mathbf{H} = 
@@ -122,32 +98,98 @@ The computation of the coefficients in Equation \eqref{eq:c_ZF_pinv} can be simp
 	\end{bmatrix}
 	\label{eq:R_h}
 \end{equation}
-where
+is the auto-correlation matrix of the channel estimate $\mathbf{h}$ with 
 \begin{equation}
 r_{h}(k) = \sum_{n=-N_1}^{N_2} h(n) h^\ast(n-k).
 \end{equation}
-Second the matrix vector multiplication of $\mathbf{H}^\dagger$ and $\mathbf{u}_{n_0}$ is simply the $n_0$th row of $\mathbf{H}^\dagger$ or the conjugated $n_0$th column of $\mathbf{H}$.
-A new vector $\mathbf{h}_{n_0}$ is defined by
+and 
 \begin{equation}
 \mathbf{h}_{n_0} = \mathbf{H}^\dagger \mathbf{u}_{n_0} = 
-\begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}.
+\begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}
 \label{eq:h_no}
 \end{equation}
-To simplify, Equations \eqref{eq:R_h} and \eqref{eq:h_no} are substituted into Equation \eqref{eq:c_ZF_pinv} resulting in 
-\begin{equation}
-\mathbf{c}_\text{ZF} = \mathbf{R}^{-1}_{h} \mathbf{h}_{n_0}.
-\label{eq:c_ZF_R_h}
-\end{equation}
+is a vector with the channel estimate $\mathbf{h}$ centered at $n_0$.
 
-Computing the inverse of $\mathbf{R}_{h}$ is computationally heavy because an inverse is an $N^3$ operation.
-To avoid an inverse, $\mathbf{R}_{h}$ is moved to the left side and $\mathbf{c}_\text{ZF}$ is found by solving a system of linear equations. 
-Note that $r_{h}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{h}$ sparse or $\%63$ zeros.
-The sparseness of $\mathbf{R}_{h}$ is leveraged to reduce computation drastically.
-The Zero-Forcing Equalizer coefficients are computed by solving
+Note that $\mathbf{R}_{h}$ can be built by computing
 \begin{equation}
-\mathbf{R}_h \mathbf{c}_\text{ZF} = \mathbf{h}_{n_0}.
-\label{eq:c_ZF_solve}
-\end{equation}
+\mathbf{r}_h = 
+\begin{bmatrix} r_{h}(0) \\ \vdots \\ r_{h}(L_{ch}) \\ r_{h}(L_{ch}+1) \\ \vdots \\ r_{h}(L_{eq}-1)\end{bmatrix} =
+\begin{bmatrix} r_{h}(0) \\ \vdots \\ r_{h}(L_{ch}) \\ 0 \\ \vdots \\ 0  \end{bmatrix},
+\end{equation} 
+eliminating the need for matrix matrix multiply of $\mathbf{H}^\dagger\mathbf{H}$.
+Also, $r_{h}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{h}$ sparse or $\%63$ zeros.
+The sparseness of $\mathbf{R}_{h}$ can be leveraged to reduce computation drastically.
+
+%Jeff explains how CUDA solvers handle this equation.
+%
+%The ZF equalizer was studied in the PAQ Phase 1 Final Report in ~equation 324
+%\begin{equation}
+%\mathbf{c}_\text{ZF} = (\mathbf{H}^\dagger \mathbf{H})^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}
+%\label{eq:c_ZF_pinv}
+%\end{equation}
+%where $\mathbf{c}_\text{ZF}$ is a $L_{eq} \times 1$ vector of equalizer coefficients computed to invert the channel estimate $\mathbf{h}$
+%and $\mathbf{u}_{n_0}$ is the desired channel impulse response centered on $n0 = N_1+L_1+1$
+%\begin{equation}
+%\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+%	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+%		\text{$n_0-1$ zeros}
+%		\\ \\
+%		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+%		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
+%		\end{matrix*}.
+%		\label{eq:un0_ZF}
+%\end{equation}
+%The $L_{eq}+N_1+N_2 \times L_{eq}$ convolution matrix $\mathbf{H}$ is built using the channel estimate $\mathbf{h}$
+%\begin{equation}
+%\mathbf{H} = 
+%		\begin{bmatrix}
+%		h(-N_1)		&  			& 		 	&  			\\
+%		h(-N_1+1) 	& h(-N_1)	& 		 	&  			\\
+%		\vdots	 	& \vdots	& \ddots 	&  			\\
+%		h(N_2)		& h(N_2-1) 	&  			& h(-N_1)  	\\
+%		 			& h(N_2) 	&  			& h(-N_1+1) \\
+%		 			&  	   		&  			& \vdots	\\
+%		 			&  	   		&  			& h(N_2)	\\
+%	\end{bmatrix}.
+%\end{equation}
+%The computation of the coefficients in Equation \eqref{eq:c_ZF_pinv} can be simplified in a couple of ways: First the matrix multiplication of $\mathbf{H}^\dagger$ and $\mathbf{H}$ is the autocorrelation matrix of the channel
+%\begin{equation}
+%\mathbf{R}_{h} = 
+%\mathbf{H}^\dagger \mathbf{H} = 
+%		\begin{bmatrix}
+%		r_{h}(0)		& r^\ast_{h}(1)	& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
+%		r_{h}(1) 		& r_{h}(0)		& \cdots 	& r^\ast_{h}(L_{eq}-2)  	\\
+%		\vdots	 			& \vdots				& \ddots 	&  							\\
+%		r_{h}(L_{eq}-1)	& r_{h}(L_{eq}-2)	& \cdots	& r_{h}(0)  			
+%	\end{bmatrix}
+%	\label{eq:R_h}
+%\end{equation}
+%where
+%\begin{equation}
+%r_{h}(k) = \sum_{n=-N_1}^{N_2} h(n) h^\ast(n-k).
+%\end{equation}
+%Second the matrix vector multiplication of $\mathbf{H}^\dagger$ and $\mathbf{u}_{n_0}$ is simply the $n_0$th row of $\mathbf{H}^\dagger$ or the conjugated $n_0$th column of $\mathbf{H}$.
+%A new vector $\mathbf{h}_{n_0}$ is defined by
+%\begin{equation}
+%\mathbf{h}_{n_0} = \mathbf{H}^\dagger \mathbf{u}_{n_0} = 
+%\begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}.
+%\label{eq:h_no}
+%\end{equation}
+%To simplify, Equations \eqref{eq:R_h} and \eqref{eq:h_no} are substituted into Equation \eqref{eq:c_ZF_pinv} resulting in 
+%\begin{equation}
+%\mathbf{c}_\text{ZF} = \mathbf{R}^{-1}_{h} \mathbf{h}_{n_0}.
+%\label{eq:c_ZF_R_h}
+%\end{equation}
+%
+%Computing the inverse of $\mathbf{R}_{h}$ is computationally heavy because an inverse is an $N^3$ operation.
+%To avoid an inverse, $\mathbf{R}_{h}$ is moved to the left side and $\mathbf{c}_\text{ZF}$ is found by solving a system of linear equations. 
+%Note that $r_{h}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{h}$ sparse or $\%63$ zeros.
+%The sparseness of $\mathbf{R}_{h}$ is leveraged to reduce computation drastically.
+%The Zero-Forcing Equalizer coefficients are computed by solving
+%\begin{equation}
+%\mathbf{R}_h \mathbf{c}_\text{ZF} = \mathbf{h}_{n_0}.
+%\label{eq:c_ZF_solve}
+%\end{equation}
 
 
 \subsubsection{MMSE Equalizer}
