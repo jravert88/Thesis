@@ -208,11 +208,11 @@ Why not just do all computations in local memory?
 The memory needs come from global memory to before it can be used in local memory.
 Memory should be saved in shared memory if many threads are going to use it in a thread block.
 Local and shared memory should be used as much as possible but sometimes a GPU kernel cant utilized local and shared memory because elements might only be used once.
-\begin{sidewaysfigure}
-	\centering\includegraphics[width=9in/100*55]{figures/gpu_intro/fullGPUmemBlockDiagram.png}
+\begin{figure}
 	\caption{A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}
+	\centering\includegraphics[width=9.83in/100*55]{figures/gpu_intro/fullGPUmemBlockDiagram.pdf}
 	\label{fig:fullGPUmemBlockDiagram}
-\end{sidewaysfigure}
+\end{figure}
 
 Why is global memory so slow?
 Looking at the physical hardware will shed some light.
@@ -445,6 +445,105 @@ Launching $560$ does produce about a $1.12$x speed up, but thread optimization d
 \end{figure}
 
 To answer the question: ``There are $X$ number of ways to implement this algorithm, which one is executes the fastest?'' the answer always is ``It depends. Implement the algorithm $X$ ways and see which is fastest.''
+
+\section{CPU GPU Pipelining}
+Typically a programmer acquires data, crunches the data then he is done.
+But what if you could crunch data while acquiring data? 
+How much computation time could you gain by pipelining acquiring data and processing data?
+
+Listing \ref{code:noPipe} shows example code of a straight forward structure of a typical implementation.
+The CPU acquires data from myADC on Line 5.
+After taking time to acquire data, the CPU launches GPU instructions on lines 8-10.
+cudaDeviceSynchronize on line 13 blocks the CPU until all instructions are done on the GPU.
+
+Figure \ref{fig:concurrentCPU_nonBlocking} shows a block diagram of what is happening on the CPU and GPU in Listing \ref{code:noPipe}.
+The GPU is idle while the CPU is acquiring data.
+The CPU is idle while the GPU is processing and data is being transferred to and from the GPU.
+\begin{figure}
+	\caption{The typical approach of CPU and GPU operations. This block diagram shows a Profile of Listing \ref{code:noPipe}.}
+	\centering\includegraphics[width=8.77in/100*55]{figures/gpu_intro/concurrentCPU_nonBlocking.pdf}
+	\label{fig:concurrentCPU_nonBlocking}
+\end{figure}
+\singlespacing
+\begin{lstlisting}[caption={Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:noPipe}]
+int main()
+{
+	...
+	// CPU Acuire Data
+	myADC.acquire(vec);
+	
+	// Launch instructions on GPU 
+	cudaMemcpy(dev_vec0, vec,      numBytes, cudaMemcpyHostToDevice);
+	GPUkernel<<<1, N>>>(dev_vec0);
+	cudaMemcpy(vec,      dev_vec0, numBytes, cudaMemcpyDeviceToHost);
+	
+	// Synchronize CPU with GPU
+	cudaDeviceSynchronize();
+	...
+}
+\end{lstlisting}
+\doublespacing
+
+So the question is, ``Can the throughput increase by using idle time on the GPU and CPU?''
+Yes, CPU and GPU operations can sacrifice latency for throughput by pipelineing.
+After the CPU gives instructions to the GPU, the CPU can do other operations like acquire data or perform algorithms better suited for a CPU than the GPU.
+Once the CPU has finished its operations, the CPU calls cudaDeviceSynchronize to wait for the GPU to finish.
+
+Listing \ref{code:pipe} shows how to pipeline CPU and GPU operations.
+Instead of acquiring data first, the CPU gives instructions to the GPU then starts acquiring data.
+The CPU then does an asynchronous data transfer to a temporary vector on the GPU.
+The GPU first performs a device to device transfer from the temporary vector.
+The GPU then runs the GPUkernel and transfers the result to the host.
+This system suffers latency equal a full cycle of data.
+\begin{figure}
+	\caption{GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref{code:pipe}.}
+	\centering\includegraphics[width=9.97in/100*55]{figures/gpu_intro/concurrentCPU_blocking.pdf}
+	\label{fig:concurrentCPU_blocking}
+\end{figure}
+\singlespacing
+\begin{lstlisting}[caption={Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:pipe}]
+int main()
+{
+	...
+	// Launch instructions on GPU 
+	cudaMemcpy(dev_vec, dev_temp, numBytes, cudaMemcpyDeviceToDevice);
+	GPUkernel<<<N, M>>>(dev_vec);
+	cudaMemcpy(vec,     dev_vec,  numBytes, cudaMemcpyDeviceToHost);
+	
+	// CPU Acuire Data
+	myADC.acquire(vec);
+	cudaMemcpyAsync(dev_temp, vec, numBytes, cudaMemcpyHostToDevice);
+	
+	// Synchronize CPU with GPU
+	cudaDeviceSynchronize();
+	...
+	
+	...
+	// Launch instructions on GPU 
+	cudaMemcpy(dev_vec, dev_temp, numBytes, cudaMemcpyDeviceToDevice);
+	GPUkernel<<<N, M>>>(dev_vec);
+	cudaMemcpy(vec,     dev_vec,  numBytes, cudaMemcpyDeviceToHost);
+	
+	// CPU Acuire Data
+	myADC.acquire(vec);
+	cudaMemcpyAsync(dev_temp, vec, numBytes, cudaMemcpyHostToDevice);
+	
+	// Synchronize CPU with GPU
+	cudaDeviceSynchronize();
+	...
+}
+\end{lstlisting}
+\doublespacing
+
+Pipelineing can be extended to multiple GPUs for even more throughput but only suffer latency of one GPU.
+Figure \ref{fig:concurrentCPU_nonBlocking_multiGPU} shows a block diagram of how three GPUs can be pipelined.
+A strong understanding of your full system is required to pipeline at this level.
+\begin{figure}
+	\caption{A block diagram of pipelining a CPU with three GPUs.}
+	\centering\includegraphics[width=11.42in/100*55]{figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf}
+	\label{fig:concurrentCPU_nonBlocking_multiGPU}
+\end{figure}
+
 
 \singlespacing
 \clearpage

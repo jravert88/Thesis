@@ -24,12 +24,6 @@ Wikipedia, ``Graphics processing unit,'' 2015. [Online]. Available:
   \url{http://en.wikipedia.org/wiki/Graphics_processing_unit}
 \BIBentrySTDinterwordspacing
 
-\bibitem{wikipedia-cuda:2015}
-\BIBentryALTinterwordspacing
-------, ``{CUDA},'' 2015. [Online]. Available:
-  \url{http://en.wikipedia.org/wiki/CUDA}
-\BIBentrySTDinterwordspacing
-
 \bibitem{CUDA_toolkit_doc}
 \BIBentryALTinterwordspacing
 NVIDIA, ``Cuda toolkit documentation,'' 2017. [Online]. Available:
@@ -40,5 +34,13 @@ NVIDIA, ``Cuda toolkit documentation,'' 2017. [Online]. Available:
 M.~Rice and A.~Mcmurdie, ``On frame synchronization in aeronautical
   telemetry,'' \emph{IEEE Transactions on Aerospace and Electronic Systems},
   vol.~52, no.~5, pp. 2263--2280, October 2016.
+
+\bibitem{PAQ-phase1}
+M.~Rice, ``Phase 1 report: Preamble assisted equalization for aeronautical
+  telemetry ({PAQ}),‖ {Brigham Young University},'' Technical Report, 2014,
+  submitted to the Spectrum Efficient Technologies (SET) Office of the Science
+  \& Technology, Test \& Evaluation (S\&T/T\&E) Program, Test Resource
+  Management Center (TRMC). Also available online at< http://hdl. lib. byu.
+  edu/1877/3242, Tech. Rep., 2014.
 
 \end{thebibliography}

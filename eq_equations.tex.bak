@@ -4,21 +4,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 % \cleardoublepage
 \chapter{Equalizer Equations}
 \label{sec:eq_eq}
 
 \section{Overview}
-There are 3 different kinds of equalizers I run
-1. the solving ones!!!  They are equations like Ax=b where I have A and b but I need x
-2. the initialized then iterative ones. CMA is initialized with MMSE then runs as many times a possible
-3. the multiply ones! the FDEs are a simple multiply in the frequency domain
+This thesis examines that performance and GPU implementation of 5 equalizers.
+While the performance and GPU implementation is interesting, this thesis makes no claim of theoretically expanding understanding of equalizers.
+The data-aided equalizers studied in this thesis are:
+\begin{itemize}
+\item Zero-Forcing (ZF)
+\item Minimum Mean Square Error (MMSE)
+\item Constant Modulus Algorithm (CMA)
+\item Frequency Domain Equalizer 1 (FDE1)
+\item Frequency Domain Equalizer 2 (FDE2)
+\end{itemize}
 
-\section{Zero-Forcing and MMSE Equalizers}
+The ZF and MMSE equalizers are very similar in formulation though from different sources.
+As you might tell from the names, FDE1 and FDE2 are very similar also with one subtle difference.
+CMA isn't related to any other algorithm aside from being initialized to MMSE.
 
-The Zero-Forcing (ZF) and MMSE equalizers are treated together here because they have many common features\ldots
+\section{Zero-Forcing and Minimum Mean Square Error Equalizers}
 
+The ZF and MMSE equalizers are treated together here because they have many common features.
+Both equalizers are found by solving linear equations
+\begin{equation}
+\mathbf{R}\mathbf{c} = \mathbf{h}
+\end{equation}
+where $\mathbf{c}$ is vector of the desired equalizer coefficients
+and $\mathbf{R}$ is the auto-correlation matrix of the channel estimate $\mathbf{h}$.
+It will be shown that the only difference between ZF and MMSE lies in the the auto-correlation matrix $\mathbf{R}$.
+
+\subsection{Zero-Forcing}
 The ZF equalizer is an FIR filter defined by the coefficients
 \begin{equation}
 \begin{matrix}

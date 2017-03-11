@@ -7,20 +7,23 @@
 \contentsline {figure}{\numberline {3.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{9}{figure.3.4}
 \contentsline {figure}{\numberline {3.5}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{10}{figure.3.5}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{11}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{12}{figure.3.7}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{11}{figure.3.7}
 \contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison of complex convolution on CPU to GPU with varying signal lengths without lower bounding.}}{15}{figure.3.8}
 \contentsline {figure}{\numberline {3.9}{\ignorespaces Comparison of complex convolution on CPU to GPU with varying signal lengths with lower bounding.}}{16}{figure.3.9}
 \contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing when CPU convolution is faster than GPU convolution.}}{17}{figure.3.10}
 \contentsline {figure}{\numberline {3.11}{\ignorespaces Plot showing trade offs with convolution in GPUs.}}{18}{figure.3.11}
 \contentsline {figure}{\numberline {3.12}{\ignorespaces Lower bounded plot showing trade offs with convolution in GPUs.}}{19}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}}{21}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces ConvGPU thread optimization 128 threads per block 0.006811.}}{22}{figure.3.14}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}}{20}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces ConvGPU thread optimization 128 threads per block 0.006811.}}{21}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows a Profile of Listing \ref {code:noPipe}.}}{21}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{22}{figure.3.16}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{23}{figure.3.17}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{28}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces The iNET packet structure.}}{28}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{31}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{33}{figure.4.4}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces This a simple block diagram of what the GPU does.}}{30}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces The iNET packet structure.}}{30}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces The output of the Preamble Detector $L(u)$.}}{33}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{35}{figure.4.4}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{44}{figure.5.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram illustrating organization of the algorithms in the GPU.}}{47}{figure.5.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -12,18 +12,20 @@
 \BOOKMARK [1][-]{section.3.4}{3.4 Cuda Libraries}{chapter.3}% 12
 \BOOKMARK [1][-]{section.3.5}{3.5 Cuda Convolution}{chapter.3}% 13
 \BOOKMARK [1][-]{section.3.6}{3.6 Thread Optimization}{chapter.3}% 14
-\BOOKMARK [0][]{chapter.4}{4 System Overview}{}% 15
-\BOOKMARK [1][-]{section.4.1}{4.1 Overview}{chapter.4}% 16
-\BOOKMARK [1][-]{section.4.2}{4.2 Preamble Detection}{chapter.4}% 17
-\BOOKMARK [1][-]{section.4.3}{4.3 Frequency Offset Compensation}{chapter.4}% 18
-\BOOKMARK [1][-]{section.4.4}{4.4 Channel Estimation}{chapter.4}% 19
-\BOOKMARK [1][-]{section.4.5}{4.5 Noise Variance Estimation}{chapter.4}% 20
-\BOOKMARK [1][-]{section.4.6}{4.6 SxS Detector}{chapter.4}% 21
-\BOOKMARK [0][]{chapter.5}{5 Equalizer Equations}{}% 22
-\BOOKMARK [1][-]{section.5.1}{5.1 Overview}{chapter.5}% 23
-\BOOKMARK [1][-]{section.5.2}{5.2 Zero-Forcing and MMSE Equalizers}{chapter.5}% 24
-\BOOKMARK [2][-]{subsection.5.2.1}{5.2.1 The Iterative Equalizer}{section.5.2}% 25
-\BOOKMARK [2][-]{subsection.5.2.2}{5.2.2 The Multiply Equalizers}{section.5.2}% 26
-\BOOKMARK [0][]{chapter.6}{6 Equalizer Performance}{}% 27
-\BOOKMARK [0][]{chapter.7}{7 Final Summary}{}% 28
-\BOOKMARK [0][]{section*.11}{Bibliography}{}% 29
+\BOOKMARK [1][-]{section.3.7}{3.7 CPU GPU Pipelining}{chapter.3}% 15
+\BOOKMARK [0][]{chapter.4}{4 System Overview}{}% 16
+\BOOKMARK [1][-]{section.4.1}{4.1 Overview}{chapter.4}% 17
+\BOOKMARK [1][-]{section.4.2}{4.2 Preamble Detection}{chapter.4}% 18
+\BOOKMARK [1][-]{section.4.3}{4.3 Frequency Offset Compensation}{chapter.4}% 19
+\BOOKMARK [1][-]{section.4.4}{4.4 Channel Estimation}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.5}{4.5 Noise Variance Estimation}{chapter.4}% 21
+\BOOKMARK [1][-]{section.4.6}{4.6 SxS Detector}{chapter.4}% 22
+\BOOKMARK [0][]{chapter.5}{5 Equalizer Equations}{}% 23
+\BOOKMARK [1][-]{section.5.1}{5.1 Overview}{chapter.5}% 24
+\BOOKMARK [1][-]{section.5.2}{5.2 Zero-Forcing and Minimum Mean Square Error Equalizers}{chapter.5}% 25
+\BOOKMARK [2][-]{subsection.5.2.1}{5.2.1 Zero-Forcing}{section.5.2}% 26
+\BOOKMARK [2][-]{subsection.5.2.2}{5.2.2 The Iterative Equalizer}{section.5.2}% 27
+\BOOKMARK [2][-]{subsection.5.2.3}{5.2.3 The Multiply Equalizers}{section.5.2}% 28
+\BOOKMARK [0][]{chapter.6}{6 Equalizer Performance}{}% 29
+\BOOKMARK [0][]{chapter.7}{7 Final Summary}{}% 30
+\BOOKMARK [0][]{section*.11}{Bibliography}{}% 31
