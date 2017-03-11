@@ -1,12 +1,10 @@
 clear all
-latexWidth = 4;
-latexHeight = 3;
+latexWidth = 5;
+latexHeight = 4;
 
 load('fromCpp.mat')
 
-figure(2); clf
-
-numToSmooth = 10;
+numToSmooth = 1;
 numToMin = 20;
 
 x = fromCpp(:,1);
@@ -28,11 +26,15 @@ direct = smooth(direct,numToSmooth);
 shared = smooth(shared,numToSmooth);
 myfft = smooth(myfft,numToSmooth);
 
-plot(cpux,cpu,directx,direct,sharedx,shared,myfftx,myfft); grid on; axis tight; hold on
+figure(1); clf
+plot(cpux,cpu,directx,direct,sharedx,shared,myfftx,myfft); grid on;
+ax = gca;
 legend('Time Domain CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
-title('Convolution CPU vs GPU')
+% title('Convolution CPU vs GPU')
 xlabel('signal length')
 ylabel('time (ms)')
+
+ax.FontName = 'Times New Roman';
 
 ff = gcf;
 homer = ff.Units;
@@ -41,50 +43,71 @@ bart = ff.Position;
 ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
-axis tight
 drawnow
 print(ff, '-depsc', ['CPUvsGPU']) %save as eps a 
-max(x)
 
-% 
-% close all
-% plot(cpux,cpu,directx,direct,sharedx,shared,myfftx,myfft); grid on; axis tight; hold on
-% legend('Time Domain CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+
+figure(2); clf
+plot(cpux,cpu,directx,direct,sharedx,shared,myfftx,myfft); grid on;
+ax = gca;
+legend('Time Domain CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
 % title('Convolution CPU vs GPU')
-% xlabel('signal length')
-% ylabel('time (ms)')
-% 
-% ff = gcf;
-% homer = ff.Units;
-% ff.Units = 'inches';
-% bart = ff.Position;
-% ff.Position = [bart(1:2) latexWidth latexHeight];
-% ff.PaperPositionMode = 'auto';
-% ff.Units = homer;
-% axis tight
-% marge = axis;
-% axis([29 600 0 0.4])
-% drawnow
-% print(ff, '-depsc', ['CPUvsGPU_CPUtoGPU']) %save as eps a 
-% 
-% close all
-% plot(cpux,cpu,directx,direct,sharedx,shared,myfftx,myfft); grid on; axis tight; hold on
-% legend('Time Domain CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+xlabel('signal length')
+ylabel('time (ms)')
+
+ax.FontName = 'Times New Roman';
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+axis([29 600 0 0.3])
+drawnow
+print(ff, '-depsc', ['CPUvsGPU_CPUtoGPU']) %save as eps a 
+
+
+
+figure(3); clf
+plot(cpux,cpu,directx,direct,sharedx,shared,myfftx,myfft); grid on;
+ax = gca;
+legend('Time Domain CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
 % title('Convolution CPU vs GPU')
-% xlabel('signal length')
-% ylabel('time (ms)')
-% 
-% ff = gcf;
-% homer = ff.Units;
-% ff.Units = 'inches';
-% bart = ff.Position;
-% ff.Position = [bart(1:2) latexWidth latexHeight];
-% ff.PaperPositionMode = 'auto';
-% ff.Units = homer;
-% axis tight
-% marge = axis;
-% axis([marge(1:2) 0 1.4])
-% title('Convolution GPU vs GPU')
-% drawnow
-% print(ff, '-depsc', ['CPUvsGPU_GPUtoGPU']) %save as eps a 
-% 
+xlabel('signal length')
+ylabel('time (ms)')
+
+ax.FontName = 'Times New Roman';
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+marge = axis;
+axis([marge(1:2) 0 1.1])
+drawnow
+print(ff, '-depsc', ['CPUvsGPU_GPUtoGPU']) %save as eps a 
+
+figure(4); clf
+plot(x,cpu1,x,direct1,x,shared1,x,myfft1); grid on;
+ax = gca;
+legend('Time Domain CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+% title('Convolution CPU vs GPU')
+xlabel('signal length')
+ylabel('time (ms)')
+
+ax.FontName = 'Times New Roman';
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+drawnow
+print(ff, '-depsc', ['CPUvsGPU_spikes']) %save as eps a 

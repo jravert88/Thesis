@@ -1027,6 +1027,13 @@ Stabilization by smooth feedback in the neighborhood of an equilibrium
 	url = {http://docs.nvidia.com/cuda/}
 }
 
+@misc{FFTW:2015,
+	author = {Wikipedia},
+	title = {Fastest Fourier Transform in the West},
+	year = 2015,
+	url = {http://www.fftw.org/}
+}
+
 @misc{wikipedia-gpu:2015,
 	author = {Wikipedia},
 	title = {Graphics Processing Unit},

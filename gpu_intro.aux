@@ -28,26 +28,38 @@
 \newlabel{fig:GPUpicture}{{3.6}{11}{GPU memory}{figure.3.6}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{11}{table.3.1}}
 \newlabel{tab:gpu-resources_jeffs}{{3.1}{11}{GPU memory}{table.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Cuda Libraries}{11}{section.3.4}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{12}{figure.3.7}}
 \newlabel{fig:GPUarch}{{3.7}{12}{GPU memory}{figure.3.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Cuda Libraries}{12}{section.3.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Cuda Convolution}{13}{section.3.5}}
 \newlabel{eq:simple_conv}{{3.2}{13}{Cuda Convolution}{equation.3.5.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{14}{table.3.2}}
+\newlabel{tab:CPUvsGPUtimingTable}{{3.2}{14}{Cuda Convolution}{table.3.2}{}}
 \citation{Cooley-Tukey_old}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison of complex convolution in on CPU to GPU with varying signal lengths.}}{14}{figure.3.8}}
-\newlabel{fig:CPUvsGPU}{{3.8}{14}{Cuda Convolution}{figure.3.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing when CPU convolution is faster than GPU convolution.}}{15}{figure.3.9}}
-\newlabel{fig:CPUvsGPU_CPUtoGPU}{{3.9}{15}{Cuda Convolution}{figure.3.9}{}}
-\@writefile{brf}{\backcite{Cooley-Tukey_old}{{15}{3.5}{figure.3.9}}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Thread Optimization}{15}{section.3.6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing trade offs with convolution in GPUs.}}{16}{figure.3.10}}
-\newlabel{fig:CPUvsGPU_GPUtoGPU}{{3.10}{16}{Cuda Convolution}{figure.3.10}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}}{16}{table.3.2}}
-\newlabel{tab:CPUvsGPUtable}{{3.2}{16}{Cuda Convolution}{table.3.2}{}}
-\newlabel{code:convFun}{{3.2}{18}{CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU}{lstlisting.3.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU.}{18}{lstlisting.3.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison of complex convolution on CPU to GPU with varying signal lengths without lower bounding.}}{15}{figure.3.8}}
+\newlabel{fig:CPUvsGPU_spikes}{{3.8}{15}{Cuda Convolution}{figure.3.8}{}}
+\@writefile{brf}{\backcite{Cooley-Tukey_old}{{15}{3.5}{figure.3.10}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Comparison of complex convolution on CPU to GPU with varying signal lengths with lower bounding.}}{16}{figure.3.9}}
+\newlabel{fig:CPUvsGPU}{{3.9}{16}{Cuda Convolution}{figure.3.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}}{16}{table.3.3}}
+\newlabel{tab:CPUvsGPUtable_2_15}{{3.3}{16}{Cuda Convolution}{table.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing when CPU convolution is faster than GPU convolution.}}{17}{figure.3.10}}
+\newlabel{fig:CPUvsGPU_CPUtoGPU}{{3.10}{17}{Cuda Convolution}{figure.3.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.4}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{17}{table.3.4}}
+\newlabel{tab:CPUvsGPUtable_12672}{{3.4}{17}{Cuda Convolution}{table.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces Plot showing trade offs with convolution in GPUs.}}{18}{figure.3.11}}
+\newlabel{fig:CPUvsGPU_GPUtoGPU}{{3.11}{18}{Cuda Convolution}{figure.3.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Thread Optimization}{18}{section.3.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces Lower bounded plot showing trade offs with convolution in GPUs.}}{19}{figure.3.12}}
+\newlabel{fig:taps10CPUvsGPU}{{3.12}{19}{Cuda Convolution}{figure.3.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}}{21}{figure.3.13}}
+\newlabel{fig:ConvGPU_shared_12672_186taps}{{3.13}{21}{Thread Optimization}{figure.3.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.14}{\ignorespaces ConvGPU thread optimization 128 threads per block 0.006811.}}{22}{figure.3.14}}
+\newlabel{fig:ConvGPU_global_12672_186taps}{{3.14}{22}{Thread Optimization}{figure.3.14}{}}
+\newlabel{code:convFun}{{3.2}{23}{CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU}{lstlisting.3.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU.}{23}{lstlisting.3.2}}
 \@setckpt{gpu_intro}{
-\setcounter{page}{22}
+\setcounter{page}{27}
 \setcounter{equation}{2}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -62,8 +74,8 @@
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{10}
-\setcounter{table}{2}
+\setcounter{figure}{14}
+\setcounter{table}{4}
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{1}
 \setcounter{cp@cnt}{0}

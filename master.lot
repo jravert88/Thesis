@@ -2,7 +2,9 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{11}{table.3.1}
-\contentsline {table}{\numberline {3.2}{\ignorespaces Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}}{16}{table.3.2}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{14}{table.3.2}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}}{16}{table.3.3}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{17}{table.3.4}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

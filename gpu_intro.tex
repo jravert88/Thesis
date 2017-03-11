@@ -62,12 +62,12 @@ The GPU kernel computes every element of $\mathbf{C}_2$ in parallel while the CP
 #include <math.h>
 using namespace std;
 
-void VecAddCPU(int* destination,int* source0,int* source1,int myLength){
+void VecAddCPU(float* destination,float* source0,float* source1,int myLength){
 	for(int i = 0; i < myLength; i++)
 		destination[i] = source0[i] + source1[i];
 }
 
-__global__ void VecAddGPU(int* destination, int* source0, int* source1, int lastThread){
+__global__ void VecAddGPU(float* destination, float* source0, float* source1, int lastThread){
 	int i = blockIdx.x*blockDim.x + threadIdx.x;
 
 	// don't access elements out of bounds
@@ -77,6 +77,7 @@ __global__ void VecAddGPU(int* destination, int* source0, int* source1, int last
 	destination[i] = source0[i] + source1[i];
 }
 
+
 int main(){
 	int numPoints = pow(2,22);
 	cout << numPoints << endl;
@@ -84,12 +85,12 @@ int main(){
                                	   CPU Start
 	--------------------------------------------------------------------*/
 	// allocate memory on host
-	int *A1;
-	int *B1;
-	int *C1;
-	A1 = (int*) malloc (numPoints*sizeof(int));
-	B1 = (int*) malloc (numPoints*sizeof(int));
-	C1 = (int*) malloc (numPoints*sizeof(int));
+	float *A1;
+	float *B1;
+	float *C1;
+	A1 = (float*) malloc (numPoints*sizeof(float));
+	B1 = (float*) malloc (numPoints*sizeof(float));
+	C1 = (float*) malloc (numPoints*sizeof(float));
 
 	// Initialize vectors 0-99
 	for(int i = 0; i < numPoints; i++){
@@ -107,20 +108,20 @@ int main(){
                                	   GPU End
 	--------------------------------------------------------------------*/
 	// allocate memory on host for result
-	int *C2;
-	C2 = (int*) malloc (numPoints*sizeof(int));
+	float *C2;
+	C2 = (float*) malloc (numPoints*sizeof(float));
 
 	// allocate memory on device for computation
-	int *A2_gpu;
-	int *B2_gpu;
-	int *C2_gpu;
-	cudaMalloc(&A2_gpu, sizeof(int)*numPoints);
-	cudaMalloc(&B2_gpu, sizeof(int)*numPoints);
-	cudaMalloc(&C2_gpu, sizeof(int)*numPoints);
+	float *A2_gpu;
+	float *B2_gpu;
+	float *C2_gpu;
+	cudaMalloc(&A2_gpu, sizeof(float)*numPoints);
+	cudaMalloc(&B2_gpu, sizeof(float)*numPoints);
+	cudaMalloc(&C2_gpu, sizeof(float)*numPoints);
 
 	// Copy vectors A and B from host to device
-	cudaMemcpy(A2_gpu, A1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
-	cudaMemcpy(B2_gpu, B1, sizeof(int)*numPoints, cudaMemcpyHostToDevice);
+	cudaMemcpy(A2_gpu, A1, sizeof(float)*numPoints, cudaMemcpyHostToDevice);
+	cudaMemcpy(B2_gpu, B1, sizeof(float)*numPoints, cudaMemcpyHostToDevice);
 
 	// Set optimal number of threads per block
 	int numTreadsPerBlock = 32;
@@ -134,13 +135,24 @@ int main(){
 
 	// Run computation on device
 	//for(int i = 0; i < 100; i++)
-		VecAddGPU<<<numBlocks, numTreadsPerBlock>>>(C2_gpu, A2_gpu, B2_gpu, numPoints);
+	VecAddGPU<<<numBlocks, numTreadsPerBlock>>>(C2_gpu, A2_gpu, B2_gpu, numPoints);
 
 	// Copy vector C2 from device to host
-	cudaMemcpy(C2, C2_gpu, sizeof(int)*numPoints, cudaMemcpyDeviceToHost);
+	cudaMemcpy(C2, C2_gpu, sizeof(float)*numPoints, cudaMemcpyDeviceToHost);
 	/*--------------------------------------------------------------------
                                	   GPU End
 	--------------------------------------------------------------------*/
+
+	// Compare C2 to C1
+	bool equal = true;
+	for(int i = 0; i < numPoints; i++)
+		if(C1[i] != C2[i])
+			equal = false;
+	if(equal)
+		cout << "C2 is equal to C1." << endl;
+	else
+		cout << "C2 is NOT equal to C1." << endl;
+	sleep(2);
 
 	// Free vectors on CPU
 	free(A1);
@@ -275,7 +287,7 @@ Any graduate of a signal processing class knows the trade off of convolution in 
 Time domain convolution takes $\approx L_\text{s} L_\text{h}$ complex multiplies where $L_\text{s}$ is the signal length and $L_\text{h}$ is the filter length.
 Frequency domain convolution takes $\approx \frac{3 N_\text{FFT}}{2} \log_2(N_\text{FFT}) + N_\text{FFT}$ complex multiplies where $N_\text{FFT}$ is the next multiple of $2$ above the convolution length $L_\text{s}+L_\text{h}-1$.
 
-Lines $213$ to $232$ show how to do frequency domain convolution using the cuFFT library.
+Lines $213$ to $232$ show how to do frequency domain convolution using the cuFFT library and two simple GPU kernels.
 
 So the questions are:
 When should I stay on the host and run my convolution on the CPU?
@@ -286,41 +298,69 @@ When should I do convolution in the frequency domain?
 
 The answer to all of the questions is...it depends on your signal length, filter length, CPU, GPU and memory.
 
-The CUDA programmer can make an educated guess on which way will be fastest, but until the computations have been done in the GPU there is no definite answer.
-Figure \ref{fig:CPUvsGPU} shows a comparison of computation time by varying the signal length with a set filter length.
-The signal length is varied from $1$ to $~50000$ and the filter length is $186$;
-The functions in \ref{code:GPUvsCPU} where ran on a NVIDIA Tesla K40c GPU.
-Judging my the Figure, for signals of any significnt length, GPU convolution is much faster than CPU.
+A CUDA programmer can make an educated guess on which way may be faster, but until the algorithms have been implemented and timed, there is no definite answer.
+Figures \ref{fig:CPUvsGPU_spikes} to \ref{taps10CPUvsGPU} compare the four different ways of doing convolution implemented in Listing \ref{code:GPUvsCPU} on a Tesla K40c GPU.
+The filter length for Figures \ref{fig:CPUvsGPU_spikes} to \ref{CPUvsGPU_GPUtoGPU} is $186$.
+The filter length for Figure \ref{fig:taps10CPUvsGPU} is $10$.
+Table \ref{tab:CPUvsGPUtimingTable} lists how the kernels were timed.
+Note that all memory transfers from host to device and device to host were included in execution times.
+\begin{table}
+\caption{Defining start and stop lines for timing comparison in Listing \ref{code:convFun}.}
+\begin{center}
+\begin{tabular}{lll}
+	\toprule
+	Algorithm 								& Start Timing Line	& Stop Timing Line	\\ \midrule
+	CPU time domain (ConvCPU) 				& 182				& 183 				\\
+	GPU time domain global (ConvGPU) 		& 187				& 195				\\
+	GPU time domain shared (ConvGPUshared) 	& 200				& 208				\\
+	GPU frequency domain 					& 212				& 231				\\ 
+	\bottomrule
+\end{tabular}
+\end{center}
+\label{tab:CPUvsGPUtimingTable}
+\end{table}
+
+Figure \ref{fig:CPUvsGPU_spikes} shows the raw computation time on the K40c for each algorithm in Table \ref{tab:CPUvsGPUtimingTable} with the filter length set to $186$.
+The figure has many irregularities because the operating system doesn't always provide as much resources as needed.
+
+Figure \ref{fig:CPUvsGPU} is generated from the raw computation data but lower bounded by searching for a minimum every $20$ samples.
+Judging my the Figure, for long signals convolved with $186$ tap filters, GPU convolution is much faster than CPU.
 \begin{figure}
-	\centering\includegraphics[width=4in]{figures/gpu_intro/CPUvsGPU.eps}
-	\caption{Comparison of complex convolution in on CPU to GPU with varying signal lengths.}
+	\caption{Comparison of complex convolution on CPU to GPU with varying signal lengths without lower bounding.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_spikes.eps}
+	\label{fig:CPUvsGPU_spikes}
+\end{figure}
+\begin{figure}
+	\caption{Comparison of complex convolution on CPU to GPU with varying signal lengths with lower bounding.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU.eps}
 	\label{fig:CPUvsGPU}
 \end{figure}
 
-Is it ever better to do convolution on the CPU rather than GPU?
+Looking at the bottom left of Figures \ref{fig:CPUvsGPU_spikes} and \ref{fig:CPUvsGPU}, a DSP engineer would ask, ``Is it ever better to do convolution on the CPU rather than GPU?''
 Yes, but for very short signals with a $186$ tap filter.
 Figure \ref{fig:CPUvsGPU_CPUtoGPU} shows when a CPU is faster than a GPU.
 \begin{figure}
-	\centering\includegraphics[width=4in]{figures/gpu_intro/CPUvsGPU_CPUtoGPU.eps}
 	\caption{Plot showing when CPU convolution is faster than GPU convolution.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_CPUtoGPU.eps}
 	\label{fig:CPUvsGPU_CPUtoGPU}
 \end{figure}
 
 Now for the interesting question, if I am going to do convolution in the GPU, should I do time domain or frequency domain convolution?
 If I do time domain convolution, should I use global or shared memory?
-Figure \ref{fig:CPUvsGPU_GPUtoGPU} shows that the answer is, ``it depends''.
+Figure \ref{fig:CPUvsGPU_GPUtoGPU} shows that the answer: ``It depends.''
 A good choice is to do frequency domain, but not always.
-As the signal length increases, the frequency domain execution time has steps because the signal is zero padded out to the next power of 2 to leverage the Cooley-Tukey FFT algorithm \cite{Cooley-Tukey_old}.
+As the signal length increases, the frequency domain execution time has a staircase shape because the signal is zero padded out to the next power of 2 to leverage the Cooley-Tukey FFT algorithm \cite{Cooley-Tukey_old}.
 \begin{figure}
-	\centering\includegraphics[width=4in]{figures/gpu_intro/CPUvsGPU_GPUtoGPU.eps}
 	\caption{Plot showing trade offs with convolution in GPUs.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_GPUtoGPU.eps}
 	\label{fig:CPUvsGPU_GPUtoGPU}
 \end{figure}
 
 Usually, when implementing convolution, the signal and filter length is set.
 If is good practice to implement convolution in the CPU and GPU in many ways to evaluate which way is best.
-Choosing the signal length to be $2^{15}$ and the filter length to be $186$, Table \ref{tab:CPUvsGPUtable} shows how the different algorithms compare.
+Choosing the signal length to be $2^{15}$ and the filter length to be $186$, Tables \ref{tab:CPUvsGPUtable_2_15} and \ref{tab:CPUvsGPUtable_12672} shows how the different algorithms compare for different signal lengths.
 \begin{table}
+\caption{Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}
 \begin{center}
 \begin{tabular}{lll}
 	\toprule
@@ -328,49 +368,83 @@ Choosing the signal length to be $2^{15}$ and the filter length to be $186$, Tab
 	CPU time domain (ConvCPU) 				& 131.943 	\\
 	GPU time domain global (ConvGPU) 		& 7.79477	\\
 	GPU time domain shared (ConvGPUshared) 	& 6.77736	\\
-	GPU frequency domain shared 			& 5.81085	\\ 
+	GPU frequency domain		 			& 5.81085	\\ 
 	\bottomrule
 \end{tabular}
 \end{center}
-\caption{Convolution computation times with signal length $2^{15} = 32768$ and filter length $186$ on a Tesla K40c GPU.}
-\label{tab:CPUvsGPUtable}
+\label{tab:CPUvsGPUtable_2_15}
+\end{table}
+\begin{table}
+\caption{Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}
+\begin{center}
+\begin{tabular}{lll}
+	\toprule
+	Algorithm 								& time (ms) \\ \midrule
+	CPU time domain (ConvCPU) 				& 5.04636 	\\
+	GPU time domain global (ConvGPU) 		& 0.320013	\\
+	GPU time domain shared (ConvGPUshared) 	& 0.292616	\\
+	GPU frequency domain		 			& 0.284187	\\ 
+	\bottomrule
+\end{tabular}
+\end{center}
+\label{tab:CPUvsGPUtable_12672}
 \end{table}
 
+If the length of the filter were changed from $186$ to $10$ taps, everything changes.
+Figure \ref{fig:taps10CPUvsGPU} shows execution time for a varying length complex signal convolved with a $10$ tap complex filter.
+Contrary to the text book number of flops comparison, convolution in the frequency domain is never faster than time domain in GPUs for a $10$ tap filter, even with an extremely long signal.
+Time domain convolution using shared memory in ConvGPUshared is fastest for a signal of significant length.
+ConvGPUshared performs very well because only $10$ threads per thread block need to access global memory for the filter coefficients while all other threads only need to access global memory for the signal.
+\begin{figure}
+	\caption{Lower bounded plot showing trade offs with convolution in GPUs.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/taps10CPUvsGPU.eps}
+	\label{fig:taps10CPUvsGPU}
+\end{figure}
 
-
+Long story short, most of the time a GPU DSP engineer is given a set length of signal and filter for convolution.
+As Figures \ref{fig:CPUvsGPU_spikes} through \ref{fig:CPUvsGPU_GPUtoGPU} have shown, unless every implementation is explored, there is no way of saying which implementation is fastest.
 
 \section{Thread Optimization}
 When first introduced to GPUs, a programmer might to tempted to launch as many threads per block possible.
 But, notice in Listing \ref{code:convFun} lines $190$, $203$, $219$ and $225$ launch a minimum of $96$ threads per block and maximum of $192$ threads per block.
-Running the GPU at lower occupancy leaves each thread with more resources and memory bandwidth.
-If $1024$ threads per block were always launched, lighter computaion GPU kernels will be starving for memory while other thread blocks eat up the memory bandwidth.
+Running the GPU with less threads per block with lower occupancy leaves each thread with more resources and memory bandwidth.
+Running the GPU with more threads per block with higher occupancy utilizes the full parallel might of the GPU.
+If $1024$ threads per block were always launched, lighter computation GPU kernels will be starving for memory while other thread blocks eat up the memory bandwidth.
+If $32$ threads per block were always launched, heavier computation GPU kernels will be swimming in resources.
 
 Improving memory accesses should always be the first optimization when a GPU kernel needs to be faster.
 The next step is to find the optimal number of threads per block to launch.
-The number of threads per block affect the amount of resources available to each thread.
-If a kernel is more computationally heavy, launching less threads per block may lead to faster execution time because threads have more resources available. 
-
 Knowing the perfect number of threads per block to launch is challenging to calculate.
 Luckily, there is a finite number of possible threads per block, $1$ to $1024$.
 A simple test program could time a GPU kernel while sweeping the number of threads per block from $1$ to $1024$.
 The number of threads per block with the fastest computation time is the optimal number of threads per block for that specific GPU kernel.
 
 Most of the time the optimal number of threads per block is a multiple of $32$. 
-At the lowest level of architecture, GPU do computations in \textit{warps}.
-Warps are groups of $32$ threads to do every computation together in lock step.
-If the number of threads per block is a non multiple of $32$, some threads in a warp will be idle and the GPU will be wasting resources.
+At the lowest level of architecture, GPUs do computations in \textit{warps}.
+Warps are groups of $32$ threads that do every computation together in lock step.
+If the number of threads per block is a non multiple of $32$, some threads in a warp will be idle and the GPU will have unused resources.
 
-Figure \ref{fig:threadOptimzation_ConvGPU} shows the execution time of ConvGPU while varying threads per block.
-The minimum execution time is $651651$ at $128$ threads per block.
+Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of ConvGPUshared while varying threads per block.
+Although the minimum execution time is $0.1078$ms at the optimal $96$ threads per block, incorrect output will result if ConvGPUshared is launched with less than $186$ threads per block.
+Launching $96$ threads per block only transfer $96$ filter coefficients to shared memory from global memory.
+Luckily, launching $192$ threads per block is near optimal with an execution time of $0.1101$ms.
+By simply adjusting the number of threads per block, ConvGPUshared can have a $2\times$ speed up.
 
+Adjusting the number of threads per block doesn't always drastically speed up GPU kernels.
+Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time for ConvGPU with varying threads per block.
+Launching $560$ does produce about a $1.12$x speed up, but thread optimization doesn't have as much of an affect of ConvGPU verse ConvGPUshared.
+\begin{figure}
+	\caption{The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_shared_12672_186taps.eps}
+	\label{fig:ConvGPU_shared_12672_186taps}
+\end{figure}
+\begin{figure}
+	\caption{ConvGPU thread optimization 128 threads per block 0.006811.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_global_12672_186taps.eps}
+	\label{fig:ConvGPU_global_12672_186taps}
+\end{figure}
 
-
-
-
-
-
-
-
+To answer the question: ``There are $X$ number of ways to implement this algorithm, which one is executes the fastest?'' the answer always is ``It depends. Implement the algorithm $X$ ways and see which is fastest.''
 
 \singlespacing
 \clearpage
