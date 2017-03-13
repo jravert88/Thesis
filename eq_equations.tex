@@ -365,38 +365,43 @@ y = yy(L1+1:end-L2); % trim yy
 
 \clearpage
 \subsection{The Frequency Domain Equalizers}
-Frequency domain equalization in aeronautical telemetry has been studied \cite{williams2013linear}.
+Williams and Saquib derived the Frequency Domain Equalizers (FDEs) for this application \cite[]{williams2013linear}.
 
 \subsubsection{The Frequency Domain Equalizer One}
-Frequency Domain Equalizer One (FDE1) is the MMSE or wiener filter applied in the frequency domain.
-FDE1 is adapted from \cite[eq. (11)]{williams2013linear}.
-Ian E. Williams and M. Saquib derived FDE1 for this project in a paper called Linear Frequency Domain Equalization of SOQPSK-TG for Wideband Aeronautical Telemetry.
-The FDE1 equalizer is defined in Equation (11) as
+Frequency Domain Equalizer One (FDE1) is the MMSE or Wiener filter applied in the frequency domain.
+FDE1 is adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (11)]{williams2013linear}
 \begin{equation}
-C_\text{FDE1}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{1}{\hat{\sigma}^2_w}}
+C_\text{FDE1}(e^{j\omega_k}) = \frac{H^\ast(e^{j\omega_k})}  {|H(e^{j\omega_k})|^2  +  \frac{1}{\hat{\sigma}^2_w}} \quad
+\text{where} \;
+\omega_k = \frac{2\pi}{L} \;
+\text{for} \;
+k=0,1,\cdots,L-1.
 \label{eq:FDE1}
 \end{equation}
-The term $C_\text{FDE1}(\omega)$ is the Frequency Domain Equalizer One frequency response at $\omega$.
-The term $\hat{H}(\omega)$ is the channel estimate frequency response at $\omega$.
-The term $\hat{\sigma}^2$ is the noise variance estimate, this term is completely independent of frequency because the noise is assumed to be white or spectrally flat.
+The term $C_\text{FDE1}(e^{j\omega_k})$ is the Frequency Domain Equalizer One frequency response at $\omega_k$.
+The term $H(e^{j\omega_k})$ is the channel estimate frequency response at $\omega_k$.
+The term $\hat{\sigma}^2$ is the estimated noise variance estimate, this term is completely independent of frequency because the noise is assumed to be white or spectrally flat.
 
-FDE1 needs no massaging because Equation \eqref{eq:FDE1} is easily implemented in the GPU and it is computationally efficient.
+Equation \eqref{eq:FDE1} is straight forward to implement in GPUs.
+FDE2 is also extremely fast and computationally efficient.
 
 \subsubsection{The Frequency Domain Equalizer One}
-The Frequency Domain Equalizer Two (FDE2) is the MMSE or wiener filter applied in the frequency domain.
-FDE1 is adapted from \cite[eq. (12)]{williams2013linear}.
-Ian E. Williams and M. Saquib derived FDE1 for this project in a paper called Linear Frequency Domain Equalization of SOQPSK-TG for Wideband Aeronautical Telemetry.
+Frequency Domain Equalizer Two (FDE2) is also the MMSE or Wiener filter applied in the frequency domain but knowledge of the SOQPSK-TG spectrum is leveraged.
+FDE1 is adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (12)]{williams2013linear}
 The FDE2 equalizer is defined in Equation (12) as
 \begin{equation}
-C_\text{FDE2}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{\Psi(\omega)}{\hat{\sigma}^2_w}}
+C_\text{FDE2}(e^{j\omega_k}) = \frac{H^\ast(e^{j\omega_k})}  {|H(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
+\text{where} \;
+\omega_k = \frac{2\pi}{L} \;
+\text{for} \;
+k=0,1,\cdots,L-1
 \label{eq:FDE2}
 \end{equation}
 FDE2 almost identical to FDE1.
-The only difference is term $\Psi(\omega)$ in the denominator. 
-The term $\Psi(\omega)$ is the average spectrum of SPQOSK-TG shown in Figure \ref{fig:SOQPSK_spectrum}.
+The only difference is the term $\Psi(e^{j\omega_k})$ in the denominator. 
+The term $\Psi(\omega)$ is the averaged SPQOSK-TG power spectrum shown in Figure \ref{fig:SOQPSK_spectrum}.
 \begin{figure}
+	\caption{I need help on this one!!!! }
 	\centering\includegraphics[width=5in]{figures/eq_equations/FDE2_spectrum_PSI.eps}
-	\caption{A block diagram illustrating organization of the algorithms in the GPU.}
 	\label{fig:SOQPSK_spectrum}
 \end{figure}
-FDE2 needs no massaging because Equation \eqref{eq:FDE2} is easily implemented in the GPU and is computationally efficient.
