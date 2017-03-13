@@ -42,8 +42,9 @@
 % set indent to a more reasonable level (so that itemize can be used in columns)
 \setlength{\leftmargini}{20pt}
 
-\lstset{
-    language=[ANSI]C++,
+
+\lstdefinestyle{myCUDAstyle} {
+	language=[ANSI]C++,
     showstringspaces=false,
     backgroundcolor=\color{mygray},
     basicstyle=\lstfont{black},
@@ -73,16 +74,46 @@
     emphstyle={\lstfont{green!50!black}},
     breaklines=true,
     numbers=left
-}
-
-\lstdefinestyle{inline}{
+    }
+    
+    \lstdefinestyle{myCUDAstyle_inline} {
+	language=[ANSI]C++,
+    showstringspaces=false,
     backgroundcolor=\color{white},
-}
+    basicstyle=\lstfont{black},
+    identifierstyle=\lstfont{black},
+    keywordstyle=\lstfont{magenta},
+    stringstyle=\lstfont{cyan},
+    commentstyle=\lstfont{yellow!30!black},
+    moredelim=[is][\lstfont{green!50!black}]{@}{@},
+    emph={
+        cudaMalloc, cudaFree,
+        cudaMallocHost, cudaFreeHost,
+        cudaMemcpyAsync, cudaMemcpy, cudaMemcpyHostToDevice, cudaMemcpyDeviceToHost,
+        cudaSuccess, cudaGetLastError, cudaGetErrorString,
+        cudaErrorMemoryAllocation, cudaError_t,
+        cudaOccupancyMaxPotentialBlockSize,
+        __global__, __shared__, __device__, __host__,
+        __syncthreads,
+        cudaEvent_t, cudaStream_t,
+        cudaEventCreate, cudaEventSynchronize, cudaEventDestroy,
+        cudaEventElapsedTime, cudaEventQuery, cudaEventRecord,
+        cudaStreamWaitEvent,
+        threadIdx, blockIdx, blockDim, gridDim,
+        cudaStream_t, cudaStreamCreate, cudaStreamDestroy,
+        cudaMemcpyDeviceToDevice, cudaMemcpyHostToHost,
+    },
+    emphstyle={\lstfont{green!50!black}},
+    breaklines=true,
+    }
 
 \definecolor{codenumber}{rgb}{0.5,0.5,0.5}
 \definecolor{codekeyword}{rgb}{0.9,0.4,0.7}
 \definecolor{codeCUDA}{rgb}{1.0,0.6,0.6}
 \DeclareTextFontCommand{\emph}{\bfseries\color{blue!70!black}}
+
+\usepackage[numbered,framed]{matlab-prettifier}
+\usepackage{filecontents}
 
 % Setup the byu style sheet
 \byustylesetup{%

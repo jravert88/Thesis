@@ -22,11 +22,10 @@
 \contentsline {section}{\numberline {5.2}Zero-Forcing and Minimum Mean Square Error Equalizers}{37}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Zero-Forcing}{38}{subsection.5.2.1}
 \contentsline {subsubsection}{MMSE Equalizer}{40}{section*.7}
-\contentsline {subsection}{\numberline {5.2.2}The Iterative Equalizer}{42}{subsection.5.2.2}
-\contentsline {subsubsection}{The Constant Modulus Algorithm}{42}{section*.8}
-\contentsline {subsection}{\numberline {5.2.3}The Multiply Equalizers}{45}{subsection.5.2.3}
-\contentsline {subsubsection}{The Frequency Domain Equalizer One}{45}{section*.9}
-\contentsline {subsubsection}{The Frequency Domain Equalizer One}{45}{section*.10}
-\contentsline {chapter}{\numberline {6}Equalizer Performance}{47}{chapter.6}
-\contentsline {chapter}{\numberline {7}Final Summary}{49}{chapter.7}
-\contentsline {chapter}{Bibliography}{50}{section*.11}
+\contentsline {subsection}{\numberline {5.2.2}The Constant Modulus Algorithm}{42}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}The Frequency Domain Equalizers}{46}{subsection.5.2.3}
+\contentsline {subsubsection}{The Frequency Domain Equalizer One}{46}{section*.8}
+\contentsline {subsubsection}{The Frequency Domain Equalizer One}{46}{section*.9}
+\contentsline {chapter}{\numberline {6}Equalizer Performance}{49}{chapter.6}
+\contentsline {chapter}{\numberline {7}Final Summary}{51}{chapter.7}
+\contentsline {chapter}{Bibliography}{52}{section*.10}

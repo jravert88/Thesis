@@ -43,4 +43,10 @@ M.~Rice, ``Phase 1 report: Preamble assisted equalization for aeronautical
   Management Center (TRMC). Also available online at< http://hdl. lib. byu.
   edu/1877/3242, Tech. Rep., 2014.
 
+\bibitem{williams2013linear}
+I.~E. Williams and M.~Saquib, ``Linear frequency domain equalization of
+  {SOQPSK-TG} for wideband aeronautical telemetry channels,'' \emph{IEEE
+  Transactions on Aerospace and Electronic Systems}, vol.~49, no.~1, pp.
+  640--647, 2013.
+
 \end{thebibliography}

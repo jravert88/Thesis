@@ -105,10 +105,10 @@ r_{h}(k) = \sum_{n=-N_1}^{N_2} h(n) h^\ast(n-k).
 and 
 \begin{equation}
 \mathbf{h}_{n_0} = \mathbf{H}^\dagger \mathbf{u}_{n_0} = 
-\begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}
+\begin{bmatrix} h^\ast(L_1) \\ \vdots \\ h^\ast(0) \\ \vdots \\ h^\ast(-L_2)  \end{bmatrix}
 \label{eq:h_no}
 \end{equation}
-is a vector with the channel estimate $\mathbf{h}$ centered at $n_0$.
+is a vector with the time reversed and conjugated channel estimate $\mathbf{h}$ centered at $n_0$.
 
 Note that $\mathbf{R}_{h}$ can be built by computing
 \begin{equation}
@@ -193,13 +193,20 @@ The sparseness of $\mathbf{R}_{h}$ can be leveraged to reduce computation drasti
 
 
 \subsubsection{MMSE Equalizer}
-The MMSE equalizer has the same form as the Zero-Forcing equalizer. 
-The MMSE equalizer was also studied in the PAQ Phase 1 Final Report in ~equation 330.
+
+The MMSE equalizer is an FIR filter defined by the coefficients
 \begin{equation}
-\mathbf{c}_{MMSE} = \big[ \mathbf{G}\mathbf{G}^\dagger + \frac{\sigma_w^2}{\sigma_s^2}\mathbf{I}_{L_1+L_2+1} \big] \mathbf{g}^\dagger
-\label{eq:MMSE_start}
+\begin{matrix}
+c_\text{MMSE}(-L_1) & \cdots & c_\text{MMSE}(0) & \cdots & c_\text{MMSE}(L_2).
+\end{matrix}
 \end{equation}
-where
+The filter coefficients are the solution to the matrix vector equation \cite[eq. (330) and (333)]{PAQ-phase1}
+\begin{equation}
+\mathbf{c}_{MMSE} = \big[ \mathbf{G}\mathbf{G}^\dagger + 2\hat{\sigma}^2_w\mathbf{I}_{L_1+L_2+1} \big]^{-1} \mathbf{g}^\dagger
+\label{eq:c_MMSE_direct}
+\end{equation}
+where $\mathbf{I}_{L_1+L_2+1}$ is the $(L_1+L_2+1)\times(L_1+L_2+1)$ identity matrix,
+$\hat{\sigma}^2_w$ is the estimated noise variance, $\mathbf{G}$ is the $(L_1+L_2+1)\times(N_1+N_2+L_1+L_2+1)$ matrix given by
 \begin{equation}
 \mathbf{G} = 
 		\begin{bmatrix}
@@ -209,49 +216,58 @@ where
 		 			&  	   		&  			& h(N_2)	& \cdots	& h(-N_1)	\\
 	\end{bmatrix}
 \end{equation}
-and
+and $\mathbf{g}^\dagger$ is the $(L_1+L_2+1)\times1$ vector given by
 \begin{equation}
-\mathbf{g} = \begin{bmatrix} h(L_1) \cdots h(-L_2) \end{bmatrix}.
+\mathbf{g}^\dagger = \mathbf{h}_{n0} = \begin{bmatrix} h^\ast(L_1) \\ \vdots \\ h^\ast(0) \\ \vdots \\ h^\ast(-L_2)  \end{bmatrix}.
+%\begin{bmatrix} h(L_1) \cdots h(-L_2) \end{bmatrix}.
+\label{eq:g_dagger_h_n0}
 \end{equation}
-The vector $\mathbf{g}^\dagger$ is also the same vector as $\mathbf{h}_{n_0}$ in Equation \eqref{eq:un0_ZF}.
-The matrix multiplication $\mathbf{G}\mathbf{G}^\dagger$ is also the same autocorrelation matrix $\mathbf{R}_h$ as Equation \eqref{eq:R_h}.
-The fraction $\frac{1}{2\hat{\sigma^2_w}}$ is substituted in for the fraction $\frac{\sigma_w^2}{\sigma_s^2}$ using Equation 333 Rice's report.
-MMSE only differs from Zero-Forcing by adding the signal-to-noise ratio estimate down the diagonal of the autocorrelation matrix $\mathbf{R}_h$.
-Substituting in all these similarities in to Equation \eqref{eq:MMSE_start} results in
-\begin{equation}
-\big[ \mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1} \big] \mathbf{c}_\text{MMSE} = \mathbf{h}_{n_0}.
-\label{eq:c_MMSE_solve1}
-\end{equation}
-To further simplify the notation, $\mathbf{R}_{hw}$ is substituted in for $\mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1}$ where
+
+Computing $\mathbf{c}_{MMSE}$ can be simplified by noticing that $\mathbf{g}^\dagger = \mathbf{h}_{n_0}$, $\mathbf{G}\mathbf{G}^\dagger = \mathbf{R}_h$ in Equation \eqref{eq:R_h} and defining
 \begin{equation}
 \mathbf{R}_{hw} = 
-\mathbf{R}_h + \frac{1}{2\hat{\sigma^2_w}} \mathbf{I}_{L_1+L_2+1} = 
+\mathbf{R}_h + 2\hat{\sigma^2_w} \mathbf{I}_{L_1+L_2+1} = 
 		\begin{bmatrix}
-		r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}	& r^\ast_{h}(1)							& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
-		r_{h}(1) 								& r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}& \cdots 	& r^\ast_{h}(L_{eq}-2)  	\\
-		\vdots	 								& \vdots								& \ddots 	&  							\\
-		r_{h}(L_{eq}-1)							& r_{h}(L_{eq}-2)						& \cdots	& r_{h}(0) + \frac{1}{2\hat{\sigma^2_w}}  			
+		r_{h}(0) + 2\hat{\sigma^2_w}	& r^\ast_{h}(1)							& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
+		r_{h}(1) 						& r_{h}(0) + 2\hat{\sigma^2_w}& \cdots 	& r^\ast_{h}(L_{eq}-2)  				\\
+		\vdots	 						& \vdots								& \ddots 	&  							\\
+		r_{h}(L_{eq}-1)					& r_{h}(L_{eq}-2)						& \cdots	& r_{h}(0) + 2\hat{\sigma^2_w}  			
 	\end{bmatrix}.
 	\label{eq:R_MMSE}
 \end{equation}
-
-The MMSE equalizer coefficients are solved for in a similar fashion to the Zero-Forcing equalizer coefficients in Equation \eqref{eq:c_ZF_solve}.
+By placing Equation \eqref{eq:R_MMSE} and \eqref{eq:g_dagger_h_n0} into \eqref{eq:c_MMSE_direct}, solving for the MMSE equalizer coefficients $\mathbf{c}_\text{MMSE}$ takes the form like the ZF equalizer coeffiencts in \eqref{eq:c_ZF_solve}
 \begin{equation}
 \mathbf{R}_{hw}\mathbf{c}_\text{MMSE} = \mathbf{h}_{n_0}.
 \label{eq:c_MMSE_solve}
 \end{equation}
-\clearpage
-\subsection{The Iterative Equalizer}
 
-\subsubsection{The Constant Modulus Algorithm}
-CMA uses a steepest decent algorithm.
+
+The only difference between solving for the ZF or MMSE equalizer coefficients is $\mathbf{R}_{hw}$ or $\mathbf{R}_{h}$. 
+MMSE equalizer uses the noise variance estimate by adding $2\hat{\sigma^2_w}$ to $r_h(0)$ when building $\mathbf{R}_{hw}$.
+The sparseness of $\mathbf{R}_{hw}$ can also be leveraged to reduce computation drastically because
+$\mathbf{R}_{hw}$ has the same sparse properties as $\mathbf{R}_{h}$.
+
+\subsection{The Constant Modulus Algorithm}
+The CMA equalizer is an FIR filter defined by the coefficients
 \begin{equation}
-\mathbf{c}_{b+1} = \mathbf{c}_{b}-\mu \nabla \mathbf{J}
+\begin{matrix}
+c_\text{CMA}(-L_1) & \cdots & c_\text{CMA}(0) & \cdots & c_\text{CMA}(L_2).
+\end{matrix}
 \end{equation}
-The vector $\mathbf{J}$ is the cost function and $\nabla J$ is the cost function gradient defined in the PAQ report 352 by
+The filter coefficients are calculated by a steepest decent algorithm 
 \begin{equation}
-	\nabla J = \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
-	\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right]
+\mathbf{c}_{b+1} = \mathbf{c}_{b}-\mu \nabla J
+\label{eq:steepest}
+\end{equation}
+initialized by the MMSE equalizer coefficients
+\begin{equation}
+\mathbf{c}_{0} = \mathbf{c}_\text{MMSE}.
+\end{equation}
+
+The vector $\mathbf{J}$ is the cost function and $\nabla J$ is the cost function gradient \cite[eq. (352)]{PAQ-phase1}
+\begin{equation}
+	\nabla J \approx \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - 1 \right]
 	y(n)  \mathbf{r}^\ast(n).
 \label{eq:DelJcma-approxr}
 \end{equation}
@@ -259,15 +275,17 @@ where
 \begin{equation}
 \mathbf{r}(n) = \begin{bmatrix} r(n+L_1) \\ \vdots \\ r(n) \\ \vdots \\ r(n-L_2) \end{bmatrix}.
 \end{equation}
-This means $\nabla J$ is of the form
+This means $\nabla J$ is defined by
 \begin{equation}
 \nabla J = \begin{bmatrix} \nabla J(-L_1) \\ \vdots \\ \nabla J(0) \\ \vdots \\ \nabla J(L_2) \end{bmatrix}.
 \end{equation}
-To leverage the computational efficiency of the Fast Fourier Transform (FFT), Equation \eqref{eq:DelJcma-approxr} is re-expressed as a convolution.
+
+A DSP engineer could implement Equation \eqref{eq:DelJcma-approxr} and \eqref{eq:steepest} directly but CMA can be massaged to map better to GPUs.
+To leverage the computational efficiency of convolution using the cuFFT library, Equation \eqref{eq:DelJcma-approxr} is re-expressed as a convolution.
 
 To begin messaging $\nabla J$ 
 \begin{equation}
-z(n) = 	2\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - R_2 \right] y(n)
+z(n) = 	2\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - 1 \right] y(n)
 \end{equation} 
 is defined to make the expression of $\nabla J$ to be
 \begin{equation}
@@ -301,8 +319,9 @@ Now
 \nabla J(k) = \frac{1}{L_{pkt}} \sum^{L_{pkt}-1}_{m=0}  z(m) \rho(k-m).
 \label{eq:CMA_delJ_rice_reformed}
 \end{equation}
-Because $z(n)$ has support on $0 \leq n \leq L_{pkt}-1$ and $\rho(n)$ has support on $-L_{pkt}+1 \leq n \leq 0$, 
-the result of the convolution sum $b(n)$ has support on $-L_{pkt}+1 \leq n \leq L_{pkt}-1$.
+Because $z(n)$ has support on $0 \leq n \leq \Lpkt-1$ and 
+$\rho(n)$ has support on $-\Lpkt+1 \leq n \leq 0$, 
+the result of the convolution sum $b(n)$ has support on $-\Lpkt+1 \leq n \leq \Lpkt-1$.
 Putting all the pieces together, we have
 \begin{align}
 b(n) &= \sum^{L_{pkt}-1}_{m=0} z(m) \rho(n-m) \nonumber \\
@@ -314,20 +333,47 @@ Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rh
 \nabla J(k) = \frac{1}{L_{pkt}} b(k), \quad -L_1 \leq k \leq L_2.
 \label{eq:CMA_delJ_donzo}
 \end{equation}
-The values of interest are shown in Figure Foo!!!!(c)
+The values of interest are shown in Figure \ref{fig:convolutionFigureRice}.
+\begin{figure}
+	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
+	\centering\includegraphics[width=10in/100*55]{figures/eq_equations/convolutionFigureRice.pdf}
+	\label{fig:convolutionFigureRice}
+\end{figure}
 
-This suggest the following algorithm for computing the gradient vector $\nabla J$
-Matlab Code!!!
+
+This suggest the following algorithm for computing the gradient vector $\nabla J$.
+\begin{filecontents*}{CMA.m}
+c_CMA = c_MMSE;
+for i = 1:its
+yy = conv(r,c_CMA);
+y = yy(L1+1:end-L2); % trim yy
+z = 2*(y.*conj(y)-1).*y;
+Z = fft(z,Nfft);
+R = fft(conj(r(end:-1:1)),Nfft)
+b = ifft(Z.*R);
+delJ = b(Lpkt-L1:Lpkt+L2);
+c_CMA1 = c_CMA -mu*delJ;
+c_CMA = c_CMA1;
+end
+yy = conv(r,c_CMA);
+y = yy(L1+1:end-L2); % trim yy
+\end{filecontents*}
+
+\singlespacing
+\lstinputlisting[caption = {Matlab code showing how to compute implement CMA through convolution using FFTs.}]{CMA.m}
+\doublespacing
 
 \clearpage
-\subsection{The Multiply Equalizers}
+\subsection{The Frequency Domain Equalizers}
+Frequency domain equalization in aeronautical telemetry has been studied \cite{williams2013linear}.
 
 \subsubsection{The Frequency Domain Equalizer One}
-The Frequency Domain Equalizer One (FDE1) is the MMSE or wiener filter applied in the frequency domain.
+Frequency Domain Equalizer One (FDE1) is the MMSE or wiener filter applied in the frequency domain.
+FDE1 is adapted from \cite[eq. (11)]{williams2013linear}.
 Ian E. Williams and M. Saquib derived FDE1 for this project in a paper called Linear Frequency Domain Equalization of SOQPSK-TG for Wideband Aeronautical Telemetry.
 The FDE1 equalizer is defined in Equation (11) as
 \begin{equation}
-C_\text{FDE1}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{1}{\hat{\sigma}^2}}
+C_\text{FDE1}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{1}{\hat{\sigma}^2_w}}
 \label{eq:FDE1}
 \end{equation}
 The term $C_\text{FDE1}(\omega)$ is the Frequency Domain Equalizer One frequency response at $\omega$.
@@ -338,17 +384,18 @@ FDE1 needs no massaging because Equation \eqref{eq:FDE1} is easily implemented i
 
 \subsubsection{The Frequency Domain Equalizer One}
 The Frequency Domain Equalizer Two (FDE2) is the MMSE or wiener filter applied in the frequency domain.
+FDE1 is adapted from \cite[eq. (12)]{williams2013linear}.
 Ian E. Williams and M. Saquib derived FDE1 for this project in a paper called Linear Frequency Domain Equalization of SOQPSK-TG for Wideband Aeronautical Telemetry.
 The FDE2 equalizer is defined in Equation (12) as
 \begin{equation}
-C_\text{FDE2}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{\Psi(\omega)}{\hat{\sigma}^2}}
+C_\text{FDE2}(\omega) = \frac{\hat{H}^\ast(\omega)}{|\hat{H}(\omega)|^2+\frac{\Psi(\omega)}{\hat{\sigma}^2_w}}
 \label{eq:FDE2}
 \end{equation}
 FDE2 almost identical to FDE1.
 The only difference is term $\Psi(\omega)$ in the denominator. 
 The term $\Psi(\omega)$ is the average spectrum of SPQOSK-TG shown in Figure \ref{fig:SOQPSK_spectrum}.
 \begin{figure}
-	\centering\includegraphics[width=5in]{figures/equations/FDE2_spectrum_PSI.eps}
+	\centering\includegraphics[width=5in]{figures/eq_equations/FDE2_spectrum_PSI.eps}
 	\caption{A block diagram illustrating organization of the algorithms in the GPU.}
 	\label{fig:SOQPSK_spectrum}
 \end{figure}

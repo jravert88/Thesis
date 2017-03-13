@@ -56,7 +56,7 @@ The GPU kernel computes every element of $\mathbf{C}_2$ in parallel while the CP
 \end{figure}
 \singlespacing
 \clearpage
-\begin{lstlisting}[caption={Comparison of CPU verse GPU code.},label={code:GPUvsCPU}]
+\begin{lstlisting}[style=myCUDAstyle,caption={Comparison of CPU verse GPU code.},label={code:GPUvsCPU}]
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
@@ -465,7 +465,7 @@ The CPU is idle while the GPU is processing and data is being transferred to and
 	\label{fig:concurrentCPU_nonBlocking}
 \end{figure}
 \singlespacing
-\begin{lstlisting}[caption={Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:noPipe}]
+\begin{lstlisting}[style=myCUDAstyle,caption={Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:noPipe}]
 int main()
 {
 	...
@@ -486,8 +486,10 @@ int main()
 
 So the question is, ``Can the throughput increase by using idle time on the GPU and CPU?''
 Yes, CPU and GPU operations can sacrifice latency for throughput by pipelineing.
-After the CPU gives instructions to the GPU, the CPU can do other operations like acquire data or perform algorithms better suited for a CPU than the GPU.
-Once the CPU has finished its operations, the CPU calls cudaDeviceSynchronize to wait for the GPU to finish.
+After the CPU gives instructions to the GPU, the CPU can do other operations like acquire data or perform algorithms better suited for a CPU than the \mcode{for i=1:3, disp('cool'); end;} GPU.
+Once the CPU has finished its operations, the CPU calls \begin{lstlisting}[style=myCUDAstyle]
+	cudaDeviceSynchronize();
+\end{lstlisting} to wait for the GPU to finish.
 
 Listing \ref{code:pipe} shows how to pipeline CPU and GPU operations.
 Instead of acquiring data first, the CPU gives instructions to the GPU then starts acquiring data.
@@ -501,7 +503,7 @@ This system suffers latency equal a full cycle of data.
 	\label{fig:concurrentCPU_blocking}
 \end{figure}
 \singlespacing
-\begin{lstlisting}[caption={Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:pipe}]
+\begin{lstlisting}[style=myCUDAstyle,caption={Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:pipe}]
 int main()
 {
 	...
@@ -547,7 +549,7 @@ A strong understanding of your full system is required to pipeline at this level
 
 \singlespacing
 \clearpage
-\begin{lstlisting}[caption={CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU.},label={code:convFun}]
+\begin{lstlisting}[style=myCUDAstyle,language=C++,caption={CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU.},label={code:convFun}]
 #include <cufft.h>
 using namespace std;
 // Length of Filter (186 is a magic number)
