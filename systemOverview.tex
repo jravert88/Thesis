@@ -10,68 +10,52 @@
 \label{sec:systemOverview}
 
 \section{Overview}
-This chapter gives a high lever overview of the the algorithms implemented into the GPU. 
-A block diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
-The algorithms implemented in GPUs will briefly be explained.
-Chapter \ref{sec:eq_eq} explains the computation and application of the equalizers at a lower level.
-A simple block Diagram is shown in Figure \ref{fig:simpleBlockDiagram}.
+This chapter gives a high lever overview of the algorithms required to implement equalizers in GPUs. 
+As shown in chapter blah, an equalizer uses the channel estimate and the noise varinace to be calculated.
+The channel estimate is found by estimating the channel based on the preamble.
+The noise estimate is found by estimating the noise varinace from the preamble after the channel has been estimated.
+The frequency offset also needs to be removed before estimating the channel and noise.
+All estimators are data aided. The preamble has to be found before any estimators can be ran.
 
-This chapter will proceed as follows, 
-section \ref{sec:preamble_detection} will explain the algorithm used to find the preambles and packetize the received signal,
-section \ref{sec:frequency_offset_estimation_and_compensation} will explain the frequency offset estimator and frequency offset compensation,
-section \ref{sec:channel_estimation} will explain channel channel estimation,
-section \ref{sec:noise_variance_estimation} will explain noise variance,
-section \ref{sec:oqpsk_detector} will explain the GPU implementation of the OQPSK detector.
-The explanation of the GPU implantation of the equalizers will be explained in much detail in Chapter \ref{sec:eq_eq}.
+
+A block diagram of the estimators is shown in Figure \ref{fig:estimatorBlock}.
+A block diagram of the equalization and symbol detector is shown in Figure \ref{fig:estimatorBlock}.
+The estimators and symbol detector will be explained briefly in this chapter.
+The equalizer computation and detection filter process in the dashed box will be explained in chapter \ref{chap:eq_eq}.
 \begin{figure}
-	\centering\includegraphics[width=6in]{figures/systemOverview/blockDiagram.pdf}
-	\caption{This a simple block diagram of what the GPU does.}
-	\label{fig:simpleBlockDiagram}
+	\caption{A block diagram of the estimation process.}
+	\centering\includegraphics[width=10.33in/100*55]{figures/systemOverview/estimatorBlock.pdf}
+	\label{fig:estimatorBlock}
+\end{figure}
+\begin{figure}
+	\caption{A block diagram of the equalization and symbol detector process.}
+	\centering\includegraphics[width=9.35in/100*55]{figures/systemOverview/ProcessingBlock.pdf}
+	\label{fig:ProcessingBlock}
 \end{figure}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \section{Preamble Detection}
-\label{sec:preamble_detection}
-The received samples in this project has the iNET packet structure shown in Figure \ref{fig:packet}.
+The received samples in this thesis has the iNET packet structure shown in Figure \ref{fig:packet}.
 The iNET packet consists of a preamble and ASM periodically inserted into the data stream.
 The iNET preamble and ASM bits are inserted every 6144 data bits.
-The received signal is sampled at 2 samples/bit, making a iNET packet $\Lpkt$ long or $12672$ samples.
+The received signal is sampled at 2 samples/bit, making an $\Lpkt=12672$ sample iNET packet.
 The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field
 \begin{equation}
 034776C72728950B0_\text{hex}
 \end{equation}
-Each 16-bit sequence $\text{CD98}_\text{hex}$ sampled at two samples/bit are 32 or $L_q$ samples long.
+Each 16-bit sequence $\text{CD98}_\text{hex}$ sampled at two samples/bit are $L_q=32$ samples long.
 \begin{figure}
-	\centering\includegraphics[width=\textwidth/10*10]{figures/gpu/packet.png}
 	\caption{The iNET packet structure.}
+	\centering\includegraphics[width=9.47in/100*55]{figures/systemOverview/packetStructure.pdf}
 	\label{fig:packet}
 \end{figure}
 
 To compute data-aided preamble assisted equalizers, preambles in the received signal are found then used to estimate various parameters.
-The goal of the preamble detection step is to "packetize" the received samples into vectors with the packet structure shown in Figure \ref{fig:packet}. 
-Each packet of received samples contains a $\Lp$ preamble samples, $\Lasm$ ASM samples and $\Ldata$ data samples.
-The received signal is sampled at two samples per bit making $\Lp = 256$, $\Lasm = 136$ and $\Ldata = 12288$. 
-The full length of a packet is $\Lp + \Lasm + \Ldata = 12672$.
+The goal of the preamble detection step is to structure the received samples into length $\Lpkt$ vectors with the structure shown in Figure \ref{fig:packet}.
+Each vector contains $\Lp = 256$ preamble samples, $\Lasm = 136$ ASM samples and $\Ldata = 12288$ data samples.
+The full length of a vector is $\Lp + \Lasm + \Ldata = 12672$.
 
-Before the received samples can be packetized, the preambles are found using a preamble detector explained in \cite{preamble_detector}.
-The preamble detector output $L(u)$ is computed by 
+Before the structureing the received samples into packets, the preambles are found using a preamble detector explained in \cite{preamble_detector}.
+Equations \eqref{eq:gpu-L-4} through \eqref{eq:gpu-L-pedone-geoghegan-4} have been optimized for GPUs and are implemented directly.
 \begin{equation}
 	L(u) = \sum_{m=0}^{7}
 		\left[ I^2(n,m) + Q^2(n,m) \right]
@@ -126,80 +110,87 @@ with
 \end{split}
 \label{eq:gpu-L-pedone-geoghegan-4}
 \end{equation}
-Figure \ref{fig:L_2_packets} shows $2\Lpkt$ samples of the preamble detector output $L(u)$.
-\begin{figure}
-	\centering\includegraphics[width=5in]{figures/gpu/L_2_packets.eps}
-	\caption{The output of the Preamble Detector $L(u)$.}
-	\label{fig:L_2_packets}
-\end{figure}
-The start of a preamble is indicated by a local maximum of the preamble detector output.
-Using the index of the local maximums, the received samples are packetized.
-The vector $\rpkt$ as shown in Figure \ref{fig:simpleBlockDiagram} contains $12672$ samples of data with the packet structure shown in Figure \ref{fig:packet}.
 
-The preamble detection algoritm in Equations \eqref{eq:gpu-L-4}-\eqref{eq:gpu-L-pedone-geoghegan-4} and the local maximum search algorithms are easily implemented into GPUs.
-The GPU implementation of these algorithms wont be explained here.
+A correlation peak in $L(u)$ indicate the starting index $k$ of a preamble.
+The vector $\mathbf{r}_\text{p}$ in Figure \ref{fig:estimatorBlock} is defined by
+\begin{equation}
+\mathbf{r}_\text{p} = 
+\begin{bmatrix}
+r(k) \\ 
+\vdots \\ 
+r(k+\Lpkt-1)
+\end{bmatrix}
+=
+\begin{bmatrix}
+r_\text{p}(0) \\ 
+\vdots \\ 
+r_\text{p}(\Lpkt-1)
+\end{bmatrix}
+\end{equation}
 
 \section{Frequency Offset Compensation}
-\label{sec:frequency_offset_estimation_and_compensation}
-The frequency offset estimator shown in Figure \ref{fig:simpleBlockDiagram} is an algorithm taken from blah.
+The frequency offset estimator shown in Figure \ref{fig:estimatorBlock} is the estimator taken from \cite[eq. (24)]{rice2014frequency}.
 With the notation adjusted slightly, the frequency offset estimate is
 \begin{equation}
-	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \sum_{n=i+2L_q}^{i+7L_q-1} r(n)r^\ast(n-L_q)\right\}
+	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \sum_{n=i+2L_q}^{i+7L_q-1} r_\text{p}(n)r_\text{p}^\ast(n-L_q)\right\}
+	\quad
+\text{for} \;
+i=1,2,3,4,5.
 	\label{eq:jeff-ML-w-final3}
 \end{equation}
-where $L_q$ is the length of 
-where a frequency offset estimate is produced for every packet in $\rpkt$.
+The frequency offset is estimated for every packet or each vector $\mathbf{r}_\text{p}$.
 
-The frequency offset is compensated for by derotating the packetized samples by $-\hat{\omega}_0$
+The frequency offset is compensated for by derotating the packet structured samples by the estimated offset
 \begin{equation}
-	r(n) = r_\text{pkt}(n) e^{-j\hat{\omega}_0}
+	r(n) = r_\text{p}(n) e^{-j\hat{\omega}_0}.
 	\label{eq:frequency_compensation}
 \end{equation}
 Equations \eqref{eq:jeff-ML-w-final3} and \eqref{eq:frequency_compensation} are easily implemented into GPUs. 
 
 \section{Channel Estimation}
 \label{sec:channel_estimation}
-The channel estimator is the ML estimator taken from blah.
+The channel estimator is the ML estimator taken from \cite[eq. 8]{rice-afran-saquib-cole-rhodes-moazzami:2014}.
 \begin{equation}
-\hat{\mathbf{h}} = \underbrace{ \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag}_{\mathbf{P}_{ix}}\mathbf{r}
+\hat{\mathbf{h}} = \underbrace{ \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag}_{\mathbf{X}_\text{lpi}}\mathbf{r}
 \end{equation}
-where $\mathbf{X}$ is a convolution matrix formed from the ideal preamble and ASM samples.
-The matrix $\mathbf{P}_\text{ix}$ is
+where $\mathbf{X}$ is a convolution matrix formed from the ideal preamble and ASM samples
+and $\mathbf{X}_\text{lpi}$ is the left psudo-inverse of $\mathbf{X}$.
+The ML channel estimator is the matrix operation
 \begin{equation}
-\mathbf{P}_\text{ix} = \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag
+\hat{\mathbf{h}} = \mathbf{X}_\text{lpi} \mathbf{r}.
 \end{equation}
-making the channel estimate simply
-\begin{equation}
-\hat{\mathbf{h}} = \mathbf{P}_\text{ix} \mathbf{r}
-\end{equation}
-The matrix multiplication is easily implemented into GPUs.
+The matrix operation $\mathbf{X}_\text{lpi} \mathbf{r}$ maps simply and efficiently in GPUs using cuBLAS.
 
 
 \section{Noise Variance Estimation}
 \label{sec:noise_variance_estimation}
-The noise variance estimator is the algorithm taken from blah.
-The algorithm is
+The noise variance estimator is also taken from \cite[eq. 9]{rice-afran-saquib-cole-rhodes-moazzami:2014}
 \begin{equation}
 	\hat{\sigma}_w^2 = \frac{1}{2\rho} \left| \mathbf{r}-\mathbf{X}\hat{\mathbf{h}}\right|^2
 	\label{eq:ML-s2-final3}
 \end{equation}
-where $\rho$ is the pre-computed constant
+where
 \begin{equation}
 	\rho = {\rm Trace} \left\{ \mathbf{I} -  \mathbf{X}\left(\mathbf{X}^\dag\mathbf{X}\right)^{-1}\mathbf{X}^\dag \right\}.
 \end{equation}
 Equation \eqref{eq:ML-s2-final3} is easily implemented into GPUs.
 	
 
-\section{SxS Detector}
+\section{Symbol-by-Symbol Detector}
 \label{sec:oqpsk_detector}
-The Symbol by Symbol (SxS) detector block in Figure \ref{fig:simpleBlockDiagram} is a Offset Quadtriture Phase Shift Keying (OQPSK) detector.
-Using the simple OQPSK detector in place of the complex MLSE SOQPSK-TG detector leads to less than $1$ dB in bit error rate blah.
+The symbol by symbol detector block in Figure \ref{fig:ProcessingBlock} is a Offset Quadrature Phase Shift Keying (OQPSK) detector.
+Using the simple OQPSK detector in place of the complex MLSE SOQPSK-TG detector leads to less than $1$dB in bit error rate \cite{perrins:2013}.
 \begin{figure}
-	\centering\includegraphics[width=6in]{figures/systemOverview/OQPSK.pdf}
 	\caption{Offset Quadriture Phase Shift Keying symbol by symbol detector.}
+	\centering\includegraphics[width=6in]{figures/systemOverview/OQPSK.pdf}
 	\label{fig:OQPSK}
 \end{figure}
 
-The Phase Lock Loop (PLL) in the SxS OQPSK detector cannot be parallelized to be implemented into GPUs because of the feedback loop. Feedback loops are inherently serial.
-Although the OQPSK detector cannot be parallelized on a sample by sample basis, it can be parallelized on a packet by packet basis.
+A Phase Lock Loop (PLL) is needed in the SxS OQPSK detector to track out residual frequency offset.
+The residual frequency offset results from the frequency offset estimation error.
+While phase offset, timing offset and multipath are combated with equalizers, a PLL is required to eliminate residual frequency offset.
+The PLL tracks out the residual frequency offset using a feedback control loop.
+
+Implementing the PLL with a feedback loop seems like it may be challenging in GPUs because it cannot be parallelized.
+While the PLL cannot be parallelized on a sample by sample basis, it can be parallelized on a packet by packet basis.
 Running the PLL and detector serially through a full packet of data is still relatively fast because each iteration of the PLL and detector is computationally light.

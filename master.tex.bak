@@ -265,6 +265,7 @@
 \include{gpu_intro}
 \include{systemOverview}
 \include{eq_equations}
+\include{eq_GPUimplementation}
 \include{eq_performance}
 \include{final_summary}
 

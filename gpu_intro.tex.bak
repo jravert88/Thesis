@@ -7,7 +7,7 @@
 
 % \cleardoublepage
 \chapter{Signal Processing with GPUs}
-\label{sec:gpu}
+\label{chap:gpu}
 
 This thesis explores the use of GPUs in data-aided estimation, equalization and filtering operations.
 
@@ -259,6 +259,9 @@ Some libraries used in this Thesis are
   \item cusolverSp
 \end{itemize}
 
+
+Convolution is one of the most important tools in any digital signal processing engineer’s toolbox. Convolution can be implemented in the time or frequency domain. Theory says if the given signal and filter is “long”, the frequency domain is the best choice. But how long is… long? First we need a way to measure how computationally intensive an algorithm is. The number of floating point operations (flops) is commonly used for benchmarking. Assuming the length input signal is complex and the length filter is complex, how many flops are required to produce in the time domain verse the frequency domain? Time Domain Convolution flops Frequency Domain Convolution flops
+
 \section{Cuda Convolution}
 An important tool to Digital Communications and Digital Signal Processing is convolution.
 Time domain convolution is
@@ -486,10 +489,8 @@ int main()
 
 So the question is, ``Can the throughput increase by using idle time on the GPU and CPU?''
 Yes, CPU and GPU operations can sacrifice latency for throughput by pipelineing.
-After the CPU gives instructions to the GPU, the CPU can do other operations like acquire data or perform algorithms better suited for a CPU than the \mcode{for i=1:3, disp('cool'); end;} GPU.
-Once the CPU has finished its operations, the CPU calls \begin{lstlisting}[style=myCUDAstyle]
-	cudaDeviceSynchronize();
-\end{lstlisting} to wait for the GPU to finish.
+After the CPU gives instructions to the GPU, the CPU can do other operations like acquire data or perform algorithms better suited for a CPU than the GPU.
+Once the CPU has finished its operations, the CPU calls to wait for the GPU to finish.
 
 Listing \ref{code:pipe} shows how to pipeline CPU and GPU operations.
 Instead of acquiring data first, the CPU gives instructions to the GPU then starts acquiring data.

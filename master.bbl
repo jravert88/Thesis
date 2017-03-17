@@ -35,6 +35,23 @@ M.~Rice and A.~Mcmurdie, ``On frame synchronization in aeronautical
   telemetry,'' \emph{IEEE Transactions on Aerospace and Electronic Systems},
   vol.~52, no.~5, pp. 2263--2280, October 2016.
 
+\bibitem{rice2014frequency}
+M.~Rice and E.~Perrins, ``On frequency offset estimation using the inet
+  preamble in frequency selective fading,'' in \emph{Military Communications
+  Conference (MILCOM), 2014 IEEE}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE,
+  2014, pp. 706--711.
+
+\bibitem{rice-afran-saquib-cole-rhodes-moazzami:2014}
+M.~Rice, M.~S. Afran, M.~Saquib, A.~Cole-Rhodes, and F.~Moazzami, ``On the
+  performance of equalization techniques for aeronautical telemetry,'' in
+  \emph{Proceedings of the {IEEE} Military Communications Conference},
+  Baltimore, MD, November 2014.
+
+\bibitem{perrins:2013}
+E.~Perrins, ``{FEC} systems for aeronautical telemetry,'' \emph{{IEEE}
+  Transactions on Aerospace and Electronic Systems}, vol.~49, no.~4, pp.
+  2340--2352, October 2013.
+
 \bibitem{PAQ-phase1}
 M.~Rice, ``Phase 1 report: Preamble assisted equalization for aeronautical
   telemetry ({PAQ}),‖ {Brigham Young University},'' Technical Report, 2014,
@@ -48,5 +65,11 @@ I.~E. Williams and M.~Saquib, ``Linear frequency domain equalization of
   {SOQPSK-TG} for wideband aeronautical telemetry channels,'' \emph{IEEE
   Transactions on Aerospace and Electronic Systems}, vol.~49, no.~1, pp.
   640--647, 2013.
+
+\bibitem{wiki:Sparse_matrix}
+\BIBentryALTinterwordspacing
+Wikipedia, ``Sparse matrix,'' 2017. [Online]. Available:
+  \url{https://en.wikipedia.org/wiki/Sparse_matrix}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

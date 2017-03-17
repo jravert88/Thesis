@@ -19,13 +19,20 @@
 \BOOKMARK [1][-]{section.4.3}{4.3 Frequency Offset Compensation}{chapter.4}% 19
 \BOOKMARK [1][-]{section.4.4}{4.4 Channel Estimation}{chapter.4}% 20
 \BOOKMARK [1][-]{section.4.5}{4.5 Noise Variance Estimation}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.6}{4.6 SxS Detector}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.6}{4.6 Symbol-by-Symbol Detector}{chapter.4}% 22
 \BOOKMARK [0][]{chapter.5}{5 Equalizer Equations}{}% 23
 \BOOKMARK [1][-]{section.5.1}{5.1 Overview}{chapter.5}% 24
 \BOOKMARK [1][-]{section.5.2}{5.2 Zero-Forcing and Minimum Mean Square Error Equalizers}{chapter.5}% 25
 \BOOKMARK [2][-]{subsection.5.2.1}{5.2.1 Zero-Forcing}{section.5.2}% 26
 \BOOKMARK [2][-]{subsection.5.2.2}{5.2.2 The Constant Modulus Algorithm}{section.5.2}% 27
 \BOOKMARK [2][-]{subsection.5.2.3}{5.2.3 The Frequency Domain Equalizers}{section.5.2}% 28
-\BOOKMARK [0][]{chapter.6}{6 Equalizer Performance}{}% 29
-\BOOKMARK [0][]{chapter.7}{7 Final Summary}{}% 30
-\BOOKMARK [0][]{section*.10}{Bibliography}{}% 31
+\BOOKMARK [0][]{chapter.6}{6 Equalizer GPU Implementation}{}% 29
+\BOOKMARK [1][-]{section.6.1}{6.1 CUDA Batched Processing}{chapter.6}% 30
+\BOOKMARK [1][-]{section.6.2}{6.2 Batched Convolution}{chapter.6}% 31
+\BOOKMARK [1][-]{section.6.3}{6.3 Equalizer Implementations}{chapter.6}% 32
+\BOOKMARK [1][-]{section.6.4}{6.4 Zero-Forcing and MMSE GPU Implementation}{chapter.6}% 33
+\BOOKMARK [1][-]{section.6.5}{6.5 Constant Modulus Algorithm GPU Implementation}{chapter.6}% 34
+\BOOKMARK [1][-]{section.6.6}{6.6 Frequency Domain Equalizer One and Two GPU Implementation}{chapter.6}% 35
+\BOOKMARK [0][]{chapter.7}{7 Equalizer Performance}{}% 36
+\BOOKMARK [0][]{chapter.8}{8 Final Summary}{}% 37
+\BOOKMARK [0][]{section*.14}{Bibliography}{}% 38

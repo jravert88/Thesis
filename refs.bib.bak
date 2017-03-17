@@ -1083,3 +1083,45 @@ Stabilization by smooth feedback in the neighborhood of an equilibrium
   year={2014},
   institution={Technical Report, 2014, submitted to the Spectrum Efficient Technologies (SET) Office of the Science \& Technology, Test \& Evaluation (S\&T/T\&E) Program, Test Resource Management Center (TRMC). Also available online at< http://hdl. lib. byu. edu/1877/3242}
 }
+
+@article{williams2013linear,
+  title={Linear frequency domain equalization of {SOQPSK-TG} for wideband aeronautical telemetry channels},
+  author={Williams, Ian E and Saquib, M},
+  journal={IEEE Transactions on Aerospace and Electronic Systems},
+  volume={49},
+  number={1},
+  pages={640--647},
+  year={2013},
+  publisher={IEEE}
+}
+
+@inproceedings{rice2014frequency,
+  title={On Frequency Offset Estimation Using the iNET Preamble in Frequency Selective Fading},
+  author={Rice, Michael and Perrins, Erik},
+  booktitle={Military Communications Conference (MILCOM), 2014 IEEE},
+  pages={706--711},
+  year={2014},
+  organization={IEEE}
+}
+
+@misc{wiki:Sparse_matrix,
+	author = {Wikipedia},
+	title = {Sparse matrix},
+	year = 2017,
+	url = {https://en.wikipedia.org/wiki/Sparse_matrix}
+}
+
+@article{dongarra2016proposed,
+  title={A proposed API for batched basic linear algebra subprograms},
+  author={Dongarra, Jack and Duff, Iain and Gates, Mark and Haidar, Azzam and Hammarling, Sven and Higham, Nicholas J and Hogg, Jonathon and Valero-Lara, Pedro and Relton, Samuel D and Tomov, Stanimire and others},
+  year={2016}
+}
+
+@inproceedings{haidar2015optimization,
+  title={Optimization for performance and energy for batched matrix computations on gpus},
+  author={Haidar, Azzam and Dong, Tingxing and Luszczek, Piotr and Tomov, Stanimire and Dongarra, Jack},
+  booktitle={Proceedings of the 8th Workshop on General Purpose Processing using GPUs},
+  pages={59--69},
+  year={2015},
+  organization={ACM}
+}
