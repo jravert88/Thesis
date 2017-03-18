@@ -13,26 +13,26 @@
 \contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing when CPU convolution is faster than GPU convolution.}}{17}{figure.3.10}
 \contentsline {figure}{\numberline {3.11}{\ignorespaces Plot showing trade offs with convolution in GPUs.}}{18}{figure.3.11}
 \contentsline {figure}{\numberline {3.12}{\ignorespaces Lower bounded plot showing trade offs with convolution in GPUs.}}{19}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}}{20}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces ConvGPU thread optimization 128 threads per block 0.006811.}}{21}{figure.3.14}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows a Profile of Listing \ref {code:noPipe}.}}{21}{figure.3.15}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{22}{figure.3.16}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{23}{figure.3.17}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}}{21}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces ConvGPU thread optimization 128 threads per block 0.006811.}}{22}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows a Profile of Listing \ref {code:noPipe}.}}{22}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{23}{figure.3.16}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{24}{figure.3.17}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces A block diagram of the estimation process.}}{29}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces A block diagram of the equalization and symbol detector process.}}{30}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces The iNET packet structure.}}{30}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{34}{figure.4.4}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces A block diagram of the estimation process.}}{31}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces A block diagram of the equalization and symbol detector process.}}{32}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces The iNET packet structure.}}{32}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{36}{figure.4.4}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{43}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces I need help on this one!!!! }}{45}{figure.5.2}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{45}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces I need help on this one!!!! }}{47}{figure.5.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{48}{figure.6.1}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{48}{figure.6.2}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{51}{figure.6.3}
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{52}{figure.6.4}
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{53}{figure.6.5}
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{54}{figure.6.6}
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{54}{figure.6.7}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{50}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{50}{figure.6.2}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{53}{figure.6.3}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{54}{figure.6.4}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{55}{figure.6.5}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{56}{figure.6.6}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{56}{figure.6.7}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

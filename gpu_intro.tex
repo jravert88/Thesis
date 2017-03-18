@@ -274,6 +274,7 @@ While Listing \ref{code:GPUvsCPU} is a simple and good example showing how progr
 Listing \ref{code:convFun} shows four different ways of implementing convolution
 \begin{itemize}
   \item time domain convolution in a CPU
+  \item frequency domain convolution in a CPU
   \item time domain convolution in a GPU using global memory
   \item time domain convolution in a GPU using shared memory
   \item frequency domain convolution in a GPU using CUDA libraries
@@ -550,11 +551,16 @@ A strong understanding of your full system is required to pipeline at this level
 
 \singlespacing
 \clearpage
-\begin{lstlisting}[style=myCUDAstyle,language=C++,caption={CUDA code to performing complex convolution four different ways: time domain CPU, time domain GPU, time domain GPU using shared memory and frequency domain GPU.},label={code:convFun}]
+\begin{lstlisting}[style=myCUDAstyle,language=C++,caption={CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU.},label={code:convFun}]
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
 #include <cufft.h>
+#include <fstream>
+#include <string>
+#include <fftw3.h>
 using namespace std;
-// Length of Filter (186 is a magic number)
-const int LH = 186;
+
 
 void ConvCPU(cufftComplex* y,cufftComplex* x,cufftComplex* h,int Lx,int Lh){
 	for(int yIdx = 0; yIdx < Lx+Lh-1; yIdx++){
@@ -565,29 +571,31 @@ void ConvCPU(cufftComplex* y,cufftComplex* x,cufftComplex* h,int Lx,int Lh){
 			int xAccessIdx = yIdx-hIdx;
 			if(xAccessIdx>=0 && xAccessIdx<Lx){
 				// temp += x[xAccessIdx]*h[hIdx];
-				// (A+jB)(C+jD) = (AC-BD) + j(AD+BC)
 				float A = x[xAccessIdx].x;
 				float B = x[xAccessIdx].y;
 				float C = h[hIdx].x;
 				float D = h[hIdx].y;
-				cufftComplex complexMult;
-				complexMult.x = A*C-B*D;
-				complexMult.y = A*D+B*C;
-
-				temp.x += complexMult.x;
-				temp.y += complexMult.y;
+				cufftComplex result;
+				result.x = A*C-B*D;
+				result.y = A*D+B*C;
+				temp.x += result.x;
+				temp.y += result.y;
 			}
 		}
 		y[yIdx] = temp;
 	}
+
 }
 
 __global__ void ConvGPU(cufftComplex* y,cufftComplex* x,cufftComplex* h,int Lx,int Lh){
 	int yIdx = blockIdx.x*blockDim.x + threadIdx.x;
+
 	int lastThread = Lx+Lh-1;
-	// Don't access elements out of bounds
+
+	// don't access elements out of bounds
 	if(yIdx >= lastThread)
 		return;
+
 	cufftComplex temp;
 	temp.x = 0;
 	temp.y = 0;
@@ -595,78 +603,79 @@ __global__ void ConvGPU(cufftComplex* y,cufftComplex* x,cufftComplex* h,int Lx,i
 		int xAccessIdx = yIdx-hIdx;
 		if(xAccessIdx>=0 && xAccessIdx<Lx){
 			// temp += x[xAccessIdx]*h[hIdx];
-			// (A+jB)(C+jD) = (AC-BD) + j(AD+BC)
 			float A = x[xAccessIdx].x;
 			float B = x[xAccessIdx].y;
 			float C = h[hIdx].x;
 			float D = h[hIdx].y;
-			cufftComplex complexMult;
-			complexMult.x = A*C-B*D;
-			complexMult.y = A*D+B*C;
-
-			temp.x += complexMult.x;
-			temp.y += complexMult.y;
+			cufftComplex result;
+			result.x = A*C-B*D;
+			result.y = A*D+B*C;
+			temp.x += result.x;
+			temp.y += result.y;
 		}
-		y[yIdx] = temp;
 	}
+	y[yIdx] = temp;
 }
+
 
 __global__ void ConvGPUshared(cufftComplex* y,cufftComplex* x,cufftComplex* h,int Lx,int Lh){
 	int yIdx = blockIdx.x*blockDim.x + threadIdx.x;
-	// Be sure to read in full h_shared before checking lastThread
-	// First Lh threads in thread block read h from global memory into shared memory
-	__shared__ cufftComplex h_shared[LH];
-	if(threadIdx.x < LH)
-		h_shared[threadIdx.x] = h[threadIdx.x];
+
 	int lastThread = Lx+Lh-1;
-	// Don't access elements out of bounds
+
+	extern __shared__ cufftComplex h_shared[];
+	if(threadIdx.x < Lh){
+		h_shared[threadIdx.x] = h[threadIdx.x];
+	}
+	__syncthreads();
+
+	// don't access elements out of bounds
 	if(yIdx >= lastThread)
 		return;
-	// Thread barrier, ensures threads wait until h has been read into h_shared
-	__syncthreads();
+
 	cufftComplex temp;
 	temp.x = 0;
 	temp.y = 0;
 	for(int hIdx = 0; hIdx < Lh; hIdx++){
 		int xAccessIdx = yIdx-hIdx;
 		if(xAccessIdx>=0 && xAccessIdx<Lx){
-			// temp += x[xAccessIdx]*h_shared[hIdx];
-
-			// (A+jB)(C+jD) = (AC-BD) + j(AD+BC)
+			// temp += x[xAccessIdx]*h[hIdx];
 			float A = x[xAccessIdx].x;
 			float B = x[xAccessIdx].y;
 			float C = h_shared[hIdx].x;
 			float D = h_shared[hIdx].y;
-			cufftComplex complexMult;
-			complexMult.x = A*C-B*D;
-			complexMult.y = A*D+B*C;
-
-			temp.x += complexMult.x;
-			temp.y += complexMult.y;
+			cufftComplex result;
+			result.x = A*C-B*D;
+			result.y = A*D+B*C;
+			temp.x += result.x;
+			temp.y += result.y;
 		}
-		y[yIdx] = temp;
 	}
+	y[yIdx] = temp;
 }
 
-__global__ void PointToPointMultiply(cufftComplex* vec0, cufftComplex* vec1, int lastThread){
+__global__ void PointToPointMultiply(cufftComplex* v0, cufftComplex* v1, int lastThread){
 	int i = blockIdx.x*blockDim.x + threadIdx.x;
-	// Don't access elements out of bounds
+
+	// don't access elements out of bounds
 	if(i >= lastThread)
 		return;
-	// vec0[i] = vec0[i]*vec1[i]];
+	float A = v0[i].x;
+	float B = v0[i].y;
+	float C = v1[i].x;
+	float D = v1[i].y;
+
 	// (A+jB)(C+jD) = (AC-BD) + j(AD+BC)
-	float A = vec0[i].x;
-	float B = vec0[i].y;
-	float C = vec1[i].x;
-	float D = vec1[i].y;
-	cufftComplex complexMult;
-	complexMult.x = A*C-B*D;
-	complexMult.y = A*D+B*C;
-	vec0[i] = complexMult;
+	cufftComplex result;
+	result.x = A*C-B*D;
+	result.y = A*D+B*C;
+
+	v0[i] = result;
 }
 
 __global__ void ScalarMultiply(cufftComplex* vec0, float scalar, int lastThread){
 	int i = blockIdx.x*blockDim.x + threadIdx.x;
+
 	// Don't access elements out of bounds
 	if(i >= lastThread)
 		return;
@@ -677,134 +686,226 @@ __global__ void ScalarMultiply(cufftComplex* vec0, float scalar, int lastThread)
 }
 
 int main(){
-	int mySignalLength = pow(2,15);
-	int myFilterLength = LH;
+	int mySignalLength = 1000;
+	int myFilterLength = 186;
 	int myConvLength   = mySignalLength + myFilterLength - 1;
-	int Nfft        = pow(2, ceil(log(myConvLength)/log(2)));
-	int numTreadsPerBlock;
-	int numBlocks;
+	int Nfft           = pow(2, ceil(log(myConvLength)/log(2)));
 
-	cufftHandle plan;
-	int n[1] = {Nfft};
-	cufftPlanMany(&plan,1,n,NULL,1,1,NULL,1,1,CUFFT_C2C,1);
-
-	// Allocate memory on host
 	cufftComplex *mySignal1;
+	cufftComplex *mySignal2;
+	cufftComplex *mySignal2_fft;
+
 	cufftComplex *myFilter1;
+	cufftComplex *myFilter2;
+	cufftComplex *myFilter2_fft;
+
 	cufftComplex *myConv1;
 	cufftComplex *myConv2;
+	cufftComplex *myConv2_timeReversed;
 	cufftComplex *myConv3;
 	cufftComplex *myConv4;
-	mySignal1      = (cufftComplex*) malloc(mySignalLength*sizeof(cufftComplex));
-	myFilter1      = (cufftComplex*) malloc(myFilterLength*sizeof(cufftComplex));
-	myConv1        = (cufftComplex*) malloc(myConvLength  *sizeof(cufftComplex));
-	myConv2        = (cufftComplex*) malloc(myConvLength  *sizeof(cufftComplex));
-	myConv3        = (cufftComplex*) malloc(myConvLength  *sizeof(cufftComplex));
-	myConv4        = (cufftComplex*) malloc(Nfft       *sizeof(cufftComplex));
+	cufftComplex *myConv5;
+
+	mySignal1      		= (cufftComplex*)malloc(mySignalLength*sizeof(cufftComplex));
+	mySignal2      		= (cufftComplex*)malloc(Nfft  		  *sizeof(cufftComplex));
+	mySignal2_fft  		= (cufftComplex*)malloc(Nfft   	      *sizeof(cufftComplex));
+
+	myFilter1      		= (cufftComplex*)malloc(myFilterLength*sizeof(cufftComplex));
+	myFilter2      		= (cufftComplex*)malloc(Nfft   	      *sizeof(cufftComplex));
+	myFilter2_fft  		= (cufftComplex*)malloc(Nfft  		  *sizeof(cufftComplex));
+
+	myConv1        		= (cufftComplex*)malloc(myConvLength  *sizeof(cufftComplex));
+	myConv2        		= (cufftComplex*)malloc(Nfft  	      *sizeof(cufftComplex));
+	myConv2_timeReversed= (cufftComplex*)malloc(Nfft  	      *sizeof(cufftComplex));
+	myConv3        		= (cufftComplex*)malloc(myConvLength  *sizeof(cufftComplex));
+	myConv4        		= (cufftComplex*)malloc(myConvLength  *sizeof(cufftComplex));
+	myConv5        		= (cufftComplex*)malloc(Nfft          *sizeof(cufftComplex));
+
+	srand(time(0));
 	for(int i = 0; i < mySignalLength; i++){
 		mySignal1[i].x = rand()%100-50;
 		mySignal1[i].y = rand()%100-50;
 	}
+
 	for(int i = 0; i < myFilterLength; i++){
 		myFilter1[i].x = rand()%100-50;
 		myFilter1[i].y = rand()%100-50;
 	}
 
-	// Allocate memory on device
-	cufftComplex *dev_mySignal2;
-	cufftComplex *dev_myFilter2;
-	cufftComplex *dev_myConv2;
 	cufftComplex *dev_mySignal3;
-	cufftComplex *dev_myFilter3;
-	cufftComplex *dev_myConv3;
 	cufftComplex *dev_mySignal4;
-	cufftComplex *dev_myFilter4;
-	cufftComplex *dev_myConv4;
-	cudaMalloc(&dev_mySignal2, mySignalLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter2, myFilterLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv2,   myConvLength  *sizeof(cufftComplex));
-	cudaMalloc(&dev_mySignal3, mySignalLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter3, myFilterLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv3,   myConvLength  *sizeof(cufftComplex));
-	cudaMalloc(&dev_mySignal4, Nfft          *sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter4, Nfft          *sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv4,   Nfft          *sizeof(cufftComplex));
+	cufftComplex *dev_mySignal5;
 
-	/*---------------------------------------------------------------------------------------
-                                CPU Time Domain Direct Convolution
-	---------------------------------------------------------------------------------------*/
+	cufftComplex *dev_myFilter3;
+	cufftComplex *dev_myFilter4;
+	cufftComplex *dev_myFilter5;
+
+	cufftComplex *dev_myConv3;
+	cufftComplex *dev_myConv4;
+	cufftComplex *dev_myConv5;
+
+	cudaMalloc(&dev_mySignal3, mySignalLength*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal4, mySignalLength*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal5, Nfft          *sizeof(cufftComplex));
+
+	cudaMalloc(&dev_myFilter3, myFilterLength*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter4, myFilterLength*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter5, Nfft          *sizeof(cufftComplex));
+
+	cudaMalloc(&dev_myConv3,   myConvLength  *sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv4,   myConvLength  *sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv5,   Nfft          *sizeof(cufftComplex));
+
+
+	/**
+	 * Time Domain Convolution CPU
+	 */
 	ConvCPU(myConv1,mySignal1,myFilter1,mySignalLength,myFilterLength);
 
-	/*---------------------------------------------------------------------------------------
-                                GPU Time DomainDirect Convolution
-	---------------------------------------------------------------------------------------*/
-	cudaMemcpy(dev_mySignal2, mySignal1, sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter2, myFilter1, sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
-	numTreadsPerBlock = 128;
-	numBlocks = myConvLength/numTreadsPerBlock;
-	if(myConvLength % numTreadsPerBlock > 0)
-		numBlocks++;
-	ConvGPU<<<numBlocks, numTreadsPerBlock>>>(dev_myConv2, dev_mySignal2, dev_myFilter2, mySignalLength, myFilterLength);
-	cudaMemcpy(myConv2, dev_myConv2, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	/**
+	 * Frequency Domain Convolution CPU
+	 */
+	fftwf_plan forwardPlanSignal = fftwf_plan_dft_1d(Nfft, (fftwf_complex*)mySignal2,    (fftwf_complex*)mySignal2_fft, 	   FFTW_FORWARD, FFTW_MEASURE);
+	fftwf_plan forwardPlanFilter = fftwf_plan_dft_1d(Nfft, (fftwf_complex*)myFilter2, 	 (fftwf_complex*)myFilter2_fft, 	   FFTW_FORWARD, FFTW_MEASURE);
+	fftwf_plan backwardPlanConv  = fftwf_plan_dft_1d(Nfft, (fftwf_complex*)mySignal2_fft,(fftwf_complex*)myConv2_timeReversed, FFTW_FORWARD, FFTW_MEASURE);
+
+	cufftComplex zero; zero.x = 0; zero.y = 0;
+	for(int i = 0; i < Nfft; i++){
+		if(i<mySignalLength)
+			mySignal2[i] = mySignal1[i];
+		else
+			mySignal2[i] = zero;
+
+		if(i<myFilterLength)
+			myFilter2[i] = myFilter1[i];
+		else
+			myFilter2[i] = zero;
+	}
+
+	fftwf_execute(forwardPlanSignal);
+	fftwf_execute(forwardPlanFilter);
+
+	for (int i = 0; i < Nfft; i++){
+		// mySignal2_fft = mySignal2_fft*myFilter2_fft;
+		float A = mySignal2_fft[i].x;
+		float B = mySignal2_fft[i].y;
+		float C = myFilter2_fft[i].x;
+		float D = myFilter2_fft[i].y;
+		cufftComplex result;
+		result.x = A*C-B*D;
+		result.y = A*D+B*C;
+		mySignal2_fft[i] = result;
+	}
+
+	fftwf_execute(backwardPlanConv);
+
+	// myConv2 from fftwf must be time reversed and scaled
+	// to match Matlab, myConv1, myConv3, myConv4 and myConv5
+	cufftComplex result;
+	for (int i = 0; i < Nfft; i++){
+		result.x = myConv2_timeReversed[Nfft-i].x/Nfft;
+		result.y = myConv2_timeReversed[Nfft-i].y/Nfft;
+		myConv2[i] = result;
+	}
+	result.x = myConv2_timeReversed[0].x/Nfft;
+	result.y = myConv2_timeReversed[0].y/Nfft;
+	myConv2[0] = result;
+
+	fftwf_destroy_plan(forwardPlanSignal);
+	fftwf_destroy_plan(forwardPlanFilter);
+	fftwf_destroy_plan(backwardPlanConv);
 
 
-	/*---------------------------------------------------------------------------------------
-                                GPU Time Domain Convolution Using Shared Memory
-	---------------------------------------------------------------------------------------*/
+	/**
+	 * Time Domain Convolution GPU Using Global Memory
+	 */
 	cudaMemcpy(dev_mySignal3, mySignal1, sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
 	cudaMemcpy(dev_myFilter3, myFilter1, sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
-	numTreadsPerBlock = 192;
+
+	int numTreadsPerBlock = 512;
+	int numBlocks = myConvLength/numTreadsPerBlock;
+	if(myConvLength % numTreadsPerBlock > 0)
+		numBlocks++;
+	ConvGPU<<<numBlocks, numTreadsPerBlock>>>(dev_myConv3, dev_mySignal3, dev_myFilter3, mySignalLength, myFilterLength);
+
+	cudaMemcpy(myConv3, dev_myConv3, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+
+
+	/**
+	 * Time Domain Convolution GPU Using Shared Memory
+	 */
+	cudaMemcpy(dev_mySignal4, mySignal1, sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter4, myFilter1, sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
+
+	numTreadsPerBlock = 512;
 	numBlocks = myConvLength/numTreadsPerBlock;
 	if(myConvLength % numTreadsPerBlock > 0)
 		numBlocks++;
-	ConvGPUshared<<<numBlocks, numTreadsPerBlock>>>(dev_myConv3, dev_mySignal3, dev_myFilter3, mySignalLength, myFilterLength);
-	cudaMemcpy(myConv3, dev_myConv3, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	ConvGPUshared<<<numBlocks, numTreadsPerBlock,myFilterLength*sizeof(cufftComplex)>>>(dev_myConv4, dev_mySignal4, dev_myFilter4, mySignalLength, myFilterLength);
 
-	/*---------------------------------------------------------------------------------------
-                                GPU Frequency Domain Convolution using cuFFT
-	---------------------------------------------------------------------------------------*/
-	cudaMemset(dev_mySignal4, 0, Nfft*sizeof(cufftComplex));
-	cudaMemset(dev_myFilter4, 0, Nfft*sizeof(cufftComplex));
-	cudaMemcpy(dev_mySignal4, mySignal1, sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter4, myFilter1, sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
-	cufftExecC2C(plan, dev_mySignal4, dev_mySignal4, CUFFT_FORWARD);
-	cufftExecC2C(plan, dev_myFilter4, dev_myFilter4, CUFFT_FORWARD);
-	numTreadsPerBlock = 96;
+	cudaMemcpy(myConv4, dev_myConv4, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+
+
+	/**
+	 * Frequency Domain Convolution GPU
+	 */
+	cufftHandle plan;
+	int n[1] = {Nfft};
+	cufftPlanMany(&plan,1,n,NULL,1,1,NULL,1,1,CUFFT_C2C,1);
+
+	cudaMemset(dev_mySignal5, 0, 	     Nfft*sizeof(cufftComplex));
+	cudaMemset(dev_myFilter5, 0, 	     Nfft*sizeof(cufftComplex));
+
+	cudaMemcpy(dev_mySignal5, mySignal2, Nfft*sizeof(cufftComplex), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter5, myFilter2, Nfft*sizeof(cufftComplex), cudaMemcpyHostToDevice);
+
+	cufftExecC2C(plan, dev_mySignal5, dev_mySignal5, CUFFT_FORWARD);
+	cufftExecC2C(plan, dev_myFilter5, dev_myFilter5, CUFFT_FORWARD);
+
+	numTreadsPerBlock = 512;
 	numBlocks = Nfft/numTreadsPerBlock;
 	if(Nfft % numTreadsPerBlock > 0)
 		numBlocks++;
-	PointToPointMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal4, dev_myFilter4, Nfft);
-	cufftExecC2C(plan, dev_mySignal4, dev_mySignal4, CUFFT_INVERSE);
+	PointToPointMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal5, dev_myFilter5, Nfft);
+
+	cufftExecC2C(plan, dev_mySignal5, dev_mySignal5, CUFFT_INVERSE);
+
 	numTreadsPerBlock = 128;
 	numBlocks = Nfft/numTreadsPerBlock;
 	if(Nfft % numTreadsPerBlock > 0)
 		numBlocks++;
 	float scalar = 1.0/((float)Nfft);
-	ScalarMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal4, scalar, Nfft);
-	cudaMemcpy(myConv4, dev_mySignal4, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	ScalarMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal5, scalar, Nfft);
+
+	cudaMemcpy(myConv5, dev_mySignal5, Nfft*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+
 	cufftDestroy(plan);
 
-	// Free vectors on CPU
 	free(mySignal1);
+	free(mySignal2);
+
 	free(myFilter1);
+	free(myFilter2);
+
 	free(myConv1);
 	free(myConv2);
+	free(myConv2_timeReversed);
 	free(myConv3);
 	free(myConv4);
+	free(myConv5);
+	fftwf_cleanup();
 
-	// Free vectors on GPU
-	cudaFree(dev_mySignal2);
-	cudaFree(dev_myFilter2);
-	cudaFree(dev_myConv2);
-	cudaFree(dev_mySignal2);
-	cudaFree(dev_myFilter2);
-	cudaFree(dev_myConv2);
 	cudaFree(dev_mySignal3);
-	cudaFree(dev_myFilter3);
-	cudaFree(dev_myConv3);
 	cudaFree(dev_mySignal4);
+	cudaFree(dev_mySignal5);
+
+	cudaFree(dev_myFilter3);
 	cudaFree(dev_myFilter4);
+	cudaFree(dev_myFilter5);
+
+	cudaFree(dev_myConv3);
 	cudaFree(dev_myConv4);
+	cudaFree(dev_myConv5);
 
 	return 0;
 }

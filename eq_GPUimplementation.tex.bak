@@ -39,21 +39,18 @@ Every block diagram is batched and applied to $3104$ iNET packets.
 
 
 \section{Batched Convolution}
-Chapter \ref{chap:gpu} delved into comparing a signal time domain and frequency domain convolution in CPUs and GPUs.
-Now $3104$ equalizers needs to be convolved to the received signal packets.
-\begin{align}
-\mathbf{r}_{\text{d}0} &= \mathbf{r}_0*\mathbf{c}_0*\mathbf{h}_{NO}\\
-\mathbf{r}_{\text{d}1} &= \mathbf{r}_1*\mathbf{c}_1*\mathbf{h}_{NO}\\
-\vdots\\
-\mathbf{r}_{\text{d}3102} &= \mathbf{r}_{3102}*\mathbf{c}_{3102}*\mathbf{h}_{NO}\\
-\mathbf{r}_{\text{d}3103} &= \mathbf{r}_{3103}*\mathbf{c}_{3103}*\mathbf{h}_{NO}\
-\label{eq:simple_conv}
-\end{align}
-
+Chapter \ref{chap:gpu} delved into comparing a single convolution in CPUs and GPUs in the time domain or frequency domain.
+As talked about in Chapter blah, system overview, We dont only have a packet or batch, we have $3104$ packets or batches.
+When we perform convolution we convolve $3104$ signals with $3104$ filters.
+So...
 How does the problem change?
-Obviously doing batched convolution in a CPU will not be considered.
+Obviously doing batched convolution in a CPU will not be feasible and wont be considered.
+
+Lets stay in GPU land.
 Should we do convolution in the time domain or the frequency domain?
+Are there draw backs to staying in the time domain? 
 If we do convolution in the time domain, should we use shared memory?
+Are there draw backs for going to the frequency domain? 
 
 Get timing of convolution in the time domain global, time domain shared, time domain frequency.
 
