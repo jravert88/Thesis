@@ -1,0 +1,140 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}GPU Convolution}{25}{chapter.5}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:gpu_convolution}{{5}{25}{GPU Convolution}{chapter.5}{}}
+\newlabel{eq:simple_conv_time}{{5.2}{25}{GPU Convolution}{equation.5.0.2}{}}
+\newlabel{eq:flops_time_domain_conv}{{5.3}{25}{GPU Convolution}{equation.5.0.3}{}}
+\citation{FFTW:2017,cooley1965algorithm}
+\newlabel{eq:simple_conv_freq}{{5.4}{26}{GPU Convolution}{equation.5.0.4}{}}
+\@writefile{brf}{\backcite{FFTW:2017,cooley1965algorithm}{{26}{5}{equation.5.0.4}}}
+\newlabel{eq:flops_freq_domain_conv}{{5.5}{26}{GPU Convolution}{equation.5.0.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Single Convolution}{26}{section.5.1}}
+\newlabel{sec:cuda_convolution_single}{{5.1}{26}{Single Convolution}{section.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $186$ tap complex filter.}}{27}{figure.5.1}}
+\newlabel{fig:Theory186Tap_flops}{{5.1}{27}{Single Convolution}{figure.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $21$ tap complex filter.}}{28}{figure.5.2}}
+\newlabel{fig:Theory21Tap_flops}{{5.2}{28}{Single Convolution}{figure.5.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{29}{table.5.1}}
+\newlabel{tab:CPUvsGPUtimingTable}{{5.1}{29}{Single Convolution}{table.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{30}{figure.5.3}}
+\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}{{5.3}{30}{Single Convolution}{figure.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{31}{figure.5.4}}
+\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal}{{5.4}{31}{Single Convolution}{figure.5.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Batched Convolution}{31}{section.5.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{32}{figure.5.5}}
+\newlabel{fig:CPUvsGPU_1batch_21taps_varySignal}{{5.5}{32}{Single Convolution}{figure.5.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{32}{table.5.2}}
+\newlabel{tab:CPUvsGPUtable_12672_186}{{5.2}{32}{Single Convolution}{table.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{33}{figure.5.6}}
+\newlabel{fig:CPUvsGPU_1batch_12672signal_varyFilter}{{5.6}{33}{Single Convolution}{figure.5.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{33}{table.5.3}}
+\newlabel{tab:CPUvsGPUtable_12672_21}{{5.3}{33}{Single Convolution}{table.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{34}{figure.5.7}}
+\newlabel{fig:CPUvsGPU_varyBatches_186taps_12672signal}{{5.7}{34}{Batched Convolution}{figure.5.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:batchedConvFun}.}}{35}{table.5.4}}
+\newlabel{tab:BatchedGPUtimingTable}{{5.4}{35}{Batched Convolution}{table.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{36}{figure.5.8}}
+\newlabel{fig:CPUvsGPU_3104batch_186taps_varySignal}{{5.8}{36}{Batched Convolution}{figure.5.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{37}{figure.5.9}}
+\newlabel{fig:CPUvsGPU_3104batch_21taps_varySignal}{{5.9}{37}{Batched Convolution}{figure.5.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{38}{figure.5.10}}
+\newlabel{fig:CPUvsGPU_3104batch_21taps_varySignal}{{5.10}{38}{Batched Convolution}{figure.5.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{38}{table.5.5}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_186}{{5.5}{38}{Batched Convolution}{table.5.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.6}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{38}{table.5.6}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_21}{{5.6}{38}{Batched Convolution}{table.5.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.7}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}}{39}{table.5.7}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_206}{{5.7}{39}{Batched Convolution}{table.5.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{39}{table.5.8}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_21_186}{{5.8}{39}{Batched Convolution}{table.5.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Two ways to convolve the signal $\mathbf  {r}$ with the $186$ tap filter $\mathbf  {c}$ and $21$ tap filter $\mathbf  {d}$.}}{39}{figure.5.11}}
+\newlabel{fig:twoWaysToConv}{{5.11}{39}{Batched Convolution}{figure.5.11}{}}
+\citation{FFTW:2017,cooley1965algorithm}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Cuda Convolution}{40}{section.5.3}}
+\newlabel{eq:simple_conv_time}{{5.7}{40}{Cuda Convolution}{equation.5.3.7}{}}
+\newlabel{eq:flops_time_domain_conv}{{5.8}{40}{Cuda Convolution}{equation.5.3.8}{}}
+\newlabel{eq:simple_conv_freq}{{5.9}{40}{Cuda Convolution}{equation.5.3.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $186$ tap complex filter.}}{41}{figure.5.12}}
+\newlabel{fig:Theory186Tap_flops}{{5.12}{41}{Single Convolution}{figure.5.12}{}}
+\@writefile{brf}{\backcite{FFTW:2017,cooley1965algorithm}{{41}{5.3}{equation.5.3.9}}}
+\newlabel{eq:flops_freq_domain_conv}{{5.10}{41}{Cuda Convolution}{equation.5.3.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Single Convolution}{41}{section.5.4}}
+\newlabel{sec:cuda_convolution_single}{{5.4}{41}{Single Convolution}{section.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $21$ tap complex filter.}}{42}{figure.5.13}}
+\newlabel{fig:Theory21Tap_flops}{{5.13}{42}{Single Convolution}{figure.5.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.9}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{44}{table.5.9}}
+\newlabel{tab:CPUvsGPUtimingTable}{{5.9}{44}{Single Convolution}{table.5.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{44}{figure.5.14}}
+\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}{{5.14}{44}{Single Convolution}{figure.5.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{45}{figure.5.15}}
+\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal}{{5.15}{45}{Single Convolution}{figure.5.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{46}{figure.5.16}}
+\newlabel{fig:CPUvsGPU_1batch_21taps_varySignal}{{5.16}{46}{Single Convolution}{figure.5.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{47}{figure.5.17}}
+\newlabel{fig:CPUvsGPU_1batch_12672signal_varyFilter}{{5.17}{47}{Single Convolution}{figure.5.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.10}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{48}{table.5.10}}
+\newlabel{tab:CPUvsGPUtable_12672_186}{{5.10}{48}{Single Convolution}{table.5.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.11}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{48}{table.5.11}}
+\newlabel{tab:CPUvsGPUtable_12672_21}{{5.11}{48}{Single Convolution}{table.5.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Batched Convolution}{48}{section.5.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{49}{figure.5.18}}
+\newlabel{fig:CPUvsGPU_varyBatches_186taps_12672signal}{{5.18}{49}{Batched Convolution}{figure.5.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.12}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:batchedConvFun}.}}{50}{table.5.12}}
+\newlabel{tab:BatchedGPUtimingTable}{{5.12}{50}{Batched Convolution}{table.5.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{50}{figure.5.19}}
+\newlabel{fig:CPUvsGPU_3104batch_186taps_varySignal}{{5.19}{50}{Batched Convolution}{figure.5.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{51}{figure.5.20}}
+\newlabel{fig:CPUvsGPU_3104batch_21taps_varySignal}{{5.20}{51}{Batched Convolution}{figure.5.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{52}{figure.5.21}}
+\newlabel{fig:CPUvsGPU_3104batch_21taps_varySignal}{{5.21}{52}{Batched Convolution}{figure.5.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.13}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{53}{table.5.13}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_186}{{5.13}{53}{Batched Convolution}{table.5.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.14}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{53}{table.5.14}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_21}{{5.14}{53}{Batched Convolution}{table.5.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.15}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}}{53}{table.5.15}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_206}{{5.15}{53}{Batched Convolution}{table.5.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.16}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{54}{table.5.16}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_21_186}{{5.16}{54}{Batched Convolution}{table.5.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces Two ways to convolve the signal $\mathbf  {r}$ with the $186$ tap filter $\mathbf  {c}$ and $21$ tap filter $\mathbf  {d}$.}}{54}{figure.5.22}}
+\newlabel{fig:twoWaysToConv}{{5.22}{54}{Batched Convolution}{figure.5.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.23}{\ignorespaces Comparison of a batched cascaded complex convolution on a GPU. The signal length is varied and the filter is the $206$ result of convolving $186$ and $21$ tap filters.}}{55}{figure.5.23}}
+\newlabel{fig:CPUvsGPU_3104batch_21taps_186taps_cascade_varySignal}{{5.23}{55}{Batched Convolution}{figure.5.23}{}}
+\newlabel{code:convFun}{{5.1}{56}{CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU}{lstlisting.5.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.1}CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU.}{56}{lstlisting.5.1}}
+\newlabel{code:batchedConvFun}{{5.2}{62}{CUDA code to perform batched complex convolution three different ways in a GPU: time domain using global memory, time domain using shared memory and frequency domain GPU}{lstlisting.5.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.2}CUDA code to perform batched complex convolution three different ways in a GPU: time domain using global memory, time domain using shared memory and frequency domain GPU.}{62}{lstlisting.5.2}}
+\@setckpt{GPUconvolution}{
+\setcounter{page}{67}
+\setcounter{equation}{10}
+\setcounter{enumi}{0}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{0}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{5}
+\setcounter{section}{5}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{23}
+\setcounter{table}{16}
+\setcounter{parentequation}{0}
+\setcounter{r@tfl@t}{0}
+\setcounter{cp@cnt}{0}
+\setcounter{cp@tempcnt}{0}
+\setcounter{lstnumber}{270}
+\setcounter{subfigure}{0}
+\setcounter{lofdepth}{1}
+\setcounter{subtable}{0}
+\setcounter{lotdepth}{1}
+\setcounter{Item}{0}
+\setcounter{Hfootnote}{0}
+\setcounter{bookmark@seq@number}{27}
+\setcounter{lstlisting}{2}
+\setcounter{section@level}{1}
+}

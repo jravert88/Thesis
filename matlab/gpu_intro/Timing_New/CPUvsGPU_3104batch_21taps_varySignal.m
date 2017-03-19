@@ -1052,7 +1052,7 @@ plot(xgpu_fft,gpu_fft)
 grid on
 axis tight
 marge = axis;
-axis([marge(1) marge(2) marge(3:4)])
+axis([marge(1) 16497 marge(3:4)])
 ax = gca;
 legend('Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
 xlabel('signal length')

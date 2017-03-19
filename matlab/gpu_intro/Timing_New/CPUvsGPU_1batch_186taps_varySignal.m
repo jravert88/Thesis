@@ -1096,7 +1096,7 @@ latexWidth =  5;
 latexHeight = 4;   
 
 
-numToMin = 10;
+numToMin = 15;
 x = a(:,2);
 [cpu        xcpu]       = minWindows(x,a(:,4),numToMin);
 [cpu_fft    xcpu_fft]   = minWindows(x,a(:,5),numToMin);
@@ -1114,7 +1114,7 @@ plot(xgpu_fft,gpu_fft)
 grid on
 axis tight
 marge = axis;
-axis([marge(1) marge(2) marge(3:4)])
+axis([marge(1) 16497 marge(3:4)])
 ax = gca;
 legend('Time Domain CPU','Frequency Domain  CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
 % title('Convolution CPU vs GPU 10 tap filter')

@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{#1}
 \csname url@rmstyle\endcsname
 \providecommand{\newblock}{\relax}
@@ -29,6 +29,17 @@ Wikipedia, ``Graphics processing unit,'' 2015. [Online]. Available:
 NVIDIA, ``Cuda toolkit documentation,'' 2017. [Online]. Available:
   \url{http://docs.nvidia.com/cuda/}
 \BIBentrySTDinterwordspacing
+
+\bibitem{FFTW:2017}
+\BIBentryALTinterwordspacing
+Wikipedia, ``Fastest fourier transform in the west,'' 2017. [Online].
+  Available: \url{http://www.fftw.org/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{cooley1965algorithm}
+J.~W. Cooley and J.~W. Tukey, ``An algorithm for the machine calculation of
+  complex fourier series,'' \emph{Mathematics of computation}, vol.~19, no.~90,
+  pp. 297--301, 1965.
 
 \bibitem{preamble_detector}
 M.~Rice and A.~Mcmurdie, ``On frame synchronization in aeronautical
@@ -65,6 +76,12 @@ I.~E. Williams and M.~Saquib, ``Linear frequency domain equalization of
   {SOQPSK-TG} for wideband aeronautical telemetry channels,'' \emph{IEEE
   Transactions on Aerospace and Electronic Systems}, vol.~49, no.~1, pp.
   640--647, 2013.
+
+\bibitem{haidar2015optimization}
+A.~Haidar, T.~Dong, P.~Luszczek, S.~Tomov, and J.~Dongarra, ``Optimization for
+  performance and energy for batched matrix computations on gpus,'' in
+  \emph{Proceedings of the 8th Workshop on General Purpose Processing using
+  GPUs}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 2015, pp. 59--69.
 
 \bibitem{wiki:Sparse_matrix}
 \BIBentryALTinterwordspacing

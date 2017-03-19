@@ -389,6 +389,7 @@ clc
 latexWidth =  5;
 latexHeight = 4;   
 
+a = a(1:256,:);
 
 numToMin = 1;
 x = a(:,3);

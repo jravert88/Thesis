@@ -4237,16 +4237,17 @@ x = a(:,1);
 [gpu_shared xgpu_shared]= minWindows(x,a(:,5),numToMin);
 [gpu_fft    xgpu_fft]   = minWindows(x,a(:,6),numToMin);
 
-
+plot(xgpu,xgpu*5.0388); hold on
+plot(xgpu,xgpu*1.6295)
 plot(xgpu,gpu); hold on
 plot(xgpu_shared,gpu_shared)
 plot(xgpu_fft,gpu_fft)
 grid on
 axis tight
 marge = axis;
-axis([marge(1) marge(2) marge(3:4)])
+axis([marge(1) marge(2) [0.0001    0.2740]*1e3])
 ax = gca;
-legend('Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+legend('Time Domain CPU','Frequency Domain  CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
 % title('Convolution CPU vs GPU 10 tap filter')
 xlabel('batches')
 ylabel('time (ms)')
