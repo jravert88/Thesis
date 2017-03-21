@@ -4224,13 +4224,14 @@ a = [1	12672	186	0.161216	0.110336	0.142752
 4223	12672	186	273.972	245.716	49.8855
 ];
 
-close all
+% close all
 clc
 
 latexWidth =  5;
 latexHeight = 4;   
 
 
+figure(1); clf
 numToMin = 1;
 x = a(:,1);
 [gpu        xgpu]       = minWindows(x,a(:,4),numToMin);
@@ -4245,7 +4246,7 @@ plot(xgpu_fft,gpu_fft)
 grid on
 axis tight
 marge = axis;
-axis([marge(1) marge(2) [0.0001    0.2740]*1e3])
+axis([marge(1) 4000 [0.0001    0.2740]*1e3])
 ax = gca;
 legend('Time Domain CPU','Frequency Domain  CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
 % title('Convolution CPU vs GPU 10 tap filter')
@@ -4263,3 +4264,45 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
 print(ff, '-depsc', ['CPUvsGPU_varyBatches_186taps_12672signal']) %save as eps a
+
+
+
+
+
+
+
+
+
+figure(2); clf
+numToMin = 1;
+x = a(:,1);
+[gpu        xgpu]       = minWindows(x,a(:,4),numToMin);
+[gpu_shared xgpu_shared]= minWindows(x,a(:,5),numToMin);
+[gpu_fft    xgpu_fft]   = minWindows(x,a(:,6),numToMin);
+
+% plot(xgpu,xgpu*5.0388./xgpu); hold on
+% plot(xgpu,xgpu*1.6295./xgpu)
+plot(xgpu,gpu./xgpu); hold on
+plot(xgpu_shared,gpu_shared./xgpu_shared)
+plot(xgpu_fft,gpu_fft./xgpu_fft)
+grid on
+axis tight
+marge = axis;
+axis([marge(1) 100 0 marge(4)])
+ax = gca;
+legend('Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+% title('Convolution CPU vs GPU 10 tap filter')
+xlabel('batches')
+ylabel('time/batch (ms)')
+
+ax.FontName = 'Times New Roman';
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+drawnow
+print(ff, '-depsc', ['CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch']) %save as eps a

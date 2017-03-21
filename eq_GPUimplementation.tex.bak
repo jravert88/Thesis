@@ -98,6 +98,76 @@ While using staying real time using cuBLAS was feasable, cusolverSp out performe
 \end{center}
 \label{tab:ZFMMSEtimingComparison}
 \end{table}
+%Jeff explains how CUDA solvers handle this equation.
+%
+%The ZF equalizer was studied in the PAQ Phase 1 Final Report in ~equation 324
+%\begin{equation}
+%\mathbf{c}_\text{ZF} = (\mathbf{H}^\dagger \mathbf{H})^{-1} \mathbf{H}^\dagger \mathbf{u}_{n_0}
+%\label{eq:c_ZF_pinv}
+%\end{equation}
+%where $\mathbf{c}_\text{ZF}$ is a $L_{eq} \times 1$ vector of equalizer coefficients computed to invert the channel estimate $\hat{\mathbf{h}}$
+%and $\mathbf{u}_{n_0}$ is the desired channel impulse response centered on $n0 = N_1+L_1+1$
+%\begin{equation}
+%\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+%	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+%		\text{$n_0-1$ zeros}
+%		\\ \\
+%		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+%		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
+%		\end{matrix*}.
+%		\label{eq:un0_ZF}
+%\end{equation}
+%The $L_{eq}+N_1+N_2 \times L_{eq}$ convolution matrix $\mathbf{H}$ is built using the channel estimate $\hat{\mathbf{h}}$
+%\begin{equation}
+%\mathbf{H} = 
+%		\begin{bmatrix}
+%		h(-N_1)		&  			& 		 	&  			\\
+%		h(-N_1+1) 	& h(-N_1)	& 		 	&  			\\
+%		\vdots	 	& \vdots	& \ddots 	&  			\\
+%		h(N_2)		& h(N_2-1) 	&  			& h(-N_1)  	\\
+%		 			& h(N_2) 	&  			& h(-N_1+1) \\
+%		 			&  	   		&  			& \vdots	\\
+%		 			&  	   		&  			& h(N_2)	\\
+%	\end{bmatrix}.
+%\end{equation}
+%The computation of the coefficients in Equation \eqref{eq:c_ZF_pinv} can be simplified in a couple of ways: First the matrix multiplication of $\mathbf{H}^\dagger$ and $\mathbf{H}$ is the autocorrelation matrix of the channel
+%\begin{equation}
+%\mathbf{R}_{\hat{h}} = 
+%\mathbf{H}^\dagger \mathbf{H} = 
+%		\begin{bmatrix}
+%		r_{h}(0)		& r^\ast_{h}(1)	& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
+%		r_{h}(1) 		& r_{h}(0)		& \cdots 	& r^\ast_{h}(L_{eq}-2)  	\\
+%		\vdots	 			& \vdots				& \ddots 	&  							\\
+%		r_{h}(L_{eq}-1)	& r_{h}(L_{eq}-2)	& \cdots	& r_{h}(0)  			
+%	\end{bmatrix}
+%	\label{eq:R_h}
+%\end{equation}
+%where
+%\begin{equation}
+%r_{h}(k) = \sum_{n=-N_1}^{N_2} h(n) h^\ast(n-k).
+%\end{equation}
+%Second the matrix vector multiplication of $\mathbf{H}^\dagger$ and $\mathbf{u}_{n_0}$ is simply the $n_0$th row of $\mathbf{H}^\dagger$ or the conjugated $n_0$th column of $\mathbf{H}$.
+%A new vector $\hat{\mathbf{h}}_{n_0}$ is defined by
+%\begin{equation}
+%\hat{\mathbf{h}}_{n_0} = \mathbf{H}^\dagger \mathbf{u}_{n_0} = 
+%\begin{bmatrix} h(L_1) \\ \vdots \\ h(0) \\ \vdots \\ h(-L_2)  \end{bmatrix}.
+%\label{eq:h_no}
+%\end{equation}
+%To simplify, Equations \eqref{eq:R_h} and \eqref{eq:h_no} are substituted into Equation \eqref{eq:c_ZF_pinv} resulting in 
+%\begin{equation}
+%\mathbf{c}_\text{ZF} = \mathbf{R}^{-1}_{h} \hat{\mathbf{h}}_{n_0}.
+%\label{eq:c_ZF_R_h}
+%\end{equation}
+%
+%Computing the inverse of $\mathbf{R}_{\hat{h}}$ is computationally heavy because an inverse is an $N^3$ operation.
+%To avoid an inverse, $\mathbf{R}_{\hat{h}}$ is moved to the left side and $\mathbf{c}_\text{ZF}$ is found by solving a system of linear equations. 
+%Note that $r_{h}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{\hat{h}}$ sparse or $\%63$ zeros.
+%The sparseness of $\mathbf{R}_{\hat{h}}$ is leveraged to reduce computation drastically.
+%The Zero-Forcing Equalizer coefficients are computed by solving
+%\begin{equation}
+%\mathbf{R}_{\hat{h}} \mathbf{c}_\text{ZF} = \hat{\mathbf{h}}_{n_0}.
+%\label{eq:c_ZF_solve}
+%\end{equation}
 
 
 \section{Constant Modulus Algorithm GPU Implementation}
@@ -146,13 +216,13 @@ The direct computation is done by performing a long $12672$ sample summation fro
 Long summations are slow in GPUs.
 Table \ref{tab:CMAtimingComparison} lists the comparison on computing $\nabla J(k)$ verse using convolution.
 \begin{table}
-\caption{Defining start and stop lines for timing comparison in Listing \ref{code:convFun}.}
+\caption{The gradient vector $\nabla J(k)$ can be computed using convolution or computed directly.}
 \begin{center}
 \begin{tabular}{lll}
 	\toprule
 	CMA	Iteration Algorithm			& Execution Time (ms)	\\ \midrule
-	$\nabla J(k)$ directly 			& 421.317				\\
-	$\nabla J(k)$ using convolution & 88.7743				\\
+	$\nabla J$ directly 			& 421.317				\\
+	$\nabla J$ using convolution & 88.7743				\\
 	\bottomrule
 \end{tabular}
 \end{center}
@@ -168,7 +238,7 @@ The block diagram looks just like convolution accept that point to point multipl
 Equation \ref{eq:FDE1} and is implemented directly in the GPU.
 To save execution time, the FFT of the detection filter $\mathbf{H}_{\text{NO}}$ multiplied at the same time FDE1 is calculated 
 \begin{equation}
-R_\text{d}(e^{j\omega_k}) = \frac{R(e^{j\omega_k}) \hat{H}^\ast(e^{j\omega_k}) H_{\text{NO}}(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{1}{\hat{\sigma}^2_w}} \quad
+R_\text{d1}(e^{j\omega_k}) = \frac{R(e^{j\omega_k}) \hat{H}^\ast(e^{j\omega_k}) H_{\text{NO}}(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{1}{\hat{\sigma}^2_w}} \quad
 \text{where} \;
 \omega_k = \frac{2\pi}{L} \;
 \text{for} \;
@@ -176,7 +246,7 @@ k=0,1,\cdots,L-1
 \label{eq:FDE1_applied}
 \end{equation}
 \begin{equation}
-R_\text{d}(e^{j\omega_k}) = \frac{R(e^{j\omega_k}) \hat{H}^\ast(e^{j\omega_k}) H_{\text{NO}}(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
+R_\text{d2}(e^{j\omega_k}) = \frac{R(e^{j\omega_k}) \hat{H}^\ast(e^{j\omega_k}) H_{\text{NO}}(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
 \text{where} \;
 \omega_k = \frac{2\pi}{L} \;
 \text{for} \;
@@ -190,9 +260,9 @@ at $\omega_k$.
 \begin{center}
 \begin{tabular}{lll}
 	\toprule
-	Algorithm		& Execution Time (ms)	\\ \midrule
-	Fre 			& 421.317				\\
-	FDE2			& 88.7743				\\
+	Algorithm						& Execution Time (ms)	\\ \midrule
+	Frequency Domain Equalizer One 	& 57.156				\\
+	Frequency Domain Equalizer Two	& 58.841				\\
 	\bottomrule
 \end{tabular}
 \end{center}
