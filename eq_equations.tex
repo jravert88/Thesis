@@ -19,7 +19,6 @@ The data-aided equalizers studied in this thesis are:
 \item Frequency Domain Equalizer 1 (FDE1)
 \item Frequency Domain Equalizer 2 (FDE2)
 \end{itemize}
-
 The ZF and MMSE equalizers are very similar in formulation though from different sources.
 As you might tell from the names, FDE1 and FDE2 are very similar also with one subtle difference.
 CMA isn't related to any other algorithm aside from being initialized to MMSE.
@@ -36,6 +35,7 @@ and $\mathbf{R}$ is the auto-correlation matrix of the channel estimate $\hat{\m
 It will be shown that the only difference between ZF and MMSE lies in the the auto-correlation matrix $\mathbf{R}$.
 
 \subsection{Zero-Forcing}
+\label{sec:zero-forcing}
 The ZF equalizer is an FIR filter defined by the coefficients
 \begin{equation}
 \begin{matrix}
@@ -101,6 +101,7 @@ where
 is the auto-correlation matrix of the channel estimate $\hat{\mathbf{h}}$ with 
 \begin{equation}
 r_{\hat{h}}(k) = \sum_{n=-N_1}^{N_2} \hat{h}(n) \hat{h}^\ast(n-k).
+\label{eq:sample_autocorrelation}
 \end{equation}
 and 
 \begin{equation}
@@ -248,6 +249,7 @@ The sparseness of $\mathbf{R}_{\hat{h}w}$ can also be leveraged to reduce comput
 $\mathbf{R}_{\hat{h}w}$ has the same sparse properties as $\mathbf{R}_{\hat{h}}$.
 
 \subsection{The Constant Modulus Algorithm}
+\label{sec:CMA}
 The $b$th CMA equalizer is an FIR filter defined by the coefficients
 \begin{equation}
 \begin{matrix}
@@ -308,6 +310,7 @@ then writing the summation out in vector form
 The $k$th value of $\nabla J$ is
 \begin{equation}
 \nabla J(k) = \frac{1}{L_{pkt}} \sum^{L_{pkt}-1}_{m=0}  z(m) r^\ast(m-k), \quad -L_1 \leq k \leq L_2.
+\label{eq:delJ_direct_way}
 \end{equation}
 The summation almost looks like a convolution.
 To put the summation in convolution form, define
@@ -367,7 +370,6 @@ y = yy(L1+1:end-L2); % trim yy
 \subsection{The Frequency Domain Equalizers}
 Williams and Saquib derived the Frequency Domain Equalizers (FDEs) for this application \cite[]{williams2013linear}.
 
-\subsubsection{The Frequency Domain Equalizer One}
 Frequency Domain Equalizer One (FDE1) is the MMSE or Wiener filter applied in the frequency domain.
 FDE1 is adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (11)]{williams2013linear}
 \begin{equation}
@@ -385,7 +387,6 @@ The term $\hat{\sigma}^2$ is the estimated noise variance estimate, this term is
 Equation \eqref{eq:FDE1} is straight forward to implement in GPUs.
 FDE1 is extremely fast and computationally efficient.
 
-\subsubsection{The Frequency Domain Equalizer One}
 Frequency Domain Equalizer Two (FDE2) is also the MMSE or Wiener filter applied in the frequency domain but knowledge of the SOQPSK-TG spectrum is leveraged.
 FDE1 is adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (12)]{williams2013linear}
 The FDE2 equalizer is defined in Equation (12) as

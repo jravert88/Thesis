@@ -161,7 +161,7 @@ int main(){
 \doublespacing
 
 \section{GPU kernel using threads and thread blocks}
-A GPU kernel is executed on a GPU by launching numTreadsPerBlock$\times$numBlocks 
+A GPU kernel is executed on a GPU by launching numTreadsPerBlock $\times$ numBlocks 
 threads.
 Each thread has a unique index.
 CUDA calls this indes threadIdx and blockIdx.

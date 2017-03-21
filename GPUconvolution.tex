@@ -1,42 +1,125 @@
 \chapter{GPU Convolution}
+
+
+\section{CUDA Batched Processing}
+Typically when batched processing, each batch is ran independent of other batches.
+In CPU this is done by calling the same function on different data.
+Shouldn't GPUs be able to do the same thing...but in parallel.
+
+CUDA has many libraries that are ``batched,'' meaning a GPU kernel launched for each batch of data.
+Examples of using a batched libraries that are used in PAQ are cuFFT, cuBLAS and cuSolver.
+Each of these libraries have batched kernels.
+Figure \ref{fig:matrix_batch_vs_batched} shows the concept of a batched matrix multiply.
+\begin{figure}
+	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
+	\centering\includegraphics[width=4.13in/100*55]{figures/eq_GPUimplementation/matrix_batch_vs_batched.pdf}
+	\label{fig:matrix_batch_vs_batched}
+\end{figure}
+
+Batched libraries perform much better than calling a GPU kernel multiple times with independent data.
+Haidar et al. showed batched libaries in GPUs achive more Gflops per second than calling GPU kernels multiple times \cite{haidar2015optimization}.
+Batched processing performs very well in GPUs because it increases parallelism, gives more opportunities for NVIDIA engineers to optimize and reduces overhead on the CPU.
+The bottom line is use batched libraries as often as possible.
+
+The PAQ system is suited very well for batched processing.
+Each $1.907$ second set has $3104$ packets or batches of data as shown in Figure \ref{fig:packet_batch_set}.
+If an operation is done on each packet, available CUDA batched libraries should always be used.
+For simplicity, every block diagram shown in this chapter only applies to a single batch.
+Every block diagram is batched and applied to $3104$ iNET packets.
+\begin{figure}
+	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
+	\centering\includegraphics[width=5.94in/100*55]{figures/eq_GPUimplementation/packet_batch_set.pdf}
+	\label{fig:packet_batch_set}
+\end{figure}
+
+
+\section{Batched Convolution}
+Chapter \ref{chap:gpu} delved into comparing a single convolution in CPUs and GPUs in the time domain or frequency domain.
+As talked about in Chapter blah, system overview, We dont only have a packet or batch, we have $3104$ packets or batches.
+When we perform convolution we convolve $3104$ signals with $3104$ filters.
+So...
+How does the problem change?
+Obviously doing batched convolution in a CPU will not be feasible and wont be considered.
+
+Lets stay in GPU land.
+Should we do convolution in the time domain or the frequency domain?
+Are there draw backs to staying in the time domain? 
+If we do convolution in the time domain, should we use shared memory?
+Are there draw backs for going to the frequency domain? 
+
+Get timing of convolution in the time domain global, time domain shared, time domain frequency.
+
+There is one very important thing we have over looked...
+We are doing just one convolution...we are doing two.
+We have to convolve with the equalizer AND the numerically optimized detection filter $\mathbf{h}_{NO}$.
+If we stay in the time domain, we have to do two cascaded convolutions.
+Two convolutions takes...twice the time....
+If we go to the frequency domain, the point to point or hadamard product is done with 3 inputs rather than 2.
+Convolving with 2 inputs vs even 10 inputs is about the same.
+The only required part is performing the FFT on the inputs and performing the $N$ way multiply...
+
+Well, $\mathbf{h}_{NO}$ doesn't change, so we compute the FFT of the detection filter $\mathbf{H}_{NO}$ and store it.
+So doing the convolution requires taking the FFT of 2 vectors $\mathbf{c}$ and $\mathbf{r}$.
+After the hadamard product, the functions independent of how many filters we are convolving with accept for we may have to trip off different parts depending on what we are convolving with.
+
+Optimizing convolution speeds up every equalizer because every equalizer uses convolution...CMA uses convolution twice per iteration. 
+
+Chapter \ref{chap:eq_eq} the equalizer equations were conditioned for GPU implementation.
+This Chapter explains how the equalizers were implemented into GPUs.
+Block diagrams will be a very helpful tool to display how the GPU kernels flow.
+
+CUDA has many functions that are ``batched,'' meaning the GPU can apply the same function to each packet.
+Don't be confused with the term batch. 
+In the PAQ system, a ``batch'' is 1.907 seconds of data or $3103$ or $3104$ packets.
+In CUDA, ``batched'' kernels are GPU kernels that are called $3103$ or $3104$ times to run on each iNET packet.
+One could say ``The batched kernel runs on a batch of data by processing $3103$ or $3104$ packets.'' 
+The CUDA number of batches is how many iNET packets are being processed.
+
+This sections explains how each equalizer is computed and how the ``numerically optimized'' $H_\text{NO}$ detection filter is applied in each case \cite[Fig. 3]{perrins:2013}.
+
+
+
+
 \label{chap:gpu_convolution}
-Convolution is one of the most important tools in any digital signal processing engineer’s toolbox. 
+Convolution is one of the most important tools in any digital signal processing engineer's toolbox. 
+In fact, Chapter blah (system overview) shows that convolution is used nearly 10 times.
+Much time was spend optimizing convolution because even a 10 ms speed up provides 100ms of extra processing time.
+
 Convolution can be implemented in the time or frequency domain. 
-%In CPUs, the number of floating point operations (flop) is the main determining factor in execution time.
-%The Tesla K40c can perform 4.29 Tflops, computation is not a problem.
-%The limiting factor in GPUs is the memory bandwidth.
-Theory says if the given filter is ``long'', the frequency domain is the best choice.
-But how long is… long? 
-First we need a way to measure how computationally intensive an algorithm is. 
-The number of flops is commonly used for benchmarking. 
-Let the complex signal length be $N$ and the complex filter length be $L$.
+Discrete time convolution computed in the time domain is
+\begin{equation}
+y(n) = \sum^{L-1}_{m=0} x(m) h(n-m)
+  \label{eq:simple_conv_time}
+\end{equation}
+and discrete time convolution computed in the frequency domain is
+\begin{equation}
+\mathbf{y} = \mathscr{F}^{-1}(\mathscr{F}(\mathbf{x})\times\mathscr{F}(\mathbf{h}))
+  \label{eq:simple_conv_freq}
+\end{equation}
+where the $N$ sample complex signal is convolved with the complex $L$ tap filter.
+
+Theory says if the given filter is relatively long the frequency domain is the best choice.
+What constitutes a ``long'' signal?
+When should convolution be done in the frequency domain rather than time domain?
+
+
+Traditionally the number of flops is used to estimate how computationally intense an algorithm is. 
 Each complex multiply 
 \begin{equation}
 (A+jB)\times(C+jD) = (AC-BD)+j(AD+BC)
 \end{equation}
 is $6$ flops, $4$ multiplies and $2$ additions/subtractions.
-
-Discrete time convolution computed in the time domain is
-\begin{equation}
-y(n) = \sum^{L-1}_{m=0} x(m) h(n-m).
-  \label{eq:simple_conv_time}
-\end{equation}
-Each output element of $y(n)$ requires a $8L$ flops, $2$ flops (real and imaginary) for each term to be summed then $6$ flops for time signal and filter complex multiply.
+Each output element of $\mathbf{y}$ in Equation \eqref{eq:simple_conv_time} requires $8L$ flops, $2$ flops (real and imaginary) for each term to be summed then $6$ flops for time signal and filter complex multiply.
 The length of the output $\mathbf{y}$ is $N+L-1$.
-The number of flops required for convolution of a given length $N$ signal and length $L$ filter is
+The number of flops required for convolution is
 \begin{equation}
 8L(N+L-1) \text{ flops}.
 \label{eq:flops_time_domain_conv}
 \end{equation}
 
-Discrete time convolution computed in the frequency domain is
-\begin{equation}
-\mathbf{y} = \mathscr{F}^{-1}(\mathscr{F}(\mathbf{x})\times\mathscr{F}(\mathbf{h})).
-  \label{eq:simple_conv_freq}
-\end{equation}
 The length of the convolution, $M=N+L-1$ is the minimum point Fourier Transform possible.
-It is common practice perform a next power of two above the minimum Fourier Transform to leverage the Cooley-Tukey radix 2 Fast Fourier Transform (FFT).
-In the Fastest Fourier Transform in the West (FFTW) library the Cooley-Tukey radix 2 transform is used.
+To leverage the Cooley-Tukey radix 2 Fast Fourier Transform (FFT), it is common practice zero pad out to the next power of to above $M$.
+The current most popular FFT library is the Fastest Fourier Transform in the West (FFTW) library, FFTW uses the Cooley-Tukey radix 2 transform.
 Each radix 2 forward or backward Fourier transform performs $5M\log_2(M)$ flops \cite{FFTW:2017,cooley1965algorithm}.
 Performing convolution in the frequency domain requires
 \begin{equation}
@@ -59,10 +142,9 @@ Appending zeros to the next power of $2$ causes the stair stepping pattern.
 	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory21Tap_flops.eps}
 	\label{fig:Theory21Tap_flops}
 \end{figure}
+Judging by the figures, a $186$ tap filter is long and a $21$ tap filter is short compared to the $12672$ sample signal.
 
-
-Now that we understand the number of flops required for a ``short'' filter, does the number of flops affect CPU or GPU execution time?
-While Listing \ref{code:GPUvsCPU} is a simple and good example showing how program GPUs, frankly, it is pretty boring and doesn't display the real challenges and tradeoffs of GPUs.
+Does the number of flops affect CPU or GPU execution time?
 Listing \ref{code:convFun} shows five different ways of implementing convolution:
 \begin{itemize}
   \item time domain convolution in a CPU
@@ -79,24 +161,22 @@ ConvGPU implements time domain convolution by accessing global memory for every 
 The GPU implements time domain convolution using shared memory in lines $283$ to $292$.
 The GPU kernel ConvGPUshared on lines $67$ to $101$ is nearly identical to ConvGPU.
 Threads accessing the same elements of the filter in global memory is a waste of valuable clock cycles.
-ConvGPUshared pays and initial price on lines $72$ to $76$ to move $L_\text{h}$ filter coefficients from off chip global memory memory to on chip shared memory.
+ConvGPUshared pays and initial price on lines $72$ to $76$ to move $L_\text{h}$ filter coefficients from the off chip global memory to the on chip shared memory.
 Finally, the GPU implements frequency domain convolution using the cuFFT library on lines $298$ to $326$.
 
 
-So the questions are:
+The questions are:
 Do flops have a direct relationship to execution time on CPUs? 
 Do flops have a direct relationship to execution time on GPUs? 
-When is convolution in CPUs faster than GPUs?
 When is it worth the initial cost to used shared memory?
 When should convolution be done in the frequency domain?
 
-The answer to all of the questions is...it depends on your signal length, filter length, CPU, GPU and memory.
-A CUDA programmer can make an educated guess on which algorithm may be faster, but until all the algorithms have been implemented and timed, there is no definite answer.
+The short answer to all of the questions is it depends on your signal length, filter length, CPU, GPU and memory.
+A good CUDA programmer can make an educated guess on which algorithm may be faster, but until all the algorithms have been implemented and timed, there is no definite answer.
 
 To demonstrate that there is no definite answer in GPUs, 
 the execution time of the code in Listing \ref{code:GPUvsCPU} was timed.
-Only the CPU functions were timed for the time and frequency domain convolution on the CPU.
-Each memory transfer host to device and device to host was timed for a fair comparison of GPU to CPU.
+All the memory transfers to and from the host were timed for a fair comparison of GPU to CPU.
 Table \ref{tab:CPUvsGPUtimingTable} shows where timing was started and stopped for each algorithm.
 \begin{table}
 \caption{Defining start and stop lines for timing comparison in Listing \ref{code:convFun}.}
@@ -277,9 +357,9 @@ This figure exhibits nearly the same characteristics of single batch convolution
 For very short filter lengths, time domain convolution using shared memory is fastest.
 For longer filters , frequency domain convolution is fastest.
 \begin{figure}
-	\caption{Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal.eps}
-	\label{fig:CPUvsGPU_3104batch_21taps_varySignal}
+	\caption{Comparison of a batched complex convolution on a GPU. The filter length is varied and the signal length is set at $12672$ samples.}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyFilter.eps}
+	\label{fig:CPUvsGPU_3104batch_12672signal_varyFilter}
 \end{figure}
 
 Though this section has show that in batched processing the algorithm leading to the fastest execution time still depends on signal and filter length,
@@ -371,399 +451,6 @@ Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows the execution time of i
 It only costs $2.3165$ms to apply an extra filter in the frequency domain.
 It costs $22.0170$ms and $19.7460$ms to apply an extra filter in the time domain because the cascaded filter is now $206$ taps rather than $186$.
 Table \ref{tab:Batched_CPUvsGPUtable_12672_206} confirms it costs an extra $20$ms or so to apply a $206$ vs $186$ tap filter.
-
-
-
-
-
-
-
-%%CPUvsGPU_3104batch_21taps_186taps_cascade_varySignal
-
-
-
-
-
-
-
-
-\section{Cuda Convolution}
-Convolution is one of the most important tools in any digital signal processing engineer’s toolbox. 
-Convolution can be implemented in the time or frequency domain. 
-Theory says if the given filter is ``long'', the frequency domain is the best choice.
-But how long is… long? 
-First we need a way to measure how computationally intensive an algorithm is. 
-The number of floating point operations (flops) is commonly used for benchmarking. 
-Let the complex signal length be $N$ and the complex filter length be $L$.
-Each complex multiply 
-\begin{equation}
-(A+jB)\times(C+jD) = (AC-BD)+j(AD+BC)
-\end{equation}
-is $6$ flops, $4$ multiplies and $2$ additions/subtractions.
-
-Discrete time convolution computed in the time domain is
-\begin{equation}
-y(n) = \sum^{L-1}_{m=0} x(m) h(n-m).
-  \label{eq:simple_conv_time}
-\end{equation}
-Each output element of $y(n)$ requires a $8L$ flops, $2$ flops (real and imaginary) for each term to be summed then $6$ flops for time signal and filter complex multiply.
-The length of the output $\mathbf{y}$ is $N+L-1$.
-The number of flops required for convolution of a given length $N$ signal and length $L$ filter is
-\begin{equation}
-8L(N+L-1) \text{ flops}.
-\label{eq:flops_time_domain_conv}
-\end{equation}
-
-Discrete time convolution computed in the frequency domain is
-\begin{equation}
-\mathbf{y} = \mathscr{F}^{-1}(\mathscr{F}(\mathbf{x})\times\mathscr{F}(\mathbf{h})).
-  \label{eq:simple_conv_freq}
-\end{equation}
-The length of the convolution, $M=N+L-1$ is the minimum point Fourier Transform possible.
-It is common practice perform a next power of two above the minimum Fourier Transform to leverage the Cooley-Tukey radix 2 Fast Fourier Transform (FFT).
-In the Fastest Fourier Transform in the West (FFTW) library the Cooley-Tukey radix 2 transform is used.
-Each radix 2 forward or backward Fourier transform performs $5M\log_2(M)$ flops \cite{FFTW:2017,cooley1965algorithm}.
-Performing convolution in the frequency domain requires
-\begin{equation}
-3\times5M\log_2(M)+6M \text{ flops}.
-\label{eq:flops_freq_domain_conv}
-\end{equation}
-
-\section{Single Convolution}
-\label{sec:cuda_convolution_single}
-Figure \ref{fig:Theory186Tap_flops} compares the number of flops required for time domain verse frequency domain convolution of a $12672$ sample complex signal with a $186$ tap complex filter.
-Figure \ref{fig:Theory21Tap_flops} compares the number of flops required for time domain verse frequency domain convolution of a $12672$ sample complex signal with a $21$ tap complex filter.
-Appending zeros to the next power of $2$ causes the stair stepping pattern.
-\begin{figure}
-	\caption{Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $186$ tap complex filter.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory186Tap_flops.eps}
-	\label{fig:Theory186Tap_flops}
-\end{figure}
-\begin{figure}
-	\caption{Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $21$ tap complex filter.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory21Tap_flops.eps}
-	\label{fig:Theory21Tap_flops}
-\end{figure}
-
-
-Now that we understand the number of flops required for a ``short'' filter, does the number of flops affect CPU or GPU execution time?
-While Listing \ref{code:GPUvsCPU} is a simple and good example showing how program GPUs, frankly, it is pretty boring and doesn't display the real challenges and tradeoffs of GPUs.
-Listing \ref{code:convFun} shows five different ways of implementing convolution:
-\begin{itemize}
-  \item time domain convolution in a CPU
-  \item frequency domain convolution in a CPU
-  \item time domain convolution in a GPU using global memory
-  \item time domain convolution in a GPU using shared memory
-  \item frequency domain convolution in a GPU using CUDA libraries
-\end{itemize}
-The CPU implements Equation \eqref{eq:simple_conv_time} in ConvCPU directly on line $209$ using a function from lines $11$ to $34$.
-The CPU implements Equation \eqref{eq:simple_conv_freq} using the FFTW library on lines $214$ to $258$.
-The GPU implements time domain convolution using global memory in lines $268$ to $277$.
-The GPU kernel ConvGPU on lines $36$ to $64$ is a parallel version of ConvCPU.
-ConvGPU implements time domain convolution by accessing global memory for every element of the signal and filter.
-The GPU implements time domain convolution using shared memory in lines $283$ to $292$.
-The GPU kernel ConvGPUshared on lines $67$ to $101$ is nearly identical to ConvGPU.
-Threads accessing the same elements of the filter in global memory is a waste of valuable clock cycles.
-ConvGPUshared pays and initial price on lines $72$ to $76$ to move $L_\text{h}$ filter coefficients from off chip global memory memory to on chip shared memory.
-Finally, the GPU implements frequency domain convolution using the cuFFT library on lines $298$ to $326$.
-
-
-So the questions are:
-Do flops have a direct relationship to execution time on CPUs? 
-Do flops have a direct relationship to execution time on GPUs? 
-When is convolution in CPUs faster than GPUs?
-When is it worth the initial cost to used shared memory?
-When should convolution be done in the frequency domain?
-
-The answer to all of the questions is...it depends on your signal length, filter length, CPU, GPU and memory.
-A CUDA programmer can make an educated guess on which algorithm may be faster, but until all the algorithms have been implemented and timed, there is no definite answer.
-
-To demonstrate that there is no definite answer in GPUs, 
-the execution time of the code in Listing \ref{code:GPUvsCPU} was timed.
-Only the CPU functions were timed for the time and frequency domain convolution on the CPU.
-Each memory transfer host to device and device to host was timed for a fair comparison of GPU to CPU.
-Table \ref{tab:CPUvsGPUtimingTable} shows where timing was started and stopped for each algorithm.
-\begin{table}
-\caption{Defining start and stop lines for timing comparison in Listing \ref{code:convFun}.}
-\begin{center}
-\begin{tabular}{llll}
-	\toprule
-	Algorithm 				& Function		& Start Line	& Stop  Line		\\ \midrule
-	CPU time domain 		& ConvCPU 		& 208			& 210 				\\
-	CPU frequency domain 	& FFTW 			& 213			& 259 				\\
-	GPU time domain global 	& ConvGPU 		& 267			& 278				\\
-	GPU time domain shared 	& ConvGPUshared & 282			& 293				\\
-	GPU frequency domain 	& cuFFT			& 301			& 327				\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:CPUvsGPUtimingTable}
-\end{table}
-
-Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} compares the computation time of a fixed length $186$ tap filter convolved with a varied length signal.
-The execution time varies enough that the plot is messy and unreadable.
-Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal} compares the same data but $15$ sample local minimums were found.
-\begin{figure}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_noMin.eps}
-	\label{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}
-\end{figure}
-\begin{figure}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal.eps}
-	\label{fig:CPUvsGPU_1batch_186taps_varySignal}
-\end{figure}
-
-With the plot lower bounded, compare Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal} to Figure \ref{fig:Theory186Tap_flops}.
-Does the CPU and GPU follow the same trend as the number of flops?
-The CPU has the exact structure that the number of flops predicted.
-The GPU does have the stair stepping from appending zeros for the frequency domain, but the time domain GPU kernels execute in less time.
-
-The GPU execution time does not follow the same trend as the number of flops.
-Why? As mentioned in Section \ref{sec:GPU_memory}, GPUs have a hanes amount of computational resources and limited memory bandwidth.
-Over $90\%$ of GPU kernels are memory bandwidth limited.
-
-To provide more proof, compare Figures \ref{fig:CPUvsGPU_1batch_21taps_varySignal} and \ref{fig:Theory21Tap_flops}.
-Once again, the CPU follows the same trend as the number of flops.
-The GPU also follows the number of flops trends but to a lesser extent than the CPU.
-On ``short'' filters, using shared memory will perform better than using only global memory.
-Using shared memory to store the short filter saves the each iteration a lot of execution time.
-\begin{figure}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal.eps}
-	\label{fig:CPUvsGPU_1batch_21taps_varySignal}
-\end{figure}
-
-What if the signal length was set and the filter length was varied?
-Figure \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} compares CPU to GPU execution time of a $12672$ sample signal convolved with a varying filter length.
-The time domain CPU execution time is affected obviously because the number of flops increases.
-
-Neither CPU or GPU frequency domain execution time is affected by varying filter length.
-The execution time stays the same because the number of memory accesses and flops remain constant because the filter is appended with zeros to the convolution length.
-
-The execution time of both time domain GPU convolutions are slightly affected by increasing filter length.
-The number of memory accesses per output sample increase as the filter length increases.
-Bottom line, the length of the signal is the largest factor as Equations \ref{eq:flops_time_domain_conv} and \ref{eq:flops_freq_domain_conv} suggest.
-\begin{figure}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter.eps}
-	\label{fig:CPUvsGPU_1batch_12672signal_varyFilter}
-\end{figure}
-
-Conclusion, when needing implement convolution in a CPU or GPU, implement it every way possible.
-Which ever way has the fastest execution time, he is your winner.
-Long story short, most of the time a GPU DSP engineer is given a set length for the signal and filter.
-As Figures \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} through \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} have shown, unless every implementation is explored, there is no way of saying which implementation will absolutely be fastest.
-
-Table \ref{tab:CPUvsGPUtable_12672_186} shows GPU frequency domain is fastest when convolving a $12672$ sample signal with a $186$ tap filter.
-Table \ref{tab:CPUvsGPUtable_12672_21} shows GPU time domain using shared is fastest when convolving a $12672$ sample signal with a $21$ tap filter.
-\begin{table}
-\caption{Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	CPU time domain 		& ConvCPU 					& 5.0388		\\
-	CPU frequency domain 	& FFTW 						& 1.6295		\\
-	GPU time domain global 	& ConvGPU 					& 0.4021		\\
-	GPU time domain shared 	& ConvGPUshared 			& 0.3752		\\
-	GPU frequency domain 	& cuFFT						& 0.3387		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:CPUvsGPUtable_12672_186}
-\end{table}
-\begin{table}
-\caption{Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	CPU time domain 		& ConvCPU 					& 0.6125		\\
-	CPU frequency domain 	& FFTW 						& 2.5947		\\
-	GPU time domain global 	& ConvGPU 					& 0.2405		\\
-	GPU time domain shared 	& ConvGPUshared 			& 0.2112		\\
-	GPU frequency domain 	& cuFFT						& 0.3360		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:CPUvsGPUtable_12672_21}
-\end{table}
-
-\section{Batched Convolution}
-In section \ref{sec:cuda_convolution_single} convolution of a single single with a single filter was studied.
-Chapter blah (system overview) shows the packetized structure of the received signal.
-The received signal has $3104$ packets or batches and each packet is independent of other packets.
-
-Now that we have $3104$ signals to be convolved with $3104$ filters, how does the problem change?
-Which approach to convolution will be fastest?
-
-As the number of batches increases, does CPU and GPU execution time increase linearly?
-Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal} shows how the execution time increases with the number of batches.
-Note that no lower bounding is needed to produce clean batched processing results.
-This figure shows that frequency domain convolution leverages batch processing better than time domain convolution.
-No surprise CPU time and frequency domain execution time skyrockets as the number of batches increases.
-The GPU handles batched processing very well because it introduces more parallelism.
-\begin{figure}
-	\caption{Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal.eps}
-	\label{fig:CPUvsGPU_varyBatches_186taps_12672signal}
-\end{figure}
-
-Judging by Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal}, CPU is not a contender in batched processing for fast execution times when compared to the GPU.
-CPU and GPU batched processing will not be compared any further.
-Listing \ref{code:batchedConvFun} shows three ways of batched convolution in CUDA
-\begin{itemize}
-  \item time domain convolution in a GPU using global memory
-  \item time domain convolution in a GPU using shared memory
-  \item frequency domain convolution in a GPU using the cuFFT library.
-\end{itemize}
-
-Now that the GPU execution time isn't being compared to the CPU, transfers between host and device will not be a factor for algorithm comparison.
-Table \ref{tab:BatchedGPUtimingTable} shows how Listing \ref{code:batchedConvFun} is timed.
-\begin{table}
-\caption{Defining start and stop lines for timing comparison in Listing \ref{code:batchedConvFun}.}
-\begin{center}
-\begin{tabular}{llll}
-	\toprule
-	Algorithm 				& Function		& Start Line	& Stop  Line		\\ \midrule
-	GPU time domain global 	& ConvGPU 		& 197			& 204				\\
-	GPU time domain shared 	& ConvGPUshared & 212			& 219				\\
-	GPU frequency domain 	& cuFFT			& 227			& 245				\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:BatchedGPUtimingTable}
-\end{table}
-
-
-Figure \ref{fig:CPUvsGPU_3104batch_186taps_varySignal} shows execution time for $3104$ batches of $186$ tap filters convolved with varying signal lengths.
-Performing frequency domain convolution is always faster than time domain convolution because the cuFFT library is better optimized for batched processing.
-Frequency domain convolution for a $12672$ sample signal takes just $36.8$ms, that is on average $0.0119$ms per batch.
-Compare $0.0119$ms per batch to single batched execution time in Table \ref{tab:CPUvsGPUtable_12672_186}, one batch took $0.3387$.
-Batched processing introduced a $28\times$ speed up!
-\begin{figure}
-	\caption{Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySignal.eps}
-	\label{fig:CPUvsGPU_3104batch_186taps_varySignal}
-\end{figure}
-
-Figure \ref{fig:CPUvsGPU_3104batch_21taps_varySignal} shows execution time for $3104$ batches of $21$ tap filters convolved with varying signal lengths.
-This figure exhibits the same characteristics of single batch convolution execution time shown in Figure \ref{fig:CPUvsGPU_1batch_21taps_varySignal}.
-For most signal lengths, performing time domain convolution using shared memory is fastest.
-\begin{figure}
-	\caption{Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal.eps}
-	\label{fig:CPUvsGPU_3104batch_21taps_varySignal}
-\end{figure}
-
-Figure \ref{fig:CPUvsGPU_3104batch_12672signal_varyFilter} shows execution time for $3104$ batches of $12672$ sample signal convolved with varying filter lengths.
-This figure exhibits nearly the same characteristics of single batch convolution execution time shown in Figure \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} accept the varied filter length has no affect on execution time.
-For very short filter lengths, time domain convolution using shared memory is fastest.
-For longer filters , frequency domain convolution is fastest.
-\begin{figure}
-	\caption{Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal.eps}
-	\label{fig:CPUvsGPU_3104batch_21taps_varySignal}
-\end{figure}
-
-Though this section has show that in batched processing the algorithm leading to the fastest execution time still depends on signal and filter length,
-one important comcept has been over looked.
-Figure \ref{fig:ProcessingBlock} shows there are two filters that need to be allied to the signal. 
-
-If convolution is implemented in the time domain, ConvGPU or ConvGPUshared must run twice.
-The first call of ConvGPU or ConvGPUshared performs the convolution of the $186$ tap equalizer and $21$ detection filter.
-The second call of ConvGPU or ConvGPUshared performs the convolution of the $12672$ sample signal with the  convolved $186+21-1$ tap filter.
-
-If convolution is implemented in the frequency domain, only the GPU kernel PointToPointMultiply has to be updated.
-PointToPointMultiply must be changed from two input vectors to three input vectors.
-For every point the number of memory accesses increases by $1$ element and the number of flops doubles from $6$ to $12$.
-An extra cuFFT call would be expected accept the detection filter in Figure \ref{fig:ProcessingBlock} constant.
-The FFT of the detection filter can be calculated and stored at initialization.
-
-Table \ref{tab:Batched_CPUvsGPUtable_12672_186} shows the batched convolution execution time for a $12672$ sample signal and $186$ tap filter.
-Table \ref{tab:Batched_CPUvsGPUtable_12672_21} shows the batched convolution execution time for a $12672$ sample signal and $21$ tap filter.
-Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows the batched cascaded convolution execution time for a $12672$ sample signal with $21$ and $186$ tap filters.
-\begin{table}
-\caption{Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	GPU time domain global 	& ConvGPU 					& 201.29		\\
-	GPU time domain shared 	& ConvGPUshared 			& 180.272		\\
-	GPU frequency domain 	& cuFFT						& 36.798 		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:Batched_CPUvsGPUtable_12672_186}
-\end{table}
-\begin{table}
-\caption{Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	GPU time domain global 	& ConvGPU 					& 27.642		\\
-	GPU time domain shared 	& ConvGPUshared 			& 20.4287		\\
-	GPU frequency domain 	& cuFFT						& 36.7604		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:Batched_CPUvsGPUtable_12672_21}
-\end{table}
-\begin{table}
-\caption{Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	GPU time domain global 	& ConvGPU 					& 223.064		\\
-	GPU time domain shared 	& ConvGPUshared 			& 199.844		\\
-	GPU frequency domain 	& cuFFT						& 36.7704		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:Batched_CPUvsGPUtable_12672_206}
-\end{table}
-\begin{table}
-\caption{Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	GPU time domain global 	& ConvGPU 					& 223.307		\\
-	GPU time domain shared 	& ConvGPUshared 			& 200.018		\\
-	GPU frequency domain 	& cuFFT						& 39.0769		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:Batched_CPUvsGPUtable_12672_21_186}
-\end{table}
-
-Tables \ref{tab:Batched_CPUvsGPUtable_12672_186} and \ref{tab:Batched_CPUvsGPUtable_12672_21} agree with Figures \ref{fig:CPUvsGPU_3104batch_21taps_varySignal} and \ref{fig:CPUvsGPU_3104batch_186taps_varySignal}.
-Time domain convolution is faster with a short $21$ tap filter but frequency domain convolution is faster with a long $186$ tap filter.
-
-\begin{figure}
-	\caption{Two ways to convolve the signal $\mathbf{r}$ with the $186$ tap filter $\mathbf{c}$ and $21$ tap filter $\mathbf{d}$.}
-	\centering\includegraphics[width=5.01in/100*55]{figures/gpu_intro/twoWaysToConv.pdf}
-	\label{fig:twoWaysToConv}
-\end{figure}
-Figure \ref{fig:twoWaysToConv} shows two ways to cascade the signal $\mathbf{r}$ though two filters.
-Rather than applying both filters to the signal, compute a shorter convolution of the $186$ and $21$ tap filters then apply the $186+21-1$ tap result to the signal.
-
-Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows the execution time of implementing cascaded filters, convolving the $21$ and $186$ tap filters is extremely fast in the GPU.
-It only costs $2.3165$ms to apply an extra filter in the frequency domain.
-It costs $22.0170$ms and $19.7460$ms to apply an extra filter in the time domain because the cascaded filter is now $206$ taps rather than $186$.
-Table \ref{tab:Batched_CPUvsGPUtable_12672_206} confirms it costs an extra $20$ms or so to apply a $206$ vs $186$ tap filter.
-
-Figure \ref{fig:CPUvsGPU_3104batch_21taps_186taps_cascade_varySignal} shows 
-\begin{figure}
-	\caption{Comparison of a batched cascaded complex convolution on a GPU. The signal length is varied and the filter is the $206$ result of convolving $186$ and $21$ tap filters.}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_21taps_186taps_cascade_varySignal.eps}
-	\label{fig:CPUvsGPU_3104batch_21taps_186taps_cascade_varySignal}
-\end{figure}
-
 
 \singlespacing
 \clearpage

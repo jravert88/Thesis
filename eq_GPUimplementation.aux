@@ -1,45 +1,46 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\citation{haidar2015optimization}
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Equalizer GPU Implementation}{79}{chapter.7}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Equalizer GPU Implementation}{67}{chapter.7}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}CUDA Batched Processing}{79}{section.7.1}}
-\@writefile{brf}{\backcite{haidar2015optimization}{{79}{7.1}{figure.7.1}}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{80}{figure.7.1}}
-\newlabel{fig:matrix_batch_vs_batched}{{7.1}{80}{CUDA Batched Processing}{figure.7.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{80}{figure.7.2}}
-\newlabel{fig:packet_batch_set}{{7.2}{80}{CUDA Batched Processing}{figure.7.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}Batched Convolution}{80}{section.7.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.3}Equalizer Implementations}{81}{section.7.3}}
-\citation{perrins:2013}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Zero-Forcing and MMSE GPU Implementation}{67}{section.7.1}}
+\newlabel{eq:ZF_gpuimp}{{7.1}{67}{Zero-Forcing and MMSE GPU Implementation}{equation.7.1.1}{}}
+\newlabel{eq:MMSE_gpuimp}{{7.2}{67}{Zero-Forcing and MMSE GPU Implementation}{equation.7.1.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Convolution of vectors $\mathbf  {c}$ and $\mathbf  {r}$ block diagram simplified to one block marked Conv.}}{68}{figure.7.1}}
+\newlabel{fig:Conv2}{{7.1}{68}{Equalizer GPU Implementation}{figure.7.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.2}{\ignorespaces Convolution of vectors $\mathbf  {c}$, $\mathbf  {r}$ and $\mathbf  {H}_{\text  {NO}}$ block diagram simplified to one block marked Conv.}}{68}{figure.7.2}}
+\newlabel{fig:Conv3}{{7.2}{68}{Equalizer GPU Implementation}{figure.7.2}{}}
+\newlabel{eq:ZF_gpuimp}{{7.3}{68}{Zero-Forcing and MMSE GPU Implementation}{equation.7.1.3}{}}
+\newlabel{eq:MMSE_gpuimp}{{7.4}{68}{Zero-Forcing and MMSE GPU Implementation}{equation.7.1.4}{}}
 \citation{wiki:Sparse_matrix}
-\@writefile{brf}{\backcite{perrins:2013}{{82}{7.3}{section.7.3}}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.4}Zero-Forcing and MMSE GPU Implementation}{82}{section.7.4}}
-\newlabel{eq:ZF_gpuimp}{{7.1}{82}{Zero-Forcing and MMSE GPU Implementation}{equation.7.4.1}{}}
-\newlabel{eq:MMSE_gpuimp}{{7.2}{82}{Zero-Forcing and MMSE GPU Implementation}{equation.7.4.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Zero-Forcing}{82}{section*.10}}
-\@writefile{brf}{\backcite{wiki:Sparse_matrix}{{82}{7.4}{section*.10}}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.3}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{83}{figure.7.3}}
-\newlabel{fig:blockZF}{{7.3}{83}{Zero-Forcing}{figure.7.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{MMSE}{83}{section*.11}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.5}Constant Modulus Algorithm GPU Implementation}{83}{section.7.5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.4}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{84}{figure.7.4}}
-\newlabel{fig:blockMMSE}{{7.4}{84}{MMSE}{figure.7.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{85}{figure.7.5}}
-\newlabel{fig:blockCMA}{{7.5}{85}{Constant Modulus Algorithm GPU Implementation}{figure.7.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.6}Frequency Domain Equalizer One and Two GPU Implementation}{85}{section.7.6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.6}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{86}{figure.7.6}}
-\newlabel{fig:blockFDE1}{{7.6}{86}{Frequency Domain Equalizer One}{figure.7.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.7}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{86}{figure.7.7}}
-\newlabel{fig:blockFDE2}{{7.7}{86}{Frequency Domain Equalizer Two}{figure.7.7}{}}
-\newlabel{eq:FDE1_applied}{{7.8}{86}{Frequency Domain Equalizer One and Two GPU Implementation}{equation.7.6.8}{}}
-\newlabel{eq:FDE2_applied}{{7.9}{86}{Frequency Domain Equalizer One and Two GPU Implementation}{equation.7.6.9}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer One}{86}{section*.12}}
-\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer Two}{86}{section*.13}}
+\citation{CUDA_toolkit_doc}
+\citation{hayes:1996}
+\@writefile{brf}{\backcite{wiki:Sparse_matrix}{{69}{7.1}{equation.7.1.4}}}
+\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{69}{7.1}{equation.7.1.4}}}
+\@writefile{brf}{\backcite{hayes:1996}{{69}{7.1}{figure.7.4}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{70}{figure.7.3}}
+\newlabel{fig:blockZF}{{7.3}{70}{Zero-Forcing and MMSE GPU Implementation}{figure.7.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{70}{figure.7.4}}
+\newlabel{fig:blockMMSE}{{7.4}{70}{Zero-Forcing and MMSE GPU Implementation}{figure.7.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{70}{table.7.1}}
+\newlabel{tab:ZFMMSEtimingComparison}{{7.1}{70}{Zero-Forcing and MMSE GPU Implementation}{table.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Constant Modulus Algorithm GPU Implementation}{71}{section.7.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{72}{figure.7.5}}
+\newlabel{fig:blockCMA}{{7.5}{72}{Constant Modulus Algorithm GPU Implementation}{figure.7.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{73}{table.7.2}}
+\newlabel{tab:CMAtimingComparison}{{7.2}{73}{Constant Modulus Algorithm GPU Implementation}{table.7.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.3}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{73}{table.7.3}}
+\newlabel{tab:CMAtimingComparison}{{7.3}{73}{Frequency Domain Equalizer One and Two GPU Implementation}{table.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Frequency Domain Equalizer One and Two GPU Implementation}{73}{section.7.3}}
+\newlabel{eq:FDE1_applied}{{7.10}{73}{Frequency Domain Equalizer One and Two GPU Implementation}{equation.7.3.10}{}}
+\newlabel{eq:FDE2_applied}{{7.11}{73}{Frequency Domain Equalizer One and Two GPU Implementation}{equation.7.3.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.6}{\ignorespaces Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{74}{figure.7.6}}
+\newlabel{fig:blockFDE1}{{7.6}{74}{Frequency Domain Equalizer One and Two GPU Implementation}{figure.7.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.7}{\ignorespaces Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{74}{figure.7.7}}
+\newlabel{fig:blockFDE2}{{7.7}{74}{Frequency Domain Equalizer One and Two GPU Implementation}{figure.7.7}{}}
 \@setckpt{eq_GPUimplementation}{
-\setcounter{page}{87}
-\setcounter{equation}{9}
+\setcounter{page}{75}
+\setcounter{equation}{11}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
@@ -48,13 +49,13 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{7}
-\setcounter{section}{6}
+\setcounter{section}{3}
 \setcounter{subsection}{0}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
 \setcounter{figure}{7}
-\setcounter{table}{0}
+\setcounter{table}{3}
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{0}
 \setcounter{cp@cnt}{0}
@@ -66,7 +67,7 @@
 \setcounter{lotdepth}{1}
 \setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{40}
+\setcounter{bookmark@seq@number}{36}
 \setcounter{lstlisting}{0}
-\setcounter{section@level}{3}
+\setcounter{section@level}{1}
 }

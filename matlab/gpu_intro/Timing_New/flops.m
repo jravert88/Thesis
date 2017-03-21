@@ -12,7 +12,7 @@ convFlops = convLength.*numFLOPSperConvOutput;
 
 fftFlops = 0*convFlops;
 for i = 1:length(N)
-    Nfft = L+N(i)-1;
+    Nfft = 2^nextpow2(L+N(i)-1);
     fftFlops(i) = 5*Nfft*log2(Nfft) + 5*Nfft*log2(Nfft) + 6*Nfft + 5*Nfft*log2(Nfft);
 end
 
@@ -24,7 +24,8 @@ latexHeight = 4;
 figure(loops)
 plot(N,convFlops, N,fftFlops); grid on
 marge = axis;
-% axis([0 max(N) marge(3:4)])
+marge = axis;
+axis([0 16497 marge(3:4)])
 ax = gca;
 legend('Time Domain','Frequency Domain','Location', 'NorthWest')
 % title(['Convolution with Filter Length ' num2str(L)])

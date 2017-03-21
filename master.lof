@@ -19,39 +19,28 @@
 \contentsline {figure}{\numberline {4.11}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{22}{figure.4.11}
 \contentsline {figure}{\numberline {4.12}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{23}{figure.4.12}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $186$ tap complex filter.}}{27}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $21$ tap complex filter.}}{28}{figure.5.2}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{30}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{31}{figure.5.4}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{32}{figure.5.5}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{33}{figure.5.6}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{34}{figure.5.7}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{36}{figure.5.8}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{37}{figure.5.9}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{38}{figure.5.10}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Two ways to convolve the signal $\mathbf {r}$ with the $186$ tap filter $\mathbf {c}$ and $21$ tap filter $\mathbf {d}$.}}{39}{figure.5.11}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $186$ tap complex filter.}}{41}{figure.5.12}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $21$ tap complex filter.}}{42}{figure.5.13}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{44}{figure.5.14}
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{45}{figure.5.15}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{46}{figure.5.16}
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{47}{figure.5.17}
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{49}{figure.5.18}
-\contentsline {figure}{\numberline {5.19}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{50}{figure.5.19}
-\contentsline {figure}{\numberline {5.20}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{51}{figure.5.20}
-\contentsline {figure}{\numberline {5.21}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{52}{figure.5.21}
-\contentsline {figure}{\numberline {5.22}{\ignorespaces Two ways to convolve the signal $\mathbf {r}$ with the $186$ tap filter $\mathbf {c}$ and $21$ tap filter $\mathbf {d}$.}}{54}{figure.5.22}
-\contentsline {figure}{\numberline {5.23}{\ignorespaces Comparison of a batched cascaded complex convolution on a GPU. The signal length is varied and the filter is the $206$ result of convolving $186$ and $21$ tap filters.}}{55}{figure.5.23}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{25}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{26}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $186$ tap complex filter.}}{30}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a $21$ tap complex filter.}}{31}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{32}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{33}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{34}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{35}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{37}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{38}{figure.5.10}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{39}{figure.5.11}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is varied and the signal length is set at $12672$ samples.}}{40}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Two ways to convolve the signal $\mathbf {r}$ with the $186$ tap filter $\mathbf {c}$ and $21$ tap filter $\mathbf {d}$.}}{42}{figure.5.13}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{75}{figure.6.1}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces I need help on this one!!!! }}{77}{figure.6.2}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{63}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces I need help on this one!!!! }}{65}{figure.6.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{80}{figure.7.1}
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{80}{figure.7.2}
-\contentsline {figure}{\numberline {7.3}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{83}{figure.7.3}
-\contentsline {figure}{\numberline {7.4}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{84}{figure.7.4}
-\contentsline {figure}{\numberline {7.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{85}{figure.7.5}
-\contentsline {figure}{\numberline {7.6}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{86}{figure.7.6}
-\contentsline {figure}{\numberline {7.7}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{86}{figure.7.7}
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Convolution of vectors $\mathbf {c}$ and $\mathbf {r}$ block diagram simplified to one block marked Conv.}}{68}{figure.7.1}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Convolution of vectors $\mathbf {c}$, $\mathbf {r}$ and $\mathbf {H}_{\text {NO}}$ block diagram simplified to one block marked Conv.}}{68}{figure.7.2}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{70}{figure.7.3}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{70}{figure.7.4}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{72}{figure.7.5}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{74}{figure.7.6}
+\contentsline {figure}{\numberline {7.7}{\ignorespaces Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{74}{figure.7.7}
 \addvspace {10\p@ }
