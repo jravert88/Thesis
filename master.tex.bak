@@ -264,6 +264,7 @@
 \include{introduction}
 \include{problem_statment}
 \include{systemOverview}
+\include{Estimators}
 \include{gpu_intro}
 \include{GPUconvolution}
 \include{eq_equations}

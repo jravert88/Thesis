@@ -2,20 +2,21 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{18}{table.4.1}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{32}{table.5.1}
-\contentsline {table}{\numberline {5.2}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{34}{table.5.2}
-\contentsline {table}{\numberline {5.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{35}{table.5.3}
-\contentsline {table}{\numberline {5.4}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:batchedConvFun}.}}{39}{table.5.4}
-\contentsline {table}{\numberline {5.5}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{42}{table.5.5}
-\contentsline {table}{\numberline {5.6}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{42}{table.5.6}
-\contentsline {table}{\numberline {5.7}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{42}{table.5.7}
-\contentsline {table}{\numberline {5.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}}{43}{table.5.8}
+\contentsline {table}{\numberline {5.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{20}{table.5.1}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces CMA}}{63}{table.6.1}
+\contentsline {table}{\numberline {6.1}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{34}{table.6.1}
+\contentsline {table}{\numberline {6.2}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{36}{table.6.2}
+\contentsline {table}{\numberline {6.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{37}{table.6.3}
+\contentsline {table}{\numberline {6.4}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:batchedConvFun}.}}{41}{table.6.4}
+\contentsline {table}{\numberline {6.5}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{44}{table.6.5}
+\contentsline {table}{\numberline {6.6}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{44}{table.6.6}
+\contentsline {table}{\numberline {6.7}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{44}{table.6.7}
+\contentsline {table}{\numberline {6.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}}{45}{table.6.8}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{70}{table.7.1}
-\contentsline {table}{\numberline {7.2}{\ignorespaces The gradient vector $\nabla J(k)$ can be computed using convolution or computed directly.}}{73}{table.7.2}
-\contentsline {table}{\numberline {7.3}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{73}{table.7.3}
+\contentsline {table}{\numberline {7.1}{\ignorespaces CMA}}{65}{table.7.1}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {8.1}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{72}{table.8.1}
+\contentsline {table}{\numberline {8.2}{\ignorespaces The gradient vector $\nabla J(k)$ can be computed using convolution or computed directly.}}{75}{table.8.2}
+\contentsline {table}{\numberline {8.3}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{75}{table.8.3}
 \addvspace {10\p@ }
