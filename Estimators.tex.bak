@@ -160,10 +160,12 @@ where
 	\rho = {\rm Trace} \left\{ \mathbf{I} -  \mathbf{X}\left(\mathbf{X}^\dag\mathbf{X}\right)^{-1}\mathbf{X}^\dag \right\}.
 \end{equation}
 Equation \eqref{eq:ML-s2-final3} is easily implemented into GPUs.
-	
+
 
 \section{Symbol-by-Symbol Detector}
 \label{sec:oqpsk_detector}
+Before the symbols are detected, a detection filter is applied then the signal is downsampled by $2$. The detection filter is the ``numerically optimized'' SOQPSK detection filter $H_\text{NO}$ detection filter \cite[Fig. 3]{perrins:2013}.
+symbol by symbol detector 
 The symbol by symbol detector block in Figure \ref{fig:ProcessingBlock} is a Offset Quadrature Phase Shift Keying (OQPSK) detector.
 Using the simple OQPSK detector in place of the complex MLSE SOQPSK-TG detector leads to less than $1$dB in bit error rate \cite{perrins:2013}.
 \begin{figure}
@@ -177,6 +179,7 @@ The residual frequency offset results from the frequency offset estimation error
 While phase offset, timing offset and multipath are combated with equalizers, batched based equalizers cannot remove residual frequency offset.
 The PLL tracks out the residual frequency offset using a feedback control loop.
 
-Implementing a PLL may seem like a challenge in GPUs because the feedback loop cannot be parallelized.
-While the PLL cannot be parallelized on a sample by sample basis, it can be parallelized on a packet by packet basis.
-Running the PLL and detector serially through a full packet of data is still relatively fast because each iteration of the PLL and detector is computationally light.
+Implementing a PLL may not seem feasible in GPUs because the feedback loop cannot be parallelized.
+But the PAQ system processes $3104$ batches of data at a time.
+The detector and PLL are parallelized on a packet by packet basis.
+Running the PLL and detector serially through a full packet of data is relatively fast because each iteration requires only $10$ floating point operations and a few logic decisions.

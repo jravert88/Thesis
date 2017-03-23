@@ -2,6 +2,9 @@
 \label{chap:gpu}
 
 This thesis explores the use of GPUs in data-aided estimation, equalization and filtering operations.
+The purpose of chapter is to provide context for the contributions of this thesis.
+As such this overview is not a tutorial.
+For a full explination of CUDA programming please see the CUDA toolkit documentation \cite{CUDA_toolkit_doc}.
 
 A Graphics Processing Unit (GPU) is a computational unit with a highly-parallel architecture well-suited for executing the same function on many data elements.
 In the past, GPUs were used to process graphics data.
@@ -13,29 +16,29 @@ CUDA allows a programmer to write C++ like functions that are massively parallel
 To invoke parallelism, a GPU kernel is called $N$ times and mapped to $N$ \textit{threads} that run concurrently.
 To achieve the full potential of high performance GPUs, kernels must be written with some basic concepts about GPU architecture and memory in mind.
 
-The purpose of this overview is to provide context for the contributions of this thesis.
-As such this overview is not a tutorial.
-For a full explination of CUDA programming please see the CUDA toolkit documentation \cite{CUDA_toolkit_doc}.
-
 \section{Simple GPU code example}
 If a programmer has some C++ experience, learning how to program GPUs using CUDA comes fairly easily.
 GPU code still runs top to bottom and memory still has to be allocated.
 The only real difference is where the memory physically is and how functions run on GPUs.
 To run functions or kernels on GPUs, the memory must be copied from the host (CPU) to the device (GPU).
 Once the memory has been copied, the parallel GPU kernels can be called.
-After the GPU kernels have finished, the resulting memory has to be copied back from the device (GPU) to the host (CPU).
+After the GPU kernels have finished, the results have to be copied back from the device (GPU) to the host (CPU).
 
-Listing \ref{code:GPUvsCPU} shows a simple program that sums to vectors together
+Listing \ref{code:GPUvsCPU} shows a simple program that sums two vectors together where each vector is length $1024$.
 \begin{equation}
 \begin{matrix}
 \mathbf{C}_1 = \mathbf{A}_1 + \mathbf{B}_1 \\
 \mathbf{C}_2 = \mathbf{A}_2 + \mathbf{B}_2
 \end{matrix}
 \end{equation}
-where each vector is length $1024$.
-Figure \ref{fig:CPUaddBlockDiagram} shows how the CPU computes $\mathbf{C}_1$ by summing elements of $\mathbf{A}_1$ and $\mathbf{B}_1$ together \textit{sequentially}.
-Figure \ref{fig:GPUaddBlockDiagram} shows how the GPU computes $\mathbf{C}_2$ by summing elements of $\mathbf{A}_1$ and $\mathbf{B}_1$ together \textit{in parallel}.
-The GPU kernel computes every element of $\mathbf{C}_2$ in parallel while the CPU computes one element of $\mathbf{C}_1$ at a time.
+
+On line $42$ the CPU computes $\mathbf{C}_1$ by summing elements of $\mathbf{A}_1$ and $\mathbf{B}_1$ together \textit{sequentially}. Figure \ref{fig:CPUaddBlockDiagram} shows how the CPU computes $\mathbf{C}_1$  sequentially.
+
+The vector addition in the GPU takes a little more work. 
+On lines $60$ and $61$ the vectors in host memory $\mathbf{A}_1$ and $\mathbf{B}_1$ are copied to device memory vectors $\mathbf{A}_2$ and $\mathbf{B}_2$.
+The vector $\mathbf{C}_2$ is computed by calling the GPU kernel VecAddGPU on line $75$.
+The vector is then copied from device memory to host memory on line $78$.
+Figure \ref{fig:GPUaddBlockDiagram} shows how the GPU computes $\mathbf{C}_2$ \textit{in parallel}.
 \begin{figure}
 	\centering\includegraphics[width=3.17in/100*55]{figures/gpu_intro/CPUaddBlockDiagram.pdf}
 	\caption{A block diagram of how a CPU sequentially performs vector addition.}
@@ -46,6 +49,7 @@ The GPU kernel computes every element of $\mathbf{C}_2$ in parallel while the CP
 	\caption{A block diagram of how a GPU performs vector addition in parallel.}
 	\label{fig:GPUaddBlockDiagram}
 \end{figure}
+
 \singlespacing
 \clearpage
 \begin{lstlisting}[style=myCUDAstyle,caption={Comparison of CPU verse GPU code.},label={code:GPUvsCPU}]
@@ -69,13 +73,12 @@ __global__ void VecAddGPU(float* destination, float* source0, float* source1, in
 	destination[i] = source0[i] + source1[i];
 }
 
-
 int main(){
 	int numPoints = pow(2,22);
 	cout << numPoints << endl;
-	/*--------------------------------------------------------------------
-                               	   CPU Start
-	--------------------------------------------------------------------*/
+	/**
+	* Vector Addition on CPU
+	*/
 	// allocate memory on host
 	float *A1;
 	float *B1;
@@ -92,13 +95,10 @@ int main(){
 
 	// vector sum C1 = A1 + B1
 	VecAddCPU(C1, A1, B1, numPoints);
-	/*--------------------------------------------------------------------
-                               	   CPU End
-	--------------------------------------------------------------------*/
-
-	/*--------------------------------------------------------------------
-                               	   GPU End
-	--------------------------------------------------------------------*/
+	
+	/**
+	* Vector Addition on GPU
+	*/
 	// allocate memory on host for result
 	float *C2;
 	C2 = (float*) malloc (numPoints*sizeof(float));
@@ -131,9 +131,6 @@ int main(){
 
 	// Copy vector C2 from device to host
 	cudaMemcpy(C2, C2_gpu, sizeof(float)*numPoints, cudaMemcpyDeviceToHost);
-	/*--------------------------------------------------------------------
-                               	   GPU End
-	--------------------------------------------------------------------*/
 
 	// Compare C2 to C1
 	bool equal = true;
@@ -144,7 +141,6 @@ int main(){
 		cout << "C2 is equal to C1." << endl;
 	else
 		cout << "C2 is NOT equal to C1." << endl;
-	sleep(2);
 
 	// Free vectors on CPU
 	free(A1);
@@ -161,20 +157,23 @@ int main(){
 \doublespacing
 
 \section{GPU kernel using threads and thread blocks}
-A GPU kernel is executed on a GPU by launching numTreadsPerBlock $\times$ numBlocks 
-threads.
-Each thread has a unique index.
-CUDA calls this indes threadIdx and blockIdx.
+A GPU kernel is executed on a GPU by launching numBlocks thread blocks with a set number of threads per block.
+In the Listing \ref{code:GPUvsCPU}, VecAddGPU is launched with $32$ threads per block on line $75$.
+The total number of threads launched on the GPU is the number of blocks times the number of threads per block.
+VecAddGPU needs to be launched with atleast $2^22$ threads or $131072 = 2^22/32$ blocks of $32$ threads.
+
+CUDA gives each thread launched in a GPU kernel a unique index called threadIdx and blockIdx.
 threadIdx is the thread index inside the assigned thread block.
-blockIdx is the index of the block the thread is assigned.
+blockIdx is the index of the block that the thread is assigned to.
 blockDim is the number of threads assigned per block, in fact blockDim $=$ numTreadsPerBlock.
 Both threadIdx and blockIdx are three dimensional and have x, y and z components.
-In this thesis only the x dimension is used because GPU kernels operate only on vectors.
+In this thesis only the x dimension is used because GPU kernels operate only on one dimensional vectors.
 
-To replace a CPU for loop that runs $0$ to $N-1$, a GPU kernel launches $N$ threads are with $T$ threads per thread block.
+To turn a CPU for loop in to a GPU kernel that runs $0$ to $N-1$, the GPU kernel will launch atleast $N$ threads are with $T$ threads per thread block.
 The number of blocks need is $M = \frac{N}{T}$ or $M = \frac{N}{T}+1$ if $N$ is not an integer multiple of $T$.
 Figure \ref{fig:threadsBlocks32} shows $32$ threads launched in $4$ thread blocks with $8$ threads per block.
-Figure \ref{fig:threadsBlocks36} shows $36$ threads launched in $5$ thread blocks with $8$ threads per block. An full extra thread block must be launched to with $8$ threads but $4$ threads are idle.
+Figure \ref{fig:threadsBlocks36} shows $36$ threads launched in $5$ thread blocks with $8$ threads per block. 
+An full extra thread block is launched with $8$ threads but $4$ threads are idle.
 \begin{figure}
 	\centering\includegraphics[width=4in/100*55]{figures/gpu_intro/threadsBlocks32.pdf}
 	\caption{Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}
@@ -186,34 +185,44 @@ Figure \ref{fig:threadsBlocks36} shows $36$ threads launched in $5$ thread block
 	\label{fig:threadsBlocks36}
 \end{figure}
 
-\section{GPU memory}
+\section{GPU Execution and Memory}
 \label{sec:GPU_memory}
-Thread blocks run independent of other thread blocks.
+Thread blocks are executed independent of other thread blocks.
 The GPU does not guarantee Block $0$ will execute before Block $2$.
-Threads in blocks can coordinate and use shared memory but blocks do not coordinate with other blocks.
+Threads in individual blocks can coordinate and use shared memory but blocks do not coordinate with other blocks.
 Threads have access to private local memory that is fast and efficient.
-Each thread in a thread block has access to private shared memory in the thread block.
+Each thread in a thread block has access to shared memory the is private to the thread block.
 All threads have access to global memory.
 
 Local memory is the fastest and global memory is by far the slowest.
-One global memory access takes 400-800 clock cycles while a local memory is a few clock cycles.
-Why not just do all computations in local memory?
-The memory needs come from global memory to before it can be used in local memory.
-Memory should be saved in shared memory if many threads are going to use it in a thread block.
-Local and shared memory should be used as much as possible but sometimes a GPU kernel cant utilized local and shared memory because elements might only be used once.
+One global memory access takes 400-800 clock cycles while a local memory in the form of registers, L1 and shared memory is a few clock cycles.
+Figure \ref{fig:MemoryPyramid} helps visualize the trade offs of memory and 
+Figure \ref{fig:fullGPUmemBlockDiagram} shows where each type of memory is located.
+\begin{figure}
+	\caption{Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}
+	\centering\includegraphics[width=8.36in/100*55]{figures/gpu_intro/MemoryPyramid.pdf}
+	\label{fig:MemoryPyramid}
+\end{figure}
 \begin{figure}
 	\caption{A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}
 	\centering\includegraphics[width=9.83in/100*55]{figures/gpu_intro/fullGPUmemBlockDiagram.pdf}
 	\label{fig:fullGPUmemBlockDiagram}
 \end{figure}
 
+Why not just use local memory for all computation storage?
+Elements need to come from global memory to before they can be used in local memory.
+If many threads access the same elements in global memory, clock cycles can be saved by copying the elements from global to shared memory.
+Local and shared memory should be used as much as possible but sometimes a GPU kernel cant utilized local and shared memory because elements might only be used once.
+
+
 Why is global memory so slow?
-Looking at the physical hardware will shed some light.
-This thesis uses NVIDIA Tesla K40c and K20c GPUs, Table \ref{tab:gpu-resources_jeffs} gives some specifications and Figure \ref{fig:GPUpicture} shows the form factor of the these GPUs.
-The red box in Figure \ref{fig:GPUarch} show the GPU chip and the yellow boxes show the SRAM that is \textit{off} the GPU chip.
-The GPU global memory is located in the SRAM.
+Looking at the physical hardware is instructive.
+This thesis uses NVIDIA Tesla K40c and K20c GPUs, Table \ref{tab:gpu-resources_jeffs} lists some specifications and Figure \ref{fig:GPUpicture} shows the form factor of the these GPUs.
+The red box in Figure \ref{fig:GPUarch} shows the GPU chip and the yellow boxes show the SRAM that is \textit{off} the GPU chip.
+
+The global memory is located in the SRAM.
 To move memory to thread blocks \textit{on} the GPU chip from global memory requires fetching memory from \textit{off} the GPU.
-Now 400-800 clock cycles doesn't sound all the bad huh?
+Considering that global memory is off chip, 400-800 clock cycles doesn't sound all that bad.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/k40c_k20c.jpg}
 	\caption{NVIDIA Tesla K40c and K20c.}
@@ -238,73 +247,120 @@ Now 400-800 clock cycles doesn't sound all the bad huh?
 \label{tab:gpu-resources_jeffs}
 \end{table}
 
-\section{Cuda Libraries}
-CUDA isn't just a programming language, it also has many GPU optimized libraries that are extremely useful.
-CUDA libraries are written by NVIDIA engineers that know how to squeeze out every drop of performance out of NVIDIA GPUs.
-Because ninjas are unbeatable, NVIDIA engineers are known as ninjas in the Telemetry Group at BYU.
-While figuring out how to optimize a GPU kernel is extremely satisfying, GPU programmers should always search the CUDA library documentation for any thing that might be useful.
-
-Some libraries used in this Thesis are
-\begin{itemize}
-  \item cufft
-  \item cublas
-  \item cusolver
-  \item cusolverSp
-\end{itemize}
-
 \section{Thread Optimization}
 When writing a custom GPU kernel, it is tempting to launch as many threads per block as possible.
 Launching 256 threads per block doesn't sound as fast at launching 1024 threads per block, right?
-Wrong. Running the GPU at low occupancy provides each thread with more resources in the block.
+Wrong. Running the GPU at low occupancy provides each thread with more resources in the each block.
 Running the GPU at high occupancy provides each thread with less resources.
 
 Launching 1024 threads per block isnt always bad though.
-1024 might be the optimal number of threads per block for a given GPU kernel.
+1024 might be the optimal number of threads per block.
 If a GPU kernel was very computationally heavy but didn't require much memory resources, 1024 threads might be a good amount of threads per block.
 
 Improving memory accesses should always be the first optimization when a GPU kernel needs to be faster.
 The next step is to find the optimal number of threads per block to launch.
 Knowing the perfect number of threads per block to launch is challenging to calculate.
 Luckily, there is a finite number of possible threads per block, $1$ to $1024$.
-A simple test program could time a GPU kernel while sweeping the number of threads per block from $1$ to $1024$.
+Listing \ref{code:threadTiming} shows a simple test program that times GPU kernel execution time while sweeping the number of possible threads per block.
 The number of threads per block with the fastest computation time is the optimal number of threads per block for that specific GPU kernel.
+
+\singlespacing
+\clearpage
+\begin{lstlisting}[style=myCUDAstyle,caption={Code snippet for thread optimization.},label={code:threadTiming}]
+float milliseconds_opt = pow(2,10); // initiaize to "big" number
+int numTreadsPerBlock_opt;
+int minNumTotalThreads = pow(2,20); // set to minimum number of required threads
+for(int numTreadsPerBlock = 1; numTreadsPerBlock<=1024; numTreadsPerBlock++){
+	int numBlocks = minNumTotalThreads/numTreadsPerBlock;
+	if(minNumTotalThreads % numTreadsPerBlock > 0)
+		numBlocks++;
+	cudaEvent_t start, stop;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
+	cudaEventRecord(start);
+	
+	GPUkernel<<<numBlocks, numTreadsPerBlock>>>(dev_vec0, dev_vec1);
+	
+	cudaEventRecord(stop);
+	cudaEventSynchronize(stop);
+	float milliseconds = 0;
+	cudaEventElapsedTime(&milliseconds, start, stop);
+	cudaEventDestroy(start);
+	cudaEventDestroy(stop);
+	if(milliseconds<milliseconds_opt){
+		milliseconds_opt = milliseconds;
+		numTreadsPerBlock_opt = numTreadsPerBlock;
+	}
+}
+cout << "Optimal Threads Per Block " << numTreadsPerBlock_opt << endl
+cout << "Optimal Execution Time    " << milliseconds_opt      << endl;
+\end{lstlisting}
+\doublespacing
 
 Most of the time the optimal number of threads per block is a multiple of $32$. 
 At the lowest level of architecture, GPUs do computations in \textit{warps}.
 Warps are groups of $32$ threads that do every computation together in lock step.
 If the number of threads per block is a non multiple of $32$, some threads in a warp will be idle and the GPU will have unused resources.
 
-Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of ConvGPUshared while varying threads per block.
-Although the minimum execution time is $0.1078$ms at the optimal $96$ threads per block, incorrect output will result if ConvGPUshared is launched with less than $186$ threads per block.
-Launching $96$ threads per block only transfer $96$ filter coefficients to shared memory from global memory.
-Luckily, launching $192$ threads per block is near optimal with an execution time of $0.1101$ms.
-By simply adjusting the number of threads per block, ConvGPUshared can have a $2\times$ speed up.
+
+Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of an example GPU kernel
+The optimal execution time is $0.1078$ms at the optimal $96$ threads per block.
+By simply adjusting the number of threads per block, this example kernel can have a $2\times$ speed up.
 
 Adjusting the number of threads per block doesn't always drastically speed up GPU kernels.
-Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time for ConvGPU with varying threads per block.
-Launching $560$ does produce about a $1.12$x speed up, but thread optimization doesn't have as much of an affect of ConvGPU verse ConvGPUshared.
+Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time for another GPU kernel with varying threads per block.
+Launching $560$ does produce about a $1.12\times$ speed up.
 \begin{figure}
-	\caption{The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}
+	\caption{Plot showing how execution time is affected by changing the number of threads per block.
+	The optimal execution time for an example GPU kernel is $0.1078$ms at the optimal $96$ threads per block.}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_shared_12672_186taps.eps}
 	\label{fig:ConvGPU_shared_12672_186taps}
 \end{figure}
 \begin{figure}
-	\caption{ConvGPU thread optimization 128 threads per block 0.006811.}
+	\caption{Plot showing the number of threads per block doesn't always drastically affect execution time.}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_global_12672_186taps.eps}
 	\label{fig:ConvGPU_global_12672_186taps}
 \end{figure}
+%Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of ConvGPUshared from Listing \ref{code:convFun} while varying threads per block.
+%Although the minimum execution time is $0.1078$ms at the optimal $96$ threads per block, but ConvGPUshared must be lauched with atleast $186$ threads per block because of the way the kernel uses shared memory.
+%Luckily, launching $192$ threads per block is near optimal with an execution time of $0.1101$ms.
+%By simply adjusting the number of threads per block, ConvGPUshared can have a $2\times$ speed up.
+%
+%Adjusting the number of threads per block doesn't always drastically speed up GPU kernels.
+%Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time for ConvGPU with varying threads per block.
+%Launching $560$ does produce about a $1.12$x speed up, but thread optimization doesn't have as much of an affect of ConvGPU verse ConvGPUshared.
+%\begin{figure}
+%	\caption{The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}
+%	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_shared_12672_186taps.eps}
+%	\label{fig:ConvGPU_shared_12672_186taps}
+%\end{figure}
+%\begin{figure}
+%	\caption{ConvGPU thread optimization 128 threads per block 0.006811.}
+%	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_global_12672_186taps.eps}
+%	\label{fig:ConvGPU_global_12672_186taps}
+%\end{figure}
+%To answer the question: ``There are $X$ number of ways to implement this algorithm, which one is executes the fastest?'' the answer always is ``It depends. Implement the algorithm $X$ ways and see which is fastest.''
 
-To answer the question: ``There are $X$ number of ways to implement this algorithm, which one is executes the fastest?'' the answer always is ``It depends. Implement the algorithm $X$ ways and see which is fastest.''
+%\section{Cuda Libraries}
+While writing a custom GPU kernel then figuring out how to optimize it is extremely satisfying,
+CUDA has super optimized GPU libraries that are extremely useful and efficient.
+The CUDA libraries are written by NVIDIA engineers that know how to squeeze out every drop of performance out of NVIDIA GPUs.
+Some libraries used in this thesis are cuFFT, cuBLAS and cuSolverSp.
 
 \section{CPU GPU Pipelining}
-Typically a programmer acquires data, crunches the data then he is done.
-But what if you could crunch data while acquiring data? 
-How much computation time could you gain by pipelining acquiring data and processing data?
+A basic program flow is shown in Listing \ref{code:noPipe}.
+The CPU acquires data from myADC on Line 5.
+After taking time to acquire data, the data is copied to the CPU, the data is processed in the GPU then result is copied back to the CPU on Lines $8$ to $10$.
+cudaDeviceSynchronize on line $13$ causes the CPU to wait until all instructions on the GPU are.
+Acquiring and copying data takes precious processing time.
+What if the GPU could be processing data while the CPU acquires and copied data?
+How much computation time could be gained by pipelining acquiring data and processing data?
+How much would the throughput increase?
 
 Listing \ref{code:noPipe} shows example code of a straight forward structure of a typical implementation.
-The CPU acquires data from myADC on Line 5.
-After taking time to acquire data, the CPU launches GPU instructions on lines 8-10.
-cudaDeviceSynchronize on line 13 blocks the CPU until all instructions are done on the GPU.
+
+the CPU launches GPU instructions on lines 8-10.
+
 
 Figure \ref{fig:concurrentCPU_nonBlocking} shows a block diagram of what is happening on the CPU and GPU in Listing \ref{code:noPipe}.
 The GPU is idle while the CPU is acquiring data.
@@ -319,6 +375,19 @@ The CPU is idle while the GPU is processing and data is being transferred to and
 \begin{lstlisting}[style=myCUDAstyle,caption={Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:noPipe}]
 int main()
 {
+	...
+	// CPU Acuire Data
+	myADC.acquire(vec);
+	
+	// Launch instructions on GPU 
+	cudaMemcpy(dev_vec0, vec,      numBytes, cudaMemcpyHostToDevice);
+	GPUkernel<<<1, N>>>(dev_vec0);
+	cudaMemcpy(vec,      dev_vec0, numBytes, cudaMemcpyDeviceToHost);
+	
+	// Synchronize CPU with GPU
+	cudaDeviceSynchronize();
+	...
+	
 	...
 	// CPU Acuire Data
 	myADC.acquire(vec);

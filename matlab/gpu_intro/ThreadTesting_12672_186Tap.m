@@ -4115,7 +4115,7 @@ figure(1); clf
 plot(0:1024,[10; ConvGPU(:,2)]); grid on; axis tight
 A = max(ConvGPU(400:end,2));
 M = min(ConvGPU(1:end,2));
-% [time Idx] = min(ConvGPU(1:end,2));
+[time Idx] = min(ConvGPU(1:end,2));
 fprintf('Fastest time for ConvGPU is %f with %d threads\n',time,Idx)
 marge = axis;
 axis([marge(1:2) M*0.9 A*1.1])
@@ -4136,7 +4136,7 @@ ff.Units = homer;
 drawnow
 print(ff, '-depsc', ['ConvGPU_global_12672_186taps']) %save as eps a 
 
-return
+% return
 
 
 
