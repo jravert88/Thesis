@@ -62,7 +62,7 @@ c_\text{ZF}(-L_1) \\ \vdots \\ c_\text{ZF}(0) \\ \vdots \\ c_\text{ZF}(L_2)
 		\end{matrix*},
 		\label{eq:un0_ZF}
 \end{equation}
-and
+where $n_0 = N_1+L_1+1$ and
 \begin{equation} 
 \mathbf{H} = 
 		\begin{bmatrix}
@@ -116,7 +116,7 @@ Note that the auto-correlation matrix $\mathbf{R}_{\hat{h}}$ is comprised of
 \begin{bmatrix} r_{\hat{h}}(0) \\ \vdots \\ r_{\hat{h}}(L_{ch}) \\ 0 \\ \vdots \\ 0  \end{bmatrix}.
 \end{equation} 
 Using $\mathbf{r}_{\hat{h}}$ eliminates the need for matrix matrix multiply of $\mathbf{H}^\dagger\mathbf{H}$.
-Also, $r_{\hat{h}}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{\hat{h}}$ sparse or $\%63$ zeros.
+Also, $r_{\hat{h}}(k)$ only has support on $-(L_{ch}-1) \leq k \leq L_{ch}-1$ making $\mathbf{R}_{\hat{h}}$ sparse or $\%63$ zeros. NEEDS CHECKING!!!!
 The sparseness of $\mathbf{R}_{\hat{h}}$ can be leveraged to reduce computation drastically.
 
 \subsection{MMSE Equalizer}
@@ -270,9 +270,9 @@ Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rh
 \end{equation}
 The values of interest are shown in Figure \ref{fig:convolutionFigureRice}.
 \begin{figure}
-	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
 	\centering\includegraphics[width=10in/100*55]{figures/eq_equations/convolutionFigureRice.pdf}
 	\label{fig:convolutionFigureRice}
+	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
 \end{figure}
 
 This suggest the following matlab code for computing computing the gradient vector $\nabla J$ and implementing CMA.
@@ -338,7 +338,7 @@ k=0,1,\cdots,L-1
 where $\Psi(e^{j\omega_k})$ is show in Figure \ref{fig:SOQPSK_spectrum}.
 The term $\Psi(e^{j\omega_k})$ eliminates out of band multipath that may be challenging to estimate and over come.
 \begin{figure}
-	\caption{I need help on this one!!!! }
 	\centering\includegraphics[width=5in]{figures/eq_equations/FDE2_spectrum_PSI.eps}
 	\label{fig:SOQPSK_spectrum}
+	\caption{I need help on this one!!!! }
 \end{figure}

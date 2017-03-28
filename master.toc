@@ -3,33 +3,32 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {chapter}{\numberline {2}Problem Statement}{3}{chapter.2}
 \contentsline {chapter}{\numberline {3}System Overview}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}Batched Convolution}{6}{section.3.1}
-\contentsline {chapter}{\numberline {4}Estimators}{9}{chapter.4}
-\contentsline {section}{\numberline {4.1}Preamble Detection}{10}{section.4.1}
-\contentsline {section}{\numberline {4.2}Frequency Offset Compensation}{12}{section.4.2}
-\contentsline {section}{\numberline {4.3}Channel Estimation}{12}{section.4.3}
-\contentsline {section}{\numberline {4.4}Noise Variance Estimation}{12}{section.4.4}
-\contentsline {section}{\numberline {4.5}Symbol-by-Symbol Detector}{13}{section.4.5}
-\contentsline {chapter}{\numberline {5}Signal Processing with GPUs}{15}{chapter.5}
-\contentsline {section}{\numberline {5.1}Simple GPU code example}{15}{section.5.1}
-\contentsline {section}{\numberline {5.2}GPU kernel using threads and thread blocks}{18}{section.5.2}
-\contentsline {section}{\numberline {5.3}GPU Execution and Memory}{19}{section.5.3}
-\contentsline {section}{\numberline {5.4}Thread Optimization}{22}{section.5.4}
-\contentsline {section}{\numberline {5.5}CPU GPU Pipelining}{25}{section.5.5}
-\contentsline {chapter}{\numberline {6}GPU Convolution}{31}{chapter.6}
-\contentsline {section}{\numberline {6.1}CPU and GPU Single Batch Convolution}{33}{section.6.1}
-\contentsline {section}{\numberline {6.2}Batched Convolution}{40}{section.6.2}
-\contentsline {chapter}{\numberline {7}Equalizer Equations}{59}{chapter.7}
-\contentsline {section}{\numberline {7.1}Zero-Forcing and Minimum Mean Square Error Equalizers}{59}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Zero-Forcing}{60}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}MMSE Equalizer}{62}{subsection.7.1.2}
-\contentsline {section}{\numberline {7.2}The Constant Modulus Algorithm}{64}{section.7.2}
-\contentsline {section}{\numberline {7.3}The Frequency Domain Equalizers}{68}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}Frequency Domain Equalizer One}{68}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {7.3.2}Frequency Domain Equalizer Two}{68}{subsection.7.3.2}
-\contentsline {chapter}{\numberline {8}Equalizer GPU Implementation}{71}{chapter.8}
-\contentsline {section}{\numberline {8.1}Zero-Forcing and MMSE GPU Implementation}{71}{section.8.1}
-\contentsline {section}{\numberline {8.2}Constant Modulus Algorithm GPU Implementation}{75}{section.8.2}
-\contentsline {section}{\numberline {8.3}Frequency Domain Equalizer One and Two GPU Implementation}{77}{section.8.3}
-\contentsline {chapter}{\numberline {9}Final Summary}{79}{chapter.9}
-\contentsline {chapter}{Bibliography}{80}{section*.7}
+\contentsline {chapter}{\numberline {4}Estimators}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Preamble Detection}{14}{section.4.1}
+\contentsline {section}{\numberline {4.2}Frequency Offset Compensation}{16}{section.4.2}
+\contentsline {section}{\numberline {4.3}Channel Estimation}{16}{section.4.3}
+\contentsline {section}{\numberline {4.4}Noise Variance Estimation}{16}{section.4.4}
+\contentsline {section}{\numberline {4.5}Symbol-by-Symbol Detector}{17}{section.4.5}
+\contentsline {chapter}{\numberline {5}Signal Processing with GPUs}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}Simple GPU code example}{19}{section.5.1}
+\contentsline {section}{\numberline {5.2}GPU kernel using threads and thread blocks}{22}{section.5.2}
+\contentsline {section}{\numberline {5.3}GPU Execution and Memory}{23}{section.5.3}
+\contentsline {section}{\numberline {5.4}Thread Optimization}{26}{section.5.4}
+\contentsline {section}{\numberline {5.5}CPU GPU Pipelining}{29}{section.5.5}
+\contentsline {chapter}{\numberline {6}GPU Convolution}{35}{chapter.6}
+\contentsline {section}{\numberline {6.1}CPU and GPU Single Batch Convolution}{37}{section.6.1}
+\contentsline {section}{\numberline {6.2}Batched Convolution}{44}{section.6.2}
+\contentsline {chapter}{\numberline {7}Equalizer Equations}{63}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zero-Forcing and Minimum Mean Square Error Equalizers}{63}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Zero-Forcing}{64}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}MMSE Equalizer}{67}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}The Constant Modulus Algorithm}{68}{section.7.2}
+\contentsline {section}{\numberline {7.3}The Frequency Domain Equalizers}{73}{section.7.3}
+\contentsline {subsection}{\numberline {7.3.1}Frequency Domain Equalizer One}{73}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {7.3.2}Frequency Domain Equalizer Two}{73}{subsection.7.3.2}
+\contentsline {chapter}{\numberline {8}Equalizer GPU Implementation}{75}{chapter.8}
+\contentsline {section}{\numberline {8.1}Zero-Forcing and MMSE GPU Implementation}{75}{section.8.1}
+\contentsline {section}{\numberline {8.2}Constant Modulus Algorithm GPU Implementation}{79}{section.8.2}
+\contentsline {section}{\numberline {8.3}Frequency Domain Equalizer One and Two GPU Implementation}{81}{section.8.3}
+\contentsline {chapter}{\numberline {9}Final Summary}{83}{chapter.9}
+\contentsline {chapter}{Bibliography}{84}{section*.7}

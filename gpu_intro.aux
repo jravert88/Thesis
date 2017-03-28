@@ -2,56 +2,56 @@
 \providecommand\hyper@newdestlabel[2]{}
 \citation{CUDA_toolkit_doc}
 \citation{wikipedia-gpu:2015}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Signal Processing with GPUs}{15}{chapter.5}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Signal Processing with GPUs}{19}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:gpu}{{5}{15}{Signal Processing with GPUs}{chapter.5}{}}
-\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{15}{5}{chapter.5}}}
-\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{15}{5}{chapter.5}}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Simple GPU code example}{15}{section.5.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{16}{figure.5.1}}
-\newlabel{fig:CPUaddBlockDiagram}{{5.1}{16}{Simple GPU code example}{figure.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{16}{figure.5.2}}
-\newlabel{fig:GPUaddBlockDiagram}{{5.2}{16}{Simple GPU code example}{figure.5.2}{}}
-\newlabel{code:GPUvsCPU}{{5.1}{17}{Comparison of CPU verse GPU code}{lstlisting.5.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.1}Comparison of CPU verse GPU code.}{17}{lstlisting.5.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}GPU kernel using threads and thread blocks}{18}{section.5.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{19}{figure.5.3}}
-\newlabel{fig:threadsBlocks32}{{5.3}{19}{GPU kernel using threads and thread blocks}{figure.5.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{19}{figure.5.4}}
-\newlabel{fig:threadsBlocks36}{{5.4}{19}{GPU kernel using threads and thread blocks}{figure.5.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}GPU Execution and Memory}{19}{section.5.3}}
-\newlabel{sec:GPU_memory}{{5.3}{19}{GPU Execution and Memory}{section.5.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{20}{figure.5.5}}
-\newlabel{fig:MemoryPyramid}{{5.5}{20}{GPU Execution and Memory}{figure.5.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{20}{figure.5.6}}
-\newlabel{fig:fullGPUmemBlockDiagram}{{5.6}{20}{GPU Execution and Memory}{figure.5.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{21}{figure.5.7}}
-\newlabel{fig:GPUpicture}{{5.7}{21}{GPU Execution and Memory}{figure.5.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{22}{figure.5.8}}
-\newlabel{fig:GPUarch}{{5.8}{22}{GPU Execution and Memory}{figure.5.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{22}{table.5.1}}
-\newlabel{tab:gpu-resources_jeffs}{{5.1}{22}{GPU Execution and Memory}{table.5.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Thread Optimization}{22}{section.5.4}}
-\newlabel{code:threadTiming}{{5.2}{24}{Code snippet for thread optimization}{lstlisting.5.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.2}Code snippet for thread optimization.}{24}{lstlisting.5.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ms at the optimal $96$ threads per block.}}{25}{figure.5.9}}
-\newlabel{fig:ConvGPU_shared_12672_186taps}{{5.9}{25}{Thread Optimization}{figure.5.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}CPU GPU Pipelining}{25}{section.5.5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{26}{figure.5.10}}
-\newlabel{fig:ConvGPU_global_12672_186taps}{{5.10}{26}{Thread Optimization}{figure.5.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref  {code:noPipe}.}}{26}{figure.5.11}}
-\newlabel{fig:concurrentCPU_nonBlocking}{{5.11}{26}{CPU GPU Pipelining}{figure.5.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref  {code:pipe}.}}{27}{figure.5.12}}
-\newlabel{fig:concurrentCPU_blocking}{{5.12}{27}{CPU GPU Pipelining}{figure.5.12}{}}
-\newlabel{code:noPipe}{{5.3}{27}{Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.5.3}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.3}Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{27}{lstlisting.5.3}}
-\newlabel{code:pipe}{{5.4}{28}{Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.5.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.4}Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{28}{lstlisting.5.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{29}{figure.5.13}}
-\newlabel{fig:concurrentCPU_nonBlocking_multiGPU}{{5.13}{29}{CPU GPU Pipelining}{figure.5.13}{}}
+\newlabel{chap:gpu}{{5}{19}{Signal Processing with GPUs}{chapter.5}{}}
+\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{19}{5}{chapter.5}}}
+\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{19}{5}{chapter.5}}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Simple GPU code example}{19}{section.5.1}}
+\newlabel{fig:CPUaddBlockDiagram}{{5.1}{20}{Simple GPU code example}{equation.5.1.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{20}{figure.5.1}}
+\newlabel{fig:GPUaddBlockDiagram}{{5.1}{20}{Simple GPU code example}{figure.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{20}{figure.5.2}}
+\newlabel{code:GPUvsCPU}{{5.1}{21}{Comparison of CPU verse GPU code}{lstlisting.5.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.1}Comparison of CPU verse GPU code.}{21}{lstlisting.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}GPU kernel using threads and thread blocks}{22}{section.5.2}}
+\newlabel{fig:threadsBlocks32}{{5.2}{23}{GPU kernel using threads and thread blocks}{section.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{23}{figure.5.3}}
+\newlabel{fig:threadsBlocks36}{{5.2}{23}{GPU kernel using threads and thread blocks}{figure.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{23}{figure.5.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}GPU Execution and Memory}{23}{section.5.3}}
+\newlabel{sec:GPU_memory}{{5.3}{23}{GPU Execution and Memory}{section.5.3}{}}
+\newlabel{fig:MemoryPyramid}{{5.3}{24}{GPU Execution and Memory}{section.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{24}{figure.5.5}}
+\newlabel{fig:fullGPUmemBlockDiagram}{{5.3}{24}{GPU Execution and Memory}{figure.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{24}{figure.5.6}}
+\newlabel{fig:GPUpicture}{{5.3}{25}{GPU Execution and Memory}{figure.5.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{25}{figure.5.7}}
+\newlabel{fig:GPUarch}{{5.3}{26}{GPU Execution and Memory}{figure.5.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{26}{figure.5.8}}
+\newlabel{tab:gpu-resources_jeffs}{{5.3}{26}{GPU Execution and Memory}{figure.5.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{26}{table.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Thread Optimization}{26}{section.5.4}}
+\newlabel{code:threadTiming}{{5.2}{28}{Code snippet for thread optimization}{lstlisting.5.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.2}Code snippet for thread optimization.}{28}{lstlisting.5.2}}
+\newlabel{fig:ConvGPU_shared_12672_186taps}{{5.4}{29}{Thread Optimization}{lstnumber.5.2.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ms at the optimal $96$ threads per block.}}{29}{figure.5.9}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}CPU GPU Pipelining}{29}{section.5.5}}
+\newlabel{fig:ConvGPU_global_12672_186taps}{{5.4}{30}{Thread Optimization}{figure.5.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{30}{figure.5.10}}
+\newlabel{fig:concurrentCPU_nonBlocking}{{5.5}{30}{CPU GPU Pipelining}{section.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref  {code:noPipe}.}}{30}{figure.5.11}}
+\newlabel{fig:concurrentCPU_blocking}{{5.5}{31}{CPU GPU Pipelining}{lstnumber.5.3.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref  {code:pipe}.}}{31}{figure.5.12}}
+\newlabel{code:noPipe}{{5.3}{31}{Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.5.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.3}Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{31}{lstlisting.5.3}}
+\newlabel{code:pipe}{{5.4}{32}{Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.5.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.4}Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{32}{lstlisting.5.4}}
+\newlabel{fig:concurrentCPU_nonBlocking_multiGPU}{{5.5}{33}{CPU GPU Pipelining}{lstnumber.5.4.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{33}{figure.5.13}}
 \@setckpt{gpu_intro}{
-\setcounter{page}{30}
+\setcounter{page}{34}
 \setcounter{equation}{1}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -69,7 +69,7 @@
 \setcounter{figure}{13}
 \setcounter{table}{1}
 \setcounter{parentequation}{0}
-\setcounter{r@tfl@t}{0}
+\setcounter{r@tfl@t}{1}
 \setcounter{cp@cnt}{0}
 \setcounter{cp@tempcnt}{0}
 \setcounter{lstnumber}{31}
@@ -79,7 +79,7 @@
 \setcounter{lotdepth}{1}
 \setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{21}
+\setcounter{bookmark@seq@number}{20}
 \setcounter{lstlisting}{4}
 \setcounter{section@level}{1}
 }

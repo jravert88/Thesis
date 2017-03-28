@@ -17,9 +17,9 @@ A preamble detector is employed to estimate the starting index of each preamble 
 Figure \ref{fig:estimatorBlock} shows a block diagram of the estimators in the PAQ project.
 The estimators will be briefly explained in Sections \ref{sec:pd} to \ref{sec:noise_variance_estimation}
 \begin{figure}
-	\caption{A block diagram of the estimation process.}
 	\centering\includegraphics[width=10.33in/100*55]{figures/systemOverview/estimatorBlock.pdf}
 	\label{fig:estimatorBlock}
+	\caption{A block diagram of the estimation process.}
 \end{figure}
 
 The data-aided equalizers are then computed and the received samples are equalized.
@@ -28,9 +28,9 @@ Figure \ref{fig:ProcessingBlock} shows a block diagram of how the equalizers are
 The detection filter and OQPSK detector are explained in Section \ref{sec:oqpsk_detector} but the blocks in the dotted box.
 Chapter \ref{chap:eq_eq} will explain the equations for the equalizers and the application of the equalizers and detection filter.
 \begin{figure}
-	\caption{A block diagram of the equalization and symbol detector process.}
 	\centering\includegraphics[width=9.35in/100*55]{figures/systemOverview/ProcessingBlock.pdf}
 	\label{fig:ProcessingBlock}
+	\caption{A block diagram of the equalization and symbol detector process.}
 \end{figure}
 
 \section{Preamble Detection}
@@ -169,9 +169,9 @@ The detection filter is a ``numerically optimized'' SOQPSK detection filter $H_\
 The symbol by symbol detector block in Figure \ref{fig:ProcessingBlock} is a Offset Quadrature Phase Shift Keying (OQPSK) detector.
 Using the simple OQPSK detector in place of a complex MLSE SOQPSK-TG detector leads to less than $1$dB in bit error rate \cite{perrins:2013}.
 \begin{figure}
-	\caption{Offset Quadriture Phase Shift Keying symbol by symbol detector.}
 	\centering\includegraphics[width=6in]{figures/systemOverview/OQPSK.pdf}
 	\label{fig:OQPSK}
+	\caption{Offset Quadriture Phase Shift Keying symbol by symbol detector.}
 \end{figure}
 
 A Phase Lock Loop (PLL) is needed in the OQPSK detector to track out residual frequency offset.

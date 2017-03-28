@@ -1,5 +1,5 @@
 \chapter{Equalizer GPU Implementation}
-Each equalizer presents an intresting challenge from a GPU implementation perspective.
+Each equalizer presents an interesting challenge from a GPU implementation perspective.
 This is why in Chapter \ref{chap:eq_eq} the equalizer equations where massaged and conditioned.
 This chapter will explain how the equalizers were computed and applied in batch processing.
 
@@ -10,16 +10,16 @@ If a block diagram shows how to compute one equalizer coefficients vector, assum
 
 Convolution is used many times in this chapter.
 Frequency domain convolution has many little steps that make a block diagram look busy.
-Figures \ref{fig:Conv2} and \ref{fig:Conv3} show how frequency domain convolution will be represented as one block from in this chapter.
+Figures \ref{fig:Conv2} and \ref{fig:Conv3} show how frequency domain convolution will be represented as one block in this chapter.
 \begin{figure}
-	\caption{Convolution of vectors $\mathbf{c}$ and $\mathbf{r}$ block diagram simplified to one block marked Conv.}
 	\centering\includegraphics[width=9.27in/100*55]{figures/gpu_convolution/Conv2.pdf}
 	\label{fig:Conv2}
+	\caption{Convolution of vectors $\mathbf{c}$ and $\mathbf{r}$ block diagram simplified to one block marked Conv.}
 \end{figure}
 \begin{figure}
-	\caption{Convolution of vectors $\mathbf{c}$, $\mathbf{r}$ and $\mathbf{H}_{\text{NO}}$ block diagram simplified to one block marked Conv.}
 	\centering\includegraphics[width=9.27in/100*55]{figures/gpu_convolution/Conv3.pdf}
 	\label{fig:Conv3}
+	\caption{Convolution of vectors $\mathbf{c}$, $\mathbf{r}$ and $\mathbf{H}_{\text{NO}}$ block diagram simplified to one block marked Conv.}
 \end{figure}
 
 
@@ -65,15 +65,15 @@ An example of how to use the CUDA cusolverSp library can be found \cite{CUDA_too
 
 Figure \ref{fig:blockZF} shows how the Zero-Forcing equalizer coefficients are implemented in the GPU.
 \begin{figure}
-	\caption{Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}
 	\centering\includegraphics[width=7.5in/100*55]{figures/eq_GPUimplementation/blockZF.pdf}
 	\label{fig:blockZF}
+	\caption{Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}
 \end{figure}
 The MMSE equalizer coefficients are computed nearly identically to ZF accept when calculating $\mathbf{R}_{\hat{h}w\text{CRS}}$, $\hat{\sigma}^2_w$ is added to the main diagonal elements.
 \begin{figure}
-	\caption{Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}
 	\centering\includegraphics[width=7.98in/100*55]{figures/eq_GPUimplementation/blockMMSE.pdf}
 	\label{fig:blockMMSE}
+	\caption{Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}
 \end{figure}
 
 Using cusolverSpCcsrqrsvBatched wasn't the only implementation researched.
@@ -202,9 +202,9 @@ Once done iterating, apply the last $\mathbf{c}_\text{CMA($b+1$)}$ to the receiv
 In Section \ref{sec:CMA}, the direct application of CMA was massaged into convolution.
 Figure \ref{fig:blockCMA} shows a block diagram of how the CMA algorithm runs on the GPU.
 \begin{figure}
-	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
 	\centering\includegraphics[width=8.34in/100*55]{figures/eq_GPUimplementation/blockCMA.pdf}
 	\label{fig:blockCMA}
+	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
 \end{figure}
 
 The most computationally heavy part of CMA is computing $\nabla J(k)$.
@@ -270,14 +270,14 @@ at $\omega_k$.
 \end{table}
 Figures \ref{fig:blockFDE1} and \ref{fig:blockFDE2} show block diagrams of how FDE1 and FDE2 are implemented in the GPUs.
 \begin{figure}
-	\caption{Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}
 	\centering\includegraphics[width=9.73in/100*55]{figures/eq_GPUimplementation/blockFDE1.pdf}
 	\label{fig:blockFDE1}
+	\caption{Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}
 \end{figure}
 \begin{figure}
-	\caption{Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}
 	\centering\includegraphics[width=10.03in/100*55]{figures/eq_GPUimplementation/blockFDE2.pdf}
 	\label{fig:blockFDE2}
+	\caption{Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}
 \end{figure}
 
 

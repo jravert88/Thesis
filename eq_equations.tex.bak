@@ -22,7 +22,7 @@ As you might tell from the names, FDE1 and FDE2 are also very similar with one s
 CMA isn't related to any other algorithm aside from being initialized by MMSE.
 
 \section{Zero-Forcing and Minimum Mean Square Error Equalizers}
-
+\label{sec:ZFnMMSE}
 The ZF and MMSE equalizers are treated together here because they have many common features.
 Both equalizers are found by solving linear equations
 \begin{equation}
@@ -62,7 +62,7 @@ c_\text{ZF}(-L_1) \\ \vdots \\ c_\text{ZF}(0) \\ \vdots \\ c_\text{ZF}(L_2)
 		\end{matrix*},
 		\label{eq:un0_ZF}
 \end{equation}
-and
+where $n_0 = N_1+L_1+1$ and
 \begin{equation} 
 \mathbf{H} = 
 		\begin{bmatrix}
@@ -116,7 +116,7 @@ Note that the auto-correlation matrix $\mathbf{R}_{\hat{h}}$ is comprised of
 \begin{bmatrix} r_{\hat{h}}(0) \\ \vdots \\ r_{\hat{h}}(L_{ch}) \\ 0 \\ \vdots \\ 0  \end{bmatrix}.
 \end{equation} 
 Using $\mathbf{r}_{\hat{h}}$ eliminates the need for matrix matrix multiply of $\mathbf{H}^\dagger\mathbf{H}$.
-Also, $r_{\hat{h}}(k)$ only has support on $-L_{ch} \leq k \leq L_{ch}$ making $\mathbf{R}_{\hat{h}}$ sparse or $\%63$ zeros.
+Also, $r_{\hat{h}}(k)$ only has support on $-(L_{ch}-1) \leq k \leq L_{ch}-1$ making $\mathbf{R}_{\hat{h}}$ sparse or $\%63$ zeros. NEEDS CHECKING!!!!
 The sparseness of $\mathbf{R}_{\hat{h}}$ can be leveraged to reduce computation drastically.
 
 \subsection{MMSE Equalizer}
@@ -303,10 +303,12 @@ This suggest the following matlab code for computing computing the gradient vect
 
 \clearpage
 \section{The Frequency Domain Equalizers}
+\label{sec:FDE}
 Frequency Domain Equalizer One (FDE1) and Frequency Domain Equalizer Two (FDE2) are very similar and have the same structure.
-FDE1 is the MMSE applied in the frequency domain.
-FDE2 is the also MMSE applied in the frequency domain but extreme out of band channels are.
-FDE1 is adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (11)]{williams2013linear}
+FDE1 and FDE2 are adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (11) and (12)]{williams2013linear}.
+
+\subsection{Frequency Domain Equalizer One}
+FDE1 is the MMSE or Wiener filter applied in the frequency domain from Williams' and Saquib's paper \cite[eq. (11)]{williams2013linear}
 \begin{equation}
 C_\text{FDE1}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{1}{\hat{\sigma}^2_w}} \quad
 \text{where} \;
@@ -315,16 +317,16 @@ C_\text{FDE1}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{
 k=0,1,\cdots,L-1.
 \label{eq:FDE1}
 \end{equation}
-The term $C_\text{FDE1}(e^{j\omega_k})$ is the Frequency Domain Equalizer One frequency response at $\omega_k$.
+The term $C_\text{FDE1}(e^{j\omega_k})$ is FDE1s frequency response at $\omega_k$.
 The term $\hat{H}(e^{j\omega_k})$ is the channel estimate frequency response at $\omega_k$.
-The term $\hat{\sigma}^2$ is the estimated noise variance estimate, this term is completely independent of frequency because the noise is assumed to be white or spectrally flat.
+The term $\hat{\sigma}^2$ is the noise variance estimate, this term is completely independent of frequency because the noise is assumed to be spectrally flat or white.
 
 Equation \eqref{eq:FDE1} is straight forward to implement in GPUs.
 FDE1 is extremely fast and computationally efficient.
 
-Frequency Domain Equalizer Two (FDE2) is also the MMSE or Wiener filter applied in the frequency domain but knowledge of the SOQPSK-TG spectrum is leveraged.
-FDE1 is adapted from Williams' and Saquib's Frequency Domain Equalizers \cite[eq. (12)]{williams2013linear}
-The FDE2 equalizer is defined in Equation (12) as
+\subsection{Frequency Domain Equalizer Two}
+FDE2 is also the MMSE or Wiener filter applied in the frequency domain but knowledge of the SOQPSK-TG spectrum is leveraged \cite[eq. (12)]{williams2013linear}.
+The frequency respoonse of FDE2 is
 \begin{equation}
 C_\text{FDE2}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
 \text{where} \;
@@ -333,9 +335,8 @@ C_\text{FDE2}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{
 k=0,1,\cdots,L-1
 \label{eq:FDE2}
 \end{equation}
-FDE2 almost identical to FDE1.
-The only difference is the term $\Psi(e^{j\omega_k})$ in the denominator. 
-The term $\Psi(\omega)$ is the averaged SPQOSK-TG power spectrum shown in Figure \ref{fig:SOQPSK_spectrum}.
+where $\Psi(e^{j\omega_k})$ is show in Figure \ref{fig:SOQPSK_spectrum}.
+The term $\Psi(e^{j\omega_k})$ eliminates out of band multipath that may be challenging to estimate and over come.
 \begin{figure}
 	\caption{I need help on this one!!!! }
 	\centering\includegraphics[width=5in]{figures/eq_equations/FDE2_spectrum_PSI.eps}
