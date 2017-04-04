@@ -261,14 +261,11 @@
 % of the file should begin with \chapter{Chapter Title}, followed
 % by the text of the chapter.
 %  Note: the introduction is considered Chapter 1.
-\include{introduction}
-\include{problem_statment}
-\include{systemOverview}
-\include{Estimators}
-\include{gpu_intro}
-\include{GPUconvolution}
-\include{eq_equations}
-\include{eq_GPUimplementation}
+\include{intro-problemStatement}
+%\include{systemOverview}
+\include{equations}
+\include{signalProcessingInGPUs}
+\include{equalizer_implementation_performance}
 \include{final_summary}
 
 

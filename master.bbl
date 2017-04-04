@@ -18,6 +18,29 @@
 \fi
 #2}}
 
+\bibitem{rice-afran-saquib:2014}
+M.~Rice, M.~S. Afran, and M.~Saquib, ``Equalization in aeronautical telemetry
+  using multiple antennas,'' in \emph{Proceedings of the {IEEE} Military
+  Communications Conference}, Baltimore, MD, November 2014.
+
+\bibitem{rice-afran-saquib-cole-rhodes-moazzami:2014}
+M.~Rice, M.~S. Afran, M.~Saquib, A.~Cole-Rhodes, and F.~Moazzami, ``On the
+  performance of equalization techniques for aeronautical telemetry,'' in
+  \emph{Proceedings of the {IEEE} Military Communications Conference},
+  Baltimore, MD, November 2014.
+
+\bibitem{paq-phase1-report:2014}
+M.~Rice, ``Phase 1 report: Preamble assisted equalization for aeronautical
+  telemetry ({PAQ}),'' Brigham Young University, Tech. Rep., 2014, submitted to
+  the Spectrum Efficient Technologies (SET) Office of the Science \&
+  Technology, Test \& Evaluation (S\&T/T\&E) Program, Test Resource Management
+  Center (TRMC). Also available on-line at \url{
+  http://hdl.lib.byu.edu/1877/3242}.
+
+\bibitem{frerkingjpl}
+M.~A. Frerking and P.~M. Beauchamp, ``Jpl technology readiness level assessment
+  guideline.''
+
 \bibitem{preamble_detector}
 M.~Rice and A.~Mcmurdie, ``On frame synchronization in aeronautical
   telemetry,'' \emph{IEEE Transactions on Aerospace and Electronic Systems},
@@ -29,45 +52,10 @@ M.~Rice and E.~Perrins, ``On frequency offset estimation using the inet
   Conference (MILCOM), 2014 IEEE}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE,
   2014, pp. 706--711.
 
-\bibitem{rice-afran-saquib-cole-rhodes-moazzami:2014}
-M.~Rice, M.~S. Afran, M.~Saquib, A.~Cole-Rhodes, and F.~Moazzami, ``On the
-  performance of equalization techniques for aeronautical telemetry,'' in
-  \emph{Proceedings of the {IEEE} Military Communications Conference},
-  Baltimore, MD, November 2014.
-
 \bibitem{perrins:2013}
 E.~Perrins, ``{FEC} systems for aeronautical telemetry,'' \emph{{IEEE}
   Transactions on Aerospace and Electronic Systems}, vol.~49, no.~4, pp.
   2340--2352, October 2013.
-
-\bibitem{wikipedia-gpu:2015}
-\BIBentryALTinterwordspacing
-Wikipedia, ``Graphics processing unit,'' 2015. [Online]. Available:
-  \url{http://en.wikipedia.org/wiki/Graphics_processing_unit}
-\BIBentrySTDinterwordspacing
-
-\bibitem{CUDA_toolkit_doc}
-\BIBentryALTinterwordspacing
-NVIDIA, ``Cuda toolkit documentation,'' 2017. [Online]. Available:
-  \url{http://docs.nvidia.com/cuda/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{haidar2015optimization}
-A.~Haidar, T.~Dong, P.~Luszczek, S.~Tomov, and J.~Dongarra, ``Optimization for
-  performance and energy for batched matrix computations on gpus,'' in
-  \emph{Proceedings of the 8th Workshop on General Purpose Processing using
-  GPUs}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 2015, pp. 59--69.
-
-\bibitem{FFTW:2017}
-\BIBentryALTinterwordspacing
-Wikipedia, ``Fastest fourier transform in the west,'' 2017. [Online].
-  Available: \url{http://www.fftw.org/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{cooley1965algorithm}
-J.~W. Cooley and J.~W. Tukey, ``An algorithm for the machine calculation of
-  complex fourier series,'' \emph{Mathematics of computation}, vol.~19, no.~90,
-  pp. 297--301, 1965.
 
 \bibitem{PAQ-phase1}
 M.~Rice, ``Phase 1 report: Preamble assisted equalization for aeronautical
@@ -82,6 +70,35 @@ I.~E. Williams and M.~Saquib, ``Linear frequency domain equalization of
   {SOQPSK-TG} for wideband aeronautical telemetry channels,'' \emph{IEEE
   Transactions on Aerospace and Electronic Systems}, vol.~49, no.~1, pp.
   640--647, 2013.
+
+\bibitem{CUDA_toolkit_doc}
+\BIBentryALTinterwordspacing
+NVIDIA, ``Cuda toolkit documentation,'' 2017. [Online]. Available:
+  \url{http://docs.nvidia.com/cuda/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{wikipedia-gpu:2015}
+\BIBentryALTinterwordspacing
+Wikipedia, ``Graphics processing unit,'' 2015. [Online]. Available:
+  \url{http://en.wikipedia.org/wiki/Graphics_processing_unit}
+\BIBentrySTDinterwordspacing
+
+\bibitem{FFTW:2017}
+\BIBentryALTinterwordspacing
+------, ``Fastest fourier transform in the west,'' 2017. [Online]. Available:
+  \url{http://www.fftw.org/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{cooley1965algorithm}
+J.~W. Cooley and J.~W. Tukey, ``An algorithm for the machine calculation of
+  complex fourier series,'' \emph{Mathematics of computation}, vol.~19, no.~90,
+  pp. 297--301, 1965.
+
+\bibitem{haidar2015optimization}
+A.~Haidar, T.~Dong, P.~Luszczek, S.~Tomov, and J.~Dongarra, ``Optimization for
+  performance and energy for batched matrix computations on gpus,'' in
+  \emph{Proceedings of the 8th Workshop on General Purpose Processing using
+  GPUs}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 2015, pp. 59--69.
 
 \bibitem{wiki:Sparse_matrix}
 \BIBentryALTinterwordspacing
