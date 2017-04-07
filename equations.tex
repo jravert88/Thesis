@@ -170,13 +170,13 @@ Equation \eqref{eq:ML-s2-final3} is easily implemented into GPUs.
 \label{sec:oqpsk_detector}
 Symbol-by-symbol detection comprises a detection filter and a phase lock loop (PLL) to track out the residual frequency offset.
 Before the symbols are detected, the equalized samples are passed through the detection filter then down-sampled by $2$. 
-The detection filter is a ``numerically optimized'' SOQPSK detection filter $H_\text{NO}$ \cite[Fig. 3]{perrins:2013}.
+The detection filter is a $L_\text{df} = 21$ sample ``numerically optimized'' SOQPSK detection filter $H_\text{NO}$ \cite[Fig. 3]{perrins:2013}.
 The symbol-by-symbol detector block in Figure \ref{fig:thisThesisBlock} is a Offset Quaternary Phase Shift Keying (OQPSK) detector.
 Using the simple OQPSK detector in place of a complex MLSE SOQPSK-TG detector leads to less than $1$ dB loss in detection efficency \cite{perrins:2013}.
 \begin{figure}
 	\centering\includegraphics[width=9.11in/100*55]{figures/systemOverview/OQPSK.pdf}
-	\label{fig:OQPSK}
 	\caption{Offset Quadriture Phase Shift Keying symbol by symbol detector.}
+	\label{fig:OQPSK}
 \end{figure}
 
 A Phase Lock Loop (PLL) is needed in the OQPSK detector to track out residual frequency offset.
@@ -457,8 +457,8 @@ Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rh
 The values of interest are shown in Figure \ref{fig:convolutionFigureRice}.
 \begin{figure}
 	\centering\includegraphics[width=10in/100*55]{figures/eq_equations/convolutionFigureRice.pdf}
-	\label{fig:convolutionFigureRice}
 	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
+	\label{fig:convolutionFigureRice}
 \end{figure}
 
 This suggest the following matlab code for computing computing the gradient vector $\nabla J$ and implementing CMA.
@@ -525,6 +525,6 @@ where $\Psi(e^{j\omega_k})$ is the power spectral density of SOQPSK-TG shown in 
 The term $\Psi(e^{j\omega_k})$ eliminates out of band multipath that may be challenging to estimate and over come.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/eq_equations/FDE2_spectrum_PSI.eps}
+	\caption{SOQPSK-TG power spectral density.}
 	\label{fig:SOQPSK_spectrum}
-	\caption{I need help on this one!!!! }
 \end{figure}

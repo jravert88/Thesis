@@ -10,40 +10,41 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{13}{figure.2.1}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{22}{figure.2.2}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces I need help on this one!!!! }}{24}{figure.2.3}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces SOQPSK-TG power spectral density.}}{24}{figure.2.3}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{27}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{27}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{30}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{30}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{31}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{31}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{32}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{33}{figure.3.8}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ms at the optimal $96$ threads per block.}}{36}{figure.3.9}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{37}{figure.3.10}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref {code:noPipe}.}}{37}{figure.3.11}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{38}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{40}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a varied length tap complex filter.}}{42}{figure.3.14}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a varied length complex signal with a $186$ tap complex filter.}}{43}{figure.3.15}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a varied length complex signal with a $21$ tap complex filter.}}{44}{figure.3.16}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{45}{figure.3.17}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{46}{figure.3.18}
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{47}{figure.3.19}
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{48}{figure.3.20}
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Comparison on execution time per batch for complex convolution. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{50}{figure.3.21}
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{51}{figure.3.22}
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{52}{figure.3.23}
-\contentsline {figure}{\numberline {3.24}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{53}{figure.3.24}
-\contentsline {figure}{\numberline {3.25}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is varied and the signal length is set at $12672$ samples.}}{54}{figure.3.25}
-\contentsline {figure}{\numberline {3.26}{\ignorespaces Two ways to convolve the signal $\mathbf {r}$ with the $186$ tap filter $\mathbf {c}$ and $21$ tap filter $\mathbf {d}$.}}{56}{figure.3.26}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{26}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{27}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{27}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{30}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{30}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{31}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The GPU chip with registers, L1 cache and shared memory is shown in the dashed box. The L2 cache and global memory is shown off chip in the solid boxes.}}{31}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{32}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ ms at the optimal $96$ threads per block.}}{35}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{36}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref {code:noPipe}.}}{36}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{37}{figure.3.12}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{38}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Block diagrams showing showing time-domain convolution and frequency-domain convolution.}}{41}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $186$ tap complex filter.}}{43}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $21$ tap complex filter.}}{44}{figure.3.16}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a variable length tap complex filter.}}{45}{figure.3.17}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{46}{figure.3.18}
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}}{47}{figure.3.19}
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}}{48}{figure.3.20}
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}}{49}{figure.3.21}
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{50}{figure.3.22}
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Comparison on execution time per batch for complex convolution. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{51}{figure.3.23}
+\contentsline {figure}{\numberline {3.24}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $186$ taps.}}{52}{figure.3.24}
+\contentsline {figure}{\numberline {3.25}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $21$ taps.}}{53}{figure.3.25}
+\contentsline {figure}{\numberline {3.26}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is variable and the signal length is set to $12672$ samples.}}{54}{figure.3.26}
+\contentsline {figure}{\numberline {3.27}{\ignorespaces Block diagrams showing showing cascaded time-domain convolution and frequency-domain convolution.}}{55}{figure.3.27}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Convolution of vectors $\mathbf {c}$ and $\mathbf {r}$ block diagram simplified to one block marked Conv.}}{70}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Convolution of vectors $\mathbf {c}$, $\mathbf {r}$ and $\mathbf {H}_{\text {NO}}$ block diagram simplified to one block marked Conv.}}{70}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{72}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{72}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{74}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{76}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{76}{figure.4.7}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces To simplify block diagrams, frequency-domain convolution is shown as one block.}}{68}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces To simplify block diagrams, frequency-domain cascaded convolution is shown as one block.}}{68}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{71}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{71}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration.}}{73}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{75}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{75}{figure.4.7}
 \addvspace {10\p@ }

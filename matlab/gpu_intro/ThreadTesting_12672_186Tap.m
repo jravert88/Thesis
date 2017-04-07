@@ -4112,7 +4112,7 @@ latexHeight = 4;
 
 
 figure(1); clf
-plot(0:1024,[10; ConvGPU(:,2)]); grid on; axis tight
+plot(0:1024,[10; ConvGPU(:,2)],'k'); grid on; axis tight
 A = max(ConvGPU(400:end,2));
 M = min(ConvGPU(1:end,2));
 [time Idx] = min(ConvGPU(1:end,2));
@@ -4142,7 +4142,7 @@ print(ff, '-depsc', ['ConvGPU_global_12672_186taps']) %save as eps a
 
 
 figure(2); clf
-plot(0:1024,[10; ConvGPUshared(:,2)]); grid on; axis tight
+plot(0:1024,[10; ConvGPUshared(:,2)],'k'); grid on; axis tight
 A = max(ConvGPUshared(400:end,2));
 M = min(ConvGPUshared(186:end,2));
 [time Idx] = min(ConvGPUshared(1:end,2));
@@ -4173,7 +4173,7 @@ print(ff, '-depsc', ['ConvGPU_shared_12672_186taps']) %save as eps a
 
 
 figure(3); clf
-plot(0:1024,[10; PointToPointMultiply(:,2)]); grid on; axis tight
+plot(0:1024,[10; PointToPointMultiply(:,2)],'k'); grid on; axis tight
 A = max(PointToPointMultiply(400:end,2));
 M = min(PointToPointMultiply(1:end,2));
 [time Idx] = min(PointToPointMultiply(1:end,2));
@@ -4202,7 +4202,7 @@ print(ff, '-depsc', ['PointToPointMultiply_12672_186taps']) %save as eps a
 
 
 figure(4); clf
-plot(0:1024,[10; ScalarMultiply(:,2)]); grid on; axis tight
+plot(0:1024,[10; ScalarMultiply(:,2)],'k'); grid on; axis tight
 A = max(ScalarMultiply(400:end,2));
 M = min(ScalarMultiply(400:end,2));
 [time Idx] = min(ScalarMultiply(1:end,2));

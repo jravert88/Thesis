@@ -1,81 +1,96 @@
- \chapter{Signal Processing in GPUs}
+\chapter{Signal Processing in GPUs}
 \label{chap:gpu}
-
-
-A Central Processing Unit (CPU) can do some light real time computation for demodulation at low data rates, below $1$M bits per second (bps).
-Current telemetry data links operate at $10-20$Mbps.
-When more computation power is required for higher data rates,
-field programmable gate arrays (FPGAs) have been traditionally used in the past.
-In recent years graphic processing units (GPUs) have become a viable option for real time systems because they improved in computation power and programmability.
-
-
-To handle the computational burden of the detection, estimation and equalization, algorithms are implemented into graphic processing units (GPUs).
-A GPU is a computational unit with a specialized, highly-parallel architecture well-suited to processing large blocks of data.
-Programming NVIDIA GPUs is done using an API for C++ known as CUDA (Compute Unified Device Architecture).
-GPUs were chosen over FPGAs because the five equalizers must be computed simultaneously, development in C++ rather than an HDL languge is easier and GPUs perform computations in floating-point rather than fixed point.
-
-The unique features of the GPU architecture require the designer to rethink how the
-signal processing is organized.
-DRAM memory limitations on the FPGA limit the number of samples per transfer $39{,}321{,}600$
-complex-valued samples ($314{,}572{,}800$ Bytes).
-This data, corresponding to $3{,}103$ packets,
-is loaded into the GPU memory
-Here starting indexes of the $3{,}103$ occurrences of the preamble are found.
-Subsequent signal processing for each packet is performed \textit{in parallel}.
-In the end, $3{,}103 \times 6{,}144 = 19{,}064{,}832$ data bits \textit{per equalizer}
-are produced at the end of the processing applied to each block.
-A conceptual block diagram of this organization is illustrated in Figureblah 
-The preamble detector (or frame synchronizer), frequency offset estimator, channel estimator, and
-noise variance estimator are described in Chapter~\ref{chap:equations}.
-The equalizers are described in Section
-
-This thesis explores the use of GPUs in data-aided estimation, equalization and filtering operations.
-The purpose of chapter is to provide context for the contributions of this thesis.
-As such this overview is not a tutorial.
-For a full explination of CUDA programming please see the CUDA toolkit documentation \cite{CUDA_toolkit_doc}.
-
+%
+%
+%A Central Processing Unit (CPU) can do some light real time computation for demodulation at low data rates, below $1$M bits per second (bps).
+%Current telemetry data links operate at $10-20$Mbps.
+%When more computation power is required for higher data rates,
+%field programmable gate arrays (FPGAs) have been traditionally used in the past.
+%In recent years graphic processing units (GPUs) have become a viable option for real time systems because they improved in computation power and programmability.
+%
+%
+%To handle the computational burden of the detection, estimation and equalization, algorithms are implemented into graphic processing units (GPUs).
+%A GPU is a computational unit with a specialized, highly-parallel architecture well-suited to processing large blocks of data.
+%Programming NVIDIA GPUs is done using an API for C++ known as CUDA (Compute Unified Device Architecture).
+%GPUs were chosen over FPGAs because the five equalizers must be computed simultaneously, development in C++ rather than an HDL languge is easier and GPUs perform computations in floating-point rather than fixed point.
+%
+%The unique features of the GPU architecture require the designer to rethink how the
+%signal processing is organized.
+%DRAM memory limitations on the FPGA limit the number of samples per transfer $39{,}321{,}600$
+%complex-valued samples ($314{,}572{,}800$ Bytes).
+%This data, corresponding to $3{,}103$ packets,
+%is loaded into the GPU memory
+%Here starting indexes of the $3{,}103$ occurrences of the preamble are found.
+%Subsequent signal processing for each packet is performed \textit{in parallel}.
+%In the end, $3{,}103 \times 6{,}144 = 19{,}064{,}832$ data bits \textit{per equalizer}
+%are produced at the end of the processing applied to each block.
+%A conceptual block diagram of this organization is illustrated in Figureblah 
+%The preamble detector (or frame synchronizer), frequency offset estimator, channel estimator, and
+%noise variance estimator are described in Chapter~\ref{chap:equations}.
+%The equalizers are described in Section
+%
+%This thesis explores the use of GPUs in data-aided estimation, equalization and filtering operations.
+%The purpose of chapter is to provide context for the contributions of this thesis.
+%As such this overview is not a tutorial.
+%For a full explination of CUDA programming please see the CUDA toolkit documentation \cite{CUDA_toolkit_doc}.
 A Graphics Processing Unit (GPU) is a computational unit with a highly-parallel architecture well-suited for executing the same function on many data elements.
-In the past, GPUs were used to process graphics data.
-Recently, general purpose GPUs are being used for high performance computing in computer vision, deep learning, artificial intelligence and signal processing \cite{wikipedia-gpu:2015}.
+In the past, GPUs were used to process graphics data but in 2008 NVIDIA released the Tesla GPU.
+Telsa GPUs are built for general purpose high performance computing.
+Figure \ref{fig:GPUpicture} shows the form factor of a Tesla K40c and K20c.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/k40c_k20c.jpg}
+	\caption{NVIDIA Tesla K40c and K20c.}
+	\label{fig:GPUpicture}
+\end{figure}
+In 2007 NVIDIA released an extension to C, C++ and Fortran called CUDA (Compute Unified Device Architecture).
 
-GPUs cannot be programmed the way as a CPU. 
-NVIDIA released a extension to C, C++ and Fortran called CUDA (Compute Unified Device Architecture).
+CUDA enables GPUs to be used for high performance computing in computer vision, deep learning, artificial intelligence and signal processing \cite{wikipedia-gpu:2015}.
 CUDA allows a programmer to write C++ like functions that are massively parallel called \textit{kernels}.
-To invoke parallelism, a GPU kernel is called $N$ times and mapped to $N$ \textit{threads} that run concurrently.
+To invoke parallelism, a GPU kernel executed $N$ times with the work distributed to $N_\text{min}$ total \textit{threads} that run concurrently.
 To achieve the full potential of high performance GPUs, kernels must be written with some basic concepts about GPU architecture and memory in mind.
+This chapter will show:
+\begin{itemize}
+\item Optimizing memory access leads to faster execution time rather than optimizing number of floating point operations.
+\item The number of threads per block can majorly affect execution time.
+\item CPU and GPU processing can be pipelined.
+\item Convolution maps very well to GPUs using the Fast Fourier Transform.
+\item Batched processing leads to faster execution time per batch.
+\end{itemize}
 
-\section{Simple GPU code example}
+\section{GPU and CUDA Introduction}
+\subsection{CPU verse CUDA example}
 If a programmer has some C++ experience, learning how to program GPUs using CUDA comes fairly easily.
 GPU code still runs top to bottom and memory still has to be allocated.
-The only real difference is where the memory physically is and how functions run on GPUs.
+The only real difference is the physical location of the memory and how functions run on GPUs.
 To run functions or kernels on GPUs, the memory must be copied from the host (CPU) to the device (GPU).
-Once the memory has been copied, the parallel GPU kernels can be called.
-After the GPU kernels have finished, the results have to be copied back from the device (GPU) to the host (CPU).
+Once the memory has been copied, parallel GPU kernels are called.
+After GPU kernel execution, results are usually copied back from the device (GPU) to the host (CPU).
 
-Listing \ref{code:GPUvsCPU} shows a simple program that sums two vectors together where each vector is length $1024$.
+Listing \ref{code:GPUvsCPU} shows a simple program that implements:
 \begin{equation}
 \begin{matrix}
 \mathbf{C}_1 = \mathbf{A}_1 + \mathbf{B}_1 \\
 \mathbf{C}_2 = \mathbf{A}_2 + \mathbf{B}_2
 \end{matrix}
 \end{equation}
-
-On line $42$ the CPU computes $\mathbf{C}_1$ by summing elements of $\mathbf{A}_1$ and $\mathbf{B}_1$ together \textit{sequentially}. Figure \ref{fig:CPUaddBlockDiagram} shows how the CPU computes $\mathbf{C}_1$  sequentially.
+where $\mathbf{C}_1$ is computed in the CPU and $\mathbf{C}_2$ is computed in the GPU.
+Line $42$ the CPU computes $\mathbf{C}_1$ by summing elements of $\mathbf{A}_1$ and $\mathbf{B}_1$ together \textit{sequentially}. Figure \ref{fig:CPUaddBlockDiagram} shows how the CPU computes $\mathbf{C}_1$  sequentially.
 
 The vector addition in the GPU takes a little more work. 
 On lines $60$ and $61$ the vectors in host memory $\mathbf{A}_1$ and $\mathbf{B}_1$ are copied to device memory vectors $\mathbf{A}_2$ and $\mathbf{B}_2$.
 The vector $\mathbf{C}_2$ is computed by calling the GPU kernel VecAddGPU on line $75$.
 The vector is then copied from device memory to host memory on line $78$.
 Figure \ref{fig:GPUaddBlockDiagram} shows how the GPU computes $\mathbf{C}_2$ \textit{in parallel}.
+
 \begin{figure}
 	\centering\includegraphics[width=3.17in/100*55]{figures/gpu_intro/CPUaddBlockDiagram.pdf}
-	\label{fig:CPUaddBlockDiagram}
 	\caption{A block diagram of how a CPU sequentially performs vector addition.}
+	\label{fig:CPUaddBlockDiagram}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=4.69in/100*55]{figures/gpu_intro/GPUaddBlockDiagram.pdf}
-	\label{fig:GPUaddBlockDiagram}
 	\caption{A block diagram of how a GPU performs vector addition in parallel.}
+	\label{fig:GPUaddBlockDiagram}
 \end{figure}
 
 \singlespacing
@@ -102,8 +117,8 @@ __global__ void VecAddGPU(float* destination, float* source0, float* source1, in
 }
 
 int main(){
-	int numPoints = pow(2,22);
-	cout << numPoints << endl;
+	int N = pow(2,22);
+	cout << N << endl;
 	/**
 	* Vector Addition on CPU
 	*/
@@ -111,58 +126,58 @@ int main(){
 	float *A1;
 	float *B1;
 	float *C1;
-	A1 = (float*) malloc (numPoints*sizeof(float));
-	B1 = (float*) malloc (numPoints*sizeof(float));
-	C1 = (float*) malloc (numPoints*sizeof(float));
+	A1 = (float*) malloc (N*sizeof(float));
+	B1 = (float*) malloc (N*sizeof(float));
+	C1 = (float*) malloc (N*sizeof(float));
 
 	// Initialize vectors 0-99
-	for(int i = 0; i < numPoints; i++){
+	for(int i = 0; i < N; i++){
 		A1[i] = rand()%100;
 		B1[i] = rand()%100;
 	}
 
 	// vector sum C1 = A1 + B1
-	VecAddCPU(C1, A1, B1, numPoints);
+	VecAddCPU(C1, A1, B1, N);
 	
 	/**
 	* Vector Addition on GPU
 	*/
 	// allocate memory on host for result
 	float *C2;
-	C2 = (float*) malloc (numPoints*sizeof(float));
+	C2 = (float*) malloc (N*sizeof(float));
 
 	// allocate memory on device for computation
 	float *A2_gpu;
 	float *B2_gpu;
 	float *C2_gpu;
-	cudaMalloc(&A2_gpu, sizeof(float)*numPoints);
-	cudaMalloc(&B2_gpu, sizeof(float)*numPoints);
-	cudaMalloc(&C2_gpu, sizeof(float)*numPoints);
+	cudaMalloc(&A2_gpu, sizeof(float)*N);
+	cudaMalloc(&B2_gpu, sizeof(float)*N);
+	cudaMalloc(&C2_gpu, sizeof(float)*N);
 
 	// Copy vectors A and B from host to device
-	cudaMemcpy(A2_gpu, A1, sizeof(float)*numPoints, cudaMemcpyHostToDevice);
-	cudaMemcpy(B2_gpu, B1, sizeof(float)*numPoints, cudaMemcpyHostToDevice);
+	cudaMemcpy(A2_gpu, A1, sizeof(float)*N, cudaMemcpyHostToDevice);
+	cudaMemcpy(B2_gpu, B1, sizeof(float)*N, cudaMemcpyHostToDevice);
 
 	// Set optimal number of threads per block
-	int numTreadsPerBlock = 32;
+	int T_B = 32;
 
 	// Compute number of blocks for set number of threads
-	int numBlocks = numPoints/numTreadsPerBlock;
+	int B = N/T_B;
 
 	// If there are left over points, run an extra block
-	if(numPoints % numTreadsPerBlock > 0)
-		numBlocks++;
+	if(N % T_B > 0)
+		B++;
 
 	// Run computation on device
 	//for(int i = 0; i < 100; i++)
-	VecAddGPU<<<numBlocks, numTreadsPerBlock>>>(C2_gpu, A2_gpu, B2_gpu, numPoints);
+	VecAddGPU<<<B, T_B>>>(C2_gpu, A2_gpu, B2_gpu, N);
 
 	// Copy vector C2 from device to host
-	cudaMemcpy(C2, C2_gpu, sizeof(float)*numPoints, cudaMemcpyDeviceToHost);
+	cudaMemcpy(C2, C2_gpu, sizeof(float)*N, cudaMemcpyDeviceToHost);
 
 	// Compare C2 to C1
 	bool equal = true;
-	for(int i = 0; i < numPoints; i++)
+	for(int i = 0; i < N; i++)
 		if(C1[i] != C2[i])
 			equal = false;
 	if(equal)
@@ -184,111 +199,106 @@ int main(){
 \end{lstlisting}
 \doublespacing
 
-\section{GPU kernel using threads and thread blocks}
-A GPU kernel is executed on a GPU by launching numBlocks thread blocks with a set number of threads per block.
-In the Listing \ref{code:GPUvsCPU}, VecAddGPU is launched with $32$ threads per block on line $75$.
+\subsection{GPU kernel using threads and thread blocks}
+A GPU kernel is executed by launching blocks with a set number of threads per block.
+In the Listing \ref{code:GPUvsCPU}, VecAddGPU is launched on line 75 with $32$ threads per block.
 The total number of threads launched on the GPU is the number of blocks times the number of threads per block.
-VecAddGPU needs to be launched with atleast $2^22$ threads or $131072 = 2^22/32$ blocks of $32$ threads.
+VecAddGPU needs to be launched with at least $N = 2^{22}$ (line 22) threads or $2^{22}/32$ blocks of $32$ threads.
 
 CUDA gives each thread launched in a GPU kernel a unique index called threadIdx and blockIdx.
 threadIdx is the thread index inside the assigned thread block.
 blockIdx is the index of the block that the thread is assigned to.
-blockDim is the number of threads assigned per block, in fact blockDim $=$ numTreadsPerBlock.
 Both threadIdx and blockIdx are three dimensional and have x, y and z components.
 In this thesis only the x dimension is used because GPU kernels operate only on one dimensional vectors.
+blockDim is the number of threads assigned per block, in fact blockDim is equal to the number of threads per block because the vectors are one dimensional.
 
-To turn a CPU for loop in to a GPU kernel that runs $0$ to $N-1$, the GPU kernel will launch atleast $N$ threads are with $T$ threads per thread block.
-The number of blocks need is $M = \frac{N}{T}$ or $M = \frac{N}{T}+1$ if $N$ is not an integer multiple of $T$.
-Figure \ref{fig:threadsBlocks32} shows $32$ threads launched in $4$ thread blocks with $8$ threads per block.
-Figure \ref{fig:threadsBlocks36} shows $36$ threads launched in $5$ thread blocks with $8$ threads per block. 
-An full extra thread block is launched with $8$ threads but $4$ threads are idle.
+To turn CPU the $N$ long ``for loop'' on line 7 into a GPU kernel, at least $N$ threads are launched with $T$ threads per thread block.
+The number of blocks needed is $B = \frac{N}{T_B}$ or $B = \frac{N}{T}+1$ if $N$ is not an integer multiple of $T$.
+Figure \ref{fig:threadsBlocks32} shows $N = 32$ threads launched in $B = 4$ thread blocks with $T = 8$ threads per block.
+Figure \ref{fig:threadsBlocks36} shows $N = 36$ threads launched in $B = 5$ thread blocks with $T = 8$ threads per block. 
+An full extra thread block is launched with $T = 8$ threads but $4$ threads are idle.
+Note that thread blocks are executed independent of other thread blocks.
+The GPU does not guarantee Block $0$ will execute before Block $2$.
 \begin{figure}
 	\centering\includegraphics[width=4in/100*55]{figures/gpu_intro/threadsBlocks32.pdf}
+	\caption{$32$ threads launched in $4$ thread blocks with $8$ threads per block.}
 	\label{fig:threadsBlocks32}
-	\caption{Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in/100*55]{figures/gpu_intro/threadsBlocks36.pdf}
-	\label{fig:threadsBlocks36}
 	\caption{$36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}
+	\label{fig:threadsBlocks36}
 \end{figure}
 
-\section{GPU Execution and Memory}
+\subsection{GPU Memory}
 \label{sec:GPU_memory}
-Thread blocks are executed independent of other thread blocks.
-The GPU does not guarantee Block $0$ will execute before Block $2$.
-Threads in individual blocks can coordinate and use shared memory but blocks do not coordinate with other blocks.
-Threads have access to private local memory that is fast and efficient.
-Each thread in a thread block has access to shared memory the is private to the thread block.
-All threads have access to global memory.
+GPUs have plenty of computational resources but the most GPU kernels are limited by memory bandwidth to feed the computational units.
+GPU kernels will execute faster if the kernel is designed to access memory efficiently rather than reducing the computational burden.
+NVIDIA GPUs have many different types of memory to maximize speed and efficiency.
 
-Local memory is the fastest and global memory is by far the slowest.
-One global memory access takes 400-800 clock cycles while a local memory in the form of registers, L1 and shared memory is a few clock cycles.
-Figure \ref{fig:MemoryPyramid} helps visualize the trade offs of memory and 
-Figure \ref{fig:fullGPUmemBlockDiagram} shows where each type of memory is located.
+The fastest memory is private local memory in the form of registers, L1 cache and shared memory but only kilobytes are available.
+The slowest memory is public memory in the form of L2 cache and global memory and gigabytes are available.
+Figure \ref{fig:MemoryPyramid} shows the trade off of memory speed and the size of different types of memory.
 \begin{figure}
 	\centering\includegraphics[width=8.36in/100*55]{figures/gpu_intro/MemoryPyramid.pdf}
-	\label{fig:MemoryPyramid}
 	\caption{Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}
-\end{figure}
-\begin{figure}
-	\centering\includegraphics[width=9.83in/100*55]{figures/gpu_intro/fullGPUmemBlockDiagram.pdf}
-	\label{fig:fullGPUmemBlockDiagram}
-	\caption{A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}
+	\label{fig:MemoryPyramid}
 \end{figure}
 
-Why not just use local memory for all computation storage?
-Elements need to come from global memory to before they can be used in local memory.
-If many threads access the same elements in global memory, clock cycles can be saved by copying the elements from global to shared memory.
-Local and shared memory should be used as much as possible but sometimes a GPU kernel cant utilized local and shared memory because elements might only be used once.
-
-
-Why is global memory so slow?
-Looking at the physical hardware is instructive.
-This thesis uses NVIDIA Tesla K40c and K20c GPUs, Table \ref{tab:gpu-resources_jeffs} lists some specifications and Figure \ref{fig:GPUpicture} shows the form factor of the these GPUs.
-The red box in Figure \ref{fig:GPUarch} shows the GPU chip and the yellow boxes show the SRAM that is \textit{off} the GPU chip.
-
-The global memory is located in the SRAM.
-To move memory to thread blocks \textit{on} the GPU chip from global memory requires fetching memory from \textit{off} the GPU.
-Considering that global memory is off chip, 400-800 clock cycles doesn't sound all that bad.
-\begin{figure}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/k40c_k20c.jpg}
-	\label{fig:GPUpicture}
-	\caption{NVIDIA Tesla K40c and K20c.}
-\end{figure}
+Figure \ref{fig:GPUarch} shows a picture of the GPU hardware.
+The solid boxes show that L2 cache or global memory are physically located \textit{off} the GPU chip. 
+The dashed box shows that registers, L1 cache or shared memory are physically located \textit{on} the GPU chip. 
+A L2 cache or global memory access takes over 60 clock cycles because the memory is off chip. 
+A registers, L1 cache or shared memory access is only a few clock cycles because the memory is on chip.
 \begin{figure}
 	\centering\includegraphics[width=\textwidth]{figures/gpu_intro/Kepler_box.png}
+	\caption{Example of an NVIDIA GPU card. The GPU chip with registers, L1 cache and shared memory is shown in the dashed box.	The L2 cache and global memory is shown off chip in the solid boxes.}
 	\label{fig:GPUarch}
-	\caption{Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}
 \end{figure}
+
+Figure \ref{fig:fullGPUmemBlockDiagram} illustrates where each type of memory is located.
+Threads have access to their own registers and L1 cache.
+Threads in a block can coordinate using shared memory because shared memory private to the thread block.
+All threads have access to L2 cache and global memory.
+The figure also shows that thread blocks are assigned to streaming multiprocessors (SMs).
+CUDA handles all the thread block assignments to SMs.
+\begin{figure}
+	\centering\includegraphics[width=9.83in/100*55]{figures/gpu_intro/fullGPUmemBlockDiagram.pdf}
+	\caption{A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}
+	\label{fig:fullGPUmemBlockDiagram}
+\end{figure}
+Table \ref{tab:gpu-resources_jeffs} lists Telsa K40c and K20c resources.
 \begin{table}
+\caption{The resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c). Note that CUDA configures the size of the L1 cache needed.}
 \begin{center}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 	\toprule
-	Feature 			& Tesla K40c 	& Tesla K20c 	\\ \midrule
-	Memory size (GDDR5) & 12 GB 		& 5 GB 			\\
-	CUDA cores 			& 2880 			& 2496 			\\
-	Base clock (MHz) 	& 745 			& 732 			\\ \bottomrule
+	Feature 			& Per			& Tesla K40c 	& Tesla K20c	\\ \midrule
+	Global Memory 		& GPU			& 12 GB	 		& 5 GB			\\
+	L2 Cache Size 		& GPU			& 1.6 GB		& 1.3 GB		\\
+	Memory Bandwidth	& 				& 288 GB/s		& 208 GB/s		\\		
+	Shared Memory 		& Thread Block	& 49 kB			& 49 kB			\\
+	L1 Cache Size 		& Thread Block	& variable		& variable		\\
+	Registers			& Thread Block	& 65536			& 65536			\\
+	Maximum Threads		& Thread Block	& 1024			& 1024			\\
+	CUDA Cores 			& GPU			& 2880 			& 2496 			\\
+	Base Core Clock 	&				& 745 MHz 		& 732 MHz		\\ \bottomrule
 \end{tabular}
 \end{center}
 \label{tab:gpu-resources_jeffs}
-\caption{The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}
 \end{table}
 
-\section{Thread Optimization}
-When writing a custom GPU kernel, it is tempting to launch as many threads per block as possible.
-Launching 256 threads per block doesn't sound as fast at launching 1024 threads per block, right?
-Wrong. Running the GPU at low occupancy provides each thread with more resources in the each block.
-Running the GPU at high occupancy provides each thread with less resources.
-
-Launching 1024 threads per block isnt always bad though.
-1024 might be the optimal number of threads per block.
-If a GPU kernel was very computationally heavy but didn't require much memory resources, 1024 threads might be a good amount of threads per block.
+\subsection{Thread Optimization}
+Most resources listed in Table \ref{tab:gpu-resources_jeffs} show how much memory per thread block is available. 
+The number of threads per block and the amount of resources available have an inverse relationship.
+Threads will have very little memory resources available if a GPU kernel launches 1024 threads per block.
+Threads will have a lot of memory resources available if a GPU kernel launches 32 threads per block.
+This section will show that finding the optimum number of threads per block can drastically speed up GPU kernels.
 
 Improving memory accesses should always be the first optimization when a GPU kernel needs to be faster.
 The next step is to find the optimal number of threads per block to launch.
 Knowing the perfect number of threads per block to launch is challenging to calculate.
-Luckily, there is a finite number of possible threads per block, $1$ to $1024$.
+Luckily, there is a finite number of possible threads per block in the Tesla K40c and K20c GPUs, $1$ to $1024$.
 Listing \ref{code:threadTiming} shows a simple test program that times GPU kernel execution time while sweeping the number of possible threads per block.
 The number of threads per block with the fastest computation time is the optimal number of threads per block for that specific GPU kernel.
 
@@ -296,18 +306,18 @@ The number of threads per block with the fastest computation time is the optimal
 \clearpage
 \begin{lstlisting}[style=myCUDAstyle,caption={Code snippet for thread optimization.},label={code:threadTiming}]
 float milliseconds_opt = pow(2,10); // initiaize to "big" number
-int numTreadsPerBlock_opt;
+int T_B_opt;
 int minNumTotalThreads = pow(2,20); // set to minimum number of required threads
-for(int numTreadsPerBlock = 1; numTreadsPerBlock<=1024; numTreadsPerBlock++){
-	int numBlocks = minNumTotalThreads/numTreadsPerBlock;
-	if(minNumTotalThreads % numTreadsPerBlock > 0)
-		numBlocks++;
+for(int T_B = 1; T_B<=1024; T_B++){
+	int B = minNumTotalThreads/T_B;
+	if(minNumTotalThreads % T_B > 0)
+		B++;
 	cudaEvent_t start, stop;
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);
 	cudaEventRecord(start);
 	
-	GPUkernel<<<numBlocks, numTreadsPerBlock>>>(dev_vec0, dev_vec1);
+	GPUkernel<<<B, T_B>>>(dev_vec0, dev_vec1);
 	
 	cudaEventRecord(stop);
 	cudaEventSynchronize(stop);
@@ -317,85 +327,87 @@ for(int numTreadsPerBlock = 1; numTreadsPerBlock<=1024; numTreadsPerBlock++){
 	cudaEventDestroy(stop);
 	if(milliseconds<milliseconds_opt){
 		milliseconds_opt = milliseconds;
-		numTreadsPerBlock_opt = numTreadsPerBlock;
+		T_B_opt = T_B;
 	}
 }
-cout << "Optimal Threads Per Block " << numTreadsPerBlock_opt << endl
-cout << "Optimal Execution Time    " << milliseconds_opt      << endl;
+cout << "Optimal Threads Per Block " << T_B_opt << endl
+cout << "Optimal Execution Time    " << milliseconds_opt << endl;
 \end{lstlisting}
 \doublespacing
 
 Most of the time the optimal number of threads per block is a multiple of $32$. 
 At the lowest level of architecture, GPUs do computations in \textit{warps}.
 Warps are groups of $32$ threads that do every computation together in lock step.
-If the number of threads per block is a non multiple of $32$, some threads in a warp will be idle and the GPU will have unused resources.
+If the number of threads per block is a non multiple of $32$, some threads in a warp will be idle and the GPU will have unused computational resources.
 
+Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of an example GPU kernel.
+The optimal execution time is $0.1078$ ms at the optimal $96$ threads per block.
+By simply adjusting the number of threads per block, the execution time of this example kernel can be reduced by 2.
 
-Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of an example GPU kernel
-The optimal execution time is $0.1078$ms at the optimal $96$ threads per block.
-By simply adjusting the number of threads per block, this example kernel can have a $2\times$ speed up.
-
-Adjusting the number of threads per block doesn't always drastically speed up GPU kernels.
-Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time for another GPU kernel with varying threads per block.
-Launching $560$ does produce about a $1.12\times$ speed up.
+Adjusting the number of threads per block does not always drastically reduce execution time.
+Figure \ref{fig:ConvGPU_global_12672_186taps} shows the execution time for another GPU kernel with varying threads per block.
+The execution time of this example kernel can be reduced by 1.12 by launching $560$ threads per block.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_shared_12672_186taps.eps}
-	\label{fig:ConvGPU_shared_12672_186taps}
 	\caption{Plot showing how execution time is affected by changing the number of threads per block.
-	The optimal execution time for an example GPU kernel is $0.1078$ms at the optimal $96$ threads per block.}
+	The optimal execution time for an example GPU kernel is $0.1078$ ms at the optimal $96$ threads per block.}
+	\label{fig:ConvGPU_shared_12672_186taps}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_global_12672_186taps.eps}
-	\label{fig:ConvGPU_global_12672_186taps}
 	\caption{Plot showing the number of threads per block doesn't always drastically affect execution time.}
+	\label{fig:ConvGPU_global_12672_186taps}
 \end{figure}
-%Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of ConvGPUshared from Listing \ref{code:convFun} while varying threads per block.
-%Although the minimum execution time is $0.1078$ms at the optimal $96$ threads per block, but ConvGPUshared must be lauched with atleast $186$ threads per block because of the way the kernel uses shared memory.
-%Luckily, launching $192$ threads per block is near optimal with an execution time of $0.1101$ms.
-%By simply adjusting the number of threads per block, ConvGPUshared can have a $2\times$ speed up.
-%
-%Adjusting the number of threads per block doesn't always drastically speed up GPU kernels.
-%Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time for ConvGPU with varying threads per block.
-%Launching $560$ does produce about a $1.12$x speed up, but thread optimization doesn't have as much of an affect of ConvGPU verse ConvGPUshared.
-%\begin{figure}
-%	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_shared_12672_186taps.eps}
-%	\label{fig:ConvGPU_shared_12672_186taps}
-%	\caption{The GPU convolution thread optimization of a $12672$ length signal with a $186$ tap filter using shared memory. $192$ is the optimal number of threads per block executing in $0.1101$ms. Note that at least $186$ threads per block must be launched to compute correct output.}
-%\end{figure}
-%\begin{figure}
-%	\centering\includegraphics[width=5in]{figures/gpu_intro/ConvGPU_global_12672_186taps.eps}
-%	\label{fig:ConvGPU_global_12672_186taps}
-%	\caption{ConvGPU thread optimization 128 threads per block 0.006811.}
-%\end{figure}
-%To answer the question: ``There are $X$ number of ways to implement this algorithm, which one is executes the fastest?'' the answer always is ``It depends. Implement the algorithm $X$ ways and see which is fastest.''
 
-%\section{Cuda Libraries}
-While writing a custom GPU kernel then figuring out how to optimize it is extremely satisfying,
-CUDA has super optimized GPU libraries that are extremely useful and efficient.
+While designing a custom GPU kernel to obtain a major speed up is satisfying,
+CUDA has optimized GPU libraries with exceptional documentation that are extremely useful and efficient.
 The CUDA libraries are written by NVIDIA engineers that know how to squeeze out every drop of performance out of NVIDIA GPUs.
 Some libraries used in this thesis are cuFFT, cuBLAS and cuSolverSp.
 
-\section{CPU GPU Pipelining}
-A basic program flow is shown in Listing \ref{code:noPipe}.
-The CPU acquires data from myADC on Line 5.
-After taking time to acquire data, the data is copied to the CPU, the data is processed in the GPU then result is copied back to the CPU on Lines $8$ to $10$.
-cudaDeviceSynchronize on line $13$ causes the CPU to wait until all instructions on the GPU are complete.
-Acquiring and copying data takes precious processing time.
-What if the GPU could be processing data while the CPU acquires and copied data?
-How much computation time could be gained by pipelining acquiring data and processing data?
-How much would the throughput increase?
+\subsection{CPU and GPU Pipelining}
+While GPU kernels execute physically on the GPU, the GPU only executes instructions received from the host CPU.
+The CPU is idle while it waits for GPU kernels to execute.
+To introduce CPU and GPU pipelining, the CPU can be pipelined by performing other operations while waiting for the GPU to finish executing kernels.
 
+A basic CPU GPU program with no pipelining is shown in Listing \ref{code:noPipe}.
+The CPU acquires data from myADC on Line 5.
+After the CPU takes time to acquire data, the data is copied from the host (CPU) to the device (GPU) on line 8.
+The data is processed on the GPU once then the result is copied back to the device to host on line 9 and 10.
+The cudaDeviceSynchronize function on line 13 blocks CPU until all GPU instructions are finished executing.
+Note that the CPU is blocked during any host to device or device to host transfer.
+Acquiring and copying data takes processing time on the CPU and GPU.
 Figure \ref{fig:concurrentCPU_nonBlocking} shows a block diagram of what is happening on the CPU and GPU in Listing \ref{code:noPipe}.
-The GPU is idle while the CPU is acquiring data.
-The CPU is idle while the GPU is processing and data is being transferred to and from the GPU.
+The GPU is idle while the CPU is acquiring data and the CPU is idle while the GPU is processing.
 \begin{figure}
-	\centering\includegraphics[width=8.77in/100*55]{figures/gpu_intro/concurrentCPU_nonBlocking.pdf}
-	\label{fig:concurrentCPU_nonBlocking}
+	\centering\includegraphics[width=8.77in/100*55]{figures/gpu_intro/concurrentCPU_blocking.pdf}
 	\caption{The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref{code:noPipe}.}
+	\label{fig:concurrentCPU_blocking}
 \end{figure}
 
-\clearpage
+Listing \ref{code:pipe} shows how to CPU and GPU operations can be pipelined.
+Assuming data is already on the GPU from a prior iteration, the CPU gives processing instructions to the GPU then acquires data.
+The CPU then does an asynchronous data transfer to a temporary vector on the GPU.
+The GPU first performs a device to device transfer from the temporary vector.
+The GPU then runs the GPUkernel and transfers the result to the host.
+Note that device to device transfers do not block the CPU.
+This system suffers a full cycle latency.
+\begin{figure}
+	\centering\includegraphics[width=9.97in/100*55]{figures/gpu_intro/concurrentCPU_nonBlocking.pdf}
+	\caption{GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref{code:pipe}.}
+	\label{fig:concurrentCPU_nonBlocking}
+\end{figure}
+
+Pipelineing can be extended to multiple GPUs for even more throughput but only suffer latency of copying memory to one GPU.
+Figure \ref{fig:concurrentCPU_nonBlocking_multiGPU} shows a block diagram of how three GPUs can be pipelined.
+A strong understanding of the full system is required to pipeline at this level.
+\begin{figure}
+	\centering\includegraphics[width=11.4in/100*55]{figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf}
+	\caption{A block diagram of pipelining a CPU with three GPUs.}
+	\label{fig:concurrentCPU_nonBlocking_multiGPU}
+\end{figure}
+
 \singlespacing
+\clearpage
 \begin{lstlisting}[style=myCUDAstyle,caption={Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:noPipe}]
 int main()
 {
@@ -414,24 +426,6 @@ int main()
 }
 \end{lstlisting}
 \doublespacing
-
-Can the throughput increase by using idle time on the GPU and CPU?
-Yes, CPU and GPU operations can sacrifice latency for throughput by pipelineing.
-After the CPU gives instructions to the GPU, the CPU can do other operations like acquire data or perform algorithms better suited for CPUs than the GPUs.
-Once the CPU has finished its operations, the CPU can wait for the GPU to finish.
-
-Listing \ref{code:pipe} shows how to pipeline CPU and GPU operations.
-Assuming data is already on the GPU from a prior iteration, the CPU gives instructions to the GPU then starts acquiring data.
-The CPU then does an asynchronous data transfer to a temporary vector on the GPU.
-The GPU first performs a device to device transfer from the temporary vector.
-The GPU then runs the GPUkernel and transfers the result to the host.
-This system suffers a full cycle latency.
-\begin{figure}
-	\centering\includegraphics[width=9.97in/100*55]{figures/gpu_intro/concurrentCPU_blocking.pdf}
-	\label{fig:concurrentCPU_blocking}
-	\caption{GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref{code:pipe}.}
-\end{figure}
-
 \singlespacing
 \begin{lstlisting}[style=myCUDAstyle,caption={Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.},label={code:pipe}]
 int main()
@@ -467,130 +461,127 @@ int main()
 \end{lstlisting}
 \doublespacing
 
-Pipelineing can be extended to multiple GPUs for even more throughput but only suffer latency of copying memory to one GPU.
-Figure \ref{fig:concurrentCPU_nonBlocking_multiGPU} shows a block diagram of how three GPUs can be pipelined.
-A strong understanding of the full system is required to pipeline at this level.
-\begin{figure}
-	\centering\includegraphics[width=11.42in/100*55]{figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf}
-	\label{fig:concurrentCPU_nonBlocking_multiGPU}
-	\caption{A block diagram of pipelining a CPU with three GPUs.}
-\end{figure}
-
+\clearpage
 \section{GPU Convolution}
 \label{chap:gpu_convolution}
 Convolution is one of the most important tools in digital signal processing.
-The PAQ system explained in the Introduction uses convolution at least 10 times, depending on the number of CMA iterations.
-If convolution execution time improves by 10 ms, the full system execution time improves by 100 ms.
-This chapter explores the how to optimize GPU convolution.
+The PAQ system explained in Chapter \ref{chap:equations} uses convolution up to 26 times per packet, depending on the number of CMA iterations.
+If convolution execution time can be reduced by 10 ms, the full system execution time can reduced by 260 ms.
 
-Discrete time convolution can be implemented in the time or frequency domain. 
-Discrete time convolution computed in the time domain is
+Discrete time convolution applies the $L$ sample complex filter $\mathbf{h}$ to the $N$ sample complex signal $\mathbf{x}$.
+The filtered signal $\mathbf{y}$ is $C = L + N - 1$ complex samples long.
+Convolution in the time domain is
 \begin{equation}
 y(n) = \sum^{L-1}_{m=0} x(m) h(n-m)
   \label{eq:simple_conv_time}
 \end{equation}
-and discrete time convolution computed in the frequency domain is
+and the frequency domain is
 \begin{equation}
-\mathbf{y} = \mathscr{F}^{-1}(\mathscr{F}(\mathbf{x})\times\mathscr{F}(\mathbf{h}))
+\mathbf{y} = \mathscr{F}^{-1}(\mathscr{F}(\mathbf{x})\times\mathscr{F}(\mathbf{h})).
   \label{eq:simple_conv_freq}
 \end{equation}
-where the $N$ sample complex signal $\mathbf{x}$ is convolved with the $L$ tap filter complex $\mathbf{h}$.
+Figure \ref{fig:freq_time_block} shows block diagrams for time-domain and frequency domain convolution.
+\begin{figure}
+	\centering\includegraphics[width=10.28in/100*55]{figures/gpu_convolution/convBlock.pdf}
+	\caption{Block diagrams showing showing time-domain convolution and frequency-domain convolution.}
+	\label{fig:freq_time_block}
+\end{figure}
+This section will show:
+\begin{itemize}
+\item GPU convolution is faster than CPU convolution with large data sets using execution time as a metric.
+\item GPU convolution execution time is dependent more on memory access than floating point operations.
+\item Performing batched GPU convolution invokes more parallelism and decreases execution time per batch.
+\item Batched GPU frequency-domain convolution executes faster than batched GPU time-domain convolution.
+\end{itemize}
 
-Traditionally the number of flops is used to estimate how computationally intense an algorithm is. 
-Each complex multiply 
+\subsection{Floating Point Operation Comparison}
+Traditionally the number of floating point operations (flops) is used to estimate how computationally intense an algorithm is. 
+Each complex multiplication  
 \begin{equation}
 (A+jB)\times(C+jD) = (AC-BD)+j(AD+BC)
 \end{equation}
-is $6$ flops, $4$ multiplies and $2$ additions/subtractions.
-Each output element of $\mathbf{y}$ in Equation \eqref{eq:simple_conv_time} requires $8L$ flops.
-Each term in the $L$ long summation takes $8$ flops, $6$ flops per multiply plus $2$ flops (real and imaginary)  for the sum.
-The output vector $\mathbf{y}$ is $N+L-1$ samples long.
-The number of flops required for convolution is
+requires $6$ flops, $4$ multiplications and $2$ additions/subtractions.
+Output elements of $\mathbf{y}$ in Equation \eqref{eq:simple_conv_time} requires $8L = (6+2)L$ flops, $2$ extra flops are required for each summand.
+The time-domain convolution requires
 \begin{equation}
-8L(N+L-1) \text{ flops}.
+8LC \text{ flops}
 \label{eq:flops_time_domain_conv}
 \end{equation}
+where $C=N+L-1$ is the number of samples in the filtered signal.
 
-The length of the convolution, $M=N+L-1$ is the minimum point Fourier Transform possible.
-To leverage the Cooley-Tukey radix 2 Fast Fourier Transform (FFT), it is common practice append zeros to the next power of to above $M$.
-The current most popular CPU based FFT is the Fastest Fourier Transform in the West (FFTW) library, FFTW uses the Cooley-Tukey radix 2 transform.
-Each radix 2 forward or backward Fourier transform requires $5M\log_2(M)$ flops \cite{FFTW:2017,cooley1965algorithm}.
+To leverage the Cooley-Tukey radix 2 Fast Fourier Transform (FFT) in frequency-domain convolution, common practice is to compute the $M$ point FFT where $M$ is the next power of 2 above $C$.
+Both the CPU based Fastest Fourier Transform in the West (FFTW) library and the NVIDIA GPU cuFFT library use the Cooley-Tukey radix 2 transform.
+Each forward or backward Fourier transform requires $5M\log_2(M)$ flops \cite{FFTW:2017,cooley1965algorithm}.
 As shown by Equation \eqref{eq:simple_conv_freq}, frequency-domain convolution requires 
 \begin{equation}
 3\times5M\log_2(M)+6M \text{ flops}
 \label{eq:flops_freq_domain_conv}
 \end{equation}
-from $3$ FFTs and a length $M$ point to point multiply.
+from $3$ FFTs and a $M$ point to point multiplication.
 
-
-Comparing Equations \eqref{eq:flops_time_domain_conv} and \ref{eq:flops_freq_domain_conv}, if a signal or filter length is relatively long the frequency domain is the best choice.
-What constitutes a ``long'' signal or filter?
-When should convolution be done in the frequency domain rather than time-domain?
-
-Figure \ref{fig:Theory12672signal_flops} compares the number of flop required to convolve a $12672$ sample complex signal with a varied length tap complex filter.
-According to the number of flops in the figure, frequency-domain convolution requires less flops if the filter is longer $40$ taps.
-\begin{figure}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory12672signal_flops.eps}
-	\label{fig:Theory12672signal_flops}
-	\caption{Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a varied length tap complex filter.}
-\end{figure}
-
-Figure \ref{fig:Theory186Tap_flops} compares the number of flops required for time-domain verse frequency-domain convolution of a $12672$ sample complex signal with a $186$ tap complex filter.
-Figure \ref{fig:Theory21Tap_flops} compares the number of flops required for time-domain verse frequency-domain convolution of a $12672$ sample complex signal with a $21$ tap complex filter.
-Appending zeros to the next power of $2$ causes the stair stepping pattern.
-Judging by the figures with varied signal lengths, a $186$ tap filter is ``long'' and a $21$ tap filter is ``short.''
+Sections \ref{sec:hardware} and \ref{sec:oqpsk_detector} show the PAQ system has one signal length $N = \Lpkt = 12672$ and two filter lengths $L = L_\text{df} = 21$ and $L = L_\text{eq} = 186$.
+Figures \ref{fig:Theory186Tap_flops} through \ref{fig:Theory12672signal_flops} compare the number of flops required for time-domain and frequency-domain convolution.
+The figures compare flops by fixing the signal length with variable filter length or visa versa.
+These figures show applying a $186$ tap filter to a $12672$ sample signal requires less flops in the frequency domain and
+applying a $21$ tap filter to a $12672$ sample signal requires less flops in the time domain.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory186Tap_flops.eps}
+	\caption{Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $186$ tap complex filter.}
 	\label{fig:Theory186Tap_flops}
-	\caption{Comparison of number of floating point operations (flops) required to convolve a varied length complex signal with a $186$ tap complex filter.}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory21Tap_flops.eps}
+	\caption{Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $21$ tap complex filter.}
 	\label{fig:Theory21Tap_flops}
-	\caption{Comparison of number of floating point operations (flops) required to convolve a varied length complex signal with a $21$ tap complex filter.}
+\end{figure}
+\begin{figure} 
+	\centering\includegraphics[width=5in]{figures/gpu_intro/Theory12672signal_flops.eps}
+	\caption{Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a variable length tap complex filter.}
+	\label{fig:Theory12672signal_flops}
 \end{figure}
 
-
-
-\section{CPU and GPU Single Batch Convolution}
+\subsection{CPU and GPU Single Batch Convolution Comparison}
 \label{sec:cuda_convolution_single}
-With an understanding of the number of flops in time verses frequency domain required to implement convolution,
-do the number of flops have a direct relationship to execution time in CPUs and GPUS?
-To explore the flop to execution time relationship Listing \ref{code:convFun} shows five different ways of implementing convolution:
+This section will show GPU convolution execution time is dependent more on memory access than the number of required floating point operations while CPU convolution execution time is dependent on the number of floating point operations.
+To illustrate these points, the execution time of the code in Listing \ref{code:convFun} (at the end of the chapter) was measured.
+The code implements convolution five different ways:
 \begin{itemize}
   \item time-domain convolution in a CPU
   \item frequency-domain convolution in a CPU
   \item time-domain convolution in a GPU using global memory
   \item time-domain convolution in a GPU using shared memory
-  \item frequency-domain convolution in a GPU using CUDA libraries
+  \item frequency-domain convolution in a GPU
 \end{itemize}
 
-The CPU implements Equation \eqref{eq:simple_conv_time} in ConvCPU directly on line $209$ using a function from lines $11$ to $34$.
-The CPU implements Equation \eqref{eq:simple_conv_freq} using the FFTW library on lines $214$ to $258$.
+The three time-domain convolution implementations compute \eqref{eq:simple_conv_time} directly.
+The two \newline frequency-domain convolution implementations compute \eqref{eq:simple_conv_freq} using the CPU FFTW library and the GPU based cuFFT library.
+For a given signal and filter length, a good CUDA programmer can make an educated guess on which algorithm may be faster
+There is no clear conclusion until all the algorithms have been implemented and measured.
 
-The GPU implements time-domain convolution using global memory in lines $268$ to $277$.
-The GPU kernel ConvGPU on lines $36$ to $64$ is a parallel version of ConvCPU.
-ConvGPU performs time-domain convolution by fetching every element of the signal and filter from global memory.
+%The CPU implements Equation \eqref{eq:simple_conv_time} in ConvCPU directly on line $209$ using a function from lines $11$ to $34$.
+%The CPU implements Equation \eqref{eq:simple_conv_freq} using the FFTW library on lines $214$ to $258$.
+%
+%The GPU implements time-domain convolution using global memory in lines $268$ to $277$.
+%The GPU kernel ConvGPU on lines $36$ to $64$ is a parallel version of ConvCPU.
+%ConvGPU performs time-domain convolution by fetching every element of the signal and filter from global memory.
+%
+%The GPU implements time-domain convolution using shared memory in lines $283$ to $292$.
+%The GPU kernel ConvGPUshared on lines $67$ to $101$ is nearly identical to ConvGPU.
+%Threads accessing the same elements of the filter in global memory can be a waste of valuable clock cycles.
+%ConvGPUshared pays and initial price on lines $72$ to $76$ to move $L_\text{h}$ filter coefficients from off chip global memory to the on chip shared memory.
+%Finally, the GPU implements frequency-domain convolution using the cuFFT library on lines $298$ to $326$.
+%
+%The questions are:
+%Do flops have a direct relationship to execution time on CPUs? 
+%Do flops have a direct relationship to execution time on GPUs? 
+%When is the initial cost to use shared memory worth it?
+%When should convolution be done in the frequency domain?
+%
+%The short answer to all of the questions is: GPU execution time depend on the signal length, filter length, CPU, GPU and memory.
+%A good CUDA programmer can make an educated guess on which algorithm may be faster in the GPU, but until all the algorithms have been implemented and timed, there is no definite answer.
 
-The GPU implements time-domain convolution using shared memory in lines $283$ to $292$.
-The GPU kernel ConvGPUshared on lines $67$ to $101$ is nearly identical to ConvGPU.
-Threads accessing the same elements of the filter in global memory can be a waste of valuable clock cycles.
-ConvGPUshared pays and initial price on lines $72$ to $76$ to move $L_\text{h}$ filter coefficients from off chip global memory to the on chip shared memory.
-Finally, the GPU implements frequency-domain convolution using the cuFFT library on lines $298$ to $326$.
-
-The questions are:
-Do flops have a direct relationship to execution time on CPUs? 
-Do flops have a direct relationship to execution time on GPUs? 
-When is the initial cost to use shared memory worth it?
-When should convolution be done in the frequency domain?
-
-The short answer to all of the questions is: GPU execution time depend on the signal length, filter length, CPU, GPU and memory.
-A good CUDA programmer can make an educated guess on which algorithm may be faster in the GPU, but until all the algorithms have been implemented and timed, there is no definite answer.
-
-To demonstrate that there is no definite answer in GPUs, 
-the execution time of the code in Listing \ref{code:GPUvsCPU} was timed.
-All the memory transfers to and from the host were timed for a fair comparison of GPU to CPU.
-Table \ref{tab:CPUvsGPUtimingTable} shows where timing was started and stopped for each convolution implementation.
+All the memory transfers to and from the GPU were timed for a fair comparison of GPU to CPU execution time.
+Table \ref{tab:CPUvsGPUtimingTable} shows how the execution time was measured for each convolution implementation.
 \begin{table}
 \caption{Defining start and stop lines for timing comparison in Listing \ref{code:convFun}.}
 \begin{center}
@@ -608,60 +599,62 @@ Table \ref{tab:CPUvsGPUtimingTable} shows where timing was started and stopped f
 \label{tab:CPUvsGPUtimingTable}
 \end{table}
 
-The execution times shown in Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} compares the computation time of a fixed length $186$ tap filter convolved with a varied length signal.
-The CPU execution time varies enough that the plot is messy.
-Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal} shows the lower bounds of execution times by finding the local minimums in $15$ sample windows.
+Figures \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} through \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} compare execution time of the five different convolution implementations by fixing the filter length with variable signal length or visa versa.
+Sub-windows emphasize points that are of interest to the PAQ system.
+The noise in Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} stems from the host operating system context switching.
+To clean up the time samples, local minimums were found in windows ranging from 3 to 15 samples.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_noMin.eps}
+	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}
 	\label{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal.eps}
+	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}
 	\label{fig:CPUvsGPU_1batch_186taps_varySignal}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}
 \end{figure}
-
-With the plot lower bounded, compare Figure \ref{fig:CPUvsGPU_1batch_186taps_varySignal} to Figure \ref{fig:Theory186Tap_flops}.
-Does the CPU and GPU follow the same trend as the number of flops?
-The CPU has the exact structure that the number of flops predicted.
-The GPU does have the stair stepping from appending zeros for the frequency domain, but the time domain GPU kernels perform better than the number of flops predicted.
-
-The GPU execution time does not follow the same trend as the number of flops.
-Why? As mentioned in Section \ref{sec:GPU_memory}, GPUs have a ridiculous amount of computational resources and limited memory bandwidth.
-Over $90\%$ of GPU kernels are memory bandwidth limited.
-Fast GPU kernels access memory efficiently.
-
-To provide more proof, compare Figures \ref{fig:CPUvsGPU_1batch_21taps_varySignal} and \ref{fig:Theory21Tap_flops}.
-Once again, the CPU follows the same trend as the number of flops.
-The GPU also follows the number of flops trends but to a lesser extent than the CPU.
-Using shared memory will perform better than using only global memory for ``short'' filters.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal.eps}
+	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}
 	\label{fig:CPUvsGPU_1batch_21taps_varySignal}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}
 \end{figure}
-
-What if the signal length was set and the filter length was varied?
-Comparing Figure \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} to Figure \ref{fig:Theory12672signal_flops} shows the CPU follows the trend of flops also.
-The time domain CPU execution time is obviously affected as the number of flops increases.
-Neither CPU or GPU frequency domain execution time is affected by varying filter length.
-
-The execution time of both time-domain GPU convolutions are slightly affected by increasing filter length.
-The number of memory accesses per output sample increase as the filter length increases.
-Bottom line, the length of the signal is the largest factor as Equations \ref{eq:flops_time_domain_conv} and \ref{eq:flops_freq_domain_conv} suggest.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter.eps}
+	\caption{Comparison of a complex convolution on CPU verse GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}
 	\label{fig:CPUvsGPU_1batch_12672signal_varyFilter}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}
 \end{figure}
 
-For most convolution implementations, the signal and filter lengths are set ``magic'' numbers.
-To find the best option, implement convolution every way possible for the given lengths, time each implementation execution time, choose which algorithm is fastest.
-As Figures \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} through \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} have shown, unless every implementation is explored, there is no way of saying which implementation will absolutely be fastest.
-
-Table \ref{tab:CPUvsGPUtable_12672_186} shows the GPU frequency-domain algorithm is fastest when convolving a $12672$ sample signal with a $186$ tap filter.
-Table \ref{tab:CPUvsGPUtable_12672_21} shows the GPU time-domain algorithm using shared memory is fastest when convolving a $12672$ sample signal with a $21$ tap filter.
+Comparing Figures \ref{fig:CPUvsGPU_1batch_186taps_varySignal} through \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter}
+to Figures \ref{fig:Theory186Tap_flops} through
+\ref{fig:Theory12672signal_flops} 
+shows
+CPU convolution has the structure that the number of flops predicted but GPU does not.
+The convolution execution time comparison reinforces that most GPU kernels execution time is limited by memory bandwidth not computational resources.
+Tables \ref{tab:CPUvsGPUtable_12672_186} and \ref{tab:CPUvsGPUtable_12672_21} show the GPU time-domain algorithm using shared memory is fastest for PAQ signal and filter lengths when performing a single complex convolution.
+%The GPU execution time does not follow the same trend as the number of flops.
+%Why? As mentioned in Section \ref{sec:GPU_memory}, GPUs have a ridiculous amount of computational resources and limited memory bandwidth.
+%Over $90\%$ of GPU kernels are memory bandwidth limited.
+%Fast GPU kernels access memory efficiently.
+%
+%To provide more proof, compare Figures \ref{fig:CPUvsGPU_1batch_21taps_varySignal} and \ref{fig:Theory21Tap_flops}.
+%Once again, the CPU follows the same trend as the number of flops.
+%The GPU also follows the number of flops trends but to a lesser extent than the CPU.
+%Using shared memory will perform better than using only global memory for ``short'' filters.
+%
+%
+%What if the signal length was set and the filter length was variable?
+%Comparing Figure \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} to Figure \ref{fig:Theory12672signal_flops} shows the CPU follows the trend of flops also.
+%The time domain CPU execution time is obviously affected as the number of flops increases.
+%Neither CPU or GPU frequency domain execution time is affected by varying filter length.
+%
+%The execution time of both time-domain GPU convolutions are slightly affected by increasing filter length.
+%The number of memory accesses per output sample increase as the filter length increases.
+%Bottom line, the length of the signal is the largest factor as Equations \ref{eq:flops_time_domain_conv} and \ref{eq:flops_freq_domain_conv} suggest.
+%
+%
+%For most convolution implementations, the signal and filter lengths are set ``magic'' numbers.
+%To find the best option, implement convolution every way possible for the given lengths, time each implementation execution time, choose which algorithm is fastest.
+%As Figures \ref{fig:CPUvsGPU_1batch_186taps_varySignal_noMin} through \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} have shown, unless every implementation is explored, there is no way of saying which implementation will absolutely be fastest.
 \begin{table}
 \caption{Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}
 \begin{center}
@@ -695,56 +688,18 @@ Table \ref{tab:CPUvsGPUtable_12672_21} shows the GPU time-domain algorithm using
 \label{tab:CPUvsGPUtable_12672_21}
 \end{table}
 
-\section{Batched Convolution}
-As shown in section \ref{sec:cuda_convolution_single}, single convolution doesn't leverage the full power of parallel processing in GPUs.
-The introduction showed the PAQ project received signal has a packetized structure.
-The received signal has $3104$ packets or batches.
-Batched processing introduces an extra level of parallelism in GPUs because each batch can be processed independently.
-CUDA has many libraries that are ``batched,'' meaning a GPU kernel is launched for each independent packet or batch of received samples.
-Some CUDA batched libraries used in PAQ system are cuFFT, cuBLAS and cuSolver.
-%Figure \ref{fig:matrix_batch_vs_batched} shows the concept of a batched matrix multiply.
-%\begin{figure}
-%	\centering\includegraphics[width=4.13in/100*55]{figures/eq_GPUimplementation/matrix_batch_vs_batched.pdf}
-%	\label{fig:matrix_batch_vs_batched}
-%	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $b(n)$.}
-%\end{figure}
-
-Batched libraries perform much better than calling a single GPU kernel multiple times with each independent batch of data.
-Haidar et al. showed batched libaries in GPUs achive more Gflops than calling GPU kernels multiple times \cite{haidar2015optimization}.
-Batched processing performs very well in GPUs because it increases parallelism, reduces overhead on the CPU and provides more opportunities for NVIDIA engineers to optimize.
-
-As the number of batches increases, does CPU and GPU execution time increase linearly?
-To illistrate how batch processing performs on GPUs, Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch} shows the execution time per batch for batched convolution in GPUs.
-The execution time per batch decreases as the number of batches increases but converges after $70$ batches.
-\begin{figure}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch.eps}
-	\label{fig:CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch}
-	\caption{Comparison on execution time per batch for complex convolution. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}
-\end{figure}
-
-Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal} shows how the execution time increases with the number of batches varied.
-Note that no lower bounding is needed to produce clean batched processing results.
-This figure shows that frequency-domain convolution leverages batch processing better than time-domain convolution.
-No surprise CPU time and frequency domain execution time skyrockets as the number of batches increases.
-\begin{figure}
-	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal.eps}
-	\label{fig:CPUvsGPU_varyBatches_186taps_12672signal}
-	\caption{Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}
-\end{figure}
-
-Judging by Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal}, CPU is not a contender in batched processing compared to the GPU.
-CPU batched processing will not be explored any further.
-Listing \ref{code:batchedConvFun} shows three implementations of batched convolution in CUDA
-\begin{itemize}
-  \item time-domain convolution in a GPU using global memory
-  \item time-domain convolution in a GPU using shared memory
-  \item frequency-domain convolution in a GPU using the cuFFT library.
-\end{itemize}
-
-Now that the GPU execution time isn't being compared to the CPU, transfers between host and device will not be a factor for algorithm comparison.
-Table \ref{tab:BatchedGPUtimingTable} shows how Listing \ref{code:batchedConvFun} is timed.
+\subsection{Batched Convolution}
+\label{sec:batched_convolution}
+Section \ref{sec:cuda_convolution_single} illustrated single convolution doesn't leverage the full power of parallel processing in GPUs.
+The PAQ project received signal has a packetized structure with $3104$ packets per $1907$ ms.
+Rather than processing each packet separately, many packets are buffered then processed in a ``batch.''
+Batch processing in GPUs has less CPU overhead and introduces an extra level of parallelism.
+Batch processing has faster execution time per packet than processing packets separately 
+CUDA has many libraries that have batch processing including cuFFT, cuBLAS and cuSolverSp.
+Haidar et al. showed batched libaries achive more Gflops than calling GPU kernels multiple times \cite{haidar2015optimization}.
+Listing \ref{code:batchedConvFun} (at the end of the chapter) shows three GPU implementations of batch processing convolution and Table \ref{tab:BatchedGPUtimingTable} shows how the execution time of the code was measured.
 \begin{table}
-\caption{Defining start and stop lines for timing comparison in Listing \ref{code:batchedConvFun}.}
+\caption{Defining start and stop lines for execution time comparison in Listing \ref{code:batchedConvFun}.}
 \begin{center}
 \begin{tabular}{llll}
 	\toprule
@@ -757,54 +712,49 @@ Table \ref{tab:BatchedGPUtimingTable} shows how Listing \ref{code:batchedConvFun
 \end{center}
 \label{tab:BatchedGPUtimingTable}
 \end{table}
-Figure \ref{fig:CPUvsGPU_3104batch_186taps_varySignal} shows execution time for $3104$ batches of $186$ tap filters convolved with varying signal lengths.
-Performing frequency-domain convolution is always faster than time-domain convolution because the cuFFT library is better optimized for batched processing.
-The batched GPU implementation of convolution in the frequency-domain convolution takes just $36.8$ms for $3104$ batches, $12672$ sample signals and $186$ tap filters.
-The average exectution time per batch for $3104$ batches is $0.0119$ms per batch!
-Compare $0.0119$ms per batch to single batched execution time in Table \ref{tab:CPUvsGPUtable_12672_186}, one batch took $0.4224$.
-Batched processing introduced a $35\times$ speed up!
+
+Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal} compares execution time of batch processing convolution as the number of packets increases, note that no lower bounding was used.
+This figure shows that frequency-domain convolution leverages batch processing better than time-domain convolution.
+As expected, CPU based batch convolution is not competitive with GPU batch convolution and thus CPU batched processing was not explored any further.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal.eps}
+	\caption{Comparison of a batched complex convolution on a CPU and GPU. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}
+	\label{fig:CPUvsGPU_varyBatches_186taps_12672signal}
+\end{figure}
+
+Now that the GPU and CPU execution time is not being compared, Table \ref{tab:BatchedGPUtimingTable} shows execution times include only GPU kernels and exclude memory transfers.
+%
+Figure \ref{fig:CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch} compares GPU batch convolution execution time per batch as the number of packets increases.
+The figure shows execution time per batch decreases as the number of packets increases but stops improving after 70 packets.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch.eps}
+	\caption{Comparison on execution time per batch for complex convolution. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}
+	\label{fig:CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch}
+\end{figure}
+
+
+Figures \ref{fig:CPUvsGPU_3104batch_186taps_varySignal} through \ref{fig:CPUvsGPU_3104batch_12672signal_varyFilter} 
+compare execution time of the three GPU convolution implementations by fixing the filter length with variable signal length or visa versa.
+Tables \ref{tab:Batched_CPUvsGPUtable_12672_186} and \ref{tab:Batched_CPUvsGPUtable_12672_21} 
+show the execution times for PAQ signal and filter lengths when performing batched convolution.
+The fastest batch implementation execution time of convolving a $12672$ sample signal with a filter depends on the number of taps.
+Batch frequency-domain convolution is fastest for $186$ tap filters while 
+time-domain convolution using shared memory is fastest for $21$ tap filters.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySignal.eps}
+	\caption{Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $186$ taps.}
 	\label{fig:CPUvsGPU_3104batch_186taps_varySignal}
-	\caption{Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}
 \end{figure}
-
-Figure \ref{fig:CPUvsGPU_3104batch_21taps_varySignal} shows execution time for $3104$ batches of $21$ tap filters convolved with varying signal lengths.
-This figure exhibits the same characteristics of single batch convolution execution time shown in Figure \ref{fig:CPUvsGPU_1batch_21taps_varySignal}.
-For most signal lengths, performing time-domain convolution using shared memory is fastest.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal.eps}
+	\caption{Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $21$ taps.}
 	\label{fig:CPUvsGPU_3104batch_21taps_varySignal}
-	\caption{Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}
 \end{figure}
-
-Figure \ref{fig:CPUvsGPU_3104batch_12672signal_varyFilter} shows execution time for $3104$ batches of $12672$ sample signal convolved with varying filter lengths.
-This figure exhibits nearly the same characteristics of single batch convolution execution time shown in Figure \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} accept the varied filter length has no affect on execution time.
-For very short filter lengths, time-domain convolution using shared memory is fastest.
-For longer filters , frequency-domain convolution is fastest.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyFilter.eps}
+	\caption{Comparison of a batched complex convolution on a GPU. The filter length is variable and the signal length is set to $12672$ samples.}
 	\label{fig:CPUvsGPU_3104batch_12672signal_varyFilter}
-	\caption{Comparison of a batched complex convolution on a GPU. The filter length is varied and the signal length is set at $12672$ samples.}
 \end{figure}
-
-Though this section has show the power of batched processing, the algorithm leading to the fastest execution time still depends on signal and filter length,
-One important concept has been over looked.
-Figure \ref{fig:thisThesisBlock} shows there are two filters that need to be applied to the received samples. 
-
-If convolution is implemented in the time domain, ConvGPU or ConvGPUshared must run twice.
-The first call of time-domain convolution performs an extremely fast ``short'' convolution of the $186$ tap equalizer and $21$ detection filter.
-The second call performs a slower ``long'' convolution of the $12672$ sample signal with the  convolved $186+21-1$ tap filter.
-
-If convolution is implemented in the frequency domain, only the GPU kernel PointToPointMultiply has to be updated.
-PointToPointMultiply is changed from two to three input vectors.
-For every point the number of memory accesses increases by $1$ element and the number of flops doubles from $6$ to $12$.
-An extra cuFFT call would be expected accept the detection filter is predefined in Figure \ref{fig:thisThesisBlock}.
-The FFT of the detection filter is calculated and stored at initialization.
-
-Table \ref{tab:Batched_CPUvsGPUtable_12672_186} shows the batched convolution execution time for a $12672$ sample signal and $186$ tap filter.
-Table \ref{tab:Batched_CPUvsGPUtable_12672_21} shows the batched convolution execution time for a $12672$ sample signal and $21$ tap filter.
-Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows batched cascaded $21$ and $186$ tap filters convolved with a $12672$ sample signal execution time.
 \begin{table}
 \caption{Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}
 \begin{center}
@@ -833,6 +783,71 @@ Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows batched cascaded $21$ a
 \end{center}
 \label{tab:Batched_CPUvsGPUtable_12672_21}
 \end{table}
+
+%Figure \ref{fig:CPUvsGPU_3104batch_186taps_varySignal} shows execution time for $3104$ batches of $186$ tap filters convolved with varying signal lengths.
+%Performing frequency-domain convolution is always faster than time-domain convolution because the cuFFT library is better optimized for batched processing.
+%The batched GPU implementation of convolution in the frequency-domain convolution takes just $36.8$ ms for $3104$ batches, $12672$ sample signals and $186$ tap filters.
+%The average exectution time per batch for $3104$ batches is $0.0119$ ms per batch!
+%Compare $0.0119$ ms per batch to single batched execution time in Table \ref{tab:CPUvsGPUtable_12672_186}, one batch took $0.4224$.
+%Batched processing introduced a $35\times$ speed up!
+%\begin{figure}
+%	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySignal.eps}
+%	\caption{Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $186$ taps.}
+%	\label{fig:CPUvsGPU_3104batch_186taps_varySignal}
+%\end{figure}
+%
+%Figure \ref{fig:CPUvsGPU_3104batch_21taps_varySignal} shows execution time for $3104$ batches of $21$ tap filters convolved with varying signal lengths.
+%This figure exhibits the same characteristics of single batch convolution execution time shown in Figure \ref{fig:CPUvsGPU_1batch_21taps_varySignal}.
+%For most signal lengths, performing time-domain convolution using shared memory is fastest.
+%\begin{figure}
+%	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal.eps}
+%	\caption{Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $21$ taps.}
+%	\label{fig:CPUvsGPU_3104batch_21taps_varySignal}
+%\end{figure}
+%
+%Figure \ref{fig:CPUvsGPU_3104batch_12672signal_varyFilter} shows execution time for $3104$ batches of $12672$ sample signal convolved with varying filter lengths.
+%This figure exhibits nearly the same characteristics of single batch convolution execution time shown in Figure \ref{fig:CPUvsGPU_1batch_12672signal_varyFilter} accept the variable filter length has no affect on execution time.
+%For very short filter lengths, time-domain convolution using shared memory is fastest.
+%For longer filters , frequency-domain convolution is fastest.
+%\begin{figure}
+%	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyFilter.eps}
+%	\caption{Comparison of a batched complex convolution on a GPU. The filter length is variable and the signal length is set at $12672$ samples.}
+%	\label{fig:CPUvsGPU_3104batch_12672signal_varyFilter}
+%\end{figure}
+% 
+%Though this section has show the power of batched processing, the algorithm leading to the fastest execution time still depends on signal and filter length,
+%One important concept has been over looked.
+%Figure \ref{fig:thisThesisBlock} shows there are two filters that need to be applied to the received samples.
+
+Until now, convolving one signal with only one filter has been considered.
+In section \ref{sec:signalProcessing}, Figure \ref{fig:thisThesisBlock} showed the PAQ system the signal is filtered by two cascaded filters: 
+an equalizer filter and a detection filter.
+The block diagrams in Figure \ref{fig:freq_time_block_cascade} show steps required for cascading time-domain and frequency-domain convolution.
+
+Comparing the block diagrams in Figures \ref{fig:freq_time_block_cascade} and \ref{fig:freq_time_block}, cascading filters in the time domain requires two time-domain convolutions while
+cascading two filters in the frequency domain requires an extra FFT and complex multiplication.
+The second time-domain convolution is applying a $206$ tap filter to a $12672$ sample signal because the output of the first time-domain convolution is $206 = 21 + 186 - 1$ samples long because the detection filter is $21$ taps and the equalizer filter is $186$ taps.
+Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows the execution times for PAQ signal and filter lengths when performing batched cascaded convolution.
+Frequency-domain batched cascaded convolution is fastest for the PAQ system.
+\begin{figure}
+	\centering\includegraphics[width=10.28in/100*55]{figures/gpu_convolution/CascadeConvBlock.pdf}
+	\caption{Block diagrams showing showing cascaded time-domain convolution and frequency-domain convolution.}
+	\label{fig:freq_time_block_cascade}
+\end{figure}
+%\begin{table}
+%\caption{Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}
+%\begin{center}
+%\begin{tabular}{lll}
+%	\toprule
+%	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
+%	GPU time domain global 	& ConvGPU 					& 223.064		\\
+%	GPU time domain shared 	& ConvGPUshared 			& 199.844		\\
+%	GPU frequency domain 	& cuFFT						& 36.7704		\\ 
+%	\bottomrule
+%\end{tabular}
+%\end{center}
+%\label{tab:Batched_CPUvsGPUtable_12672_206}
+%\end{table}
 \begin{table}
 \caption{Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}
 \begin{center}
@@ -847,37 +862,35 @@ Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows batched cascaded $21$ a
 \end{center}
 \label{tab:Batched_CPUvsGPUtable_12672_21_186}
 \end{table}
-\begin{table}
-\caption{Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}
-\begin{center}
-\begin{tabular}{lll}
-	\toprule
-	Algorithm 				& Function or Library		& Execution Time (ms) \\ \midrule
-	GPU time domain global 	& ConvGPU 					& 223.064		\\
-	GPU time domain shared 	& ConvGPUshared 			& 199.844		\\
-	GPU frequency domain 	& cuFFT						& 36.7704		\\ 
-	\bottomrule
-\end{tabular}
-\end{center}
-\label{tab:Batched_CPUvsGPUtable_12672_206}
-\end{table}
 
-Tables \ref{tab:Batched_CPUvsGPUtable_12672_186} and \ref{tab:Batched_CPUvsGPUtable_12672_21} agree with Figures \ref{fig:CPUvsGPU_3104batch_21taps_varySignal} and \ref{fig:CPUvsGPU_3104batch_186taps_varySignal}.
-time-domain convolution is faster with a short $21$ tap filter but frequency-domain convolution is faster with a long $186$ tap filter.
+%Tables \ref{tab:Batched_CPUvsGPUtable_12672_186} and \ref{tab:Batched_CPUvsGPUtable_12672_21} agree with Figures \ref{fig:CPUvsGPU_3104batch_21taps_varySignal} and \ref{fig:CPUvsGPU_3104batch_186taps_varySignal}.
+%time-domain convolution is faster with a short $21$ tap filter but frequency-domain convolution is faster with a long $186$ tap filter.
+%\begin{figure}
+%	\centering\includegraphics[width=5.01in/100*55]{figures/gpu_intro/twoWaysToConv.pdf}
+%	\caption{Two ways to convolve the signal $\mathbf{r}$ with the $186$ tap filter $\mathbf{c}$ and $21$ tap filter $\mathbf{d}$.}
+%	\label{fig:twoWaysToConv}
+%\end{figure}
+%Figure \ref{fig:twoWaysToConv} shows two ways to cascade the signal $\mathbf{r}$ though two filters.
+%The upper blocks apply both filters to the signal taking $180.272$ ms then $20.4287$ ms.
+%The lower blocks first convolve the filters to build a $186+21-1$ tap composite filter then apply the $206$ tap composite to the signal.
+%
+%Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows the execution time of implementing cascaded filters, convolving the $21$ and $186$ tap filters is extremely fast in the GPU.
+%While building the composite filter is extremely fast, time-domain convolution suffers a $22.0170$ ms or $19.7460$ ms slow down because the composite filter is now $206$ taps.
+%Applying an extra filter in the frequency domain only costs $2.3165$ ms.
+%Table \ref{tab:Batched_CPUvsGPUtable_12672_206} confirms it costs an extra $20$ ms or so to apply a $206$ vs $186$ tap filter.
 
-\begin{figure}
-	\centering\includegraphics[width=5.01in/100*55]{figures/gpu_intro/twoWaysToConv.pdf}
-	\label{fig:twoWaysToConv}
-	\caption{Two ways to convolve the signal $\mathbf{r}$ with the $186$ tap filter $\mathbf{c}$ and $21$ tap filter $\mathbf{d}$.}
-\end{figure}
-Figure \ref{fig:twoWaysToConv} shows two ways to cascade the signal $\mathbf{r}$ though two filters.
-The upper blocks apply both filters to the signal taking $180.272$ms then $20.4287$ms.
-The lower blocks first convolve the filters to build a $186+21-1$ tap composite filter then apply the $206$ tap composite to the signal.
 
-Table \ref{tab:Batched_CPUvsGPUtable_12672_21_186} shows the execution time of implementing cascaded filters, convolving the $21$ and $186$ tap filters is extremely fast in the GPU.
-While building the composite filter is extremely fast, time-domain convolution suffers a $22.0170$ms or $19.7460$ms slow down because the composite filter is now $206$ taps.
-Applying an extra filter in the frequency domain only costs $2.3165$ms.
-Table \ref{tab:Batched_CPUvsGPUtable_12672_206} confirms it costs an extra $20$ms or so to apply a $206$ vs $186$ tap filter.
+
+
+
+
+
+
+
+
+
+
+
 
 \singlespacing
 \clearpage
@@ -1016,10 +1029,10 @@ __global__ void ScalarMultiply(cufftComplex* vec0, float scalar, int lastThread)
 }
 
 int main(){
-	int mySignalLength = 1000;
-	int myFilterLength = 186;
-	int myConvLength   = mySignalLength + myFilterLength - 1;
-	int Nfft           = pow(2, ceil(log(myConvLength)/log(2)));
+	int N = 1000;
+	int L = 186;
+	int C = N + L - 1;
+	int M = pow(2, ceil(log(C)/log(2)));
 
 	cufftComplex *mySignal1;
 	cufftComplex *mySignal2;
@@ -1036,28 +1049,28 @@ int main(){
 	cufftComplex *myConv4;
 	cufftComplex *myConv5;
 
-	mySignal1      		= (cufftComplex*)malloc(mySignalLength*sizeof(cufftComplex));
-	mySignal2      		= (cufftComplex*)malloc(Nfft  		  *sizeof(cufftComplex));
-	mySignal2_fft  		= (cufftComplex*)malloc(Nfft   	      *sizeof(cufftComplex));
+	mySignal1      		= (cufftComplex*)malloc(N*sizeof(cufftComplex));
+	mySignal2      		= (cufftComplex*)malloc(M*sizeof(cufftComplex));
+	mySignal2_fft  		= (cufftComplex*)malloc(M*sizeof(cufftComplex));
 
-	myFilter1      		= (cufftComplex*)malloc(myFilterLength*sizeof(cufftComplex));
-	myFilter2      		= (cufftComplex*)malloc(Nfft   	      *sizeof(cufftComplex));
-	myFilter2_fft  		= (cufftComplex*)malloc(Nfft  		  *sizeof(cufftComplex));
+	myFilter1      		= (cufftComplex*)malloc(L*sizeof(cufftComplex));
+	myFilter2      		= (cufftComplex*)malloc(M*sizeof(cufftComplex));
+	myFilter2_fft  		= (cufftComplex*)malloc(M*sizeof(cufftComplex));
 
-	myConv1        		= (cufftComplex*)malloc(myConvLength  *sizeof(cufftComplex));
-	myConv2        		= (cufftComplex*)malloc(Nfft  	      *sizeof(cufftComplex));
-	myConv2_timeReversed= (cufftComplex*)malloc(Nfft  	      *sizeof(cufftComplex));
-	myConv3        		= (cufftComplex*)malloc(myConvLength  *sizeof(cufftComplex));
-	myConv4        		= (cufftComplex*)malloc(myConvLength  *sizeof(cufftComplex));
-	myConv5        		= (cufftComplex*)malloc(Nfft          *sizeof(cufftComplex));
+	myConv1        		= (cufftComplex*)malloc(C*sizeof(cufftComplex));
+	myConv2        		= (cufftComplex*)malloc(M*sizeof(cufftComplex));
+	myConv2_timeReversed= (cufftComplex*)malloc(M*sizeof(cufftComplex));
+	myConv3        		= (cufftComplex*)malloc(C*sizeof(cufftComplex));
+	myConv4        		= (cufftComplex*)malloc(C*sizeof(cufftComplex));
+	myConv5        		= (cufftComplex*)malloc(M*sizeof(cufftComplex));
 
 	srand(time(0));
-	for(int i = 0; i < mySignalLength; i++){
+	for(int i = 0; i < N; i++){
 		mySignal1[i].x = rand()%100-50;
 		mySignal1[i].y = rand()%100-50;
 	}
 
-	for(int i = 0; i < myFilterLength; i++){
+	for(int i = 0; i < L; i++){
 		myFilter1[i].x = rand()%100-50;
 		myFilter1[i].y = rand()%100-50;
 	}
@@ -1074,39 +1087,39 @@ int main(){
 	cufftComplex *dev_myConv4;
 	cufftComplex *dev_myConv5;
 
-	cudaMalloc(&dev_mySignal3, mySignalLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_mySignal4, mySignalLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_mySignal5, Nfft          *sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal3, N*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal4, N*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal5, M*sizeof(cufftComplex));
 
-	cudaMalloc(&dev_myFilter3, myFilterLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter4, myFilterLength*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter5, Nfft          *sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter3, L*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter4, L*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter5, M*sizeof(cufftComplex));
 
-	cudaMalloc(&dev_myConv3,   myConvLength  *sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv4,   myConvLength  *sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv5,   Nfft          *sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv3,   C*sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv4,   C*sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv5,   M*sizeof(cufftComplex));
 
 
 	/**
 	 * Time-domain Convolution CPU
 	 */
-	ConvCPU(myConv1,mySignal1,myFilter1,mySignalLength,myFilterLength);
+	ConvCPU(myConv1,mySignal1,myFilter1,N,L);
 
 	/**
 	 * Frequency Domain Convolution CPU
 	 */
-	fftwf_plan forwardPlanSignal = fftwf_plan_dft_1d(Nfft, (fftwf_complex*)mySignal2,    (fftwf_complex*)mySignal2_fft, 	   FFTW_FORWARD, FFTW_MEASURE);
-	fftwf_plan forwardPlanFilter = fftwf_plan_dft_1d(Nfft, (fftwf_complex*)myFilter2, 	 (fftwf_complex*)myFilter2_fft, 	   FFTW_FORWARD, FFTW_MEASURE);
-	fftwf_plan backwardPlanConv  = fftwf_plan_dft_1d(Nfft, (fftwf_complex*)mySignal2_fft,(fftwf_complex*)myConv2_timeReversed, FFTW_FORWARD, FFTW_MEASURE);
+	fftwf_plan forwardPlanSignal = fftwf_plan_dft_1d(M, (fftwf_complex*)mySignal2,    (fftwf_complex*)mySignal2_fft, 	   FFTW_FORWARD, FFTW_MEASURE);
+	fftwf_plan forwardPlanFilter = fftwf_plan_dft_1d(M, (fftwf_complex*)myFilter2, 	 (fftwf_complex*)myFilter2_fft, 	   FFTW_FORWARD, FFTW_MEASURE);
+	fftwf_plan backwardPlanConv  = fftwf_plan_dft_1d(M, (fftwf_complex*)mySignal2_fft,(fftwf_complex*)myConv2_timeReversed, FFTW_FORWARD, FFTW_MEASURE);
 
 	cufftComplex zero; zero.x = 0; zero.y = 0;
-	for(int i = 0; i < Nfft; i++){
-		if(i<mySignalLength)
+	for(int i = 0; i < M; i++){
+		if(i<N)
 			mySignal2[i] = mySignal1[i];
 		else
 			mySignal2[i] = zero;
 
-		if(i<myFilterLength)
+		if(i<L)
 			myFilter2[i] = myFilter1[i];
 		else
 			myFilter2[i] = zero;
@@ -1115,7 +1128,7 @@ int main(){
 	fftwf_execute(forwardPlanSignal);
 	fftwf_execute(forwardPlanFilter);
 
-	for (int i = 0; i < Nfft; i++){
+	for (int i = 0; i < M; i++){
 		// mySignal2_fft = mySignal2_fft*myFilter2_fft;
 		float A = mySignal2_fft[i].x;
 		float B = mySignal2_fft[i].y;
@@ -1132,13 +1145,13 @@ int main(){
 	// myConv2 from fftwf must be time reversed and scaled
 	// to match Matlab, myConv1, myConv3, myConv4 and myConv5
 	cufftComplex result;
-	for (int i = 0; i < Nfft; i++){
-		result.x = myConv2_timeReversed[Nfft-i].x/Nfft;
-		result.y = myConv2_timeReversed[Nfft-i].y/Nfft;
+	for (int i = 0; i < M; i++){
+		result.x = myConv2_timeReversed[M-i].x/M;
+		result.y = myConv2_timeReversed[M-i].y/M;
 		myConv2[i] = result;
 	}
-	result.x = myConv2_timeReversed[0].x/Nfft;
-	result.y = myConv2_timeReversed[0].y/Nfft;
+	result.x = myConv2_timeReversed[0].x/M;
+	result.y = myConv2_timeReversed[0].y/M;
 	myConv2[0] = result;
 
 	fftwf_destroy_plan(forwardPlanSignal);
@@ -1149,65 +1162,65 @@ int main(){
 	/**
 	 * Time-domain Convolution GPU Using Global Memory
 	 */
-	cudaMemcpy(dev_mySignal3, mySignal1, sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter3, myFilter1, sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_mySignal3, mySignal1, sizeof(cufftComplex)*N, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter3, myFilter1, sizeof(cufftComplex)*L, cudaMemcpyHostToDevice);
 
-	int numTreadsPerBlock = 512;
-	int numBlocks = myConvLength/numTreadsPerBlock;
-	if(myConvLength % numTreadsPerBlock > 0)
-		numBlocks++;
-	ConvGPU<<<numBlocks, numTreadsPerBlock>>>(dev_myConv3, dev_mySignal3, dev_myFilter3, mySignalLength, myFilterLength);
+	int T_B = 512;
+	int B = C/T_B;
+	if(C % T_B > 0)
+		B++;
+	ConvGPU<<<B, T_B>>>(dev_myConv3, dev_mySignal3, dev_myFilter3, N, L);
 
-	cudaMemcpy(myConv3, dev_myConv3, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	cudaMemcpy(myConv3, dev_myConv3, C*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
 
 
 	/**
 	 * Time-domain Convolution GPU Using Shared Memory
 	 */
-	cudaMemcpy(dev_mySignal4, mySignal1, sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter4, myFilter1, sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_mySignal4, mySignal1, sizeof(cufftComplex)*N, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter4, myFilter1, sizeof(cufftComplex)*L, cudaMemcpyHostToDevice);
 
-	numTreadsPerBlock = 512;
-	numBlocks = myConvLength/numTreadsPerBlock;
-	if(myConvLength % numTreadsPerBlock > 0)
-		numBlocks++;
-	ConvGPUshared<<<numBlocks, numTreadsPerBlock,myFilterLength*sizeof(cufftComplex)>>>(dev_myConv4, dev_mySignal4, dev_myFilter4, mySignalLength, myFilterLength);
+	T_B = 512;
+	B = C/T_B;
+	if(C % T_B > 0)
+		B++;
+	ConvGPUshared<<<B, T_B,L*sizeof(cufftComplex)>>>(dev_myConv4, dev_mySignal4, dev_myFilter4, N, L);
 
-	cudaMemcpy(myConv4, dev_myConv4, myConvLength*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	cudaMemcpy(myConv4, dev_myConv4, C*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
 
 
 	/**
 	 * Frequency-domain Convolution GPU
 	 */
 	cufftHandle plan;
-	int n[1] = {Nfft};
+	int n[1] = {M};
 	cufftPlanMany(&plan,1,n,NULL,1,1,NULL,1,1,CUFFT_C2C,1);
 
-	cudaMemset(dev_mySignal5, 0, 	     Nfft*sizeof(cufftComplex));
-	cudaMemset(dev_myFilter5, 0, 	     Nfft*sizeof(cufftComplex));
+	cudaMemset(dev_mySignal5, 0, 	     M*sizeof(cufftComplex));
+	cudaMemset(dev_myFilter5, 0, 	     M*sizeof(cufftComplex));
 
-	cudaMemcpy(dev_mySignal5, mySignal2, Nfft*sizeof(cufftComplex), cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter5, myFilter2, Nfft*sizeof(cufftComplex), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_mySignal5, mySignal2, M*sizeof(cufftComplex), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter5, myFilter2, M*sizeof(cufftComplex), cudaMemcpyHostToDevice);
 
 	cufftExecC2C(plan, dev_mySignal5, dev_mySignal5, CUFFT_FORWARD);
 	cufftExecC2C(plan, dev_myFilter5, dev_myFilter5, CUFFT_FORWARD);
 
-	numTreadsPerBlock = 512;
-	numBlocks = Nfft/numTreadsPerBlock;
-	if(Nfft % numTreadsPerBlock > 0)
-		numBlocks++;
-	PointToPointMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal5, dev_myFilter5, Nfft);
+	T_B = 512;
+	B = M/T_B;
+	if(M % T_B > 0)
+		B++;
+	PointToPointMultiply<<<B, T_B>>>(dev_mySignal5, dev_myFilter5, M);
 
 	cufftExecC2C(plan, dev_mySignal5, dev_mySignal5, CUFFT_INVERSE);
 
-	numTreadsPerBlock = 128;
-	numBlocks = Nfft/numTreadsPerBlock;
-	if(Nfft % numTreadsPerBlock > 0)
-		numBlocks++;
-	float scalar = 1.0/((float)Nfft);
-	ScalarMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal5, scalar, Nfft);
+	T_B = 128;
+	B = M/T_B;
+	if(M % T_B > 0)
+		B++;
+	float scalar = 1.0/((float)M);
+	ScalarMultiply<<<B, T_B>>>(dev_mySignal5, scalar, M);
 
-	cudaMemcpy(myConv5, dev_mySignal5, Nfft*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	cudaMemcpy(myConv5, dev_mySignal5, M*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
 
 	cufftDestroy(plan);
 
@@ -1358,17 +1371,17 @@ __global__ void ScalarMultiply(cufftComplex* vec0, float scalar, int lastThread)
 }
 
 int main(){
-	int numBatches     = 3104;
-	int mySignalLength = 12672;
-	int myFilterLength = 186;
-	int myConvLength   = mySignalLength + myFilterLength - 1;
-	int Nfft           = pow(2, ceil(log(myConvLength)/log(2)));
+	int numBatches = 3104;
+	int N = 12672;
+	int L = 186;
+	int C = N + L - 1;
+	int M = pow(2, ceil(log(C)/log(2)));
 	int maxThreads;
-	int numTreadsPerBlock;
-	int numBlocks;
+	int T_B;
+	int B;
 
 	cufftHandle plan;
-	int n[1] = {Nfft};
+	int n[1] = {M};
 	cufftPlanMany(&plan,1,n,NULL,1,1,NULL,1,1,CUFFT_C2C,numBatches);
 
 	// Allocate memory on host
@@ -1379,21 +1392,21 @@ int main(){
 	cufftComplex *myConv1;
 	cufftComplex *myConv2;
 	cufftComplex *myConv3;
-	mySignal1      = (cufftComplex*) malloc(mySignalLength*numBatches*sizeof(cufftComplex));
-	mySignal1_pad  = (cufftComplex*) malloc(Nfft		  *numBatches*sizeof(cufftComplex));
-	myFilter1      = (cufftComplex*) malloc(myFilterLength*numBatches*sizeof(cufftComplex));
-	myFilter1_pad  = (cufftComplex*) malloc(Nfft	      *numBatches*sizeof(cufftComplex));
-	myConv1        = (cufftComplex*) malloc(myConvLength  *numBatches*sizeof(cufftComplex));
-	myConv2        = (cufftComplex*) malloc(myConvLength  *numBatches*sizeof(cufftComplex));
-	myConv3        = (cufftComplex*) malloc(Nfft		  *numBatches*sizeof(cufftComplex));
+	mySignal1      = (cufftComplex*) malloc(N*numBatches*sizeof(cufftComplex));
+	mySignal1_pad  = (cufftComplex*) malloc(M*numBatches*sizeof(cufftComplex));
+	myFilter1      = (cufftComplex*) malloc(L*numBatches*sizeof(cufftComplex));
+	myFilter1_pad  = (cufftComplex*) malloc(M*numBatches*sizeof(cufftComplex));
+	myConv1        = (cufftComplex*) malloc(C*numBatches*sizeof(cufftComplex));
+	myConv2        = (cufftComplex*) malloc(C*numBatches*sizeof(cufftComplex));
+	myConv3        = (cufftComplex*) malloc(M*numBatches*sizeof(cufftComplex));
 
 	srand(time(0));
-	for(int i = 0; i < mySignalLength; i++){
+	for(int i = 0; i < N; i++){
 		mySignal1[i].x = rand()%100-50;
 		mySignal1[i].y = rand()%100-50;
 	}
 
-	for(int i = 0; i < myFilterLength; i++){
+	for(int i = 0; i < L; i++){
 		myFilter1[i].x = rand()%100-50;
 		myFilter1[i].y = rand()%100-50;
 	}
@@ -1401,18 +1414,18 @@ int main(){
 	cufftComplex zero;
 	zero.x = 0;
 	zero.y = 0;
-	for(int i = 0; i<Nfft*numBatches; i++){
+	for(int i = 0; i<M*numBatches; i++){
 		mySignal1_pad[i] = zero;
 		myFilter1_pad[i] = zero;
 	}
 	for(int batch=0; batch < numBatches; batch++){
-		for(int i = 0; i < mySignalLength; i++){
-			mySignal1[batch*mySignalLength+i] = mySignal1[i];
-			mySignal1_pad[batch*Nfft+i] = mySignal1[i];
+		for(int i = 0; i < N; i++){
+			mySignal1[batch*N+i] = mySignal1[i];
+			mySignal1_pad[batch*M+i] = mySignal1[i];
 		}
-		for(int i = 0; i < myFilterLength; i++){
-			myFilter1[batch*myFilterLength+i] = myFilter1[i];
-			myFilter1_pad[batch*Nfft+i] = myFilter1[i];
+		for(int i = 0; i < L; i++){
+			myFilter1[batch*L+i] = myFilter1[i];
+			myFilter1_pad[batch*M+i] = myFilter1[i];
 		}
 	}
 
@@ -1426,71 +1439,71 @@ int main(){
 	cufftComplex *dev_myConv1;
 	cufftComplex *dev_myConv2;
 	cufftComplex *dev_myConv3;
-	cudaMalloc(&dev_mySignal1, mySignalLength*numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_mySignal2, mySignalLength*numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_mySignal3, Nfft		     *numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter1, myFilterLength*numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter2, myFilterLength*numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_myFilter3, Nfft			 *numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv1,   myConvLength  *numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv2,   myConvLength  *numBatches*sizeof(cufftComplex));
-	cudaMalloc(&dev_myConv3,   Nfft  		 *numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal1, N*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal2, N*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_mySignal3, M*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter1, L*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter2, L*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_myFilter3, M*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv1,   C*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv2,   C*numBatches*sizeof(cufftComplex));
+	cudaMalloc(&dev_myConv3,   M*numBatches*sizeof(cufftComplex));
 
 	/**
 	 * Time-domain Convolution GPU Using Global Memory
 	 */
-	cudaMemcpy(dev_mySignal1, mySignal1, numBatches*sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter1, myFilter1, numBatches*sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_mySignal1, mySignal1, numBatches*sizeof(cufftComplex)*N, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter1, myFilter1, numBatches*sizeof(cufftComplex)*L, cudaMemcpyHostToDevice);
 
-	maxThreads = myConvLength*numBatches;
-	numTreadsPerBlock = 128;
-	numBlocks = maxThreads/numTreadsPerBlock;
-	if(maxThreads % numTreadsPerBlock > 0)
-		numBlocks++;
-	ConvGPU<<<numBlocks, numTreadsPerBlock>>>(dev_myConv1, dev_mySignal1, dev_myFilter1, mySignalLength, myFilterLength, maxThreads);
+	maxThreads = C*numBatches;
+	T_B = 128;
+	B = maxThreads/T_B;
+	if(maxThreads % T_B > 0)
+		B++;
+	ConvGPU<<<B, T_B>>>(dev_myConv1, dev_mySignal1, dev_myFilter1, N, L, maxThreads);
 
-	cudaMemcpy(myConv1, dev_myConv1, myConvLength*numBatches*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	cudaMemcpy(myConv1, dev_myConv1, C*numBatches*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
 
 	/**
 	 * Time-domain Convolution GPU Using Shared Memory
 	 */
-	cudaMemcpy(dev_mySignal2, mySignal1, numBatches*sizeof(cufftComplex)*mySignalLength, cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter2, myFilter1, numBatches*sizeof(cufftComplex)*myFilterLength, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_mySignal2, mySignal1, numBatches*sizeof(cufftComplex)*N, cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter2, myFilter1, numBatches*sizeof(cufftComplex)*L, cudaMemcpyHostToDevice);
 
-	maxThreads = myConvLength*numBatches;
-	numTreadsPerBlock = 256;
-	numBlocks = maxThreads/numTreadsPerBlock;
-	if(maxThreads % numTreadsPerBlock > 0)
-		numBlocks++;
-	ConvGPUshared<<<numBlocks, numTreadsPerBlock, myFilterLength*sizeof(cufftComplex)>>>(dev_myConv2, dev_mySignal2, dev_myFilter2, mySignalLength, myFilterLength,maxThreads);
+	maxThreads = C*numBatches;
+	T_B = 256;
+	B = maxThreads/T_B;
+	if(maxThreads % T_B > 0)
+		B++;
+	ConvGPUshared<<<B, T_B, L*sizeof(cufftComplex)>>>(dev_myConv2, dev_mySignal2, dev_myFilter2, N, L,maxThreads);
 
-	cudaMemcpy(myConv2, dev_myConv2, myConvLength*numBatches*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	cudaMemcpy(myConv2, dev_myConv2, C*numBatches*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
 
 	/**
 	 * Frequency-domain Convolution GPU
 	 */
-	cudaMemcpy(dev_mySignal3, mySignal1_pad, Nfft*numBatches*sizeof(cufftComplex), cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_myFilter3, myFilter1_pad, Nfft*numBatches*sizeof(cufftComplex), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_mySignal3, mySignal1_pad, M*numBatches*sizeof(cufftComplex), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_myFilter3, myFilter1_pad, M*numBatches*sizeof(cufftComplex), cudaMemcpyHostToDevice);
 
 	cufftExecC2C(plan, dev_mySignal3, dev_mySignal3, CUFFT_FORWARD);
 	cufftExecC2C(plan, dev_myFilter3, dev_myFilter3, CUFFT_FORWARD);
 
-	maxThreads = Nfft*numBatches;
-	numTreadsPerBlock = 96;
-	numBlocks = maxThreads/numTreadsPerBlock;
-	if(maxThreads % numTreadsPerBlock > 0)
-		numBlocks++;
-	PointToPointMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal3, dev_myFilter3, maxThreads);
+	maxThreads = M*numBatches;
+	T_B = 96;
+	B = maxThreads/T_B;
+	if(maxThreads % T_B > 0)
+		B++;
+	PointToPointMultiply<<<B, T_B>>>(dev_mySignal3, dev_myFilter3, maxThreads);
 	cufftExecC2C(plan, dev_mySignal3, dev_mySignal3, CUFFT_INVERSE);
 
-	numTreadsPerBlock = 640;
-	numBlocks = maxThreads/numTreadsPerBlock;
-	if(maxThreads % numTreadsPerBlock > 0)
-		numBlocks++;
-	float scalar = 1.0/((float)Nfft);
-	ScalarMultiply<<<numBlocks, numTreadsPerBlock>>>(dev_mySignal3, scalar, maxThreads);
+	T_B = 640;
+	B = maxThreads/T_B;
+	if(maxThreads % T_B > 0)
+		B++;
+	float scalar = 1.0/((float)M);
+	ScalarMultiply<<<B, T_B>>>(dev_mySignal3, scalar, maxThreads);
 
-	cudaMemcpy(myConv3, dev_mySignal3, Nfft*numBatches*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
+	cudaMemcpy(myConv3, dev_mySignal3, M*numBatches*sizeof(cufftComplex), cudaMemcpyDeviceToHost);
 
 	cufftDestroy(plan);
 

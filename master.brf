@@ -13,10 +13,9 @@
 \backcite {williams2013linear}{{23}{2.2.3}{subsection.2.2.3}}
 \backcite {williams2013linear}{{23}{2.2.3}{section*.11}}
 \backcite {williams2013linear}{{23}{2.2.3}{section*.12}}
-\backcite {CUDA_toolkit_doc}{{26}{3}{chapter.3}}
-\backcite {wikipedia-gpu:2015}{{26}{3}{chapter.3}}
-\backcite {FFTW:2017,cooley1965algorithm}{{41}{3.6}{equation.3.6.5}}
-\backcite {haidar2015optimization}{{49}{3.8}{section.3.8}}
-\backcite {wiki:Sparse_matrix}{{71}{4.1}{equation.4.1.4}}
-\backcite {CUDA_toolkit_doc}{{71}{4.1}{equation.4.1.4}}
-\backcite {hayes:1996}{{71}{4.1}{figure.4.4}}
+\backcite {wikipedia-gpu:2015}{{25}{3}{figure.3.1}}
+\backcite {FFTW:2017,cooley1965algorithm}{{42}{3.2.1}{equation.3.2.5}}
+\backcite {haidar2015optimization}{{48}{3.2.3}{subsection.3.2.3}}
+\backcite {hayes:1996}{{69}{4.1}{equation.4.1.2}}
+\backcite {wiki:Sparse_matrix}{{70}{4.1}{equation.4.1.2}}
+\backcite {CUDA_toolkit_doc}{{70}{4.1}{equation.4.1.2}}

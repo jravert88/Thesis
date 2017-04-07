@@ -1033,7 +1033,7 @@ a = [3104	1	21	0.073376	0.04976	0.197152
 3104	16497	21	39.2876	26.6068	74.0982
 ];
 
-close all
+% close all
 clc
 
 latexWidth =  5;
@@ -1046,6 +1046,7 @@ x = a(:,2);
 [gpu_shared xgpu_shared]= minWindows(x,a(:,5),numToMin);
 [gpu_fft    xgpu_fft]   = minWindows(x,a(:,6),numToMin);
 
+figure(1); clf
 plot(xgpu,gpu); hold on
 plot(xgpu_shared,gpu_shared)
 plot(xgpu_fft,gpu_fft)
@@ -1068,4 +1069,53 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
+print(ff, '-depsc', ['CPUvsGPU_3104batch_21taps_varySignal']) %save as eps a
+
+
+figure(2); clf;
+plot(xgpu,gpu,'k-',xgpu_shared,gpu_shared,'k--',xgpu_fft,gpu_fft,'k-.');
+% hold on
+% plot(xcpu_fft,cpu_fft)
+% plot(xgpu,gpu)
+% plot(xgpu_shared,gpu_shared)
+% plot(xgpu_fft,gpu_fft)
+grid on
+axis tight
+marge = axis;
+axis([marge(1) marge(2) marge(3:4)])
+ax = gca;
+legend('Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+% title('Convolution CPU vs GPU 10 tap filter')
+xlabel('signal length')
+ylabel('time (ms)')
+
+ax.FontName = 'Times New Roman';
+% ax.Children(4).LineWidth = 1.25; %frequency domain CPU
+% ax.Children(1).LineWidth = 1.25; %frequency domain GPU
+% ax.Children(4).Color = 0.5*[1 1 1];
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+drawnow
+% return
+
+% ax2 = axes('Position',[0.56 0.21 0.3 0.15]);
+% plot(xcpu_fft,cpu_fft,'k-',...
+%     xgpu,gpu,'k--',xgpu_shared,gpu_shared,'k-.',xgpu_fft,gpu_fft,'k--');
+% grid on;
+% ax2.Children(4).LineWidth = 1.25; %frequency domain CPU
+% ax2.Children(4).Color = 0.5*[1 1 1];
+% ax2.Children(1).LineWidth = 1.25; %frequency domain GPU
+% axis([150 200 0 1]);
+% ax2.FontSize = 6;
+% ax2.FontName = 'Times New Roman';
+% ax2.XTick = [150 175 200];
+% % ax2.XTickLabel = {'9000','12000','15000'};
+
+
 print(ff, '-depsc', ['CPUvsGPU_3104batch_21taps_varySignal']) %save as eps a

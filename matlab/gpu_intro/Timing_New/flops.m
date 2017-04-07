@@ -22,8 +22,7 @@ end
 latexWidth = 5;
 latexHeight = 4;
 figure(loops)
-plot(N,convFlops, N,fftFlops); grid on
-marge = axis;
+plot(N,convFlops,'k-', N,fftFlops,'k--'); grid on
 marge = axis;
 axis([0 16497 marge(3:4)])
 ax = gca;
@@ -64,7 +63,7 @@ for i = 1:length(L)
 end
 % return
 
-plot(L,convFlops, L,fftFlops); grid on
+plot(L,convFlops,'k-', L,fftFlops,'k--'); grid on
 marge = axis;
 axis([1 381 marge(3:4)])
 ax = gca;

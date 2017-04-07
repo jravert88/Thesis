@@ -1089,7 +1089,7 @@ a = [1	1	21	0.008384	0.007776	0.070528	0.047136	0.136384
 1	17393	21	0.811136	1.91494	0.306752	0.272512	0.7504
 ];
 
-close all
+% close all
 clc
 
 latexWidth =  5;
@@ -1104,23 +1104,57 @@ x = a(:,2);
 [gpu_shared xgpu_shared]= minWindows(x,a(:,7),numToMin);
 [gpu_fft    xgpu_fft]   = minWindows(x,a(:,8),numToMin);
 
+% figure(1); clf
+% plot(xcpu,cpu);
+% hold on
+% plot(xcpu_fft,cpu_fft)
+% plot(xgpu,gpu)
+% plot(xgpu_shared,gpu_shared)
+% plot(xgpu_fft,gpu_fft)
+% grid on
+% axis tight
+% marge = axis;
+% axis([marge(1) 16497 marge(3:4)])
+% ax = gca;
+% legend('Time Domain CPU','Frequency Domain  CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+% xlabel('signal length')
+% ylabel('time (ms)')
+% 
+% ax.FontName = 'Times New Roman';
+% 
+% ff = gcf;
+% homer = ff.Units;
+% ff.Units = 'inches';
+% bart = ff.Position;
+% ff.Position = [bart(1:2) latexWidth latexHeight];
+% ff.PaperPositionMode = 'auto';
+% ff.Units = homer;
+% drawnow
+% print(ff, '-depsc', ['CPUvsGPU_1batch_21taps_varySignal']) %save as eps a
 
-plot(xcpu,cpu);
-hold on
-plot(xcpu_fft,cpu_fft)
-plot(xgpu,gpu)
-plot(xgpu_shared,gpu_shared)
-plot(xgpu_fft,gpu_fft)
+
+figure(2); clf;
+plot(xcpu,cpu,'k-',xcpu_fft,cpu_fft,'k-',...
+    xgpu,gpu,'k--',xgpu_shared,gpu_shared,'k-.',xgpu_fft,gpu_fft,'k--');
+% hold on
+% plot(xcpu_fft,cpu_fft)
+% plot(xgpu,gpu)
+% plot(xgpu_shared,gpu_shared)
+% plot(xgpu_fft,gpu_fft)
 grid on
 axis tight
 marge = axis;
 axis([marge(1) 16497 marge(3:4)])
 ax = gca;
 legend('Time Domain CPU','Frequency Domain  CPU','Time Domain GPU global','Time Domain GPU shared','Frequency Domain  GPU','Location', 'NorthWest')
+% title('Convolution CPU vs GPU 10 tap filter')
 xlabel('signal length')
 ylabel('time (ms)')
 
 ax.FontName = 'Times New Roman';
+ax.Children(4).LineWidth = 1.25; %frequency domain CPU
+ax.Children(1).LineWidth = 1.25; %frequency domain GPU
+ax.Children(4).Color = 0.5*[1 1 1];
 
 ff = gcf;
 homer = ff.Units;
@@ -1130,4 +1164,19 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
+
+% ax2 = axes('Position',[0.56 0.3 0.3 0.15]);
+% plot(xcpu_fft,cpu_fft,'k-',...
+%     xgpu,gpu,'k--',xgpu_shared,gpu_shared,'k-.',xgpu_fft,gpu_fft,'k--');
+% grid on;
+% ax2.Children(4).LineWidth = 1.25; %frequency domain CPU
+% ax2.Children(4).Color = 0.5*[1 1 1];
+% ax2.Children(1).LineWidth = 1.25; %frequency domain GPU
+% axis([9000 15000 0 1]);
+% ax2.FontSize = 6;
+% ax2.FontName = 'Times New Roman';
+% ax2.XTick = [9000 12000 15000];
+% ax2.XTickLabel = {'9000','12000','15000'};
+
+
 print(ff, '-depsc', ['CPUvsGPU_1batch_21taps_varySignal']) %save as eps a

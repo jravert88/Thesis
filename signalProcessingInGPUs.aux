@@ -1,116 +1,117 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
+\citation{wikipedia-gpu:2015}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}Signal Processing in GPUs}{25}{chapter.3}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{chap:gpu}{{3}{25}{Signal Processing in GPUs}{chapter.3}{}}
-\citation{CUDA_toolkit_doc}
-\citation{wikipedia-gpu:2015}
-\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{26}{3}{chapter.3}}}
-\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{26}{3}{chapter.3}}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Simple GPU code example}{26}{section.3.1}}
-\newlabel{fig:CPUaddBlockDiagram}{{3.1}{27}{Simple GPU code example}{equation.3.1.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{27}{figure.3.1}}
-\newlabel{fig:GPUaddBlockDiagram}{{3.1}{27}{Simple GPU code example}{figure.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{27}{figure.3.2}}
+\@writefile{brf}{\backcite{wikipedia-gpu:2015}{{25}{3}{figure.3.1}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{26}{figure.3.1}}
+\newlabel{fig:GPUpicture}{{3.1}{26}{Signal Processing in GPUs}{figure.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}GPU and CUDA Introduction}{26}{section.3.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}CPU verse CUDA example}{26}{subsection.3.1.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{27}{figure.3.2}}
+\newlabel{fig:CPUaddBlockDiagram}{{3.2}{27}{CPU verse CUDA example}{figure.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{27}{figure.3.3}}
+\newlabel{fig:GPUaddBlockDiagram}{{3.3}{27}{CPU verse CUDA example}{figure.3.3}{}}
 \newlabel{code:GPUvsCPU}{{3.1}{28}{Comparison of CPU verse GPU code}{lstlisting.3.1}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}Comparison of CPU verse GPU code.}{28}{lstlisting.3.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}GPU kernel using threads and thread blocks}{29}{section.3.2}}
-\newlabel{fig:threadsBlocks32}{{3.2}{30}{GPU kernel using threads and thread blocks}{section.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Block $0$ $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{30}{figure.3.3}}
-\newlabel{fig:threadsBlocks36}{{3.2}{30}{GPU kernel using threads and thread blocks}{figure.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{30}{figure.3.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}GPU Execution and Memory}{30}{section.3.3}}
-\newlabel{sec:GPU_memory}{{3.3}{30}{GPU Execution and Memory}{section.3.3}{}}
-\newlabel{fig:MemoryPyramid}{{3.3}{31}{GPU Execution and Memory}{section.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{31}{figure.3.5}}
-\newlabel{fig:fullGPUmemBlockDiagram}{{3.3}{31}{GPU Execution and Memory}{figure.3.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{31}{figure.3.6}}
-\newlabel{fig:GPUpicture}{{3.3}{32}{GPU Execution and Memory}{figure.3.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{32}{figure.3.7}}
-\newlabel{fig:GPUarch}{{3.3}{33}{GPU Execution and Memory}{figure.3.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces Example of an NVIDIA GPU card. The SRAM is shown to be boxed in yellow. The GPU chip is shown to be boxed in red.}}{33}{figure.3.8}}
-\newlabel{tab:gpu-resources_jeffs}{{3.3}{33}{GPU Execution and Memory}{figure.3.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The computational resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c).}}{33}{table.3.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Thread Optimization}{33}{section.3.4}}
-\newlabel{code:threadTiming}{{3.2}{35}{Code snippet for thread optimization}{lstlisting.3.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}Code snippet for thread optimization.}{35}{lstlisting.3.2}}
-\newlabel{fig:ConvGPU_shared_12672_186taps}{{3.4}{36}{Thread Optimization}{lstnumber.3.2.27}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ms at the optimal $96$ threads per block.}}{36}{figure.3.9}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}CPU GPU Pipelining}{36}{section.3.5}}
-\newlabel{fig:ConvGPU_global_12672_186taps}{{3.4}{37}{Thread Optimization}{figure.3.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{37}{figure.3.10}}
-\newlabel{fig:concurrentCPU_nonBlocking}{{3.5}{37}{CPU GPU Pipelining}{section.3.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref  {code:noPipe}.}}{37}{figure.3.11}}
-\newlabel{fig:concurrentCPU_blocking}{{3.5}{38}{CPU GPU Pipelining}{lstnumber.3.3.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref  {code:pipe}.}}{38}{figure.3.12}}
-\newlabel{code:noPipe}{{3.3}{38}{Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.3.3}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.3}Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{38}{lstlisting.3.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}GPU kernel using threads and thread blocks}{29}{subsection.3.1.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{30}{figure.3.4}}
+\newlabel{fig:threadsBlocks32}{{3.4}{30}{GPU kernel using threads and thread blocks}{figure.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{30}{figure.3.5}}
+\newlabel{fig:threadsBlocks36}{{3.5}{30}{GPU kernel using threads and thread blocks}{figure.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}GPU Memory}{30}{subsection.3.1.3}}
+\newlabel{sec:GPU_memory}{{3.1.3}{30}{GPU Memory}{subsection.3.1.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{31}{figure.3.6}}
+\newlabel{fig:MemoryPyramid}{{3.6}{31}{GPU Memory}{figure.3.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The GPU chip with registers, L1 cache and shared memory is shown in the dashed box. The L2 cache and global memory is shown off chip in the solid boxes.}}{31}{figure.3.7}}
+\newlabel{fig:GPUarch}{{3.7}{31}{GPU Memory}{figure.3.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{32}{figure.3.8}}
+\newlabel{fig:fullGPUmemBlockDiagram}{{3.8}{32}{GPU Memory}{figure.3.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Thread Optimization}{32}{subsection.3.1.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c). Note that CUDA configures the size of the L1 cache needed.}}{33}{table.3.1}}
+\newlabel{tab:gpu-resources_jeffs}{{3.1}{33}{GPU Memory}{table.3.1}{}}
+\newlabel{code:threadTiming}{{3.2}{34}{Code snippet for thread optimization}{lstlisting.3.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}Code snippet for thread optimization.}{34}{lstlisting.3.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ ms at the optimal $96$ threads per block.}}{35}{figure.3.9}}
+\newlabel{fig:ConvGPU_shared_12672_186taps}{{3.9}{35}{Thread Optimization}{figure.3.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.5}CPU and GPU Pipelining}{35}{subsection.3.1.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{36}{figure.3.10}}
+\newlabel{fig:ConvGPU_global_12672_186taps}{{3.10}{36}{Thread Optimization}{figure.3.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref  {code:noPipe}.}}{36}{figure.3.11}}
+\newlabel{fig:concurrentCPU_blocking}{{3.11}{36}{CPU and GPU Pipelining}{figure.3.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref  {code:pipe}.}}{37}{figure.3.12}}
+\newlabel{fig:concurrentCPU_nonBlocking}{{3.12}{37}{CPU and GPU Pipelining}{figure.3.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{38}{figure.3.13}}
+\newlabel{fig:concurrentCPU_nonBlocking_multiGPU}{{3.13}{38}{CPU and GPU Pipelining}{figure.3.13}{}}
+\newlabel{code:noPipe}{{3.3}{39}{Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.3.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.3}Example code Simple example of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{39}{lstlisting.3.3}}
 \newlabel{code:pipe}{{3.4}{39}{Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data}{lstlisting.3.4}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {3.4}Example code Simple of the CPU acquiring data from myADC, copying from host to device, processing data on the device then copying from device to host. No processing occurs on device while CPU is acquiring data.}{39}{lstlisting.3.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}GPU Convolution}{39}{section.3.6}}
-\newlabel{chap:gpu_convolution}{{3.6}{39}{GPU Convolution}{section.3.6}{}}
-\newlabel{eq:simple_conv_time}{{3.2}{39}{GPU Convolution}{equation.3.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}GPU Convolution}{40}{section.3.2}}
+\newlabel{chap:gpu_convolution}{{3.2}{40}{GPU Convolution}{section.3.2}{}}
+\newlabel{eq:simple_conv_time}{{3.2}{40}{GPU Convolution}{equation.3.2.2}{}}
+\newlabel{eq:simple_conv_freq}{{3.3}{40}{GPU Convolution}{equation.3.2.3}{}}
 \citation{FFTW:2017,cooley1965algorithm}
-\newlabel{fig:concurrentCPU_nonBlocking_multiGPU}{{3.5}{40}{CPU GPU Pipelining}{lstnumber.3.4.30}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{40}{figure.3.13}}
-\newlabel{eq:simple_conv_freq}{{3.3}{40}{GPU Convolution}{equation.3.6.3}{}}
-\newlabel{eq:flops_time_domain_conv}{{3.5}{40}{GPU Convolution}{equation.3.6.5}{}}
-\@writefile{brf}{\backcite{FFTW:2017,cooley1965algorithm}{{41}{3.6}{equation.3.6.5}}}
-\newlabel{eq:flops_freq_domain_conv}{{3.6}{41}{GPU Convolution}{equation.3.6.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.7}CPU and GPU Single Batch Convolution}{41}{section.3.7}}
-\newlabel{sec:cuda_convolution_single}{{3.7}{41}{CPU and GPU Single Batch Convolution}{section.3.7}{}}
-\newlabel{fig:Theory12672signal_flops}{{3.6}{42}{GPU Convolution}{equation.3.6.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.14}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a varied length tap complex filter.}}{42}{figure.3.14}}
-\newlabel{fig:Theory186Tap_flops}{{3.6}{43}{GPU Convolution}{figure.3.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a varied length complex signal with a $186$ tap complex filter.}}{43}{figure.3.15}}
-\newlabel{fig:Theory21Tap_flops}{{3.6}{44}{GPU Convolution}{figure.3.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a varied length complex signal with a $21$ tap complex filter.}}{44}{figure.3.16}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{45}{table.3.2}}
-\newlabel{tab:CPUvsGPUtimingTable}{{3.2}{45}{CPU and GPU Single Batch Convolution}{table.3.2}{}}
-\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}{{3.7}{45}{CPU and GPU Single Batch Convolution}{table.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.17}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{45}{figure.3.17}}
-\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal}{{3.7}{46}{CPU and GPU Single Batch Convolution}{figure.3.17}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in $15$ sample width windows.}}{46}{figure.3.18}}
-\newlabel{fig:CPUvsGPU_1batch_21taps_varySignal}{{3.7}{47}{CPU and GPU Single Batch Convolution}{figure.3.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.19}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is varied and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in $5$ sample width windows.}}{47}{figure.3.19}}
-\newlabel{fig:CPUvsGPU_1batch_12672signal_varyFilter}{{3.7}{48}{CPU and GPU Single Batch Convolution}{figure.3.19}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.20}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is varied and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in $3$ sample width windows.}}{48}{figure.3.20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.14}{\ignorespaces Block diagrams showing showing time-domain convolution and frequency-domain convolution.}}{41}{figure.3.14}}
+\newlabel{fig:freq_time_block}{{3.14}{41}{GPU Convolution}{figure.3.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Floating Point Operation Comparison}{41}{subsection.3.2.1}}
+\newlabel{eq:flops_time_domain_conv}{{3.5}{41}{Floating Point Operation Comparison}{equation.3.2.5}{}}
+\@writefile{brf}{\backcite{FFTW:2017,cooley1965algorithm}{{42}{3.2.1}{equation.3.2.5}}}
+\newlabel{eq:flops_freq_domain_conv}{{3.6}{42}{Floating Point Operation Comparison}{equation.3.2.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}CPU and GPU Single Batch Convolution Comparison}{42}{subsection.3.2.2}}
+\newlabel{sec:cuda_convolution_single}{{3.2.2}{42}{CPU and GPU Single Batch Convolution Comparison}{subsection.3.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $186$ tap complex filter.}}{43}{figure.3.15}}
+\newlabel{fig:Theory186Tap_flops}{{3.15}{43}{Floating Point Operation Comparison}{figure.3.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $21$ tap complex filter.}}{44}{figure.3.16}}
+\newlabel{fig:Theory21Tap_flops}{{3.16}{44}{Floating Point Operation Comparison}{figure.3.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:convFun}.}}{44}{table.3.2}}
+\newlabel{tab:CPUvsGPUtimingTable}{{3.2}{44}{CPU and GPU Single Batch Convolution Comparison}{table.3.2}{}}
 \citation{haidar2015optimization}
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{49}{table.3.3}}
-\newlabel{tab:CPUvsGPUtable_12672_186}{{3.3}{49}{CPU and GPU Single Batch Convolution}{table.3.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.4}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{49}{table.3.4}}
-\newlabel{tab:CPUvsGPUtable_12672_21}{{3.4}{49}{CPU and GPU Single Batch Convolution}{table.3.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.8}Batched Convolution}{49}{section.3.8}}
-\@writefile{brf}{\backcite{haidar2015optimization}{{49}{3.8}{section.3.8}}}
-\newlabel{fig:CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch}{{3.8}{50}{Batched Convolution}{section.3.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.21}{\ignorespaces Comparison on execution time per batch for complex convolution. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{50}{figure.3.21}}
-\newlabel{fig:CPUvsGPU_varyBatches_186taps_12672signal}{{3.8}{51}{Batched Convolution}{figure.3.21}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.22}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is varied while the signal and filter length is set to $12672$ and $186$.}}{51}{figure.3.22}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.5}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref  {code:batchedConvFun}.}}{52}{table.3.5}}
-\newlabel{tab:BatchedGPUtimingTable}{{3.5}{52}{Batched Convolution}{table.3.5}{}}
-\newlabel{fig:CPUvsGPU_3104batch_186taps_varySignal}{{3.8}{52}{Batched Convolution}{table.3.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.23}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $186$ taps.}}{52}{figure.3.23}}
-\newlabel{fig:CPUvsGPU_3104batch_21taps_varySignal}{{3.8}{53}{Batched Convolution}{figure.3.23}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.24}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is varied and the filter is fixed at $21$ taps.}}{53}{figure.3.24}}
-\newlabel{fig:CPUvsGPU_3104batch_12672signal_varyFilter}{{3.8}{54}{Batched Convolution}{figure.3.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.25}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is varied and the signal length is set at $12672$ samples.}}{54}{figure.3.25}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.6}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{55}{table.3.6}}
-\newlabel{tab:Batched_CPUvsGPUtable_12672_186}{{3.6}{55}{Batched Convolution}{table.3.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.7}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{55}{table.3.7}}
-\newlabel{tab:Batched_CPUvsGPUtable_12672_21}{{3.7}{55}{Batched Convolution}{table.3.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{55}{table.3.8}}
-\newlabel{tab:Batched_CPUvsGPUtable_12672_21_186}{{3.8}{55}{Batched Convolution}{table.3.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.9}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $206$ tap filter on a Tesla K40c GPU.}}{56}{table.3.9}}
-\newlabel{tab:Batched_CPUvsGPUtable_12672_206}{{3.9}{56}{Batched Convolution}{table.3.9}{}}
-\newlabel{fig:twoWaysToConv}{{3.8}{56}{Batched Convolution}{table.3.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.26}{\ignorespaces Two ways to convolve the signal $\mathbf  {r}$ with the $186$ tap filter $\mathbf  {c}$ and $21$ tap filter $\mathbf  {d}$.}}{56}{figure.3.26}}
-\newlabel{code:convFun}{{3.5}{57}{CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU}{lstlisting.3.5}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.5}CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU.}{57}{lstlisting.3.5}}
-\newlabel{code:batchedConvFun}{{3.6}{63}{CUDA code to perform batched complex convolution three different ways in a GPU: time domain using global memory, time domain using shared memory and frequency domain GPU}{lstlisting.3.6}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.6}CUDA code to perform batched complex convolution three different ways in a GPU: time domain using global memory, time domain using shared memory and frequency domain GPU.}{63}{lstlisting.3.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.17}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a variable length tap complex filter.}}{45}{figure.3.17}}
+\newlabel{fig:Theory12672signal_flops}{{3.17}{45}{Floating Point Operation Comparison}{figure.3.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{46}{figure.3.18}}
+\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}{{3.18}{46}{CPU and GPU Single Batch Convolution Comparison}{figure.3.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{46}{table.3.3}}
+\newlabel{tab:CPUvsGPUtable_12672_186}{{3.3}{46}{CPU and GPU Single Batch Convolution Comparison}{table.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.19}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}}{47}{figure.3.19}}
+\newlabel{fig:CPUvsGPU_1batch_186taps_varySignal}{{3.19}{47}{CPU and GPU Single Batch Convolution Comparison}{figure.3.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.4}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{47}{table.3.4}}
+\newlabel{tab:CPUvsGPUtable_12672_21}{{3.4}{47}{CPU and GPU Single Batch Convolution Comparison}{table.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.20}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}}{48}{figure.3.20}}
+\newlabel{fig:CPUvsGPU_1batch_21taps_varySignal}{{3.20}{48}{CPU and GPU Single Batch Convolution Comparison}{figure.3.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Batched Convolution}{48}{subsection.3.2.3}}
+\newlabel{sec:batched_convolution}{{3.2.3}{48}{Batched Convolution}{subsection.3.2.3}{}}
+\@writefile{brf}{\backcite{haidar2015optimization}{{48}{3.2.3}{subsection.3.2.3}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.21}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}}{49}{figure.3.21}}
+\newlabel{fig:CPUvsGPU_1batch_12672signal_varyFilter}{{3.21}{49}{CPU and GPU Single Batch Convolution Comparison}{figure.3.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.5}{\ignorespaces Defining start and stop lines for execution time comparison in Listing \ref  {code:batchedConvFun}.}}{49}{table.3.5}}
+\newlabel{tab:BatchedGPUtimingTable}{{3.5}{49}{Batched Convolution}{table.3.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.22}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{50}{figure.3.22}}
+\newlabel{fig:CPUvsGPU_varyBatches_186taps_12672signal}{{3.22}{50}{Batched Convolution}{figure.3.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.23}{\ignorespaces Comparison on execution time per batch for complex convolution. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{51}{figure.3.23}}
+\newlabel{fig:CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch}{{3.23}{51}{Batched Convolution}{figure.3.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.6}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{51}{table.3.6}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_186}{{3.6}{51}{Batched Convolution}{table.3.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.7}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{51}{table.3.7}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_21}{{3.7}{51}{Batched Convolution}{table.3.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.24}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $186$ taps.}}{52}{figure.3.24}}
+\newlabel{fig:CPUvsGPU_3104batch_186taps_varySignal}{{3.24}{52}{Batched Convolution}{figure.3.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.25}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $21$ taps.}}{53}{figure.3.25}}
+\newlabel{fig:CPUvsGPU_3104batch_21taps_varySignal}{{3.25}{53}{Batched Convolution}{figure.3.25}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{53}{table.3.8}}
+\newlabel{tab:Batched_CPUvsGPUtable_12672_21_186}{{3.8}{53}{Batched Convolution}{table.3.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.26}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is variable and the signal length is set to $12672$ samples.}}{54}{figure.3.26}}
+\newlabel{fig:CPUvsGPU_3104batch_12672signal_varyFilter}{{3.26}{54}{Batched Convolution}{figure.3.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.27}{\ignorespaces Block diagrams showing showing cascaded time-domain convolution and frequency-domain convolution.}}{55}{figure.3.27}}
+\newlabel{fig:freq_time_block_cascade}{{3.27}{55}{Batched Convolution}{figure.3.27}{}}
+\newlabel{code:convFun}{{3.5}{56}{CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU}{lstlisting.3.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.5}CUDA code to performing complex convolution five different ways: time domain CPU, frequency domain CPU time domain GPU, time domain GPU using shared memory and frequency domain GPU.}{56}{lstlisting.3.5}}
+\newlabel{code:batchedConvFun}{{3.6}{62}{CUDA code to perform batched complex convolution three different ways in a GPU: time domain using global memory, time domain using shared memory and frequency domain GPU}{lstlisting.3.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.6}CUDA code to perform batched complex convolution three different ways in a GPU: time domain using global memory, time domain using shared memory and frequency domain GPU.}{62}{lstlisting.3.6}}
 \@setckpt{signalProcessingInGPUs}{
-\setcounter{page}{68}
+\setcounter{page}{67}
 \setcounter{equation}{6}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -120,13 +121,13 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{3}
-\setcounter{section}{8}
-\setcounter{subsection}{0}
+\setcounter{section}{2}
+\setcounter{subsection}{3}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{26}
-\setcounter{table}{9}
+\setcounter{figure}{27}
+\setcounter{table}{8}
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{0}
 \setcounter{cp@cnt}{0}
@@ -138,7 +139,7 @@
 \setcounter{lotdepth}{1}
 \setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{28}
+\setcounter{bookmark@seq@number}{30}
 \setcounter{lstlisting}{6}
 \setcounter{section@level}{1}
 }

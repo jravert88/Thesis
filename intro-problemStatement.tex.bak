@@ -13,8 +13,8 @@ The receiver compares the received signal with a locally stored copy to estimate
 Data-aided equalizers are finite impulse response filters (FIR). The impulse response of the FIR filters are computed based on the estimated parameters to better mitigate multipath.
 \begin{figure}
 	\centering\includegraphics[width=12.11in/100*50]{figures/intro/Picture1.jpg}
-	\label{fig:multipath}
 	\caption{Multipath can occur when a signal is received multiple paths like line-of-sight or ground bounce or reflections.}
+	\label{fig:multipath}
 \end{figure}
 
 \clearpage
@@ -32,6 +32,7 @@ The five data-aided equalizers the PAQ project studied are
 \item frequency domain equalizer Two (FDE2).
 \end{itemize}
 \subsubsection{Hardware}
+\label{sec:hardware}
 A block diagram of the PAQ project physical system is shown in Figure \ref{fig:hardwareblock}.
 \begin{figure}
 	\centering\includegraphics[width=11.58in/100*55]{figures/systemOverview/hardwareblock.pdf}
@@ -101,7 +102,7 @@ The received signal is down-converted, filtered in the T/M mixer, sampled at $93
 The model of the received signal is shown in Figure \ref{fig:received1}.
 At baseband and $2$ samples/bit, the FIR channel impulse response is assumed to have a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.
 Figure \ref{fig:channelExample} shows the full discrete-time $L_h = N_1+N_2+1$ sample channel.
-The received signal is sampled at $20.625$M samples.
+The received signal is sampled at $20.625$ Msamples/second.
 The iNET packet is $\Lpkt=12672$ samples long with the preamble $L_\text{p}=256$ samples and the ASM $L_\text{ASM}=128$ samples.
 \begin{figure}
 	\centering\includegraphics[width=12.33in/100*50]{figures/intro/received1.pdf}
