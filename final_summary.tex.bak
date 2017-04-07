@@ -1,0 +1,32 @@
+\chapter{Final Summary}
+\label{chap:final_summary}
+Based on measured execution times of GPU kernels, multiple data-aided equalization filters where implemented for the purpose of equalizing an aeronautical telemetry channel.
+Using GPU libraries and batch processing rather than custom designed GPU kernels produced massive speed ups.
+Also, reformulating algorithms into frequency-domain convolution produced impressive speed ups.
+
+\section{Data-aided Equalizer GPU Implementation Results}
+For implementation in one Tesla K40c and two Tesla K20c GPUs, all the equalizers are able to execute in real-time.
+It was shown that the the Frequency Domain Equalizer are the easiest to implement and have the fastest execution time.
+The Constant Modulus Algorithm equalizer was shown to be the hardest to implement and has the slowest execution time.
+The execution time did not provide the Constant Modulus Algorithm the opportunity to iterate many times.
+The Zero Forcing and Minimum Mean Squared Error equalizers was shown to be the challenging to implement but doable and had an acceptable execution time.
+
+\section{Final Data-aided Equalizer GPU Implementation}
+Because data-aided equalizers are implemented for a real-time telemetry receiver system,
+the execution time results must be considered along with the bit error rate performance.
+Despite the performance of the Constant Modulus Algorithm equalizer in AWGN, the execution time per iteration does not grant the equalizer to converge in multipath.
+We recommend that the Frequency Domain Equalizer One be used for the full-time telemetry system, marking the best tradeoff between performance and computational complexity.
+
+\section{Contributions}
+\begin{enumerate}
+\item Implemented algorithms using batch GPU libraries to reduce execution time on average by 5.
+\item Reduced GPU convolution time by using batch GPU librarys and cascading filters in the frequency domain.
+\item Implemented linear solver libraries to make Zero Forcing and Minimum Mean Squared Error equalizers feasible and real-time.
+\item Reformulated the Constant Modulus Algorithm to leverage the speed of GPU convolution.
+\item Implemented new Analog to Digital Converter to drive success of the Preamble Assisted Equalization project.
+\item Implemented halfband and resample polyphase filters in GPUs
+\item Participated heavily in flight tests at Edwards AFB in southern California.
+\item Presented a paper frequency offset compensation for equalized SOQPSK at International Telemetering Conference (ITC) cite blah.
+\end{enumerate}
+
+\section{Further Work}

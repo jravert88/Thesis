@@ -6,104 +6,155 @@
 
 
 % \cleardoublepage
-\chapter{System Overview}
-\label{sec:systemOverview}
-
-
-
-
-
-
+\chapter{Preamble Assisted Equalization Project}
+Data-aided equalization in aeronautical telemetry has been studied and tested by the Preamble Assisted Equalization (PAQ) project \cite{paq-phase1-report:2014}.
+The PAQ project built a TRL 6 system that compares five data-aided equalizers to blind equalization and no equalization \cite{frerkingjpl}.
+Bit error statistics were be used as the figure or merit for the equalization algorithms.
+Live flight tests were conducted at Edwards AFB in March and June 2016.
+The five data-aided equalizers the PAQ project studied are
+\begin{itemize}
+\item zero-forcing (ZF) equalizer
+\item minimum mean square Error (MMSE) equalizer
+\item MMSE initialized constant modulus algorithm (CMA) equalizer
+\item frequency domain equalizer one (FDE1)
+\item frequency domain equalizer Two (FDE2).
+\end{itemize}
+\section{Hardware}
+\label{sec:hardware}
+A block diagram of the PAQ project physical system is shown in Figure \ref{fig:hardwareblock}.
 \begin{figure}
-	\centering\includegraphics[width=11.25in/100*55]{figures/systemOverview/ComputationalFlowBlock.pdf}
-	\label{fig:ComputationalFlowBlock}
-		\caption{Computational Flow Block Diagram.}
+	\centering\includegraphics[width=11.58in/100*55]{figures/systemOverview/hardwareblock.pdf}
+	\caption{A block diagram of the physical PAQ project hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}
+	\label{fig:hardwareblock}
 \end{figure}
-\clearpage
-\begin{sidewaysfigure}
-	\centering\includegraphics[width=12.89in/100*55]{figures/systemOverview/ProcessingBlock_new.pdf}
-	\label{fig:ProcessingBlock_new}
-	\caption{Processing Block Diagram.}
-\end{sidewaysfigure}
+A picture of the physical components is shown in Figure \ref{fig:HostSystem}.
 \begin{figure}
-	\centering\includegraphics[scale=1]{figures/systemOverview/FullSystem.jpg}
-	\label{fig:FullSystem}
-	\caption{Picture of full System.}
-\end{figure}
-
-\begin{figure}
-	\centering\includegraphics[scale=0.5]{figures/systemOverview/HostSystem.jpg}
+	\centering\includegraphics[scale=0.55]{figures/systemOverview/HostSystem.jpg}
+	\caption{A picture of the physical PAQ project hardware refrencing blocks from Figure \ref{fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured.}
 	\label{fig:HostSystem}
-	\caption{Picture of Processing MIGHT!}
 \end{figure}
-%The PAQ system is suited very well for batched processing.
-%Each $1.907$ second set has $3104$ packets or batches of data as shown in Figure \ref{fig:packet_batch_set}.
-%If an operation is done on each packet, available CUDA batched libraries should always be used.
-%For simplicity, every block diagram shown in this chapter only applies to a single batch.
-%Every block diagram is batched and applied to $3104$ iNET packets.
-\begin{figure}
-	\centering\includegraphics[width=5.94in/100*55]{figures/eq_GPUimplementation/packet_batch_set.pdf}
-	\label{fig:packet_batch_set}
-	\caption{Set packet structure.}
-\end{figure}
+The major components, and their functions are summarized in the following.
+\begin{itemize}
+	\item The \textbf{T/M mixer} down-converts from L or C band RF to IF (70 MHz) then applies an anti-aliasing filter.
+	%
+	\item The \textbf{rack mounted server} is a high powered computer that houses an ADC, a FPGA and three GPUs 		slotted into a 32 pin PCIe bus.
+	\item The \textbf{ADC} produces 14-bit samples of the real-valued bandpass signal
+	centered at IF sampled at $93\nicefrac{1}{3}$ Msamples/s.
+	The samples are transferred to the host CPU via the PCIe bus.
+	%
+	\item The \textbf{host CPU} initiates memory transfers between itself and the ADC, GPUs and FPGA via the PCIe 	bus. 
+	The host CPU also launches the digital signal processing algorithms on the GPUs.
+	%
+	\item The three \textbf{GPUs} are where all the detection, estimation, equalization and demodulation resides.
+While the CPU has one to eight powerful processors, GPUs have thousands of small less powerful processors that work in parallel. The signal processing is done in GPUs rather than FPGAs or a CPU because programming GPUs is faster and easier than programming FPGAs and CPUs do not prosess the required processing power.
+	%
+	\item The \textbf{FPGA} receives all the bit streams from the host CPU via the PCIe bus then clocks each 			stream out in parallel to the BERT for BER testing.
+	%
+	\item The bit error rate tester (\textbf{BERT}) counts the errors in each input bit stream by comparing the 		streams to a PN sequence.
+	%
+	\item The \textbf{T/M Receiver} outputs bit streams for blind equalization and no equalization for 					BER comparison.
+\end{itemize}
+%A picture of the rack mounted physical system is shown in Figure \ref{fig:rack}.
+%\begin{figure}
+%	\centering\includegraphics[scale=0.55]{figures/systemOverview/rack.jpg}
+%	\caption{A picture of the physical PAQ project hardware. Note that the T/M Receiver is not pictured.}
+%	\label{fig:rack}
+%\end{figure}
+%A picture of the components inside the rack mounted server is shown in Figure \ref{fig:rack}.
+%\begin{figure}
+%	\centering\includegraphics[scale=0.55]{figures/systemOverview/server.jpg}
+%	\caption{A pictureof the components inside the rack mounted server.}
+%	\label{fig:server}
+%\end{figure}
 
-The received samples in this thesis has the iNET packet structure shown in Figure \ref{fig:packet}.
-The iNET packet consists of a preamble and ASM periodically inserted into the data stream.
-The iNET preamble and ASM bits are inserted every 6144 data bits.
-The received signal is sampled at 2 samples/bit, making an $\Lpkt=12672$ sample iNET packet.
-The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field
+To enable data-aided equalization, the PAQ project bit stream has a packetized structure shown in Figure \ref{fig:packetStructure_intro}.
+The bit stream has a pilot bit sequence, in the form of the iNET preamble and ASM, periodically inserted into the data bits.
+\begin{figure}
+	\centering\includegraphics[width=9.47in/100*55]{figures/intro/packetSturcture.pdf}
+	\caption{A diagram showing the PAQ packetized sample structure.}
+	\label{fig:packetStructure_intro}
+\end{figure}
+The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field is
 \begin{equation}
-034776C72728950B0_\text{hex}.
+\text{034776C7272895B0}_\text{hex}.
 \end{equation}
-Each 16-bit sequence $\text{CD98}_\text{hex}$ sampled at two samples/bit are $L_q=32$ samples long.
+The data payload is a known length-$(2^{11} - 1)$ PN sequence.
+Each packet contains $128$ preamble bits, $64$ ASM bits and $6{,}144$ data bits making each iNET packet $6{,}336$ bits.
+The data bits modulate a SOQPSK-TG carrier at $10$ Mbits/second.
+With the preamble and ASM periodically inserted, the over the air bit rate is $10.3125$ Mbits/second.
+
+After modulation, the transmitted signal experiences multipath interference modeled as the channel $h(t)$.
+The transmitted signal also experiences a frequency offset $\omega_0$, a phase offset $\phi$ and additive white Gaussian noise $w(t)$.
+The received signal is down-converted, filtered in the T/M mixer, sampled at $93\nicefrac{1}{3}$ Msamples/second by the ADC then down-converted again to baseband and resampled by $\nicefrac{99}{448}$ in the GPUs resulting in the sampled sequence $r(n)$ at rate $20.625$ Msamples/second or $2$ samples/bit.
+
+The model of the received signal is shown in Figure \ref{fig:received1}.
+At baseband and $2$ samples/bit, the FIR channel impulse response is assumed to have a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.
+Figure \ref{fig:channelExample} shows the full discrete-time $L_h = N_1+N_2+1$ sample channel.
+The received signal is sampled at $20.625$ Msamples/second.
+The iNET packet is $\Lpkt=12672$ samples long with the preamble $L_\text{p}=256$ samples and the ASM $L_\text{ASM}=128$ samples.
 \begin{figure}
-	\centering\includegraphics[width=9.47in/100*55]{figures/systemOverview/packetStructure.pdf}
-	\label{fig:packet}
-	\caption{The iNET packet structure.}
+	\centering\includegraphics[width=12.33in/100*50]{figures/intro/received1.pdf}
+	\caption{Received signal has multipath interference, frequency offset, phase offset and additive white Gaussian noise. The received signal is down-converted filtered and sampled to produce the sample sequence $r(n)$.}
+	\label{fig:received1}
+\end{figure}
+\begin{figure}
+	\centering\includegraphics[width=5.5in/100*55]{figures/intro/channelExample.pdf}
+	\caption{An illustration of the discrete-time channel of length $N_1+N_2+1$ with a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.}
+	\label{fig:channelExample}
 \end{figure}
 
+\section{Digital Signal Processing}
+\label{sec:signalProcessing}
+A high-level digital signal processing flow is shown in Figure \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
+Because the frequency offset, channel, and noise variance are estimated using the preamble and ASM, the first step is to find the samples correlating to the preamble in the received sample sequence $r(n)$.
+The preamble detector block correlates received samples with $L_\text{P}$ samples of a locally stored copy of the pilot in \eqref{eq:preamble_ASM}.
+The preamble detector block outputs the vector of samples $\mathbf{r}_\text{p}$ with the iNET packetized structure.
+The first $L_\text{P} + L_\text{ASM}$ samples in $\mathbf{r}_\text{p}$ correlate with the received pilot samples.
+\begin{equation}
+\mathbf{p} = \big[ p(0) \quad p(1) \quad \cdots  \quad  p(L_\text{P} + L_\text{ASM}-1) \big]
+\label{eq:preamble_ASM}
+\end{equation}
 
-%\section{Batched Convolution}
-%Chapter \ref{chap:gpu} delved into comparing a single convolution in CPUs and GPUs in the time domain or frequency domain.
-%As talked about in Chapter blah, system overview, We dont only have a packet or batch, we have $3104$ packets or batches.
-%When we perform convolution we convolve $3104$ signals with $3104$ filters.
-%So...
-%How does the problem change?
-%Obviously doing batched convolution in a CPU will not be feasible and wont be considered.
-%
-%Lets stay in GPU land.
-%Should we do convolution in the time domain or the frequency domain?
-%Are there draw backs to staying in the time domain? 
-%If we do convolution in the time domain, should we use shared memory?
-%Are there draw backs for going to the frequency domain? 
-%
-%Get timing of convolution in the time domain global, time domain shared, time domain frequency.
-%
-%There is one very important thing we have over looked...
-%We are doing just one convolution...we are doing two.
-%We have to convolve with the equalizer AND the numerically optimized detection filter $\mathbf{h}_{NO}$.
-%If we stay in the time domain, we have to do two cascaded convolutions.
-%Two convolutions takes...twice the time....
-%If we go to the frequency domain, the point to point or hadamard product is done with 3 inputs rather than 2.
-%Convolving with 2 inputs vs even 10 inputs is about the same.
-%The only required part is performing the FFT on the inputs and performing the $N$ way multiply...
-%
-%Well, $\mathbf{h}_{NO}$ doesn't change, so we compute the FFT of the detection filter $\mathbf{H}_{NO}$ and store it.
-%So doing the convolution requires taking the FFT of 2 vectors $\mathbf{c}$ and $\mathbf{r}$.
-%After the hadamard product, the functions independent of how many filters we are convolving with accept for we may have to trip off different parts depending on what we are convolving with.
-%
-%Optimizing convolution speeds up every equalizer because every equalizer uses convolution...CMA uses convolution twice per iteration. 
-%
-%Chapter \ref{chap:eq_eq} the equalizer equations were conditioned for GPU implementation.
-%This Chapter explains how the equalizers were implemented into GPUs.
-%Block diagrams will be a very helpful tool to display how the GPU kernels flow.
-%
-%CUDA has many functions that are ``batched,'' meaning the GPU can apply the same function to each packet.
-%Don't be confused with the term batch. 
-%In the PAQ system, a ``batch'' is 1.907 seconds of data or $3103$ or $3104$ packets.
-%In CUDA, ``batched'' kernels are GPU kernels that are called $3103$ or $3104$ times to run on each iNET packet.
-%One could say ``The batched kernel runs on a batch of data by processing $3103$ or $3104$ packets.'' 
-%The CUDA number of batches is how many iNET packets are being processed.
-%
-%This sections explains how each equalizer is computed and how the ``numerically optimized'' $H_\text{NO}$ detection filter is applied in each case \cite[Fig. 3]{perrins:2013}.
+The located preamble samples are used first to estimate the frequency offset.
+The estimated frequency offset $\hat{\omega}_0$ rads/sample is then used to ``de-rotate'' the vector of samples $\mathbf{r}_\text{p}$ to produce $\mathbf{r}$.
+The de-rotated samples in the vector $\mathbf{r}$ that correlate to the preamble and ASM are used to estimate the channel $\hat{\mathbf{h}}$ and noise variance $\hat{\sigma}^2_w$.
+The channel and noise variance estimates are done in the estimators block.
+\begin{figure}
+	\centering\includegraphics[width=8.75in/100*55]{figures/intro/estimators.pdf}
+	\caption{A block diagram of the estimators in the PAQ project.}
+	\label{fig:estimators}
+\end{figure}
 
+Equipped with knowledge of the estimated channel and noise variance, data-aided finite impulse response (FIR) equalizer filters can be computed.
+The all the data-aided equalizer filters are computed using the same channel and noise variance estimates.
+The blocks shown in Figure \ref{fig:thisThesisBlock} are duplicated in five independent branches producing five estimated vectors of bits $\hat{\mathbf{b}}$, one for each equalizer.
+
+%An equalizer filter is computed using the channel estimate $\hat{\mathbf{h}}$ and noise variance $\hat{\sigma}^2_w$ then applied to the vector of samples $\mathbf{r}$.
+The PAQ project designed the data-aided FIR equalizer filters to be $5$ times longer than the channel estimate. The equalizer filter has a non-causal component comprising $L_1 = 5N_1 = 60$ samples and a causal component comprising $L_2 = 5N_2 = 125$ samples.
+The $L_\text{EQ} = L_1+L_2+1$ sample full discrete-time equalizer filters are computed and applied in the equalizer filter block.
+
+The output of the equalizer filters are then filtered by a SOQPSK-TG detection filter and down-sampled by $2$ in preparation for an OQPSK detector.
+The $\mathbf{r}_\text{d}$ in each equalizer branch has a sample rate of $1$ sample/bit or $2$ samples/symbol.
+The OQPSK detector block outputs the vector of estimated bits $\hat{\mathbf{b}}$.
+\begin{figure}
+	\centering\includegraphics[width=8.37in/100*55]{figures/intro/thisThesisBlock.pdf}
+	\caption{A block diagram of application of the FIR equalizer and detection filters in the Preamble Assisted Equalization (PAQ) project.}
+	\label{fig:thisThesisBlock}
+\end{figure}
+Finally the BER for each equalizer is obtained by comparing the vectors of estimated bits $\hat{\mathbf{b}}$ to the PN sequence.
+
+The GPUs in Figure \ref{fig:hardwareblock} and \ref{fig:HostSystem} perform all the digital signal processing in parallel.
+To introduce as much parallelism as possible, the received samples are processed in $39$,$321$,$600$ sample 		sets. 
+At $20.625$ Msamples/second, each set of $39$,$321$,$600$ samples is $1907$ milliseconds worth of data.
+Each set has at most $3104$ independent $12672$ sample iNET packets.
+The GPU processes $3104$ packets in parallel by leveraging batched processing.
+Each packet is a batch and each batch performs the algorithms shown in Figures \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
+In order to stay real-time, \textbf{all} processing must be completed in $1907$ ms.
+
+This thesis, will illustrate how the five PAQ data-aided equalizers were computed and applied to the received samples in GPUs.
+The dashed box in Figure \ref{fig:thisThesisBlock} emphasizes which processing blocks are focused on.
+
+Chapter \ref{chap:equations} shows the equations for these block diagrams.
+Chapter \ref{chap:gpu} will shed some light on signal processing in GPUs.
+Chapter \ref{chap:equalizers_in_gpus} will illustrate how the five equalizers are implemented in GPUs.
+Chapter \ref{chap:final_summary} will summarize.

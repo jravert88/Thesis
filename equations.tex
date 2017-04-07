@@ -511,8 +511,8 @@ Equation \eqref{eq:FDE1} is straight forward to implement in GPUs.
 FDE1 is extremely fast and computationally efficient.
 
 \subsubsection{Frequency Domain Equalizer Two}
-FDE2 is also the MMSE or Wiener filter applied in the frequency domain but knowledge of the SOQPSK-TG spectrum is leveraged \cite[eq. (12)]{williams2013linear}.
-The frequency respoonse of FDE2 is
+FDE2 is also the MMSE applied in the frequency domain but knowledge of the SOQPSK-TG power spectral density is leveraged \cite[eq. (12)]{williams2013linear}.
+The frequency response of FDE2 is
 \begin{equation}
 C_\text{FDE2}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
 \text{where} \;

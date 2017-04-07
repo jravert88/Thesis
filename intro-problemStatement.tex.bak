@@ -17,6 +17,23 @@ Data-aided equalizers are finite impulse response filters (FIR). The impulse res
 	\label{fig:multipath}
 \end{figure}
 
+\section{Problem Statement}
+The signal processing for a digital communications system with data-aided equalizers is computationally heavy.
+Algorithms implemented in a high powered Central Processing Unit (CPU) can not processing in real-time.
+Graphic Processing Units (GPUs) can be used to do real-time processing because of their massively parallel architecture.
+
+This thesis studies how signal processing can be reformulated to run quickly and efficiently in GPUs.
+Processing signals in batches to introduce more parallelism.
+Optimized libraries harness GPU resources to make signal processing implementation relatively easy and extremely fast.
+Algorithms like matrix multiplication, solving linear systems and the Fast Fourier Transform
+
+Signal processing for digital communications
+implmented in GPUs
+how should we re-think to fit in GPUs
+batches
+FFT recast as convolution
+
+
 \clearpage
 \section{Preamble Assisted Equalization Project}
 Data-aided equalization in aeronautical telemetry has been studied and tested by the Preamble Assisted Equalization (PAQ) project \cite{paq-phase1-report:2014}.
@@ -116,6 +133,7 @@ The iNET packet is $\Lpkt=12672$ samples long with the preamble $L_\text{p}=256$
 \end{figure}
 
 \subsubsection{Digital Signal Processing}
+\label{sec:signalProcessing}
 A high-level digital signal processing flow is shown in Figure \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
 Because the frequency offset, channel, and noise variance are estimated using the preamble and ASM, the first step is to find the samples correlating to the preamble in the received sample sequence $r(n)$.
 The preamble detector block correlates received samples with $L_\text{P}$ samples of a locally stored copy of the pilot in \eqref{eq:preamble_ASM}.
@@ -160,6 +178,7 @@ At $20.625$ Msamples/second, each set of $39$,$321$,$600$ samples is $1907$ mill
 Each set has at most $3104$ independent $12672$ sample iNET packets.
 The GPU processes $3104$ packets in parallel by leveraging batched processing.
 Each packet is a batch and each batch performs the algorithms shown in Figures \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
+In order to stay real-time, \textbf{all} processing must be completed in $1907$ ms.
 
 This thesis, will illustrate how the five PAQ data-aided equalizers were computed and applied to the received samples in GPUs.
 The dashed box in Figure \ref{fig:thisThesisBlock} emphasizes which processing blocks are focused on.

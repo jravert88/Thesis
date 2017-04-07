@@ -1,50 +1,51 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Multipath can occur when a signal is received multiple paths like line-of-sight or ground bounce or reflections.}}{2}{figure.1.1}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces A block diagram of the physical PAQ project hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}}{4}{figure.1.2}
-\contentsline {figure}{\numberline {1.3}{\ignorespaces A picture of the physical PAQ project hardware. Right: Components in the dashed and dotted box from Figure \ref {fig:hardwareblock}. Left: Components in dashed box in Figure \ref {fig:hardwareblock}. Note that the T/M Receiver is not pictured.}}{4}{figure.1.3}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces A diagram showing the PAQ packetized sample structure.}}{5}{figure.1.4}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Received signal has multipath interference, frequency offset, phase offset and additive white Gaussian noise. The received signal is down-converted filtered and sampled to produce the sample sequence $r(n)$.}}{6}{figure.1.5}
-\contentsline {figure}{\numberline {1.6}{\ignorespaces An illustration of the discrete-time channel of length $N_1+N_2+1$ with a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.}}{6}{figure.1.6}
-\contentsline {figure}{\numberline {1.7}{\ignorespaces A block diagram of the estimators in the PAQ project.}}{7}{figure.1.7}
-\contentsline {figure}{\numberline {1.8}{\ignorespaces A block diagram of application of the FIR equalizer and detection filters in the Preamble Assisted Equalization (PAQ) project.}}{8}{figure.1.8}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{13}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{22}{figure.2.2}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces SOQPSK-TG power spectral density.}}{24}{figure.2.3}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces A block diagram of the physical PAQ project hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}}{6}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces A picture of the physical PAQ project hardware refrencing blocks from Figure \ref {fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured.}}{6}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces A diagram showing the PAQ packetized sample structure.}}{7}{figure.2.3}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Received signal has multipath interference, frequency offset, phase offset and additive white Gaussian noise. The received signal is down-converted filtered and sampled to produce the sample sequence $r(n)$.}}{8}{figure.2.4}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces An illustration of the discrete-time channel of length $N_1+N_2+1$ with a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.}}{9}{figure.2.5}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces A block diagram of the estimators in the PAQ project.}}{9}{figure.2.6}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces A block diagram of application of the FIR equalizer and detection filters in the Preamble Assisted Equalization (PAQ) project.}}{10}{figure.2.7}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{26}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{27}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{27}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{30}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{30}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{31}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Example of an NVIDIA GPU card. The GPU chip with registers, L1 cache and shared memory is shown in the dashed box. The L2 cache and global memory is shown off chip in the solid boxes.}}{31}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{32}{figure.3.8}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ ms at the optimal $96$ threads per block.}}{35}{figure.3.9}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{36}{figure.3.10}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref {code:noPipe}.}}{36}{figure.3.11}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{37}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{38}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Block diagrams showing showing time-domain convolution and frequency-domain convolution.}}{41}{figure.3.14}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $186$ tap complex filter.}}{43}{figure.3.15}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $21$ tap complex filter.}}{44}{figure.3.16}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a variable length tap complex filter.}}{45}{figure.3.17}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{46}{figure.3.18}
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}}{47}{figure.3.19}
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}}{48}{figure.3.20}
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}}{49}{figure.3.21}
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{50}{figure.3.22}
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Comparison on execution time per batch for complex convolution. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{51}{figure.3.23}
-\contentsline {figure}{\numberline {3.24}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $186$ taps.}}{52}{figure.3.24}
-\contentsline {figure}{\numberline {3.25}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $21$ taps.}}{53}{figure.3.25}
-\contentsline {figure}{\numberline {3.26}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is variable and the signal length is set to $12672$ samples.}}{54}{figure.3.26}
-\contentsline {figure}{\numberline {3.27}{\ignorespaces Block diagrams showing showing cascaded time-domain convolution and frequency-domain convolution.}}{55}{figure.3.27}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{17}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $b(n)$.}}{26}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces SOQPSK-TG power spectral density.}}{28}{figure.3.3}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces To simplify block diagrams, frequency-domain convolution is shown as one block.}}{68}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces To simplify block diagrams, frequency-domain cascaded convolution is shown as one block.}}{68}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{71}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{71}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration.}}{73}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{75}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{75}{figure.4.7}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces NVIDIA Tesla K40c and K20c.}}{30}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces A block diagram of how a CPU sequentially performs vector addition.}}{31}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces A block diagram of how a GPU performs vector addition in parallel.}}{31}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces $32$ threads launched in $4$ thread blocks with $8$ threads per block.}}{34}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces $36$ threads launched in $5$ thread blocks with $8$ threads per block with $4$ idle threads.}}{34}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}}{35}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Example of an NVIDIA GPU card. The GPU chip with registers, L1 cache and shared memory is shown in the dashed box. The L2 cache and global memory is shown off chip in the solid boxes.}}{35}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces A block diagram where local, shared, and global memory is located. Each thread has private local memory. Each thread block has private shared memory. The GPU has global memory that all threads can access.}}{36}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Plot showing how execution time is affected by changing the number of threads per block. The optimal execution time for an example GPU kernel is $0.1078$ ms at the optimal $96$ threads per block.}}{39}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Plot showing the number of threads per block doesn't always drastically affect execution time.}}{40}{figure.4.10}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces The typical approach of CPU and GPU operations. This block diagram shows the profile of Listing \ref {code:noPipe}.}}{40}{figure.4.11}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces GPU and CPU operations can be pipelined. This block diagram shows a Profile of Listing \ref {code:pipe}.}}{41}{figure.4.12}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces A block diagram of pipelining a CPU with three GPUs.}}{42}{figure.4.13}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Block diagrams showing showing time-domain convolution and frequency-domain convolution.}}{45}{figure.4.14}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $186$ tap complex filter.}}{47}{figure.4.15}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a variable length complex signal with a $21$ tap complex filter.}}{48}{figure.4.16}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Comparison of number of floating point operations (flops) required to convolve a $12672$ sample complex signal with a variable length tap complex filter.}}{49}{figure.4.17}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}}{50}{figure.4.18}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}}{51}{figure.4.19}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}}{52}{figure.4.20}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Comparison of a complex convolution on CPU verse GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}}{53}{figure.4.21}
+\contentsline {figure}{\numberline {4.22}{\ignorespaces Comparison of a batched complex convolution on a CPU and GPU. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{54}{figure.4.22}
+\contentsline {figure}{\numberline {4.23}{\ignorespaces Comparison on execution time per batch for complex convolution. The number of batches is variable while the signal and filter length is set to $12672$ and $186$.}}{55}{figure.4.23}
+\contentsline {figure}{\numberline {4.24}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $186$ taps.}}{56}{figure.4.24}
+\contentsline {figure}{\numberline {4.25}{\ignorespaces Comparison of a batched complex convolution on a GPU. The signal length is variable and the filter is fixed at $21$ taps.}}{57}{figure.4.25}
+\contentsline {figure}{\numberline {4.26}{\ignorespaces Comparison of a batched complex convolution on a GPU. The filter length is variable and the signal length is set to $12672$ samples.}}{58}{figure.4.26}
+\contentsline {figure}{\numberline {4.27}{\ignorespaces Block diagrams showing showing cascaded time-domain convolution and frequency-domain convolution.}}{59}{figure.4.27}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces To simplify block diagrams, frequency-domain convolution is shown as one block.}}{72}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces To simplify block diagrams, frequency-domain cascaded convolution is shown as one block.}}{72}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{75}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{75}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration.}}{77}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{79}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{79}{figure.5.7}
 \addvspace {10\p@ }
