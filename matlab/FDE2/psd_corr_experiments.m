@@ -2,7 +2,7 @@
 
 N = 2;
 max_lag = 100;
-Nfft = 1024;
+Nfft = 2^14;
 FF = -0.5:1/Nfft:0.5-1/Nfft;
 
 ss = SOQPSK_modulator(10,randi([0 1],1000000,1));
@@ -15,11 +15,9 @@ SS = pwelch(ss2,blackman(Nfft),0.5*Nfft,Nfft,'two-sided');
 
 
 figure(1); clf;
-plot(FF*N,10*log10(fftshift(SS/max(SS))),'k');
+plot(FF,10*log10(fftshift(SS/max(SS))),'k');
 grid on;
-xlabel('frequency (cycles/bit)');
-ylabel('magnitude (dB)');
-axis([-1 1 -50 0]);
+axis([-0.5 0.5 -50 0]);
 
 latexWidth = 5;
 latexHeight = 4;
@@ -30,8 +28,9 @@ bart = ff.Position;
 ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
-xlabel('cycles/bit')
-ylabel('Magintude (dB)')
+xlabel('cycles/sample')
+% ylabel('\Psi (dB)')
+ylabel('$\mathbf{\Psi}$ (dB)','Interpreter','latex')
 % title('SOQPSK-TG Constellation')
 % legend('SOQPSK-TG Power Spectrum','Location','Best')
 print(ff, '-depsc', ['FDE2_spectrum_PSI']) %save as eps a 

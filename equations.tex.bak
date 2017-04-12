@@ -31,8 +31,7 @@ To compute data-aided equalizers, preambles in the received signal are found the
 The goal of the preamble detection step is to structure the received samples $r(n)$ into $\Lpkt$ sample packets $\mathbf{r}_\text{p}$.
 Each vector of samples $\mathbf{r}_\text{p}$ has the structure shown in Figure \ref{fig:packetStructure_intro}.
 
-Before the structuring the received samples into packets, the preambles are found using the preamble detector explained in \cite{preamble_detector}.
-The preamble detector computes the function $L(n)$ for each sample in the set.
+Before the structuring the received samples into packets, the preamble detector computes the function $L(n)$ for each sample in the set.
 Peaks in $L(n)$ identify the locations of a preamble or the start of a packet.
 The function $L(n)$ is given by
 \begin{equation}
@@ -143,7 +142,12 @@ where
 		 								&  	   							&  		& p(L_\text{p}+L_\text{ASM}-N_1)\\
 	\end{bmatrix}
 \end{equation}
-is a $(L_\text{p}+L_\text{ASM}-N_1-N_2)\times(N_1+N_2+1)$ convolution matrix formed from the ideal preamble and ASM samples.
+and
+is a $(L_\text{p}+L_\text{ASM}-N_1-N_2)\times(N_1+N_2+1)$ convolution matrix formed from the ideal preamble and ASM samples
+\begin{equation}
+\mathbf{p} = \big[ p(0) \quad p(1) \quad \cdots  \quad  p(L_\text{P} + L_\text{ASM}-1) \big].
+\label{eq:preamble_ASM}
+\end{equation}
 The $(N_1+N_2+1)\times(L_\text{p}+L_\text{ASM}-N_1-N_2)$ matrix $\mathbf{X}_\text{lpi}$ is the left pseudo-inverse of $\mathbf{X}$.
 The ML channel estimator is the result of the matrix operation
 \begin{equation}
@@ -170,7 +174,13 @@ Equation \eqref{eq:ML-s2-final3} is easily implemented into GPUs.
 \label{sec:oqpsk_detector}
 Symbol-by-symbol detection comprises a detection filter and a phase lock loop (PLL) to track out the residual frequency offset.
 Before the symbols are detected, the equalized samples are passed through the detection filter then down-sampled by $2$. 
-The detection filter is a $L_\text{df} = 21$ sample ``numerically optimized'' SOQPSK detection filter $H_\text{NO}$ \cite[Fig. 3]{perrins:2013}.
+The detection filter is a $L_\text{df} = 21$ sample ``numerically optimized'' SOQPSK detection filter $\mathbf{h}_\text{NO}$ shown in Figure \ref{fig:detectionFilter}
+\cite[Fig. 3]{perrins:2013}.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/eq_equations/df.eps}
+	\caption{``Numerically optimized'' SOQPSK detection filter $\mathbf{h}_\text{NO}$.}
+	\label{fig:detectionFilter}
+\end{figure}
 The symbol-by-symbol detector block in Figure \ref{fig:thisThesisBlock} is a Offset Quaternary Phase Shift Keying (OQPSK) detector.
 Using the simple OQPSK detector in place of a complex MLSE SOQPSK-TG detector leads to less than $1$ dB loss in detection efficency \cite{perrins:2013}.
 \begin{figure}
@@ -491,7 +501,7 @@ This suggest the following matlab code for computing computing the gradient vect
 \subsection{The Frequency Domain Equalizers}
 \label{sec:FDE}
 Frequency Domain Equalizer One (FDE1) and Frequency Domain Equalizer Two (FDE2) are very similar and have the same structure.
-FDE1 and FDE2 are adapted from Williams and Saquib \cite[eq. (11) and (12)]{williams2013linear}.
+FDE1 and FDE2 are adapted from Williams and Saquib \cite[eq. (11) and (12)]{williams2013linear} \cite{coon2006channel}.
 
 \subsubsection{Frequency Domain Equalizer One}
 FDE1 is the MMSE applied in the frequency domain from Williams' and Saquib's paper \cite[eq. (11)]{williams2013linear}.
@@ -511,8 +521,8 @@ Equation \eqref{eq:FDE1} is straight forward to implement in GPUs.
 FDE1 is extremely fast and computationally efficient.
 
 \subsubsection{Frequency Domain Equalizer Two}
-FDE2 is also the MMSE or Wiener filter applied in the frequency domain but knowledge of the SOQPSK-TG spectrum is leveraged \cite[eq. (12)]{williams2013linear}.
-The frequency respoonse of FDE2 is
+FDE2 is also the MMSE applied in the frequency domain but knowledge of the SOQPSK-TG power spectral density is leveraged \cite[eq. (12)]{williams2013linear}.
+The frequency response of FDE2 is
 \begin{equation}
 C_\text{FDE2}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
 \text{where} \;

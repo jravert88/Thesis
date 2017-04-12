@@ -1136,3 +1136,63 @@ Stabilization by smooth feedback in the neighborhood of an equilibrium
   year={1965},
   publisher={JSTOR}
 }
+
+@article{frerkingjpl,
+  title={JPL Technology Readiness Level Assessment Guideline},
+  author={Frerking, Margaret A and Beauchamp, Patricia M}
+}
+
+@article{coon2006channel,
+  title={Channel and noise variance estimation and tracking algorithms for unique-word based single-carrier systems},
+  author={Coon, Justin and Sandell, Magnus and Beach, Mark and McGeehan, Joe},
+  journal={IEEE Transactions on Wireless Communications},
+  volume={5},
+  number={6},
+  pages={1488--1496},
+  year={2006},
+  publisher={IEEE}
+}
+
+@article{rice2016frame,
+  title={On frame synchronization in aeronautical telemetry},
+  author={Rice, Michael and Mcmurdie, Andrew},
+  journal={IEEE Transactions on Aerospace and Electronic Systems},
+  volume={52},
+  number={5},
+  pages={2263--2280},
+  year={2016},
+  publisher={IEEE}
+}
+
+@article{ng2007turbo,
+  title={Turbo frequency domain equalization for single-carrier broadband wireless systems},
+  author={Ng, Benjamin and Lam, Chan-Tong and Falconer, David},
+  journal={IEEE transactions on wireless communications},
+  volume={6},
+  number={2},
+  year={2007},
+  publisher={IEEE}
+}
+
+@inproceedings{sari1994frequency,
+  title={Frequency-domain equalization of mobile radio and terrestrial broadcast channels},
+  author={Sari, Hikmet and Karam, Georges and Jeanclaud, I},
+  booktitle={Global Telecommunications Conference, 1994. GLOBECOM'94. Communications: The Global Bridge., IEEE},
+  pages={1--5},
+  year={1994},
+  organization={IEEE}
+}
+
+@article{al2008single,
+  title={Single-carrier frequency domain equalization},
+  author={Al-Dhahir, Naofal and Uysal, Murat and Mheidat, Hakam},
+  year={2008}
+}
+@InProceedings{ravert2016,
+	author = {M. Rice and M. Jensen},
+	title = {A Comparison of {L}-Band and {C}-Band Multipath Propagation at {E}dwards {AFB}},
+	booktitle = {Proceedings of the International Telemetering Conference},
+	month = {October},
+	year = {2011},
+	address = {Las Vegas, NV}
+}

@@ -7,11 +7,11 @@
 
 % \cleardoublepage
 \chapter{Preamble Assisted Equalization Project}
+\label{chap:PAQ_project}
 Data-aided equalization in aeronautical telemetry has been studied and tested by the Preamble Assisted Equalization (PAQ) project \cite{paq-phase1-report:2014}.
-The PAQ project built a TRL 6 system that compares five data-aided equalizers to blind equalization and no equalization \cite{frerkingjpl}.
-Bit error statistics were be used as the figure or merit for the equalization algorithms.
+PAQ built a system that compares five data-aided equalizers to blind equalization and no equalization.
 Live flight tests were conducted at Edwards AFB in March and June 2016.
-The five data-aided equalizers the PAQ project studied are
+The five data-aided equalizers PAQ studied are
 \begin{itemize}
 \item zero-forcing (ZF) equalizer
 \item minimum mean square Error (MMSE) equalizer
@@ -19,45 +19,46 @@ The five data-aided equalizers the PAQ project studied are
 \item frequency domain equalizer one (FDE1)
 \item frequency domain equalizer Two (FDE2).
 \end{itemize}
-\section{Hardware}
+Bit error statistics were be used as the figure or merit for the equalization algorithms.
+\section{Hardware Overview}
 \label{sec:hardware}
-A block diagram of the PAQ project physical system is shown in Figure \ref{fig:hardwareblock}.
+A block diagram of PAQ physical system is shown in Figure \ref{fig:hardwareblock}.
 \begin{figure}
 	\centering\includegraphics[width=11.58in/100*55]{figures/systemOverview/hardwareblock.pdf}
-	\caption{A block diagram of the physical PAQ project hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}
+	\caption{A block diagram of the physical PAQ hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}
 	\label{fig:hardwareblock}
 \end{figure}
 A picture of the physical components is shown in Figure \ref{fig:HostSystem}.
 \begin{figure}
 	\centering\includegraphics[scale=0.55]{figures/systemOverview/HostSystem.jpg}
-	\caption{A picture of the physical PAQ project hardware refrencing blocks from Figure \ref{fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured.}
+	\caption{A picture of the physical PAQ hardware refrencing blocks from Figure \ref{fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured.}
 	\label{fig:HostSystem}
 \end{figure}
 The major components, and their functions are summarized in the following.
 \begin{itemize}
-	\item The \textbf{T/M mixer} down-converts from L or C band RF to IF (70 MHz) then applies an anti-aliasing filter.
+	\item The \textbf{T/M receiver} down-converts from L- or C-band RF to 70 MHz IF then applies an anti-aliasing filter.
 	%
 	\item The \textbf{rack mounted server} is a high powered computer that houses an ADC, a FPGA and three GPUs 		slotted into a 32 pin PCIe bus.
 	\item The \textbf{ADC} produces 14-bit samples of the real-valued bandpass signal
-	centered at IF sampled at $93\nicefrac{1}{3}$ Msamples/s.
+	centered at IF. The sample rate is $93\nicefrac{1}{3}$ Msamples/s.
 	The samples are transferred to the host CPU via the PCIe bus.
 	%
 	\item The \textbf{host CPU} initiates memory transfers between itself and the ADC, GPUs and FPGA via the PCIe 	bus. 
 	The host CPU also launches the digital signal processing algorithms on the GPUs.
 	%
-	\item The three \textbf{GPUs} are where all the detection, estimation, equalization and demodulation resides.
-While the CPU has one to eight powerful processors, GPUs have thousands of small less powerful processors that work in parallel. The signal processing is done in GPUs rather than FPGAs or a CPU because programming GPUs is faster and easier than programming FPGAs and CPUs do not prosess the required processing power.
-	%
-	\item The \textbf{FPGA} receives all the bit streams from the host CPU via the PCIe bus then clocks each 			stream out in parallel to the BERT for BER testing.
+	\item The three \textbf{GPUs} are where the detection, estimation, equalization and demodulation resides.
+%	While the CPU has one to eight powerful processors, GPUs have thousands of small less powerful processors that work in parallel. The signal processing is done in GPUs rather than FPGAs or a CPU because programming GPUs is faster and easier than programming FPGAs and CPUs do not prosess the required processing power.
 	%
 	\item The bit error rate tester (\textbf{BERT}) counts the errors in each input bit stream by comparing the 		streams to a PN sequence.
 	%
-	\item The \textbf{T/M Receiver} outputs bit streams for blind equalization and no equalization for 					BER comparison.
+	\item The \textbf{FPGA} is the interface between the host CPU and the BERT. After the GPUs produce bit decisions, the host CPU transfers the decisions from the GPUs to the FPGA via the PCIe bus. The FPGA then clocks the bits out to the BERT for BER testing.
+	%
+	\item The \textbf{T/M Receiver \& Demod} demodulates the RF signal outputting two bit streams for blind equalization and no equalization for BER comparison.
 \end{itemize}
 %A picture of the rack mounted physical system is shown in Figure \ref{fig:rack}.
 %\begin{figure}
 %	\centering\includegraphics[scale=0.55]{figures/systemOverview/rack.jpg}
-%	\caption{A picture of the physical PAQ project hardware. Note that the T/M Receiver is not pictured.}
+%	\caption{A picture of the physical PAQ hardware. Note that the T/M Receiver is not pictured.}
 %	\label{fig:rack}
 %\end{figure}
 %A picture of the components inside the rack mounted server is shown in Figure \ref{fig:rack}.
@@ -67,11 +68,11 @@ While the CPU has one to eight powerful processors, GPUs have thousands of small
 %	\label{fig:server}
 %\end{figure}
 
-To enable data-aided equalization, the PAQ project bit stream has a packetized structure shown in Figure \ref{fig:packetStructure_intro}.
+To enable data-aided equalization, PAQ bit stream has a packetized structure shown in Figure \ref{fig:packetStructure_intro}.
 The bit stream has a pilot bit sequence, in the form of the iNET preamble and ASM, periodically inserted into the data bits.
 \begin{figure}
 	\centering\includegraphics[width=9.47in/100*55]{figures/intro/packetSturcture.pdf}
-	\caption{A diagram showing the PAQ packetized sample structure.}
+	\caption{A diagram showing PAQ packetized sample structure.}
 	\label{fig:packetStructure_intro}
 \end{figure}
 The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98}_\text{hex}$ and the ASM field is
@@ -80,17 +81,17 @@ The iNET preamble comprises eight repetitions of the 16-bit sequence $\text{CD98
 \end{equation}
 The data payload is a known length-$(2^{11} - 1)$ PN sequence.
 Each packet contains $128$ preamble bits, $64$ ASM bits and $6{,}144$ data bits making each iNET packet $6{,}336$ bits.
-The data bits modulate a SOQPSK-TG carrier at $10$ Mbits/second.
-With the preamble and ASM periodically inserted, the over the air bit rate is $10.3125$ Mbits/second.
+The data bits are modulated by a SOQPSK-TG modulation scheme at $10$ Mbits/second.
+With the preamble and ASM periodically inserted, the over-the-air bit rate is $10.3125$ Mbits/second.
 
-After modulation, the transmitted signal experiences multipath interference modeled as the channel $h(t)$.
+After modulation, the transmitted signal experiences multipath interference modeled as an LTI system with the channel impulse response $h(t)$.
 The transmitted signal also experiences a frequency offset $\omega_0$, a phase offset $\phi$ and additive white Gaussian noise $w(t)$.
-The received signal is down-converted, filtered in the T/M mixer, sampled at $93\nicefrac{1}{3}$ Msamples/second by the ADC then down-converted again to baseband and resampled by $\nicefrac{99}{448}$ in the GPUs resulting in the sampled sequence $r(n)$ at rate $20.625$ Msamples/second or $2$ samples/bit.
+The received signal is down-converted, filtered in the T/M receiver, sampled at $93\nicefrac{1}{3}$ Msamples/second by the ADC then down-converted to baseband and resampled by $\nicefrac{99}{448}$ in the GPUs in one step using a polyphase filter bank based on the principles outlined in \cite[chap. (9)]{rice:2009}.
+The result is $r(n)$, a sampled version of the complex-valued lowpass equivalent waveform at a sample rate of $20.625$ Msamples/second or $2$ samples/bit.
 
 The model of the received signal is shown in Figure \ref{fig:received1}.
 At baseband and $2$ samples/bit, the FIR channel impulse response is assumed to have a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.
 Figure \ref{fig:channelExample} shows the full discrete-time $L_h = N_1+N_2+1$ sample channel.
-The received signal is sampled at $20.625$ Msamples/second.
 The iNET packet is $\Lpkt=12672$ samples long with the preamble $L_\text{p}=256$ samples and the ASM $L_\text{ASM}=128$ samples.
 \begin{figure}
 	\centering\includegraphics[width=12.33in/100*50]{figures/intro/received1.pdf}
@@ -103,58 +104,631 @@ The iNET packet is $\Lpkt=12672$ samples long with the preamble $L_\text{p}=256$
 	\label{fig:channelExample}
 \end{figure}
 
-\section{Digital Signal Processing}
+\section{Digital Signal Processing Overview}
 \label{sec:signalProcessing}
 A high-level digital signal processing flow is shown in Figure \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
 Because the frequency offset, channel, and noise variance are estimated using the preamble and ASM, the first step is to find the samples correlating to the preamble in the received sample sequence $r(n)$.
-The preamble detector block correlates received samples with $L_\text{P}$ samples of a locally stored copy of the pilot in \eqref{eq:preamble_ASM}.
 The preamble detector block outputs the vector of samples $\mathbf{r}_\text{p}$ with the iNET packetized structure.
 The first $L_\text{P} + L_\text{ASM}$ samples in $\mathbf{r}_\text{p}$ correlate with the received pilot samples.
-\begin{equation}
-\mathbf{p} = \big[ p(0) \quad p(1) \quad \cdots  \quad  p(L_\text{P} + L_\text{ASM}-1) \big]
-\label{eq:preamble_ASM}
-\end{equation}
 
-The located preamble samples are used first to estimate the frequency offset.
+The preamble samples are used first to estimate the frequency offset.
 The estimated frequency offset $\hat{\omega}_0$ rads/sample is then used to ``de-rotate'' the vector of samples $\mathbf{r}_\text{p}$ to produce $\mathbf{r}$.
-The de-rotated samples in the vector $\mathbf{r}$ that correlate to the preamble and ASM are used to estimate the channel $\hat{\mathbf{h}}$ and noise variance $\hat{\sigma}^2_w$.
-The channel and noise variance estimates are done in the estimators block.
+The de-rotated preamble and ASM samples in the vector $\mathbf{r}$ are used to estimate the channel $\hat{\mathbf{h}}$ and noise variance $\hat{\sigma}^2_w$.
+The channel and noise variance estimates are computed in the estimators block.
 \begin{figure}
 	\centering\includegraphics[width=8.75in/100*55]{figures/intro/estimators.pdf}
-	\caption{A block diagram of the estimators in the PAQ project.}
+	\caption{A block diagram of the estimators in PAQ.}
 	\label{fig:estimators}
 \end{figure}
 
-Equipped with knowledge of the estimated channel and noise variance, data-aided finite impulse response (FIR) equalizer filters can be computed.
-The all the data-aided equalizer filters are computed using the same channel and noise variance estimates.
-The blocks shown in Figure \ref{fig:thisThesisBlock} are duplicated in five independent branches producing five estimated vectors of bits $\hat{\mathbf{b}}$, one for each equalizer.
-
-%An equalizer filter is computed using the channel estimate $\hat{\mathbf{h}}$ and noise variance $\hat{\sigma}^2_w$ then applied to the vector of samples $\mathbf{r}$.
-The PAQ project designed the data-aided FIR equalizer filters to be $5$ times longer than the channel estimate. The equalizer filter has a non-causal component comprising $L_1 = 5N_1 = 60$ samples and a causal component comprising $L_2 = 5N_2 = 125$ samples.
-The $L_\text{EQ} = L_1+L_2+1$ sample full discrete-time equalizer filters are computed and applied in the equalizer filter block.
-
-The output of the equalizer filters are then filtered by a SOQPSK-TG detection filter and down-sampled by $2$ in preparation for an OQPSK detector.
-The $\mathbf{r}_\text{d}$ in each equalizer branch has a sample rate of $1$ sample/bit or $2$ samples/symbol.
-The OQPSK detector block outputs the vector of estimated bits $\hat{\mathbf{b}}$.
+Equipped with knowledge of the estimated channel and noise variance estimates, the impulse response of the equalizer filters are computed.
+Figure \ref{fig:thisThesisBlock} shows a block diagram of the five independent branches, each branch computing an equalizer filter and producing a vector of estimated bits $\hat{\mathbf{b}}$.
+The figure shows each equalizer requires different estimated vectors.
 \begin{figure}
-	\centering\includegraphics[width=8.37in/100*55]{figures/intro/thisThesisBlock.pdf}
-	\caption{A block diagram of application of the FIR equalizer and detection filters in the Preamble Assisted Equalization (PAQ) project.}
+	\centering\includegraphics[width=10.45in/100*55]{figures/intro/thisThesisBlock5.pdf}
+	\caption{A block diagram of the computation and application of the equalizer and detection filters. The bold box emphasizes in the focus of this thesis.}
 	\label{fig:thisThesisBlock}
 \end{figure}
+\begin{itemize}
+\item The ZF equalizer filter $\mathbf{c}_\text{ZF}$ only requires the channel estimate $\mathbf{\hat{h}}$.
+\item The MMSE equalizer filter $\mathbf{c}_\text{MMSE}$ requires the channel estimate $\mathbf{\hat{h}}$ and the noise variance estimate $\hat{\sigma}^2_w$.
+\item The CMA equalizer filter $\mathbf{c}_\text{CMA}$ requires the de-rotated received signal $\mathbf{r}$ and the MMSE equalizer filter $\mathbf{c}_\text{MMSE}$ for initialization.
+\item The FDE1 equalizer in the frequency domain $\mathbf{C}_\text{FDE1}$ requires the channel estimate $\mathbf{\hat{h}}$ and the noise variance estimate $\hat{\sigma}^2_w$.
+\item The FDE2 equalizer in the frequency domain $\mathbf{C}_\text{FDE2}$ requires the power spectral density of SOQPSK-TG $\mathbf{\Psi}$, the channel estimate $\mathbf{\hat{h}}$ and the noise variance estimate $\hat{\sigma}^2_w$.
+\end{itemize}
+Each branch filters the de-rotated received signal $\mathbf{r}$ with the computed equalizer filter and the detection filter $\mathbf{h}_\text{NO}$.
+
+The equalizer filters are FIR filters whose impulse response has support $-L_1 \leq n \leq L_2$ (i.e. the equalizer length is $L_\text{EQ} = L_1+L_2+1$ samples).
+The length of the equalizers was batch to five times the length of the channel.
+In particular the non-causal component comprising $L_1 = 5N_1 = 60$ samples and a causal component comprising $L_2 = 5N_2 = 125$ samples resulting in $L_\text{EQ} = L_1+L_2+1 = 186$.
+
+Symbol-by-symbol OQPSK detection \cite[app. (A)]{PAQ-phase1} is performed on the down-sampled equalizer output.
+The $\mathbf{r}_\text{d}$ in each branch has a sample rate of $1$ sample/bit.
+The OQPSK detector block outputs the vector of estimated bits $\hat{\mathbf{b}}$.
 Finally the BER for each equalizer is obtained by comparing the vectors of estimated bits $\hat{\mathbf{b}}$ to the PN sequence.
 
 The GPUs in Figure \ref{fig:hardwareblock} and \ref{fig:HostSystem} perform all the digital signal processing in parallel.
-To introduce as much parallelism as possible, the received samples are processed in $39$,$321$,$600$ sample 		sets. 
-At $20.625$ Msamples/second, each set of $39$,$321$,$600$ samples is $1907$ milliseconds worth of data.
-Each set has at most $3104$ independent $12672$ sample iNET packets.
-The GPU processes $3104$ packets in parallel by leveraging batched processing.
-Each packet is a batch and each batch performs the algorithms shown in Figures \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
-In order to stay real-time, \textbf{all} processing must be completed in $1907$ ms.
+To introduce as much parallelism as possible, the received samples are processed in a batch comprising $39$,$321$,$600$ samples. 
+At $20.625$ Msamples/second, each batch of $39$,$321$,$600$ samples is $1907$ milliseconds worth of data.
+Each batch has at most $3104$ $12672$-sample iNET packets.
+The GPU processes at the most $3104$ packets in parallel by leveraging batched processing.
+Each batch at the most $3104$ packets, each packet performs the algorithms shown in Figures \ref{fig:estimators} and \ref{fig:thisThesisBlock}.
+To meet the real time requirement, \textbf{all} processing must be completed in less than $1907$ ms.
 
-This thesis, will illustrate how the five PAQ data-aided equalizers were computed and applied to the received samples in GPUs.
-The dashed box in Figure \ref{fig:thisThesisBlock} emphasizes which processing blocks are focused on.
+This thesis, illustrates how the five PAQ data-aided equalizers were computed and applied in GPUs.
+The bold box in Figure \ref{fig:thisThesisBlock} emphasizes processing blocks on which this thesis focuses.
 
-Chapter \ref{chap:equations} shows the equations for these block diagrams.
-Chapter \ref{chap:gpu} will shed some light on signal processing in GPUs.
-Chapter \ref{chap:equalizers_in_gpus} will illustrate how the five equalizers are implemented in GPUs.
-Chapter \ref{chap:final_summary} will summarize.
+
+
+
+
+
+
+
+
+
+\section{Detailed Description of Signal Processing Algorithms}
+\subsection{Preamble Detection}
+\label{sec:pd}
+To compute data-aided equalizers, samples of the received waveform corresponding to the preamble and ASM bits are found then used to estimate parameters.
+The goal of the preamble detection step is to structure the received samples $r(n)$ into $\Lpkt$ sample packets denoted $\mathbf{r}_\text{p}$.
+Each vector of samples $\mathbf{r}_\text{p}$ has the structure shown in Figure \ref{fig:packetStructure_intro}.
+
+Before the structuring the received samples into packets, the preambles are found using the preamble detector described in \cite{preamble_detector}.
+The preamble detector computes the function $L(n)$ for each sample in the batch.
+Peaks in $L(n)$ identify the locations of the start of the preamble.
+The function $L(n)$ is given by
+\begin{equation}
+	L(n) = \sum_{m=0}^{7}
+		\left[ I^2(n,m) + Q^2(n,m) \right]
+	\label{eq:gpu-L-4}
+\end{equation}
+where
+\begin{multline}
+	I(n,m) \approx \sum_{\ell\in\mathcal{L}_1}r_R(\ell+32m+n)
+			- \sum_{\ell\in\mathcal{L}_2}r_R(\ell+32m+n)
+			+ \sum_{\ell\in\mathcal{L}_3}r_I(\ell+32m+n)
+			- \sum_{\ell\in\mathcal{L}_4}r_I(\ell+32m+n)
+			\\
+			+ 0.7071 \left[
+				\sum_{\ell\in\mathcal{L}_5}r_R(\ell+32m+n)
+				- \sum_{\ell\in\mathcal{L}_6}r_R(\ell+32m+n)
+			\right. \\
+			\left.
+				+ \sum_{\ell\in\mathcal{L}_7}r_I(\ell+32m+n)
+				- \sum_{\ell\in\mathcal{L}_8}r_I(\ell+32m+n)
+			\right],
+	\label{eq:gpu-L-pedone-geoghegan-2}
+\end{multline}
+and
+\begin{multline}
+	Q(n,m) \approx \sum_{\ell\in\mathcal{L}_1}r_I(\ell+32m+n)
+			- \sum_{\ell\in\mathcal{L}_2}r_I(\ell+32m+n)
+			\\
+			- \sum_{\ell\in\mathcal{L}_3}r_R(\ell+32m+n)
+			+ \sum_{\ell\in\mathcal{L}_4}r_R(\ell+32m+n)
+			\\
+			+ 0.7071 \left[
+				\sum_{\ell\in\mathcal{L}_5}r_I(\ell+32m+n)
+				- \sum_{\ell\in\mathcal{L}_6}r_I(\ell+32m+n)
+			\right. \\
+			\left.
+				- \sum_{\ell\in\mathcal{L}_7}r_R(\ell+32m+n)
+				+ \sum_{\ell\in\mathcal{L}_8}r_R(\ell+32m+n)
+			\right]
+		\label{eq:gpu-L-pedone-geoghegan-3}
+\end{multline}
+with
+\begin{equation}
+	\begin{split}
+	\mathcal{L}_1 &= \{ 0, 8, 16, 24 \}\\
+	\mathcal{L}_2 &= \{ 4, 20 \}\\
+	\mathcal{L}_3 &= \{ 2, 10, 14, 22 \}\\
+	\mathcal{L}_4 &= \{ 6, 18, 26, 30 \}\\
+	\mathcal{L}_5 &= \{ 1, 7,  9, 15, 17, 23, 25, 31 \}\\
+	\mathcal{L}_6 &= \{ 3, 5, 11, 12, 13, 19, 21, 27, 28, 29 \}\\
+	\mathcal{L}_7 &= \{ 1, 3,  9, 11, 12, 13, 15, 21, 23 \}\\
+	\mathcal{L}_8 &= \{ 5, 7, 17, 19, 25, 27, 28, 29, 31 \}.
+\end{split}
+\label{eq:gpu-L-pedone-geoghegan-4}
+\end{equation}
+A correlation peak in $L(n)$ indicates the index $n$ is the start of a preamble.
+The vector of packet samples starting at index $n$ are
+\begin{equation}
+\mathbf{r}_\text{p} = 
+\begin{bmatrix}
+r(n) \\ 
+\vdots \\ 
+r(n+\Lpkt-1)
+\end{bmatrix}
+=
+\begin{bmatrix}
+r_\text{p}(0) \\ 
+\vdots \\ 
+r_\text{p}(\Lpkt-1)
+\end{bmatrix}
+\end{equation}
+
+\subsection{Frequency Offset Compensation}
+\label{sec:freq_offset_comp}
+The frequency offset estimator shown in Figure \ref{fig:estimators} is the estimator taken from \cite[eq. (24)]{rice2014frequency}.
+With the notation adjusted slightly, the frequency offset estimate is
+\begin{equation}
+	\hat{\omega}_0 = \frac{1}{L_q} \arg\left\{ \sum_{n=i+2L_q}^{i+7L_q-1} r_\text{p}(n)r_\text{p}^\ast(n-L_q)\right\}
+	\quad
+\text{for} \;
+i=1,2,3,4,5.
+	\label{eq:jeff-ML-w-final3}
+\end{equation}
+The frequency offset is estimated for every packet or each vector of samples $\mathbf{r}_\text{p}$ in the batch.
+Frequency offset compensation is performed by de-rotating the received samples by $-\hat{\omega}_0$:
+\begin{equation}
+	r(n) = r_\text{p}(n) e^{-j\hat{\omega}_0n}.
+	\label{eq:frequency_compensation}
+\end{equation}
+Equations \eqref{eq:jeff-ML-w-final3} and \eqref{eq:frequency_compensation} are easily implemented into GPUs. 
+
+\subsection{Channel Estimation}
+\label{sec:channel_estimation}
+The channel estimate is the discrete time estimation of the multipath channel defined by the coefficients
+\begin{equation}
+\begin{matrix}
+\hat{h}(-N_1) & \cdots & \hat{h}(0) & \cdots & \hat{h}(N_2).
+\end{matrix}
+\end{equation}
+The vector of channel estimate coefficients is denoted by 
+\begin{equation}
+\mathbf{\hat{h}} = 
+\begin{bmatrix}
+\hat{h}(-N_1) \\ \vdots \\ \hat{h}(0) \\ \vdots \\ \hat{h}(N_2)
+\end{bmatrix}.
+\end{equation}
+The channel estimator is the ML estimator taken from \cite[eq. 8]{rice-afran-saquib-cole-rhodes-moazzami:2014}.
+\begin{equation}
+\hat{\mathbf{h}} = \underbrace{ \left( \mathbf{X}^\dag\mathbf{X} \right)^{-1} \mathbf{X}^\dag}_{\mathbf{X}_\text{lpi}}\mathbf{r}
+\end{equation}
+where 
+\begin{equation}
+\mathbf{X} = 
+		\begin{bmatrix}
+		p(N_2)							& 								& 		&  			\\
+		\vdots 							& p(N_2)						& 		&  			\\
+		p(L_\text{p}+L_\text{ASM}-N_1)	&\vdots							& \ddots&  			\\
+										& p(L_\text{p}+L_\text{ASM}-N_1)&  		& p(N_2)  	\\
+		 								&  								&  		& \vdots 	\\
+		 								&  	   							&  		& p(L_\text{p}+L_\text{ASM}-N_1)\\
+	\end{bmatrix}
+\end{equation}
+and
+is a $(L_\text{p}+L_\text{ASM}-N_1-N_2)\times(N_1+N_2+1)$ convolution matrix formed from the samples of SOQPSK-TG corresponding to the preamble and ASM bits
+\begin{equation}
+\mathbf{p} = \big[ p(0) \quad p(1) \quad \cdots  \quad  p(L_\text{P} + L_\text{ASM}-1) \big].
+\label{eq:preamble_ASM}
+\end{equation}
+The $(N_1+N_2+1)\times(L_\text{p}+L_\text{ASM}-N_1-N_2)$ matrix $\mathbf{X}_\text{lpi}$ is the left pseudo-inverse of $\mathbf{X}$.
+The matrix vector multiplication $\mathbf{X}_\text{lpi} \mathbf{r}$ is implemented simply and efficiently in GPUs.
+
+
+\subsection{Noise Variance Estimation}
+\label{sec:noise_variance_estimation}
+The noise variance estimator is also taken from \cite[eq. 9]{rice-afran-saquib-cole-rhodes-moazzami:2014}
+\begin{equation}
+	\hat{\sigma}_w^2 = \frac{1}{2\rho} \left| \mathbf{r}-\mathbf{X}\hat{\mathbf{h}}\right|^2
+	\label{eq:ML-s2-final3}
+\end{equation}
+where
+\begin{equation}
+	\rho = {\rm Trace} \left\{ \mathbf{I} -  \mathbf{X}\left(\mathbf{X}^\dag\mathbf{X}\right)^{-1}\mathbf{X}^\dag \right\}.
+\end{equation}
+Equation \eqref{eq:ML-s2-final3} is easily implemented into GPUs.
+
+
+\subsection{Symbol-by-Symbol Detector}
+\label{sec:oqpsk_detector}
+Symbol-by-symbol detection comprises a detection filter and a phase lock loop (PLL) to track out the residual frequency offset.
+Before the symbols are detected, the equalized samples are passed through the detection filter then down-sampled by $2$. 
+The detection filter is a $L_\text{df} = 21$ sample ``numerically optimized'' SOQPSK detection filter $\mathbf{h}_\text{NO}$ shown in Figure \ref{fig:detectionFilter}
+\cite[Fig. 3]{perrins:2013}.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/eq_equations/df.eps}
+	\caption{``Numerically optimized'' SOQPSK detection filter $\mathbf{h}_\text{NO}$.}
+	\label{fig:detectionFilter}
+\end{figure}
+The symbol-by-symbol detector block in Figure \ref{fig:thisThesisBlock} is a Offset Quaternary Phase Shift Keying (OQPSK) detector.
+Using the simple OQPSK detector in place of a complex MLSE SOQPSK-TG detector leads to less than $1$ dB loss in detection efficency \cite{perrins:2013}.
+\begin{figure}
+	\centering\includegraphics[width=9.11in/100*55]{figures/systemOverview/OQPSK.pdf}
+	\caption{Offset Quadriture Phase Shift Keying symbol by symbol detector.}
+	\label{fig:OQPSK}
+\end{figure}
+
+A Phase Lock Loop (PLL) is needed in the OQPSK detector to track out residual frequency offset.
+The residual frequency offset results from a frequency offset estimation error.
+Equalizers mitigate the effects of phase offset, timing offset, and ISI because all of these imparments form the  composite channel seen by the equalizer.
+A frequency offset is different, and cannot be mitigated by the equalizer alone.
+The PLL tracks out the residual frequency offset using a feedback control loop.
+
+Implementing a PLL may not seem feasible in GPUs because the feedback loop cannot be parallelized.
+But the PAQ system processes $3104$ packets of data simultaneously in parallel.
+Running the PLL and detector serially through a full packet of samples is relatively fast because each iteration requires only $10$ floating point operations and a few logic decisions.
+
+\section{Detailed Description of Data-aided Equalizers}
+\label{sec:equalizer_eq}
+This thesis examines the GPU implementation of the five equalizer filters.
+While the performance and GPU implementation is interesting, this thesis makes no claim of theoretically expanding understanding of equalizers.
+The data-aided equalizers studied in this thesis are:
+\begin{itemize}
+\item zero-forcing (ZF) equalizer
+\item minimum mean square Error (MMSE) equalizer
+\item MMSE-initialized constant modulus algorithm (CMA) equalizer
+\item frequency domain equalizer one (FDE1)
+\item frequency domain equalizer Two (FDE2).
+\end{itemize}
+The final equations for ZF and MMSE FIR equalizer filters are very similar but differ in formulation.
+The equations for FDE1 and FDE2 are also very similar but differ by one subtle difference.
+The CMA FIR equalizer filter is computed using a steepest decent algorithm initialized by MMSE.
+More CMA iterations lead to lower BER but ZF, MMSE, FDE1 and FDE2 only require one iteration.
+The equations explained in this section will be referenced heavily in Chapter \ref{chap:equalizers_in_gpus}.
+
+\subsection{Zero-Forcing and Minimum Mean Square Error Equalizers}
+\label{sec:ZFnMMSE}
+The ZF and MMSE equalizers are treated together here because they have many common features.
+Both equalizers are found by solving linear equations
+\begin{equation}
+\mathbf{A}\mathbf{c} = \mathbf{b}
+\end{equation}
+where $\mathbf{c}$ is a vector of desired equalizer coefficients
+and the square matrix $\mathbf{A}$ and vector $\mathbf{b}$ are known.
+It will be shown that the only difference between ZF and MMSE lies in the matrix $\mathbf{A}$.
+
+\subsubsection{Zero-Forcing}
+\label{sec:zero-forcing}
+The ZF equalizer is an FIR filter defined by the coefficients
+\begin{equation}
+\begin{matrix}
+c_\text{ZF}(-L_1) & \cdots & c_\text{ZF}(0) & \cdots & c_\text{ZF}(L_2).
+\end{matrix}
+\end{equation}
+The filter coefficients are the solution to the matrix vector equation \cite[eq. (311)]{PAQ-phase1}
+\begin{equation}
+\mathbf{R}_{\hat{h}} \mathbf{c}_\text{ZF} = \hat{\mathbf{h}}_{n_0}
+\label{eq:start_here_ZF}
+\end{equation}
+where
+\begin{equation}
+\mathbf{c}_\text{ZF} = 
+\begin{bmatrix}
+c_\text{ZF}(-L_1) \\ \vdots \\ c_\text{ZF}(0) \\ \vdots \\ c_\text{ZF}(L_2)
+\end{bmatrix},
+\end{equation}
+\begin{equation}
+\mathbf{R}_{\hat{h}} = 
+\mathbf{H}^\dagger \mathbf{H} = 
+		\begin{bmatrix}
+		r_{\hat{h}}(0)			& r^\ast_{\hat{h}}(1)	& \cdots 	& r^\ast_{\hat{h}}(L_{eq}-1)  	\\
+		r_{\hat{h}}(1) 			& r_{\hat{h}}(0)		& \cdots 	& r^\ast_{\hat{h}}(L_{eq}-2)  	\\
+		\vdots	 				& \vdots				& \ddots 	&  								\\
+		r_{\hat{h}}(L_{eq}-1)	& r_{\hat{h}}(L_{eq}-2)	& \cdots	& r_{\hat{h}}(0)  			
+	\end{bmatrix}
+	\label{eq:R_h}
+\end{equation}
+and
+\begin{equation}
+\hat{\mathbf{h}}_{n_0} = \mathbf{H}^\dagger \mathbf{u}_{n_0} = 
+\begin{bmatrix} \hat{h}^\ast(L_1) \\ \vdots \\ \hat{h}^\ast(0) \\ \vdots \\ \hat{h}^\ast(-L_2)  \end{bmatrix},
+\label{eq:h_no}
+\end{equation}
+where
+\begin{equation}
+r_{\hat{h}}(k) = \sum_{n=-N_1}^{N_2} \hat{h}(n) \hat{h}^\ast(n-k),
+\label{eq:sample_autocorrelation}
+\end{equation}
+\begin{equation}
+\mathbf{u}_{n_0} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+	\begin{matrix*}[l] \left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$n_0-1$ zeros}
+		\\ \\
+		\left. \vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}} \right\}
+		\text{$N_1+N_2+L_1+L_2-n_0+1$ zeros}
+		\end{matrix*},
+		\label{eq:un0_ZF}
+\end{equation}
+$n_0 = N_1+L_1+1$ and
+\begin{equation} 
+\mathbf{H} = 
+		\begin{bmatrix}
+		\hat{h}(-N_1)		&  				& 		 	&  					\\
+		\hat{h}(-N_1+1) 	& \hat{h}(-N_1)	& 		 	&  					\\
+		\vdots	 			& \vdots		& \ddots 	&  					\\
+		\hat{h}(N_2)		& \hat{h}(N_2-1)&  			& \hat{h}(-N_1)  	\\
+		 					& \hat{h}(N_2) 	&  			& \hat{h}(-N_1+1) 	\\
+		 					&  	   			&  			& \vdots			\\
+		 					&  	   			&  			& \hat{h}(N_2)		\\
+	\end{bmatrix}.
+\end{equation}
+
+The $(L_\text{EQ} \times L_\text{EQ})$ auto-correlation matrix $\mathbf{R}_{\hat{h}}$ comprises the sample auto-correlation $r_{\hat{h}}(k)$.
+Building $\mathbf{R}_{\hat{h}}$ using $r_{\hat{h}}(k)$ eliminates the need for the matrix matrix multiplication $\mathbf{H}^\dagger \mathbf{H}$.
+Note that the sample auto-correlation $r_{\hat{h}}(k)$ only has support on $-(L_{ch}-1) \leq k \leq L_{ch}-1$, making the auto-correlation matrix $\mathbf{R}_{\hat{h}}$ sparse or $63\%$ zero.
+
+\subsubsection{MMSE Equalizer}
+The MMSE equalizer is an FIR filter defined by the coefficients
+\begin{equation}
+\begin{matrix}
+c_\text{MMSE}(-L_1) & \cdots & c_\text{MMSE}(0) & \cdots & c_\text{MMSE}(L_2).
+\end{matrix}
+\end{equation}
+The filter coefficients are the solution to the matrix vector equation \cite[eq. (330) and (333)]{PAQ-phase1}
+\begin{equation}
+\mathbf{R} \mathbf{c}_\text{MMSE} = \mathbf{g}^\dagger
+\label{eq:start_here_MMSE}
+\end{equation}
+where
+\begin{equation}
+\mathbf{c}_\text{MMSE} = 
+\begin{bmatrix}
+c_\text{MMSE}(-L_1) \\ \vdots \\ c_\text{MMSE}(0) \\ \vdots \\ c_\text{MMSE}(L_2)
+\end{bmatrix},
+\end{equation}
+\begin{equation}
+\mathbf{R} = 
+\mathbf{G}\mathbf{G}^\dagger + 2\hat{\sigma}^2_w \mathbf{I}_{L_1+L_2+1} = 
+\begin{bmatrix}
+r_{h}(0) + 2\hat{\sigma}^2_w	& r^\ast_{h}(1)							& \cdots 	& r^\ast_{h}(L_{eq}-1) 	\\
+r_{h}(1) 						& r_{h}(0) + 2\hat{\sigma}^2_w& \cdots 	& r^\ast_{h}(L_{eq}-2)  			\\
+\vdots	 						& \vdots								& \ddots 	&  						\\
+r_{h}(L_{eq}-1)					& r_{h}(L_{eq}-2)						& \cdots	& r_{h}(0)+2\hat{\sigma}^2_w  
+\end{bmatrix}
+\label{eq:R}
+\end{equation}
+and
+\begin{equation}
+\mathbf{g}^\dagger = \hat{\mathbf{h}}_{n0} = \begin{bmatrix} \hat{h}^\ast(L_1) \\ \vdots \\ \hat{h}^\ast(0) \\ \vdots \\ \hat{h}^\ast(-L_2)  \end{bmatrix},
+\label{eq:g_dagger_h_n0}
+\end{equation}
+where
+\begin{equation}
+r_{\hat{h}}(k) = \sum_{n=-N_1}^{N_2} \hat{h}(n) \hat{h}^\ast(n-k)
+\label{eq:sample_autocorrelation}
+\end{equation}
+and
+\begin{equation}
+\mathbf{G} = 
+		\begin{bmatrix}
+		\hat{h}(N_2)		& \cdots		& \hat{h}(-N_1) 	&  				  \\
+							& \hat{h}(N_2)	& \cdots 			& \hat{h}(-N_1)	  \\
+				 			& 				& \ddots 			&  				& \ddots	  \\
+		 					&  	   			&  					& \hat{h}(N_2)	& \cdots	& \hat{h}(-N_1)	\\
+	\end{bmatrix}.
+\end{equation}
+
+The $(L_\text{EQ} \times L_\text{EQ})$ auto-correlation matrix $\mathbf{R}$ comprises the sample auto-correlation $r_{\hat{h}}(k)$ and the noise variance estimate $\hat{\sigma}^2_w$.
+Building $\mathbf{R}$ using $r_{\hat{h}}(k)$ and $\hat{\sigma}^2_w$ eliminates the need for the matrix matrix multiplication $\mathbf{G}\mathbf{G}^\dagger$.
+Note that the sample auto-correlation $r_{\hat{h}}(k)$ only has support on $-(L_{ch}-1) \leq k \leq L_{ch}-1$ and the addition of $\hat{\sigma}^2_w$ does not increase that support, making the auto-correlation matrix $\mathbf{R}$ sparse or $63\%$ zero.
+
+%where $\mathbf{I}_{L_1+L_2+1}$ is the $(L_1+L_2+1)\times(L_1+L_2+1)$ identity matrix,
+%$\hat{\sigma}^2_w$ is the estimated noise variance, $\mathbf{G}$ is the $(L_1+L_2+1)\times(N_1+N_2+L_1+L_2+1)$ matrix given by
+%\begin{equation}
+%\mathbf{G} = 
+%		\begin{bmatrix}
+%		\hat{h}(N_2)		& \cdots		& \hat{h}(-N_1) 	&  				  \\
+%							& \hat{h}(N_2)	& \cdots 			& \hat{h}(-N_1)	  \\
+%				 			& 				& \ddots 			&  				& \ddots	  \\
+%		 					&  	   			&  					& \hat{h}(N_2)	& \cdots	& \hat{h}(-N_1)	\\
+%	\end{bmatrix}
+%\end{equation}
+%and $\mathbf{g}^\dagger$ is the $(L_1+L_2+1)\times1$ vector given by
+%\begin{equation}
+%\mathbf{g}^\dagger = \hat{\mathbf{h}}_{n0} = \begin{bmatrix} \hat{h}^\ast(L_1) \\ \vdots \\ \hat{h}^\ast(0) \\ \vdots \\ \hat{h}^\ast(-L_2)  \end{bmatrix}.
+%%\begin{bmatrix} \hat{h}(L_1) \cdots \hat{h}(-L_2) \end{bmatrix}.
+%\label{eq:g_dagger_h_n0}
+%\end{equation}
+%
+%Computing $\mathbf{c}_\text{MMSE}$ can be simplified by noticing that $\mathbf{g}^\dagger = \hat{\mathbf{h}}_{n_0}$, $\mathbf{G}\mathbf{G}^\dagger = \mathbf{R}_{\hat{h}}$ in Equation \eqref{eq:R_h}.
+%To further simplify MMSE, twice the estimated noise variance is added down the diagonal of the channel estimate auto-correlation matrix
+%\begin{equation}
+%\mathbf{R} = 
+%\mathbf{R}_{\hat{h}} + 2\hat{\sigma^2_w} \mathbf{I}_{L_1+L_2+1} = 
+%		\begin{bmatrix}
+%		r_{h}(0) + 2\hat{\sigma^2_w}	& r^\ast_{h}(1)							& \cdots 	& r^\ast_{h}(L_{eq}-1)  	\\
+%		r_{h}(1) 						& r_{h}(0) + 2\hat{\sigma^2_w}& \cdots 	& r^\ast_{h}(L_{eq}-2)  				\\
+%		\vdots	 						& \vdots								& \ddots 	&  							\\
+%		r_{h}(L_{eq}-1)					& r_{h}(L_{eq}-2)						& \cdots	& r_{h}(0) + 2\hat{\sigma^2_w}  			
+%	\end{bmatrix}.
+%	\label{eq:R_MMSE}
+%\end{equation}
+%By placing Equation \eqref{eq:R_MMSE} and \eqref{eq:g_dagger_h_n0} into \eqref{eq:c_MMSE_direct} results in
+%\begin{equation}
+%\mathbf{c}_\text{MMSE} = \mathbf{R}^{-1} \hat{\mathbf{h}}_{n_0}.
+%\end{equation}
+%Solving for the MMSE equalizer coefficients $\mathbf{c}_\text{MMSE}$ takes the form like the ZF equalizer coeffiencts in \eqref{eq:c_ZF_solve}
+%\begin{equation}
+%\mathbf{R}\mathbf{c}_\text{MMSE} = \hat{\mathbf{h}}_{n_0}.
+%\label{eq:c_MMSE_solve}
+%\end{equation}
+%
+%The only difference between solving for the ZF and MMSE equalizer coefficients is $\mathbf{R}$ and $\mathbf{R}_{\hat{h}}$. 
+%The MMSE equalizer coefficients $\mathbf{c}_\text{MMSE}$ uses the noise variance estimate when building $\mathbf{R}$.
+%The sparseness of $\mathbf{R}$ can also be leveraged to reduce computation drastically because
+%$\mathbf{R}$ has the same sparse properties as $\mathbf{R}_{\hat{h}}$.
+
+\subsection{The Constant Modulus Algorithm}
+\label{sec:CMA}
+The $b$th CMA equalizer is an FIR filter defined by the coefficients
+\begin{equation}
+\begin{matrix}
+c_\text{CMA}^b(-L_1) & \cdots & c_\text{CMA}^b(0) & \cdots & c_\text{CMA}^b(L_2).
+\end{matrix}
+\end{equation}
+The filter coefficients are calculated by a steepest decent algorithm 
+\begin{equation}
+\mathbf{c}_\text{CMA}^{b+1} = \mathbf{c}_\text{CMA}^{b}-\mu \nabla J
+\label{eq:steepest}
+\end{equation}
+initialized by the MMSE equalizer coefficients
+\begin{equation}
+\mathbf{c}_\text{CMA}^0 = \mathbf{c}_\text{MMSE}.
+\end{equation}
+The vector $\mathbf{J}$ is the cost function and $\nabla J$ is the cost function gradient \cite[eq. (352)]{PAQ-phase1}
+\begin{equation}
+	\nabla J = \frac{2}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - 1 \right]
+	y(n)  \mathbf{r}^\ast(n).
+\label{eq:DelJcma-approxr}
+\end{equation}
+where
+\begin{equation}
+\mathbf{r}(n) = \begin{bmatrix} r(n+L_1) \\ \vdots \\ r(n) \\ \vdots \\ r(n-L_2) \end{bmatrix}.
+\end{equation}
+This means $\nabla J$ is defined by
+\begin{equation}
+\nabla J = \begin{bmatrix} \nabla J(-L_1) \\ \vdots \\ \nabla J(0) \\ \vdots \\ \nabla J(L_2) \end{bmatrix}.
+\end{equation}
+
+A DSP engineer could implement the steepest decent algorithm by computing the cost function gradient directly.
+The $L_{pkt}$ sample summation for $\nabla J$ in \eqref{eq:DelJcma-approxr} does not map well to GPUs.
+Chapter \ref{chap:gpu} will show how well convolution performs in GPUs.
+The computation for $\nabla J$ can be massaged and re-expressed as convolution.
+
+To begin messaging $\nabla J$, the term
+\begin{equation}
+z(n) = 	2\left[ \vphantom{\displaystyle\sum}  y(n) y^\ast(n) - 1 \right] y(n)
+\end{equation} 
+is defined to simplify the expression of $\nabla J$ to
+\begin{equation}
+	\nabla J = \frac{1}{L_{pkt}} \sum_{n=0}^{L_{pkt}-1}
+	z(n)  \mathbf{r}^\ast(n).
+\label{eq:DelJcma-midMassage}
+\end{equation}
+Expanding the expression of $\nabla J$ into vector form
+\begin{multline}
+\nabla J
+	= 
+	\frac{z(0)}{L_{pkt}}
+		\begin{bmatrix} r^\ast(L_1) \\ \vdots \\ r^\ast(0) \\ \vdots \\ r^\ast(L_2) \end{bmatrix} +
+	\frac{z(1)}{L_{pkt}}
+		\begin{bmatrix} r^\ast(1+L_1) \\ \vdots \\ r^\ast(1) \\ \vdots \\ r^\ast(1-L_2) \end{bmatrix} + \cdots
+	\frac{z(L_{pkt}-1)}{L_{pkt}}
+		\begin{bmatrix} r^\ast(L_{pkt}-1+L_1) \\ \vdots \\ r^\ast(L_{pkt}-1) \\ \vdots \\ r^\ast(L_{pkt}-1-L_2) \end{bmatrix}
+\label{eq:delJ_writeoutr}
+\end{multline}
+shows a pattern in $z(n)$ and $\mathbf{r}(n)$.
+The $k$th value of $\nabla J$ is
+\begin{equation}
+\nabla J(k) = \frac{1}{L_{pkt}} \sum^{L_{pkt}-1}_{m=0}  z(m) r^\ast(m-k), \quad -L_1 \leq k \leq L_2.
+\label{eq:delJ_direct_way}
+\end{equation}
+The summation almost looks like a convolution accept the conjugate on the element $r(n)$.
+To put the summation into the familiar convolution form, define
+\begin{equation}
+\rho(n) = r^\ast(n).
+\end{equation}
+Now
+\begin{equation}
+\nabla J(k) = \frac{1}{L_{pkt}} \sum^{L_{pkt}-1}_{m=0}  z(m) \rho(k-m).
+\label{eq:CMA_delJ_rice_reformed}
+\end{equation}
+
+Note that $z(n)$ has support on $0 \leq n \leq \Lpkt-1$ and 
+$\rho(n)$ has support on $-\Lpkt+1 \leq n \leq 0$, 
+the long result of the convolution sum $m(n)$ has support on $-\Lpkt+1 \leq n \leq \Lpkt-1$.
+Putting all the pieces together, we have
+\begin{align}
+m(n) &= \sum^{L_{pkt}-1}_{m=0} z(m) \rho(n-m) \nonumber \\
+	 &= \sum^{L_{pkt}-1}_{m=0} z(m) r^\ast(m-n)
+	 \label{eq:CMA_conv_z_rho}
+\end{align}
+Comparing Equation \eqref{eq:CMA_delJ_rice_reformed} and \eqref{eq:CMA_conv_z_rho} shows that 
+\begin{equation}
+\nabla J(k) = \frac{1}{L_{pkt}} m(k), \quad -L_1 \leq k \leq L_2.
+\label{eq:CMA_delJ_donzo}
+\end{equation}
+The values of interest are shown in Figure \ref{fig:convolutionFigureRice}.
+\begin{figure}
+	\centering\includegraphics[width=10in/100*55]{figures/eq_equations/convolutionFigureRice.pdf}
+	\caption{Diagram showing the relationships between $z(n)$, $\rho(n)$ and $m(n)$.}
+	\label{fig:convolutionFigureRice}
+\end{figure}
+
+This suggest the following matlab code for computing computing the gradient vector $\nabla J$ and implementing CMA.
+\begin{table}[h]
+\caption{CMA}
+\label{code:CMA}
+\singlespacing
+{\footnotesize
+\begin{verbatim}
+ 1 c_CMA = c_MMSE;
+ 2 for i = 1:its
+ 3 	   yy = conv(r,c_CMA);
+ 4     y = yy(L1+1:end-L2); % trim yy
+ 5     z = 2*(y.*conj(y)-1).*y;
+ 6     Z = fft(z,Nfft);
+ 7     R = fft(conj(r(end:-1:1)),Nfft)
+ 8     m = ifft(Z.*R);
+ 9     delJ = m(Lpkt-L1:Lpkt+L2)/Lpkt;
+10     c_CMA = c_CMA-mu*delJ;
+11 end
+12 yy = conv(r,c_CMA);
+13 y = yy(L1+1:end-L2); % trim yy
+\end{verbatim}
+}
+\end{table}
+\doublespacing
+
+\clearpage
+\subsection{The Frequency Domain Equalizers}
+\label{sec:FDE}
+Frequency Domain Equalizer One (FDE1) and Frequency Domain Equalizer Two (FDE2) are very similar structure.
+FDE1 and FDE2 are adapted from Williams and Saquib \cite[eq. (11) and (12)]{williams2013linear} \cite{coon2006channel}.
+The frequency domain equalizers are the frequency-domain equivalent to the MMSE equalizer. 
+
+Using circular convolution analysis, frequency-domain equalization performed on a packet structure must have cyclic prefix that is longer than the channel response \cite{sari1994frequency,ng2007turbo,al2008single,proakis-salehi:2008}.
+Half of the iNET preamble is used as the cyclic prefix because it has eight repetitions of $\text{CD98}_\text{hex}$.
+Figure \ref{fig:cyclicPrefix} shows how the iNET packet is used as a cyclic prefix.
+\begin{figure}
+	\centering\includegraphics[width=9.47in/100*55]{figures/eq_equations/cyclicPrefix.pdf}
+	\caption{A diagram showing how the iNET packet is used as a cyclic prefix.}
+	\label{fig:cyclicPrefix}
+\end{figure}
+The length of the cyclic prefix is half the preamble length $L_\text{P}/2 = 128$.
+The length of the cyclic prefix is much longer than channel impulse response $L_h = 38$.
+
+
+
+\subsubsection{Frequency Domain Equalizer One}
+FDE1 is the MMSE equalizer applied in the frequency domain from \cite[eq. (11)]{williams2013linear}:
+\begin{equation}
+C_\text{FDE1}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{1}{\hat{\sigma}^2_w}} \quad
+\omega_k = \frac{2\pi}{N_\text{FFT}} \;
+\text{for} \;
+k=0,1,\cdots,N_\text{FFT}-1
+\label{eq:FDE1}
+\end{equation}
+where $N_\text{FFT} = 2^u = 16$,$384$ where $u = {\left\lceil \log_2{\left(\Lpkt\right)}  \right\rceil} = 14$.
+The term ${\left\lceil \log_2{\left(\Lpkt\right)}  \right\rceil}$ is the ceiling of $\log_2{\left(\Lpkt\right)}$.
+The term $C_\text{FDE1}(e^{j\omega_k})$ is the frequency response of FDE1 at $\omega_k$.
+The term $\hat{H}(e^{j\omega_k})$ is the $k$th element of the length $N_\text{FFT}$ of the channel estimate $\mathbf{\hat{h}}$ frequency response at $\omega_k$.
+The term $\hat{\sigma}^2$ is the noise variance estimate, this term is completely independent of frequency because the noise is assumed to be spectrally flat or white.
+
+Equation \eqref{eq:FDE1} is straight forward to implement in GPUs.
+FDE1 is extremely fast and computationally efficient.
+
+\subsubsection{Frequency Domain Equalizer Two}
+FDE2 is also the MMSE equalizer applied in the frequency domain.
+Unlike FDE1, FDE2 incorporates knowledge of the SOQPSK-TG power spectral density.
+The frequency response of FDE2 is \cite[eq. (12)]{williams2013linear}
+\begin{equation}
+C_\text{FDE2}(e^{j\omega_k}) = \frac{\hat{H}^\ast(e^{j\omega_k})}  {|\hat{H}(e^{j\omega_k})|^2  +  \frac{\Psi(e^{j\omega_k})}{\hat{\sigma}^2_w}} \quad
+\omega_k = \frac{2\pi}{L} \;
+\text{for} \;
+k=0,1,\cdots,L-1
+\label{eq:FDE2}
+\end{equation}
+where $\Psi(e^{j\omega_k})$ is the power spectral density of SOQPSK-TG.
+Figure \ref{fig:SOQPSK_spectrum} shows $\Psi(e^{j\omega_k})$ derived using welch's method of averaging periodograms based on length $N_\text{FFT} = 16$,$384$ FFTs of SOQPSK-TG samples at a sample rate equivalent to $2$ samples/bit.
+The term $\Psi(e^{j\omega_k})$ eliminates out of band multipath that may be challenging to estimate and over come.
+\begin{figure}
+	\centering\includegraphics[width=5in]{figures/eq_equations/FDE2_spectrum_PSI.eps}
+	\caption{SOQPSK-TG power spectral density.}
+	\label{fig:SOQPSK_spectrum}
+\end{figure}

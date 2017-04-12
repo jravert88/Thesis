@@ -1,7 +1,6 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: master.aux
 A level-1 auxiliary file: intro-problemStatement.aux
 A level-1 auxiliary file: systemOverview.aux
-A level-1 auxiliary file: equations.aux
 A level-1 auxiliary file: signalProcessingInGPUs.aux
 A level-1 auxiliary file: equalizer_implementation_performance.aux
 A level-1 auxiliary file: final_summary.aux
@@ -10,8 +9,7 @@ Database file #1: refs.bib
 -- IEEEtran.bst version 1.11 (2003/04/02) by Michael Shell.
 -- http://www.ctan.org/tex-archive/macros/latex/contrib/supported/IEEEtran/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
-Warning--empty journal in frerkingjpl
-Warning--empty year in frerkingjpl
+Warning--empty journal in al2008single
 
 Done.
-(There were 2 warnings)
+(There was 1 warning)

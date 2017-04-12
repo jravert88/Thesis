@@ -1,34 +1,127 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
 \citation{paq-phase1-report:2014}
-\citation{frerkingjpl}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Preamble Assisted Equalization Project}{5}{chapter.2}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Preamble Assisted Equalization Project}{3}{chapter.2}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{brf}{\backcite{paq-phase1-report:2014}{{5}{2}{chapter.2}}}
-\@writefile{brf}{\backcite{frerkingjpl}{{5}{2}{chapter.2}}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Hardware}{5}{section.2.1}}
-\newlabel{sec:hardware}{{2.1}{5}{Hardware}{section.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces A block diagram of the physical PAQ project hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}}{6}{figure.2.1}}
-\newlabel{fig:hardwareblock}{{2.1}{6}{Hardware}{figure.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces A picture of the physical PAQ project hardware refrencing blocks from Figure \ref  {fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured.}}{6}{figure.2.2}}
-\newlabel{fig:HostSystem}{{2.2}{6}{Hardware}{figure.2.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces A diagram showing the PAQ packetized sample structure.}}{7}{figure.2.3}}
-\newlabel{fig:packetStructure_intro}{{2.3}{7}{Hardware}{figure.2.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Received signal has multipath interference, frequency offset, phase offset and additive white Gaussian noise. The received signal is down-converted filtered and sampled to produce the sample sequence $r(n)$.}}{8}{figure.2.4}}
-\newlabel{fig:received1}{{2.4}{8}{Hardware}{figure.2.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces An illustration of the discrete-time channel of length $N_1+N_2+1$ with a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.}}{9}{figure.2.5}}
-\newlabel{fig:channelExample}{{2.5}{9}{Hardware}{figure.2.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces A block diagram of the estimators in the PAQ project.}}{9}{figure.2.6}}
-\newlabel{fig:estimators}{{2.6}{9}{Digital Signal Processing}{figure.2.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Digital Signal Processing}{9}{section.2.2}}
-\newlabel{sec:signalProcessing}{{2.2}{9}{Digital Signal Processing}{section.2.2}{}}
-\newlabel{eq:preamble_ASM}{{2.2}{9}{Digital Signal Processing}{equation.2.2.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces A block diagram of application of the FIR equalizer and detection filters in the Preamble Assisted Equalization (PAQ) project.}}{10}{figure.2.7}}
-\newlabel{fig:thisThesisBlock}{{2.7}{10}{Digital Signal Processing}{figure.2.7}{}}
+\newlabel{chap:PAQ_project}{{2}{3}{Preamble Assisted Equalization Project}{chapter.2}{}}
+\@writefile{brf}{\backcite{paq-phase1-report:2014}{{3}{2}{chapter.2}}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Hardware Overview}{3}{section.2.1}}
+\newlabel{sec:hardware}{{2.1}{3}{Hardware Overview}{section.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces A block diagram of the physical PAQ hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case.}}{4}{figure.2.1}}
+\newlabel{fig:hardwareblock}{{2.1}{4}{A block diagram of the physical PAQ hardware. The components inside the rack mounted server are in the dashed box. All the components in the dashed and dotted box are housed in a rack mounted case}{figure.2.1}{}}
+\citation{rice:2009}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces A picture of the physical PAQ hardware refrencing blocks from Figure \ref  {fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured.}}{5}{figure.2.2}}
+\newlabel{fig:HostSystem}{{2.2}{5}{A picture of the physical PAQ hardware refrencing blocks from Figure \ref {fig:hardwareblock}. Right: Components in the dashed and dotted box. Left: Components in the dashed box. Note that the T/M Receiver is not pictured}{figure.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces A diagram showing PAQ packetized sample structure.}}{6}{figure.2.3}}
+\newlabel{fig:packetStructure_intro}{{2.3}{6}{A diagram showing PAQ packetized sample structure}{figure.2.3}{}}
+\@writefile{brf}{\backcite{rice:2009}{{6}{2.1}{equation.2.1.1}}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Digital Signal Processing Overview}{6}{section.2.2}}
+\newlabel{sec:signalProcessing}{{2.2}{6}{Digital Signal Processing Overview}{section.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Received signal has multipath interference, frequency offset, phase offset and additive white Gaussian noise. The received signal is down-converted filtered and sampled to produce the sample sequence $r(n)$.}}{7}{figure.2.4}}
+\newlabel{fig:received1}{{2.4}{7}{Received signal has multipath interference, frequency offset, phase offset and additive white Gaussian noise. The received signal is down-converted filtered and sampled to produce the sample sequence $r(n)$}{figure.2.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces An illustration of the discrete-time channel of length $N_1+N_2+1$ with a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples.}}{7}{figure.2.5}}
+\newlabel{fig:channelExample}{{2.5}{7}{An illustration of the discrete-time channel of length $N_1+N_2+1$ with a non-causal component comprising $N_1$ samples and a causal component comprising $N_2$ samples}{figure.2.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces A block diagram of the estimators in PAQ.}}{7}{figure.2.6}}
+\newlabel{fig:estimators}{{2.6}{7}{A block diagram of the estimators in PAQ}{figure.2.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces A block diagram of the computation and application of the equalizer and detection filters. The bold box emphasizes in the focus of this thesis.}}{8}{figure.2.7}}
+\newlabel{fig:thisThesisBlock}{{2.7}{8}{A block diagram of the computation and application of the equalizer and detection filters. The bold box emphasizes in the focus of this thesis}{figure.2.7}{}}
+\citation{PAQ-phase1}
+\citation{preamble_detector}
+\@writefile{brf}{\backcite{PAQ-phase1}{{9}{2.2}{figure.2.7}}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Detailed Description of Signal Processing Algorithms}{9}{section.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Preamble Detection}{9}{subsection.2.3.1}}
+\newlabel{sec:pd}{{2.3.1}{9}{Preamble Detection}{subsection.2.3.1}{}}
+\@writefile{brf}{\backcite{preamble_detector}{{10}{2.3.1}{subsection.2.3.1}}}
+\newlabel{eq:gpu-L-4}{{2.2}{10}{Preamble Detection}{equation.2.3.2}{}}
+\newlabel{eq:gpu-L-pedone-geoghegan-2}{{2.3}{10}{Preamble Detection}{equation.2.3.3}{}}
+\newlabel{eq:gpu-L-pedone-geoghegan-3}{{2.4}{10}{Preamble Detection}{equation.2.3.4}{}}
+\citation{rice2014frequency}
+\newlabel{eq:gpu-L-pedone-geoghegan-4}{{2.5}{11}{Preamble Detection}{equation.2.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Frequency Offset Compensation}{11}{subsection.2.3.2}}
+\newlabel{sec:freq_offset_comp}{{2.3.2}{11}{Frequency Offset Compensation}{subsection.2.3.2}{}}
+\@writefile{brf}{\backcite{rice2014frequency}{{11}{2.3.2}{subsection.2.3.2}}}
+\newlabel{eq:jeff-ML-w-final3}{{2.7}{11}{Frequency Offset Compensation}{equation.2.3.7}{}}
+\newlabel{eq:frequency_compensation}{{2.8}{11}{Frequency Offset Compensation}{equation.2.3.8}{}}
+\citation{rice-afran-saquib-cole-rhodes-moazzami:2014}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Channel Estimation}{12}{subsection.2.3.3}}
+\newlabel{sec:channel_estimation}{{2.3.3}{12}{Channel Estimation}{subsection.2.3.3}{}}
+\@writefile{brf}{\backcite{rice-afran-saquib-cole-rhodes-moazzami:2014}{{12}{2.3.3}{equation.2.3.10}}}
+\newlabel{eq:preamble_ASM}{{2.13}{12}{Channel Estimation}{equation.2.3.13}{}}
+\citation{rice-afran-saquib-cole-rhodes-moazzami:2014}
+\citation{perrins:2013}
+\citation{perrins:2013}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Noise Variance Estimation}{13}{subsection.2.3.4}}
+\newlabel{sec:noise_variance_estimation}{{2.3.4}{13}{Noise Variance Estimation}{subsection.2.3.4}{}}
+\@writefile{brf}{\backcite{rice-afran-saquib-cole-rhodes-moazzami:2014}{{13}{2.3.4}{subsection.2.3.4}}}
+\newlabel{eq:ML-s2-final3}{{2.14}{13}{Noise Variance Estimation}{equation.2.3.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}Symbol-by-Symbol Detector}{13}{subsection.2.3.5}}
+\newlabel{sec:oqpsk_detector}{{2.3.5}{13}{Symbol-by-Symbol Detector}{subsection.2.3.5}{}}
+\@writefile{brf}{\backcite{perrins:2013}{{13}{2.3.5}{subsection.2.3.5}}}
+\@writefile{brf}{\backcite{perrins:2013}{{13}{2.3.5}{figure.2.8}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.8}{\ignorespaces ``Numerically optimized'' SOQPSK detection filter $\mathbf  {h}_\text  {NO}$.}}{14}{figure.2.8}}
+\newlabel{fig:detectionFilter}{{2.8}{14}{``Numerically optimized'' SOQPSK detection filter $\mathbf {h}_\text {NO}$}{figure.2.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.9}{\ignorespaces Offset Quadriture Phase Shift Keying symbol by symbol detector.}}{14}{figure.2.9}}
+\newlabel{fig:OQPSK}{{2.9}{14}{Offset Quadriture Phase Shift Keying symbol by symbol detector}{figure.2.9}{}}
+\citation{PAQ-phase1}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Detailed Description of Data-aided Equalizers}{15}{section.2.4}}
+\newlabel{sec:equalizer_eq}{{2.4}{15}{Detailed Description of Data-aided Equalizers}{section.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Zero-Forcing and Minimum Mean Square Error Equalizers}{15}{subsection.2.4.1}}
+\newlabel{sec:ZFnMMSE}{{2.4.1}{15}{Zero-Forcing and Minimum Mean Square Error Equalizers}{subsection.2.4.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Zero-Forcing}{15}{section*.7}}
+\newlabel{sec:zero-forcing}{{2.4.1}{15}{Zero-Forcing}{section*.7}{}}
+\@writefile{brf}{\backcite{PAQ-phase1}{{16}{2.4.1}{equation.2.4.17}}}
+\newlabel{eq:start_here_ZF}{{2.18}{16}{Zero-Forcing}{equation.2.4.18}{}}
+\newlabel{eq:R_h}{{2.20}{16}{Zero-Forcing}{equation.2.4.20}{}}
+\newlabel{eq:h_no}{{2.21}{16}{Zero-Forcing}{equation.2.4.21}{}}
+\newlabel{eq:sample_autocorrelation}{{2.22}{16}{Zero-Forcing}{equation.2.4.22}{}}
+\newlabel{eq:un0_ZF}{{2.23}{16}{Zero-Forcing}{equation.2.4.23}{}}
+\citation{PAQ-phase1}
+\@writefile{toc}{\contentsline {subsubsection}{MMSE Equalizer}{17}{section*.8}}
+\@writefile{brf}{\backcite{PAQ-phase1}{{17}{2.4.1}{equation.2.4.25}}}
+\newlabel{eq:start_here_MMSE}{{2.26}{17}{MMSE Equalizer}{equation.2.4.26}{}}
+\newlabel{eq:R}{{2.28}{18}{MMSE Equalizer}{equation.2.4.28}{}}
+\newlabel{eq:g_dagger_h_n0}{{2.29}{18}{MMSE Equalizer}{equation.2.4.29}{}}
+\newlabel{eq:sample_autocorrelation}{{2.30}{18}{MMSE Equalizer}{equation.2.4.30}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}The Constant Modulus Algorithm}{18}{subsection.2.4.2}}
+\newlabel{sec:CMA}{{2.4.2}{18}{The Constant Modulus Algorithm}{subsection.2.4.2}{}}
+\citation{PAQ-phase1}
+\newlabel{eq:steepest}{{2.33}{19}{The Constant Modulus Algorithm}{equation.2.4.33}{}}
+\@writefile{brf}{\backcite{PAQ-phase1}{{19}{2.4.2}{equation.2.4.34}}}
+\newlabel{eq:DelJcma-approxr}{{2.35}{19}{The Constant Modulus Algorithm}{equation.2.4.35}{}}
+\newlabel{eq:DelJcma-midMassage}{{2.39}{20}{The Constant Modulus Algorithm}{equation.2.4.39}{}}
+\newlabel{eq:delJ_writeoutr}{{2.40}{20}{The Constant Modulus Algorithm}{equation.2.4.40}{}}
+\newlabel{eq:delJ_direct_way}{{2.41}{20}{The Constant Modulus Algorithm}{equation.2.4.41}{}}
+\newlabel{eq:CMA_delJ_rice_reformed}{{2.43}{20}{The Constant Modulus Algorithm}{equation.2.4.43}{}}
+\newlabel{eq:CMA_conv_z_rho}{{2.44}{20}{The Constant Modulus Algorithm}{equation.2.4.44}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.10}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $m(n)$.}}{21}{figure.2.10}}
+\newlabel{fig:convolutionFigureRice}{{2.10}{21}{Diagram showing the relationships between $z(n)$, $\rho (n)$ and $m(n)$}{figure.2.10}{}}
+\newlabel{eq:CMA_delJ_donzo}{{2.45}{21}{The Constant Modulus Algorithm}{equation.2.4.45}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces CMA}}{22}{table.2.1}}
+\newlabel{code:CMA}{{2.1}{22}{CMA}{table.2.1}{}}
+\citation{williams2013linear}
+\citation{coon2006channel}
+\citation{sari1994frequency,ng2007turbo,al2008single,proakis-salehi:2008}
+\citation{williams2013linear}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.11}{\ignorespaces A diagram showing how the iNET packet is used as a cyclic prefix.}}{23}{figure.2.11}}
+\newlabel{fig:cyclicPrefix}{{2.11}{23}{A diagram showing how the iNET packet is used as a cyclic prefix}{figure.2.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}The Frequency Domain Equalizers}{23}{subsection.2.4.3}}
+\newlabel{sec:FDE}{{2.4.3}{23}{The Frequency Domain Equalizers}{subsection.2.4.3}{}}
+\@writefile{brf}{\backcite{williams2013linear}{{23}{2.4.3}{subsection.2.4.3}}}
+\@writefile{brf}{\backcite{coon2006channel}{{23}{2.4.3}{subsection.2.4.3}}}
+\@writefile{brf}{\backcite{sari1994frequency,ng2007turbo,al2008single,proakis-salehi:2008}{{23}{2.4.3}{subsection.2.4.3}}}
+\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer One}{23}{section*.9}}
+\@writefile{brf}{\backcite{williams2013linear}{{23}{2.4.3}{section*.9}}}
+\newlabel{eq:FDE1}{{2.46}{23}{Frequency Domain Equalizer One}{equation.2.4.46}{}}
+\citation{williams2013linear}
+\@writefile{toc}{\contentsline {subsubsection}{Frequency Domain Equalizer Two}{24}{section*.10}}
+\@writefile{brf}{\backcite{williams2013linear}{{24}{2.4.3}{section*.10}}}
+\newlabel{eq:FDE2}{{2.47}{24}{Frequency Domain Equalizer Two}{equation.2.4.47}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.12}{\ignorespaces SOQPSK-TG power spectral density.}}{25}{figure.2.12}}
+\newlabel{fig:SOQPSK_spectrum}{{2.12}{25}{SOQPSK-TG power spectral density}{figure.2.12}{}}
 \@setckpt{systemOverview}{
-\setcounter{page}{12}
-\setcounter{equation}{2}
+\setcounter{page}{26}
+\setcounter{equation}{47}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
@@ -37,13 +130,13 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{2}
-\setcounter{section}{2}
-\setcounter{subsection}{0}
+\setcounter{section}{4}
+\setcounter{subsection}{3}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{7}
-\setcounter{table}{0}
+\setcounter{figure}{12}
+\setcounter{table}{1}
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{0}
 \setcounter{cp@cnt}{0}
@@ -55,7 +148,7 @@
 \setcounter{lotdepth}{1}
 \setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{11}
+\setcounter{bookmark@seq@number}{22}
 \setcounter{lstlisting}{0}
-\setcounter{section@level}{1}
+\setcounter{section@level}{3}
 }
