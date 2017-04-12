@@ -1,17 +1,17 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces CMA}}{22}{table.2.1}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces The resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c). Note that CUDA configures the size of the L1 cache needed.}}{35}{table.3.1}
-\contentsline {table}{\numberline {3.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{47}{table.3.2}
-\contentsline {table}{\numberline {3.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{49}{table.3.3}
-\contentsline {table}{\numberline {3.4}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $21$ on a Tesla K40c GPU.}}{50}{table.3.4}
-\contentsline {table}{\numberline {3.5}{\ignorespaces Defining start and stop lines for execution time comparison in Listing \ref {code:batchedConvFun}.}}{52}{table.3.5}
-\contentsline {table}{\numberline {3.6}{\ignorespaces Convolution using batch processing execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{53}{table.3.6}
-\contentsline {table}{\numberline {3.7}{\ignorespaces Convolution using batch processing execution times with for a $12672$ sample signal and $21$ tap filter on a Tesla K40c GPU.}}{53}{table.3.7}
-\contentsline {table}{\numberline {3.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $21$ and $186$ tap filter on a Tesla K40c GPU.}}{55}{table.3.8}
+\contentsline {table}{\numberline {3.1}{\ignorespaces The resources available with three NVIDIA GPUs used in this thesis (1x Tesla K40c 2x Tesla K20c). Note that CUDA configures the size of the L1 cache needed.}}{29}{table.3.1}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Defining start and stop lines for timing comparison in Listing \ref {code:convFun}.}}{41}{table.3.2}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $186$ on a Tesla K40c GPU.}}{43}{table.3.3}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Convolution computation times with signal length $12672$ and filter length $23$ on a Tesla K40c GPU.}}{44}{table.3.4}
+\contentsline {table}{\numberline {3.5}{\ignorespaces Defining start and stop lines for execution time comparison in Listing \ref {code:batchedConvFun}.}}{46}{table.3.5}
+\contentsline {table}{\numberline {3.6}{\ignorespaces Convolution using batch processing execution times with for a $12672$ sample signal and $186$ tap filter on a Tesla K40c GPU.}}{47}{table.3.6}
+\contentsline {table}{\numberline {3.7}{\ignorespaces Convolution using batch processing execution times with for a $12672$ sample signal and $23$ tap filter on a Tesla K40c GPU.}}{47}{table.3.7}
+\contentsline {table}{\numberline {3.8}{\ignorespaces Batched convolution execution times with for a $12672$ sample signal and cascaded $23$ and $186$ tap filter on a Tesla K40c GPU.}}{49}{table.3.8}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Three different algorithms were explored to compute the ZF and MMSE equalizer filters.}}{75}{table.4.1}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Two different algorithms were explored to compute the cost function gradient $\nabla J$.}}{77}{table.4.2}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Execution times for calculating and applying Frequency Domain Equalizer One and Two.}}{79}{table.4.3}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Three different algorithms were explored to compute the ZF and MMSE equalizer filters.}}{73}{table.4.1}
+\contentsline {table}{\numberline {4.2}{\ignorespaces CMA}}{77}{table.4.2}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Two different algorithms were explored to compute the cost function gradient $\nabla J$.}}{78}{table.4.3}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Execution times for calculating and applying Frequency Domain Equalizer One and Two.}}{83}{table.4.4}
 \addvspace {10\p@ }

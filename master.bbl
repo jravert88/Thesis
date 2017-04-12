@@ -30,52 +30,23 @@ M.~Rice, M.~S. Afran, M.~Saquib, A.~Cole-Rhodes, and F.~Moazzami, ``On the
   Baltimore, MD, November 2014.
 
 \bibitem{paq-phase1-report:2014}
-M.~Rice, ``Phase 1 report: Preamble assisted equalization for aeronautical
-  telemetry ({PAQ}),'' Brigham Young University, Tech. Rep., 2014, submitted to
-  the Spectrum Efficient Technologies (SET) Office of the Science \&
-  Technology, Test \& Evaluation (S\&T/T\&E) Program, Test Resource Management
-  Center (TRMC). Also available on-line at \url{
+M.~Rice \emph{et~al.}, ``Phase 1 report: Preamble assisted equalization for
+  aeronautical telemetry ({PAQ}),'' Brigham Young University, Tech. Rep., 2014,
+  submitted to the Spectrum Efficient Technologies (SET) Office of the Science
+  \& Technology, Test \& Evaluation (S\&T/T\&E) Program, Test Resource
+  Management Center (TRMC). Also available on-line at \url{
   http://hdl.lib.byu.edu/1877/3242}.
 
 \bibitem{rice:2009}
-------, \emph{Digital Communications: A Discrete-Time Approach}.\hskip 1em plus
-  0.5em minus 0.4em\relax Upper Saddle River, NJ: Pearson Prentice-Hall, 2009.
-
-\bibitem{PAQ-phase1}
-------, ``Phase 1 report: Preamble assisted equalization for aeronautical
-  telemetry ({PAQ}),‖ {Brigham Young University},'' Technical Report, 2014,
-  submitted to the Spectrum Efficient Technologies (SET) Office of the Science
-  \& Technology, Test \& Evaluation (S\&T/T\&E) Program, Test Resource
-  Management Center (TRMC). Also available online at< http://hdl. lib. byu.
-  edu/1877/3242, Tech. Rep., 2014.
-
-\bibitem{preamble_detector}
-M.~Rice and A.~Mcmurdie, ``On frame synchronization in aeronautical
-  telemetry,'' \emph{IEEE Transactions on Aerospace and Electronic Systems},
-  vol.~52, no.~5, pp. 2263--2280, October 2016.
+M.~Rice, \emph{Digital Communications: A Discrete-Time Approach}.\hskip 1em
+  plus 0.5em minus 0.4em\relax Upper Saddle River, NJ: Pearson Prentice-Hall,
+  2009.
 
 \bibitem{rice2014frequency}
 M.~Rice and E.~Perrins, ``On frequency offset estimation using the inet
   preamble in frequency selective fading,'' in \emph{Military Communications
   Conference (MILCOM), 2014 IEEE}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE,
   2014, pp. 706--711.
-
-\bibitem{perrins:2013}
-E.~Perrins, ``{FEC} systems for aeronautical telemetry,'' \emph{{IEEE}
-  Transactions on Aerospace and Electronic Systems}, vol.~49, no.~4, pp.
-  2340--2352, October 2013.
-
-\bibitem{williams2013linear}
-I.~E. Williams and M.~Saquib, ``Linear frequency domain equalization of
-  {SOQPSK-TG} for wideband aeronautical telemetry channels,'' \emph{IEEE
-  Transactions on Aerospace and Electronic Systems}, vol.~49, no.~1, pp.
-  640--647, 2013.
-
-\bibitem{coon2006channel}
-J.~Coon, M.~Sandell, M.~Beach, and J.~McGeehan, ``Channel and noise variance
-  estimation and tracking algorithms for unique-word based single-carrier
-  systems,'' \emph{IEEE Transactions on Wireless Communications}, vol.~5,
-  no.~6, pp. 1488--1496, 2006.
 
 \bibitem{sari1994frequency}
 H.~Sari, G.~Karam, and I.~Jeanclaud, ``Frequency-domain equalization of mobile
@@ -95,6 +66,23 @@ N.~Al-Dhahir, M.~Uysal, and H.~Mheidat, ``Single-carrier frequency domain
 \bibitem{proakis-salehi:2008}
 J.~Proakis and M.~Salehi, \emph{Digital Communications}, 5th~ed.\hskip 1em plus
   0.5em minus 0.4em\relax New York: McGraw-Hill, 2008.
+
+\bibitem{coon-sandell-beach-mcgeehan:2006}
+J.~Coon, M.~Sandell, M.~Beach, and J.~McGeehan, ``Channel and noise variance
+  estimation and tracking algorithms for unique-word based single-carrier
+  systems,'' \emph{{IEEE} Transactions on Wireless Communications}, vol.~5,
+  no.~6, pp. 1488--1496, June 2006.
+
+\bibitem{williams2013linear}
+I.~E. Williams and M.~Saquib, ``Linear frequency domain equalization of
+  {SOQPSK-TG} for wideband aeronautical telemetry channels,'' \emph{IEEE
+  Transactions on Aerospace and Electronic Systems}, vol.~49, no.~1, pp.
+  640--647, 2013.
+
+\bibitem{perrins:2013}
+E.~Perrins, ``{FEC} systems for aeronautical telemetry,'' \emph{{IEEE}
+  Transactions on Aerospace and Electronic Systems}, vol.~49, no.~4, pp.
+  2340--2352, October 2013.
 
 \bibitem{wikipedia-gpu:2015}
 \BIBentryALTinterwordspacing

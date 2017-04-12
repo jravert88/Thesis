@@ -9,8 +9,8 @@ Figure \ref{fig:GPUpicture} shows the form factor of a Tesla K40c and K20c.
 	\caption{NVIDIA Tesla K40c and K20c.}
 	\label{fig:GPUpicture}
 \end{figure}
-In 2007 NVIDIA released an extension to C, C++ and Fortran called CUDA (Compute Unified Device Architecture).
 
+In 2007 NVIDIA released an extension to C, C++ and Fortran called CUDA (Compute Unified Device Architecture).
 CUDA enables GPUs to be used for high performance computing in computer vision, deep learning, artificial intelligence and signal processing \cite{wikipedia-gpu:2015}.
 CUDA allows a programmer to write C++ like functions that are massively parallel called \textit{kernels}.
 To invoke parallelism, a GPU kernel executed $N$ times with the work distributed to $N_\text{min}$ total \textit{threads} that run concurrently.
@@ -30,7 +30,7 @@ If a programmer has some C++ experience, learning how to program GPUs using CUDA
 GPU code still runs top to bottom and memory still has to be allocated.
 The only real difference is the physical location of the memory and how functions run on GPUs.
 To run functions or kernels on GPUs, the memory must be copied from the host (CPU) to the device (GPU).
-Once the memory has been copied, parallel GPU kernels are called.
+Once the memory has been copied, parallel GPU kernels operate on the data.
 After GPU kernel execution, results are usually copied back from the device (GPU) to the host (CPU).
 
 Listing \ref{code:GPUvsCPU} shows a simple program that implements real-valued float vector addition in a CPU and a GPU.
@@ -59,7 +59,7 @@ Figure \ref{fig:GPUaddBlockDiagram} shows how the GPU computes $\mathbf{C}_2$ \t
 
 \singlespacing
 \clearpage
-\begin{lstlisting}[style=myCUDAstyle,caption={Comparison of CPU verse GPU code.},label={code:GPUvsCPU}]
+\begin{lstlisting}[style=myCUDAstyle,caption={Comparison of CPU and GPU code.},label={code:GPUvsCPU}]
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
@@ -169,10 +169,10 @@ In the Listing \ref{code:GPUvsCPU}, VecAddGPU is launched on line 75 with $32$ t
 The total number of threads launched on the GPU is the number of blocks times the number of threads per block.
 VecAddGPU needs to be launched with at least $N = 2^{22}$ (line 22) threads or $2^{22}/32$ blocks of $32$ threads.
 
-CUDA gives each thread launched in a GPU kernel a unique indices called threadIdx and blockIdx.
+CUDA gives each thread launched in a GPU kernel a set of unique indices called threadIdx and blockIdx.
 threadIdx is the thread index inside the assigned thread block.
 blockIdx is the index of the block to which the thread is assigned.
-Both threadIdx and blockIdx are three dimensional (i.ei , they both have x, y, and z components).
+Both threadIdx and blockIdx are three dimensional (i.e. they both have x, y, and z components).
 In this thesis only the x dimension is used because the GPU kernels operate only on one dimensional vectors.
 blockDim is the number of threads assigned per block, in fact blockDim is equal to the number of threads per block because the vectors are one dimensional.
 
@@ -196,15 +196,16 @@ The GPU does not guarantee Block $0$ will execute before Block $2$.
 
 \subsection{GPU Memory}
 \label{sec:GPU_memory}
-GPUs have plenty of computational resources but the most GPU kernels are limited by memory bandwidth to feed the computational units.
+GPUs have plenty of computational resources but most GPU kernels are limited by memory bandwidth to feed the computational units.
 GPU kernels execute faster if the kernel is designed to access memory efficiently rather than reducing the computational burden.
 NVIDIA GPUs have many different types of memory to maximize speed and efficiency.
 
-The fastest memory is private local memory in the form of registers, L1 cache and shared memory.
+The fastest memory is private local memory,
+in the form of Registers and L1 Cache/shared memory.
 Local memory is fast but only kilobytes are available.
-The slowest memory is public memory in the form of L2 cache and global memory.
+The slowest memory is public memory in the form of the L2 Cache and Global Memory.
 Public memory is slow but gigabytes are available.
-Figure \ref{fig:MemoryPyramid} shows the trade off of memory speed and the size of different types of memory.
+Figure \ref{fig:MemoryPyramid} shows the trade-off of memory speed and the size of different types of memory.
 \begin{figure}
 	\centering\includegraphics[width=8.36in/100*55]{figures/gpu_intro/MemoryPyramid.pdf}
 	\caption{Diagram comparing memory size and speed. Global memory is massive but extremely slow. Registers are extremely fast but there are very few.}
@@ -212,20 +213,20 @@ Figure \ref{fig:MemoryPyramid} shows the trade off of memory speed and the size 
 \end{figure}
 
 Figure \ref{fig:GPUarch} shows a picture of the GPU hardware.
-The solid boxes show that L2 cache or global memory are physically located \textit{off} the GPU chip. 
-The dashed box shows that registers, L1 cache or shared memory are physically located \textit{on} the GPU chip. 
-A L2 cache or global memory access takes over 60 clock cycles because the memory is off chip. 
-A registers, L1 cache or shared memory access is only a few clock cycles because the memory is on chip.
+The solid boxes show that the L2 cache and Global Memory are physically located \textit{off} the GPU chip. 
+The dashed box shows that Registers and L1 Cache/Shared Memory are physically located \textit{on} the GPU chip. 
+A public access takes over 60 clock cycles because the memory is off chip. 
+A local memory access is only a few clock cycles because the memory is on chip.
 \begin{figure}
 	\centering\includegraphics[width=\textwidth]{figures/gpu_intro/Kepler_box.png}
-	\caption{Example of an NVIDIA GPU card. The GPU chip with registers, L1 cache and shared memory is shown in the dashed box.	The L2 cache and global memory is shown off chip in the solid boxes.}
+	\caption{Example of an NVIDIA GPU card. The GPU chip with registers and L1/shared memory is shown in the dashed box.	The L2 cache and global memory is shown off chip in the solid boxes.}
 	\label{fig:GPUarch}
 \end{figure}
 
 Figure \ref{fig:fullGPUmemBlockDiagram} illustrates where each type of memory is located.
-Threads have access to their own registers and L1 cache.
-Threads in a block can coordinate using shared memory because shared memory private to the thread block.
-All threads have access to L2 cache and global memory.
+Threads have access to their own Registers and the L1 Cache.
+Threads in a block can coordinate using shared memory because shared memory is private to the thread block.
+All threads have access to the L2 Cache and Global Memory.
 The figure also shows that thread blocks are assigned to streaming multiprocessors (SMs).
 CUDA handles all the thread block assignments to SMs.
 \begin{figure}
@@ -257,9 +258,9 @@ Table \ref{tab:gpu-resources_jeffs} lists Telsa K40c and K20c resources.
 \subsection{Thread Optimization}
 Most resources listed in Table \ref{tab:gpu-resources_jeffs} show how much memory per thread block is available. 
 The number of threads per block and the amount of resources available have an inverse relationship.
-Threads will have very little memory resources available if a GPU kernel launches 1024 threads per block.
-Threads will have a lot of memory resources available if a GPU kernel launches 32 threads per block.
-This section will show that finding the optimum number of threads per block can drastically speed up GPU kernels.
+Threads have very little memory resources available if a GPU kernel launches 1024 threads per block.
+Threads have a lot of memory resources available if a GPU kernel launches 32 threads per block.
+This section shows that finding the optimum number of threads per block can dramatically speed up GPU kernels.
 
 Improving memory accesses should always be the first optimization when a GPU kernel needs to be faster.
 The next step is to find the optimal number of threads per block to launch.
@@ -301,8 +302,8 @@ cout << "Optimal Execution Time    " << milliseconds_opt << endl;
 \end{lstlisting}
 \doublespacing
 
-Most of the time the optimal number of threads per block is a multiple of $32$. 
-At the lowest level of architecture, GPUs perform computations in \textit{warps}.
+Most of the time the optimal number of threads per block is a multiple of $32$ this is because
+at the lowest level of architecture, GPUs perform computations in \textit{warps}.
 Warps are groups of $32$ threads that perform every computation together in lock step.
 If the number of threads per block is not a multiple of $32$, some threads in a warp are idle and the GPU has unused computational resources.
 
@@ -310,7 +311,7 @@ Figure \ref{fig:ConvGPU_shared_12672_186taps} shows the execution time of an exa
 The optimal execution time is $0.1078$ ms at the optimal $96$ threads per block.
 By simply adjusting the number of threads per block, the execution time of this example kernel can be reduced by 2.
 
-Adjusting the number of threads per block does not always drastically reduce execution time.
+Adjusting the number of threads per block does not always dramatically reduce execution time.
 Figure \ref{fig:ConvGPU_global_12672_186taps} shows the execution time for another GPU kernel with varying threads per block.
 The execution time of this example kernel can be reduced by 1.12 by launching $560$ threads per block.
 \begin{figure}
@@ -579,22 +580,22 @@ To clean up the time samples, local minimums were found in windows ranging from 
 The smallest windows possible were used to produce the results.
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_noMin.eps}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}
+	\caption{Comparison of a complex convolution on CPU and GPU. The signal length is variable and the filter is fixed at $186$ taps. The comparison is messy with out lower bounding.}
 	\label{fig:CPUvsGPU_1batch_186taps_varySignal_noMin}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal.eps}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}
+	\caption{Comparison of a complex convolution on CPU and GPU. The signal length is variable and the filter is fixed at $186$ taps. A lower bound was applied by searching for a local minimums in 15 sample width windows.}
 	\label{fig:CPUvsGPU_1batch_186taps_varySignal}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal.eps}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}
+	\caption{Comparison of a complex convolution on CPU and GPU. The signal length is variable and the filter is fixed at $21$ taps. A lower bound was applied by searching for a local minimums in 5 sample width windows.}
 	\label{fig:CPUvsGPU_1batch_21taps_varySignal}
 \end{figure}
 \begin{figure}
 	\centering\includegraphics[width=5in]{figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter.eps}
-	\caption{Comparison of a complex convolution on CPU verse GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}
+	\caption{Comparison of a complex convolution on CPU and GPU. The filter length is variable and the signal is fixed at $12672$ samples. A lower bound was applied by searching for a local minimums in 3 sample width windows.}
 	\label{fig:CPUvsGPU_1batch_12672signal_varyFilter}
 \end{figure}
 

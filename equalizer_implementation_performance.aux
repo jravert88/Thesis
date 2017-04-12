@@ -1,50 +1,95 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Equalizer GPU Implementation}{71}{chapter.4}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Equalizer GPU Implementation}{65}{chapter.4}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:equalizers_in_gpus}{{4}{71}{Equalizer GPU Implementation}{chapter.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces To simplify block diagrams, frequency-domain convolution is shown as one block.}}{72}{figure.4.1}}
-\newlabel{fig:Conv2}{{4.1}{72}{To simplify block diagrams, frequency-domain convolution is shown as one block}{figure.4.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces To simplify block diagrams, frequency-domain cascaded convolution is shown as one block.}}{72}{figure.4.2}}
-\newlabel{fig:Conv3}{{4.2}{72}{To simplify block diagrams, frequency-domain cascaded convolution is shown as one block}{figure.4.2}{}}
+\newlabel{chap:equalizers_in_gpus}{{4}{65}{Equalizer GPU Implementation}{chapter.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces To simplify block diagrams, frequency-domain convolution is shown as one block.}}{66}{figure.4.1}}
+\newlabel{fig:Conv2}{{4.1}{66}{To simplify block diagrams, frequency-domain convolution is shown as one block}{figure.4.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces To simplify block diagrams, frequency-domain cascaded convolution is shown as one block.}}{66}{figure.4.2}}
+\newlabel{fig:Conv3}{{4.2}{66}{To simplify block diagrams, frequency-domain cascaded convolution is shown as one block}{figure.4.2}{}}
+\citation{PAQ-phase1}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Zero-Forcing and MMSE GPU Implementation}{67}{section.4.1}}
+\@writefile{toc}{\contentsline {subsubsection}{Zero-Forcing}{67}{section*.12}}
+\newlabel{sec:zero-forcing}{{4.1}{67}{Zero-Forcing}{section*.12}{}}
+\@writefile{brf}{\backcite{PAQ-phase1}{{67}{4.1}{equation.4.1.2}}}
+\newlabel{eq:start_here_ZF}{{4.3}{67}{Zero-Forcing}{equation.4.1.3}{}}
+\newlabel{eq:R_h}{{4.5}{67}{Zero-Forcing}{equation.4.1.5}{}}
+\newlabel{eq:h_no}{{4.6}{68}{Zero-Forcing}{equation.4.1.6}{}}
+\newlabel{eq:sample_autocorrelation_ZF}{{4.7}{68}{Zero-Forcing}{equation.4.1.7}{}}
+\newlabel{eq:un0_ZF}{{4.8}{68}{Zero-Forcing}{equation.4.1.8}{}}
+\citation{PAQ-phase1}
+\@writefile{brf}{\backcite{PAQ-phase1}{{69}{4.1}{equation.4.1.10}}}
+\newlabel{eq:start_here_MMSE}{{4.11}{69}{Zero-Forcing}{equation.4.1.11}{}}
+\newlabel{eq:R}{{4.13}{69}{Zero-Forcing}{equation.4.1.13}{}}
+\newlabel{eq:g_dagger_h_n0}{{4.14}{69}{Zero-Forcing}{equation.4.1.14}{}}
+\newlabel{eq:sample_autocorrelation_MMSE}{{4.15}{70}{Zero-Forcing}{equation.4.1.15}{}}
+\newlabel{eq:start_here_ZF_gpuimp}{{4.17}{70}{Zero-Forcing}{equation.4.1.17}{}}
+\newlabel{eq:c_ZF_direct}{{4.18}{70}{Zero-Forcing}{equation.4.1.18}{}}
 \citation{hayes:1996}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Zero-Forcing and MMSE GPU Implementation}{73}{section.4.1}}
-\newlabel{eq:start_here_ZF_gpuimp}{{4.1}{73}{Zero-Forcing and MMSE GPU Implementation}{equation.4.1.1}{}}
-\newlabel{eq:c_ZF_direct}{{4.2}{73}{Zero-Forcing and MMSE GPU Implementation}{equation.4.1.2}{}}
-\@writefile{brf}{\backcite{hayes:1996}{{73}{4.1}{equation.4.1.2}}}
 \citation{wiki:Sparse_matrix}
 \citation{CUDA_toolkit_doc}
-\@writefile{brf}{\backcite{wiki:Sparse_matrix}{{74}{4.1}{equation.4.1.2}}}
-\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{74}{4.1}{equation.4.1.2}}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{75}{figure.4.3}}
-\newlabel{fig:blockZF}{{4.3}{75}{Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU}{figure.4.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{75}{figure.4.4}}
-\newlabel{fig:blockMMSE}{{4.4}{75}{Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU}{figure.4.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Three different algorithms were explored to compute the ZF and MMSE equalizer filters.}}{75}{table.4.1}}
-\newlabel{tab:ZFMMSEtimingComparison}{{4.1}{75}{Three different algorithms were explored to compute the ZF and MMSE equalizer filters}{table.4.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Constant Modulus Algorithm GPU Implementation}{76}{section.4.2}}
-\newlabel{eq:CMA_challenge}{{4.4}{76}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Two different algorithms were explored to compute the cost function gradient $\nabla J$.}}{77}{table.4.2}}
-\newlabel{tab:CMAtimingComparison}{{4.2}{77}{Two different algorithms were explored to compute the cost function gradient $\nabla J$}{table.4.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Frequency Domain Equalizer One and Two GPU Implementation}{77}{section.4.3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration.}}{78}{figure.4.5}}
-\newlabel{fig:blockCMA}{{4.5}{78}{Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration}{figure.4.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Frequency Domain Equalizer One}{78}{subsection.4.3.1}}
-\newlabel{eq:FDE1_imp}{{4.9}{78}{Frequency Domain Equalizer One}{equation.4.3.9}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Execution times for calculating and applying Frequency Domain Equalizer One and Two.}}{79}{table.4.3}}
-\newlabel{tab:FDEtimingComparison}{{4.3}{79}{Execution times for calculating and applying Frequency Domain Equalizer One and Two}{table.4.3}{}}
-\newlabel{eq:FDE1_applied}{{4.10}{79}{Frequency Domain Equalizer One}{equation.4.3.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Frequency Domain Equalizer Two}{79}{subsection.4.3.2}}
-\newlabel{eq:FDE2_imp}{{4.11}{79}{Frequency Domain Equalizer Two}{equation.4.3.11}{}}
-\newlabel{eq:FDE2_applied}{{4.12}{79}{Frequency Domain Equalizer Two}{equation.4.3.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Block diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{80}{figure.4.6}}
-\newlabel{fig:blockFDE1}{{4.6}{80}{Block diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs}{figure.4.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Block diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{80}{figure.4.7}}
-\newlabel{fig:blockFDE2}{{4.7}{80}{Block diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs}{figure.4.7}{}}
+\@writefile{brf}{\backcite{hayes:1996}{{71}{4.1}{equation.4.1.18}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU.}}{72}{figure.4.3}}
+\newlabel{fig:blockZF}{{4.3}{72}{Block Diagram showing how the Zero-Forcing equalizer coefficients are implemented in the GPU}{figure.4.3}{}}
+\@writefile{brf}{\backcite{wiki:Sparse_matrix}{{72}{4.1}{equation.4.1.18}}}
+\@writefile{brf}{\backcite{CUDA_toolkit_doc}{{72}{4.1}{equation.4.1.18}}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Constant Modulus Algorithm GPU Implementation}{72}{section.4.2}}
+\citation{PAQ-phase1}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU.}}{73}{figure.4.4}}
+\newlabel{fig:blockMMSE}{{4.4}{73}{Block Diagram showing how the Minimum Mean Squared Error equalizer coefficients are implemented in the GPU}{figure.4.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Three different algorithms were explored to compute the ZF and MMSE equalizer filters.}}{73}{table.4.1}}
+\newlabel{tab:ZFMMSEtimingComparison}{{4.1}{73}{Three different algorithms were explored to compute the ZF and MMSE equalizer filters}{table.4.1}{}}
+\newlabel{eq:steepest}{{4.20}{73}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.20}{}}
+\@writefile{brf}{\backcite{PAQ-phase1}{{74}{4.2}{equation.4.2.21}}}
+\newlabel{eq:DelJcma-approxr}{{4.22}{74}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.22}{}}
+\newlabel{eq:DelJcma-midMassage}{{4.26}{74}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.26}{}}
+\newlabel{eq:delJ_writeoutr}{{4.27}{75}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.27}{}}
+\newlabel{eq:delJ_direct_way}{{4.28}{75}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.28}{}}
+\newlabel{eq:CMA_delJ_rice_reformed}{{4.30}{75}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.30}{}}
+\newlabel{eq:CMA_conv_z_rho}{{4.31}{75}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagram showing the relationships between $z(n)$, $\rho (n)$ and $m(n)$.}}{76}{figure.4.5}}
+\newlabel{fig:convolutionFigureRice}{{4.5}{76}{Diagram showing the relationships between $z(n)$, $\rho (n)$ and $m(n)$}{figure.4.5}{}}
+\newlabel{eq:CMA_delJ_donzo}{{4.32}{76}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.32}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces CMA}}{77}{table.4.2}}
+\newlabel{code:CMA}{{4.2}{77}{CMA}{table.4.2}{}}
+\newlabel{eq:CMA_challenge}{{4.34}{77}{Constant Modulus Algorithm GPU Implementation}{equation.4.2.34}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Two different algorithms were explored to compute the cost function gradient $\nabla J$.}}{78}{table.4.3}}
+\newlabel{tab:CMAtimingComparison}{{4.3}{78}{Two different algorithms were explored to compute the cost function gradient $\nabla J$}{table.4.3}{}}
+\citation{williams2013linear}
+\citation{coon2006channel}
+\citation{sari1994frequency,ng2007turbo,al2008single,proakis-salehi:2008}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration.}}{79}{figure.4.6}}
+\newlabel{fig:blockCMA}{{4.6}{79}{Block Diagram showing how the CMA equalizer filter is implemented in the GPU using frequency-domain convolution twice per iteration}{figure.4.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Frequency Domain Equalizer One and Two GPU Implementation}{79}{section.4.3}}
+\@writefile{brf}{\backcite{williams2013linear}{{79}{4.3}{section.4.3}}}
+\@writefile{brf}{\backcite{coon2006channel}{{79}{4.3}{section.4.3}}}
+\@writefile{brf}{\backcite{sari1994frequency,ng2007turbo,al2008single,proakis-salehi:2008}{{79}{4.3}{section.4.3}}}
+\citation{williams2013linear}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces A diagram showing how the iNET packet is used as a cyclic prefix.}}{80}{figure.4.7}}
+\newlabel{fig:cyclicPrefix}{{4.7}{80}{A diagram showing how the iNET packet is used as a cyclic prefix}{figure.4.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Frequency Domain Equalizer One}{80}{subsection.4.3.1}}
+\@writefile{brf}{\backcite{williams2013linear}{{80}{4.3.1}{subsection.4.3.1}}}
+\newlabel{eq:FDE1}{{4.39}{80}{Frequency Domain Equalizer One}{equation.4.3.39}{}}
+\citation{williams2013linear}
+\newlabel{eq:FDE1_imp}{{4.40}{81}{Frequency Domain Equalizer One}{equation.4.3.40}{}}
+\newlabel{eq:FDE1_applied}{{4.41}{81}{Frequency Domain Equalizer One}{equation.4.3.41}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Frequency Domain Equalizer Two}{81}{subsection.4.3.2}}
+\@writefile{brf}{\backcite{williams2013linear}{{81}{4.3.2}{subsection.4.3.2}}}
+\newlabel{eq:FDE2}{{4.42}{81}{Frequency Domain Equalizer Two}{equation.4.3.42}{}}
+\newlabel{eq:FDE2_imp}{{4.43}{81}{Frequency Domain Equalizer Two}{equation.4.3.43}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces SOQPSK-TG power spectral density.}}{82}{figure.4.8}}
+\newlabel{fig:SOQPSK_spectrum}{{4.8}{82}{SOQPSK-TG power spectral density}{figure.4.8}{}}
+\newlabel{eq:FDE2_applied}{{4.44}{82}{Frequency Domain Equalizer Two}{equation.4.3.44}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Execution times for calculating and applying Frequency Domain Equalizer One and Two.}}{83}{table.4.4}}
+\newlabel{tab:FDEtimingComparison}{{4.4}{83}{Execution times for calculating and applying Frequency Domain Equalizer One and Two}{table.4.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Block diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs.}}{83}{figure.4.9}}
+\newlabel{fig:blockFDE1}{{4.9}{83}{Block diagram showing Frequency Domain Equalizer One is implemented in the frequency domain in GPUs}{figure.4.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Block diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs.}}{83}{figure.4.10}}
+\newlabel{fig:blockFDE2}{{4.10}{83}{Block diagram showing Frequency Domain Equalizer Two is implemented in the frequency domain in GPUs}{figure.4.10}{}}
 \@setckpt{equalizer_implementation_performance}{
-\setcounter{page}{81}
-\setcounter{equation}{12}
+\setcounter{page}{84}
+\setcounter{equation}{44}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
@@ -58,8 +103,8 @@
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{7}
-\setcounter{table}{3}
+\setcounter{figure}{10}
+\setcounter{table}{4}
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{0}
 \setcounter{cp@cnt}{0}
@@ -70,8 +115,8 @@
 \setcounter{subtable}{0}
 \setcounter{lotdepth}{1}
 \setcounter{Item}{0}
-\setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{39}
+\setcounter{Hfootnote}{2}
+\setcounter{bookmark@seq@number}{36}
 \setcounter{lstlisting}{0}
 \setcounter{section@level}{1}
 }
