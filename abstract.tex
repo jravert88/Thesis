@@ -1,9 +1,7 @@
 Multipath is one of the dominant causes for link loss in aeronautical telemetry.
 Equalizers have been studied to combat multipath interference in aeronautical telemetry.
-Blind Constant Modulus Algorithm (CMA) equalizers are currently being used on SOQPSK-TG.
-The Preamble Assisted Equalization (PAQ) has been funded by the Air Force to study data-aided equalizers on SOQPSK-TG.
-PAQ compares side-by-side no equalization, data-aided zero forcing equalization, data-aided MMSE equalization, data-aided initialized CMA equalization, data-aided frequency domain equalization, and blind CMA equalization.
-An real-time experimental test setup has been assembled including an RF receiver for data acquisition, FPGA for hardware interfacing and buffering, GPUs for signal processing, spectrum analyzer for viewing multipath events, and an 8 channel bit error rate tester to compare equalization performance. 
-Lab tests were performed with channel and noise emulators.
-The test setup achieved a 10 Mbps throughput with a 6 second delay.
-This thesis describes the GPU implementation of computing and application data-aided FIR equalizer filters.
+Blind equalizers are currently being used with SOQPSK-TG.
+The Preamble Assisted Equalization (PAQ) project studied data-aided equalizers with SOQPSK-TG.
+PAQ compares, side-by-side, no equalization, blind equalization, and five data-aided equalization algorithms: ZF, MMSE, MMSE-initialized CMA, and frequency domain equalization.
+This thesis describes the GPU implementation of data-aided equalizer algorithms.
+Static lab tests, performed with channel and noise emulators, showed that the MMSE, ZF, and FDE1 show the best and most consistent performance.

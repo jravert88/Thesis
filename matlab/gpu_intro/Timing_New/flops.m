@@ -2,7 +2,7 @@ clear all
 
 figure(1); clf
 convLength = 1:2^14+1024;
-L_m = [186 21];
+L_m = [186 23];
 for loops = 1:2
 L = L_m(loops);
 N = convLength-L+1;

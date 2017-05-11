@@ -14,8 +14,9 @@
 % Jeff changed this
 %\RequirePackage[margin=10pt,font=small,labelfont=bf,aboveskip=5pt,belowskip=0pt]{caption}
 %
-%%\RequirePackage[margin=10pt,font=small,labelfont=bf,aboveskip=5pt,belowskip=0pt]{caption}
-%\captionsetup[table]{justification=centering,position=top}
+\RequirePackage{caption}
+\captionsetup[table]{justification=centering,position=top,width=6in}
+\captionsetup[lstlisting]{justification=centering,position=top,width=6in}
 % For changing the top margin in all of the stuff before the actual text starts
 \RequirePackage{chngpage}
 % So we can have the abstract and acknowledgements sections only be on odd pages
@@ -45,13 +46,13 @@
 \newcommand{\@degreename}{\ifBYUs@formatting@isdissertation Doctor of Philosophy \else Master of Science \fi}
 
 % For controlling which sections are shown
-\define@boolkeys[BYUs]{sections}{noabstract,nocopyright,nouniversitypages,noacknowledgements,notableofcontents,nolistoffigures,nolistoftables,notocandlists}[false]
+\define@boolkeys[BYUs]{sections}{noabstract,nocopyright,nouniversitypages,noacknowledgements,notableofcontents,nolistoffigures,nolistoflistings,nolistoftables,notocandlists}[false]
 % Set it so that the formatting controls will be set to their defaults if the user doesn't specify them
-\setkeys[BYUs]{sections}{noabstract,nocopyright,nouniversitypages,noacknowledgements,notableofcontents,nolistoffigures,nolistoftables,notocandlists}{}
+\setkeys[BYUs]{sections}{noabstract,nocopyright,nouniversitypages,noacknowledgements,notableofcontents,nolistoffigures,nolistoflistings,nolistoftables,notocandlists}{}
 % This one is just a convenience one for turning everything off
 \define@boolkey[BYUs]{sections}{noheaderatall}[false]{%
   \ifBYUs@sections@noheaderatall
-    \setkeys[BYUs]{sections}{noabstract=true,nocopyright=true,nouniversitypages=true,noacknowledgements=true,notableofcontents=true,nolistoffigures=true,nolistoftables=true,notocandlists=true}
+    \setkeys[BYUs]{sections}{noabstract=true,nocopyright=true,nouniversitypages=true,noacknowledgements=true,notableofcontents=true,nolistoffigures=true,nolistoflistings=true,nolistoftables=true,notocandlists=true}
   \fi
 }
 
@@ -293,39 +294,76 @@
 }
 
 
+%% Abstract page
+%\newcommand{\@abstractpage}[1]{
+%  % Add a pdf bookmark so that it will show up in the PDF
+%  \pdfbookmark[0]{Abstract}{Abstract}
+%  % Put the abstract header centered on the page
+%  \begin{center}
+%    ABSTRACT\\
+%    \vspace*{0.375in}
+%    %\afterpage{\cleardoublepage}
+%    % We want the title to be double spaced
+%    \byubaselinestretch{2}
+%    {\expandafter{\@title}}\\
+%    \vspace*{0.375in}
+%    \@author\\
+%    \cmdBYUs@names@deptname\\
+%    \@degreename
+%    \vspace*{-0.25in}
+%  \end{center}
+%  % We want the actual abstract to be single spaced
+%  \singlespacing
+%  \setlength{\parskip}{1\baselineskip}
+%  % Start a new line, so that it will indent the abstract
+%  \par
+%  % Include the abstract.tex file
+%  \ifBYUs@formatting@etdsubmission  \else \afterpage{\cleardoublepage} \fi   
+%  \input{abstract}
+%    \par\mbox{ }
+%    \vfill
+%    \noindent Keywords: \cmdBYUs@names@keywords
+%        \setlength{\parskip}{0\baselineskip}
+% % \cleardoublepage
+% \ifBYUs@formatting@etdsubmission \clearpage \else \cleardoublepage \fi   
+%}
+
 % Abstract page
 \newcommand{\@abstractpage}[1]{
-  % Add a pdf bookmark so that it will show up in the PDF
-  \pdfbookmark[0]{Abstract}{Abstract}
-  % Put the abstract header centered on the page
-  \begin{center}
-    ABSTRACT\\
-    \vspace*{0.375in}
-    %\afterpage{\cleardoublepage}
-    % We want the title to be double spaced
-    \byubaselinestretch{2}
-    {\expandafter{\@title}}\\
-    \vspace*{0.375in}
-    \@author\\
-    \cmdBYUs@names@deptname\\
-    \@degreename
-    \vspace*{-0.25in}
-  \end{center}
-  % We want the actual abstract to be single spaced
-  \singlespacing
-  \setlength{\parskip}{1\baselineskip}
-  % Start a new line, so that it will indent the abstract
-  \par
-  % Include the abstract.tex file
-  \ifBYUs@formatting@etdsubmission  \else \afterpage{\cleardoublepage} \fi   
-  \input{abstract}
-    \par\mbox{ }
-    \vfill
-    \noindent Keywords: \cmdBYUs@names@keywords
-        \setlength{\parskip}{0\baselineskip}
- % \cleardoublepage
- \ifBYUs@formatting@etdsubmission \clearpage \else \cleardoublepage \fi   
+% Add a pdf bookmark so that it will show up in the PDF
+\pdfbookmark[0]{Abstract}{Abstract}
+% Put the abstract header centered on the page
+\begin{center}
+ABSTRACT\\
+%\singlespace
+\afterpage{\cleardoublepage}
+% We want the title to be double spaced
+\byubaselinestretch{2}
+{\expandafter{\@title}}\\
+%\vspace*{0.375in}
+{\singlespace
+\@author\\
+\cmdBYUs@names@deptname\\
+\vspace{-\baselineskip}
+\@degreename
 }
+\vspace*{-0.25in}
+\end{center}
+% We want the actual abstract to be single spaced
+\singlespacing
+\setlength{\parskip}{1\baselineskip}
+% Start a new line, so that it will indent the abstract
+\par
+% Include the abstract.tex file
+\ifBYUs@formatting@etdsubmission \else \afterpage{\cleardoublepage} \fi 
+\input{abstract}
+\par\mbox{ }
+\vfill
+\noindent Keywords: \cmdBYUs@names@keywords
+\setlength{\parskip}{0\baselineskip}
+% \cleardoublepage
+\ifBYUs@formatting@etdsubmission \clearpage \else \cleardoublepage \fi 
+} 
 
 % Acknowledgments page
 \newcommand{\@acknowledgements}[1]{
@@ -514,7 +552,7 @@
   % Turn back on the page numbering
   \pagestyle{plain}
 
-  % Write the Table of Contents, List of Figures and List of Tables
+  % Write the Table of Contents, List of Figures, List of Listings and List of Tables
   \ifBYUs@sections@notocandlists
   \else
     % Set the parskip so that the Table of Contents and Lists will be spaced properly
@@ -524,6 +562,7 @@
     \ifBYUs@sections@notableofcontents
     \else
       \pdfbookmark[0]{Table of Contents}{toc}
+      \setcounter{page}{4}
       \tableofcontents
 	  % inserts new page and makes sure next chapter starts on odd and required for phantomsection below
 	 %\cleardoublepage
@@ -547,6 +586,16 @@
 	  \phantomsection \label{listoffig}
       \addcontentsline{toc}{chapter}{List of Figures}
       \listoffigures
+      \newpage
+      \fussy
+    \fi
+    \ifBYUs@sections@nolistoflistings
+    \else
+      \sloppy
+	  % Makes sure that the toc has the right starting page for list of listings
+	  \phantomsection \label{listoflig}
+      \addcontentsline{toc}{chapter}{List of Listings}
+      \lstlistoflistings
       \newpage
       \fussy
     \fi

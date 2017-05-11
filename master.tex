@@ -3,7 +3,7 @@
 %% Brigham Young University
 %% Last Modified:  March 2012
 
-\documentclass[12pt]{report}
+\documentclass[12pt,twoside]{report}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Setup BYU thesis format
@@ -16,6 +16,8 @@
 \usepackage{times}
 \usepackage{fancyhdr}
 \usepackage{setspace}
+\usepackage{rotating}
+\usepackage{pdflscape}
 
 \usepackage{latexsym} % Need this for \Box
 \usepackage{graphicx}
@@ -111,9 +113,8 @@
 \definecolor{codenumber}{rgb}{0.5,0.5,0.5}
 \definecolor{codekeyword}{rgb}{0.9,0.4,0.7}
 \definecolor{codeCUDA}{rgb}{1.0,0.6,0.6}
-%\DeclareTextFontCommand{\emph}{\bfseries\color{blue!70!black}}
 
-\usepackage[numbered,framed]{matlab-prettifier}
+%\usepackage[numbered,framed]{matlab-prettifier}
 \usepackage{filecontents}
 
 % Setup the byu style sheet
@@ -125,17 +126,17 @@
     singlepageacknowledgements = true, % Uncomment this if your Acknowledgements is multiple pages
     %
     % Definitions of names needed in thesis/dissertation
-    deptname          = Department of Electrical and Computer Engineering,    %
+    deptname          = {Department of Electrical and Computer Engineering, BYU},    %
     collegename       = Ira A. Fulton College of\\Engineering and Technology, %
-    committeechairman = Michael D. Rice,                      %
+    committeechairman = Michael Rice,                      %
     committeemembera  = Brian D. Jeffs,                         %
-    committeememberb  = Brian A. Mazzeo,                          %
+    committeememberb  = Karl F. Warnick,                          %
     %committeememberc  = Firstname Mi. Lastname,                    % PhD Only
     %committeememberd  = Firstname Mi. Lastname,                     % PhD Only
-    graddate = April 2017,  % Leave commented for current month and year
+    graddate =  ,  % Leave commented for current month and year
     %copyrightyear = 2012,      % Leave commented for current year
     % uncomment the keywords for a dissertation
-    %keywords         = {elecromagnetic waves, crazy circuits}
+    keywords         = {equalization, SOQPSK-TG, GPU, CUDA, aeronautical telemetry}
     %
     % Uncomment to shorten for proofreading purposes
     %noabstract = true,         % Don't show the abstract page
@@ -238,7 +239,7 @@
 % uncomment the chapters you want
 %\includeonly{intro}
 %\includeonly{chapter2}
-%\includeonly{appendixa}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Start Document
@@ -248,7 +249,7 @@
 
 % Define Title & Author
 \title{GPU Implementation of Data-Aided Equalizers}
-\author{Jeffrey T. Ravert}
+\author{Jeffrey Thomas Ravert}
 
 % For displaying the BYU Thesis header
 % This command assumes that there are documents called abstract.tex and
@@ -266,6 +267,7 @@
 \include{signalProcessingInGPUs}
 \include{equalizer_implementation_performance}
 \include{final_summary}
+\include{appendixa}
 
 
 

@@ -37,10 +37,21 @@ M.~Rice \emph{et~al.}, ``Phase 1 report: Preamble assisted equalization for
   Management Center (TRMC). Also available on-line at \url{
   http://hdl.lib.byu.edu/1877/3242}.
 
+\bibitem{inet-ran:2012}
+{i}ntegrated Network Enhanced Telemetry ({iNET}) Radio Access Network Standards
+  Working~Group, ``Radio access network ({RAN}) standard, version 0.7.9,''
+  Tech. Rep., available at
+  \url{https://www.tena-sda.org/display/INET/iNET+Platform+Interface+Standards}.
+
 \bibitem{rice:2009}
 M.~Rice, \emph{Digital Communications: A Discrete-Time Approach}.\hskip 1em
   plus 0.5em minus 0.4em\relax Upper Saddle River, NJ: Pearson Prentice-Hall,
   2009.
+
+\bibitem{preamble_detector}
+M.~Rice and A.~McMurdie, ``On frame synchronization in aeronautical
+  telemetry,'' \emph{IEEE Transactions on Aerospace and Electronic Systems},
+  vol.~52, no.~5, pp. 2263--2280, October 2016.
 
 \bibitem{rice2014frequency}
 M.~Rice and E.~Perrins, ``On frequency offset estimation using the inet
@@ -55,7 +66,7 @@ H.~Sari, G.~Karam, and I.~Jeanclaud, ``Frequency-domain equalization of mobile
   Bridge., IEEE}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 1994, pp. 1--5.
 
 \bibitem{ng2007turbo}
-B.~Ng, C.-T. Lam, and D.~Falconer, ``Turbo frequency domain equalization for
+B.~Ng, C.~Lam, and D.~Falconer, ``Turbo frequency domain equalization for
   single-carrier broadband wireless systems,'' \emph{IEEE transactions on
   wireless communications}, vol.~6, no.~2, 2007.
 
@@ -98,12 +109,12 @@ Wikipedia, ``Graphics processing unit,'' 2015. [Online]. Available:
 
 \bibitem{cooley1965algorithm}
 J.~W. Cooley and J.~W. Tukey, ``An algorithm for the machine calculation of
-  complex fourier series,'' \emph{Mathematics of computation}, vol.~19, no.~90,
-  pp. 297--301, 1965.
+  complex {Fourier} series,'' \emph{Mathematics of computation}, vol.~19,
+  no.~90, pp. 297--301, 1965.
 
 \bibitem{haidar2015optimization}
 A.~Haidar, T.~Dong, P.~Luszczek, S.~Tomov, and J.~Dongarra, ``Optimization for
-  performance and energy for batched matrix computations on gpus,'' in
+  performance and energy for batched matrix computations on {GPUs},'' in
   \emph{Proceedings of the 8th Workshop on General Purpose Processing using
   GPUs}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 2015, pp. 59--69.
 
@@ -119,9 +130,19 @@ Wikipedia, ``Sparse matrix,'' 2017. [Online]. Available:
 
 \bibitem{CUDA_toolkit_doc}
 \BIBentryALTinterwordspacing
-NVIDIA, ``Cuda toolkit documentation,'' 2017. [Online]. Available:
+NVIDIA, ``{CUDA} toolkit documentation,'' 2017. [Online]. Available:
   \url{http://docs.nvidia.com/cuda/}
 \BIBentrySTDinterwordspacing
+
+\bibitem{rice-davis-bettwieser:2004}
+M.~Rice, A.~Davis, and C.~Bettweiser, ``A wideband channel model for
+  aeronautical telemetry,'' \emph{{IEEE} Transactions on Aerospace \&
+  Electronic Systems}, vol.~40, no.~1, pp. 57--69, January 2004.
+
+\bibitem{hog2016}
+C.~Hogstrom, C.~Nash, and M.~Rice, ``Locating and removing a {preamble/ASM}
+  sequence in aeronautical telemetry,'' in \emph{Proceedings of the
+  International Telemetering Conference}, Glendale, AZ, October 2016.
 
 \bibitem{ravert2016}
 J.~Ravert and M.~Rice, ``On frequency offset compensation for equalized

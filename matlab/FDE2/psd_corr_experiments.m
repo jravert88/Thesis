@@ -12,10 +12,10 @@ R = xcorr(ss2,max_lag,'unbiased');
 SS2 = fft(R(101-100:101+100),Nfft);
 
 SS = pwelch(ss2,blackman(Nfft),0.5*Nfft,Nfft,'two-sided');
-
+SS = SS.'/max(SS);
 
 figure(1); clf;
-plot(FF,10*log10(fftshift(SS/max(SS))),'k');
+plot(FF,10*log10(fftshift(SS)),'k');
 grid on;
 axis([-0.5 0.5 -50 0]);
 
@@ -30,7 +30,7 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 xlabel('cycles/sample')
 % ylabel('\Psi (dB)')
-ylabel('$\mathbf{\Psi}$ (dB)','Interpreter','latex')
+ylabel('$|\mathbf{\Psi}|$ (dB)','Interpreter','latex')
 % title('SOQPSK-TG Constellation')
 % legend('SOQPSK-TG Power Spectrum','Location','Best')
 print(ff, '-depsc', ['FDE2_spectrum_PSI']) %save as eps a 

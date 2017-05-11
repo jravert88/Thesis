@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  12 APR 2017 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.11.17)  9 MAY 2017 16:55
 entering extended mode
 **master.tex
 (master.tex
@@ -117,12 +117,9 @@ Package: times 2005/04/12 PSNFSS-v9.2a (SPQR)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\setspace\setspace.sty"
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\latexsym.sty"
-Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
-\symlasy=\mathgroup5
-LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
-(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
-)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\rotating\rotating.sty"
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -155,9 +152,6 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen114
 \Gin@req@width=\dimen115
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\rotating\rotating.sty"
-Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
-
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
@@ -166,6 +160,27 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 \rotFPbot=\skip58
 \rot@float@box=\box28
 \rot@mess@toks=\toks21
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\pdflscape.sty"
+Package: pdflscape 2008/08/11 v0.10 Display of landscape pages in PDF (HO)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\lscape.sty"
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\latexsym.sty"
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup5
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\epstopdf.sty"
 Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
@@ -200,11 +215,6 @@ Package etexcmds Info: Could not find \expanded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
-)
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
@@ -226,36 +236,48 @@ Package: xkeyval 2005/11/25 v2.5e package option processing (HA)
 \XKV@toks=\toks22
 \XKV@depth=\count102
 File: xkeyval.tex 2005/11/25 v2.5e key=value parser (HA)
-)) (chngpage.sty
+)) (caption.sty
+Package: caption 2006/03/21 v3.0j Customising captions (AR)
+ (caption3.sty
+Package: caption3 2006/03/16 v3.0j caption3 kernel (AR)
+\captionmargin=\dimen116
+\captionmarginx=\dimen117
+\captionwidth=\dimen118
+\captionindent=\dimen119
+\captionparindent=\dimen120
+\captionhangindent=\dimen121
+)
+Package caption Info: rotating package v2.0 (or newer) detected on input line 3
+79.
+)
+(chngpage.sty
 Package: chngpage 2003/08/10 v1.2 change page layout
 \c@cp@cnt=\count103
 \c@cp@tempcnt=\count104
-)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\afterpage.sty"
+) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\afterpage.sty"
 Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \AP@output=\toks23
 \AP@partial=\box29
 \AP@footins=\box30
-))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
+)) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
 Package: booktabs 2005/04/14 v1.61803 publication quality tables
-\heavyrulewidth=\dimen116
-\lightrulewidth=\dimen117
-\cmidrulewidth=\dimen118
-\belowrulesep=\dimen119
-\belowbottomsep=\dimen120
-\aboverulesep=\dimen121
-\abovetopsep=\dimen122
-\cmidrulesep=\dimen123
-\cmidrulekern=\dimen124
-\defaultaddspace=\dimen125
+\heavyrulewidth=\dimen122
+\lightrulewidth=\dimen123
+\cmidrulewidth=\dimen124
+\belowrulesep=\dimen125
+\belowbottomsep=\dimen126
+\aboverulesep=\dimen127
+\abovetopsep=\dimen128
+\cmidrulesep=\dimen129
+\cmidrulekern=\dimen130
+\defaultaddspace=\dimen131
 \@cmidla=\count105
 \@cmidlb=\count106
-\@aboverulesep=\dimen126
-\@belowrulesep=\dimen127
+\@aboverulesep=\dimen132
+\@belowrulesep=\dimen133
 \@thisruleclass=\count107
 \@lastruleclass=\count108
-\@thisrulewidth=\dimen128
+\@thisrulewidth=\dimen134
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\units\nicefrac.sty"
 Package: nicefrac 1998/08/04 v0.9b Nice fractions
@@ -270,8 +292,8 @@ Package: mathtools 2015/06/17 v1.17 mathematical typesetting tools
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count109
 \calc@Bcount=\count110
-\calc@Adimen=\dimen129
-\calc@Bdimen=\dimen130
+\calc@Adimen=\dimen135
+\calc@Bdimen=\dimen136
 \calc@Askip=\skip62
 \calc@Bskip=\skip63
 LaTeX Info: Redefining \setlength on input line 80.
@@ -287,28 +309,28 @@ LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \g_MT_multlinerow_int=\count112
-\l_MT_multwidth_dim=\dimen131
+\l_MT_multwidth_dim=\dimen137
 \origjot=\skip65
-\l_MT_shortvdotswithinadjustabove_dim=\dimen132
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen133
-\l_MT_above_intertext_sep=\dimen134
-\l_MT_below_intertext_sep=\dimen135
-\l_MT_above_shortintertext_sep=\dimen136
-\l_MT_below_shortintertext_sep=\dimen137
+\l_MT_shortvdotswithinadjustabove_dim=\dimen138
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen139
+\l_MT_above_intertext_sep=\dimen140
+\l_MT_below_intertext_sep=\dimen141
+\l_MT_above_shortintertext_sep=\dimen142
+\l_MT_below_shortintertext_sep=\dimen143
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.sty"
 \lst@mode=\count113
 \lst@gtempboxa=\box31
 \lst@token=\toks24
 \lst@length=\count114
-\lst@currlwidth=\dimen138
+\lst@currlwidth=\dimen144
 \lst@column=\count115
 \lst@pos=\count116
-\lst@lostspace=\dimen139
-\lst@width=\dimen140
+\lst@lostspace=\dimen145
+\lst@width=\dimen146
 \lst@newlines=\count117
 \lst@lineno=\count118
-\lst@maxwidth=\dimen141
+\lst@maxwidth=\dimen147
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
@@ -338,100 +360,6 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\matlab-prettifier\matlab-prettifi
-er.sty"
-Package: matlab-prettifier 2014/06/19 v0.3 A package for prettyprinting Matlab 
-source code
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\textcomp.sty"
-Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
-Package textcomp Info: Sub-encoding information:
-(textcomp)               5 = only ISO-Adobe without \textcurrency
-(textcomp)               4 = 5 + \texteuro
-(textcomp)               3 = 4 + \textohm
-(textcomp)               2 = 3 + \textestimated + \textcurrency
-(textcomp)               1 = TS1 - \textcircled - \t
-(textcomp)               0 = TS1 (full)
-(textcomp)             Font families with sub-encoding setting implement
-(textcomp)             only a restricted character set as indicated.
-(textcomp)             Family '?' is the default used for unknown fonts.
-(textcomp)             See the documentation for details.
-Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1enc.def"
-File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
-)
-LaTeX Info: Redefining \oldstylenums on input line 334.
-Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
-Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
-Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
-Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
-Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
-Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
-Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
-Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
-Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
-Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
-Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
-Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
-Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
-Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
-Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
-Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
-Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
-Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
-Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
-Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
-Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
-Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
-Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
-Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
-
-Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
-Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
-Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
-Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
-Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
-Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
-Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
-Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
-Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
-Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
-Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
-Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
-Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
-Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
-Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
-Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
-Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
-Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
-Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
-Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
-Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
-Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
-Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
-Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
-Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
-Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
-Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
-Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
-Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
-Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
-Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
-Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
-Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
-Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
-Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
-Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
-Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
-)
-\netBracketCount@mlpr=\count121
-\blkLvl@mlpr=\count122
-\blkLvlAtClassdef@mlpr=\count123
-\emHeight@mlpr=\skip66
-\jayDepth@mlpr=\skip67
-\sectionRuleOffset@mlpr=\skip68
-\toks@mlpr=\toks25
-)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\filecontents\filecontents.sty"
 Package: filecontents 2011/10/08 v1.3 Create an external file from within a LaT
 eX document
@@ -448,23 +376,23 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\subfigure\subfigure.sty"
 Package: subfigure 2002/07/30 v2.1.4 subfigure package
-\subfigtopskip=\skip69
-\subfigcapskip=\skip70
-\subfigcaptopadj=\dimen142
-\subfigbottomskip=\skip71
-\subfigcapmargin=\dimen143
-\subfiglabelskip=\skip72
-\c@subfigure=\count124
-\c@lofdepth=\count125
-\c@subtable=\count126
-\c@lotdepth=\count127
+\subfigtopskip=\skip66
+\subfigcapskip=\skip67
+\subfigcaptopadj=\dimen148
+\subfigbottomskip=\skip68
+\subfigcapmargin=\dimen149
+\subfiglabelskip=\skip69
+\c@subfigure=\count121
+\c@lofdepth=\count122
+\c@subtable=\count123
+\c@lotdepth=\count124
 
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\subfigure\subfigure.cfg")
-\subfig@top=\skip73
-\subfig@bottom=\skip74
+\subfig@top=\skip70
+\subfig@bottom=\skip71
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -503,20 +431,17 @@ Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
 Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
-Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
-)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
 Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 )
-\@linkdim=\dimen144
-\Hy@linkcounter=\count128
-\Hy@pagecounter=\count129
+\@linkdim=\dimen150
+\Hy@linkcounter=\count125
+\Hy@pagecounter=\count126
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count130
+\Hy@SavedSpaceFactor=\count127
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -538,17 +463,17 @@ Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 ))
-\c@Hy@tempcnt=\count131
+\c@Hy@tempcnt=\count128
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen145
-\Fld@menulength=\count132
-\Field@Width=\dimen146
-\Fld@charsize=\dimen147
+\XeTeXLinkMargin=\dimen151
+\Fld@menulength=\count129
+\Field@Width=\dimen152
+\Fld@charsize=\dimen153
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -558,55 +483,44 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count133
-\c@Item=\count134
-\c@Hfootnote=\count135
+\Hy@abspage=\count130
+\c@Item=\count131
+\c@Hfootnote=\count132
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count136
-\c@bookmark@seq@number=\count137
-\Hy@SectionHShift=\skip75
+\Fld@listcount=\count133
+\c@bookmark@seq@number=\count134
+\Hy@SectionHShift=\skip72
 )
-Package hyperref Info: Option `breaklinks' set `false' on input line 208.
-Package hyperref Info: Option `linktocpage' set `false' on input line 208.
-Package hyperref Info: Option `colorlinks' set `false' on input line 208.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 208.
+Package hyperref Info: Option `breaklinks' set `false' on input line 209.
+Package hyperref Info: Option `linktocpage' set `false' on input line 209.
+Package hyperref Info: Option `colorlinks' set `false' on input line 209.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 209.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 208.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 209.
 
 (master.aux (intro-problemStatement.aux) (systemOverview.aux)
-(signalProcessingInGPUs.aux) (equalizer_implementation_performance.aux
-
-LaTeX Warning: Label `eq:steepest' multiply defined.
-
-) (final_summary.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 247.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 247.
-
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
-File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 247.
-LaTeX Font Info:    ... okay on input line 247.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 247.
+(signalProcessingInGPUs.aux) (equalizer_implementation_performance.aux)
+(final_summary.aux) (appendixa.aux))
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 248.
+LaTeX Font Info:    ... okay on input line 248.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 248.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
@@ -614,85 +528,135 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count138
-\scratchdimen=\dimen148
+\scratchcounter=\count135
+\scratchdimen=\dimen154
 \scratchbox=\box33
-\nofMPsegments=\count139
-\nofMParguments=\count140
-\everyMPshowfont=\toks26
-\MPscratchCnt=\count141
-\MPscratchDim=\dimen149
-\MPnumerator=\count142
-\makeMPintoPDFobject=\count143
-\everyMPtoPDFconversion=\toks27
+\nofMPsegments=\count136
+\nofMParguments=\count137
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count138
+\MPscratchDim=\dimen155
+\MPnumerator=\count139
+\makeMPintoPDFobject=\count140
+\everyMPtoPDFconversion=\toks26
+) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ms\ragged2e.sty"
+Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ms\everysel.sty"
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+
+ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 126.
 )
-\c@lstlisting=\count144
+\CenteringLeftskip=\skip73
+\RaggedLeftLeftskip=\skip74
+\RaggedRightLeftskip=\skip75
+\CenteringRightskip=\skip76
+\RaggedLeftRightskip=\skip77
+\RaggedRightRightskip=\skip78
+\CenteringParfillskip=\skip79
+\RaggedLeftParfillskip=\skip80
+\RaggedRightParfillskip=\skip81
+\JustifyingParfillskip=\skip82
+\CenteringParindent=\skip83
+\RaggedLeftParindent=\skip84
+\RaggedRightParindent=\skip85
+\JustifyingParindent=\skip86
+)
+Package caption Info: hyperref package v6.74m (or newer) detected on input line
+ 248.
+Package caption Info: listings package v1.2 (or newer) detected on input line 2
+48.
+\c@lstlisting=\count141
 \AtBeginShipoutBox=\box34
-Package hyperref Info: Link coloring OFF on input line 247.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+Package hyperref Info: Link coloring OFF on input line 248.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count145
+\c@section@level=\count142
 )
-LaTeX Info: Redefining \ref on input line 247.
-LaTeX Info: Redefining \pageref on input line 247.
-LaTeX Info: Redefining \nameref on input line 247.
+LaTeX Info: Redefining \ref on input line 248.
+LaTeX Info: Redefining \pageref on input line 248.
+LaTeX Info: Redefining \nameref on input line 248.
 
 (master.out) (master.out)
 \@outlinefile=\write3
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 256.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 257.
 
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 257.
+ [1
 
 {C:/Users/ecestudent/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
 
 ] (abstract.tex) [3] [4
 
 
-] (acknowledgements.tex) [5] [6
+] (acknowledgements.tex) [5
+
+] [6
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.iv}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.257 \showBYUHeader
+                     [4
 
 
 ]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 256.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 257.
  (master.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 4.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 5.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\jknappen\ursfs.fd"
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 4.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 5.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 4.
+LaTeX Font Info:    Try loading font information for U+msa on input line 5.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 4.
+LaTeX Font Info:    Try loading font information for U+msb on input line 5.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [7
-
-
-])
+)pdfTeX warning (ext4): destination with the same identifier (name{page.v}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.23 ...}Signal Processing in GPUs}{21}{chapter.3}
+                                                   [5]pdfTeX warning (ext4): de
+stination with the same identifier (name{page.vi}) has been already used, dupli
+cate ignored
+<to be read again> 
+                   \relax 
+l.46 ...e {chapter}{Bibliography}{89}{section*.14}
+                                                   [6])
 \tf@toc=\write4
- [8]
-(master.lot)
-\tf@lot=\write5
- [9
+ [7] [8
 
+] (master.lot)
+\tf@lot=\write5
+
+[9
 
 ] [10
 
@@ -706,22 +670,27 @@ ain con-vo-lu-tion and
 
 [13])
 \tf@lof=\write6
- [14] (intro-problemStatement.tex
+ [14] (master.lol)
+\tf@lol=\write7
+ [15
+
+] [16
+
+] (intro-problemStatement.tex
 Chapter 1.
-<figures/intro/Picture1.jpg, id=460, 876.3942pt x 193.6836pt>
+<figures/intro/Picture1.jpg, id=549, 876.3942pt x 193.6836pt>
 File: figures/intro/Picture1.jpg Graphic file (type jpg)
 
 <use figures/intro/Picture1.jpg>
-Package pdftex.def Info: figures/intro/Picture1.jpg used on input line 14.
+Package pdftex.def Info: figures/intro/Picture1.jpg used on input line 13.
 (pdftex.def)             Requested size: 437.5946pt x 96.70856pt.
  [1
-
 
 
  <./figures/intro/Picture1.jpg>]) [2]
 (systemOverview.tex
 Chapter 2.
-<figures/intro/received1.pdf, id=476, 5635.38382pt x 1642.80756pt>
+<figures/intro/received1.pdf, id=565, 5635.38382pt x 1642.80756pt>
 File: figures/intro/received1.pdf Graphic file (type pdf)
 
 <use figures/intro/received1.pdf>
@@ -732,137 +701,137 @@ Package pdftex.def Info: figures/intro/received1.pdf used on input line 24.
 
 
 ]
-<figures/intro/packetSturcture.pdf, id=486, 4283.94472pt x 1218.18112pt>
+<figures/intro/packetSturcture.pdf, id=577, 4283.94472pt x 1218.18112pt>
 File: figures/intro/packetSturcture.pdf Graphic file (type pdf)
 
 <use figures/intro/packetSturcture.pdf>
-Package pdftex.def Info: figures/intro/packetSturcture.pdf used on input line 4
-8.
+Package pdftex.def Info: figures/intro/packetSturcture.pdf used on input line 5
+0.
 (pdftex.def)             Requested size: 376.418pt x 107.02925pt.
 
-<figures/systemOverview/hardwareblock.pdf, id=488, 5239.36426pt x 2880.5618pt>
+<figures/systemOverview/hardwareblock.pdf, id=579, 5239.36426pt x 2880.5618pt>
 File: figures/systemOverview/hardwareblock.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/hardwareblock.pdf>
 Package pdftex.def Info: figures/systemOverview/hardwareblock.pdf used on input
- line 57.
+ line 59.
 (pdftex.def)             Requested size: 460.28763pt x 253.0419pt.
 
-<figures/systemOverview/HostSystem.jpg, id=490, 828.696pt x 505.89pt>
+<figures/systemOverview/HostSystem.jpg, id=581, 828.696pt x 505.89pt>
 File: figures/systemOverview/HostSystem.jpg Graphic file (type jpg)
 
 <use figures/systemOverview/HostSystem.jpg>
 Package pdftex.def Info: figures/systemOverview/HostSystem.jpg used on input li
-ne 63.
+ne 65.
 (pdftex.def)             Requested size: 455.78421pt x 278.24034pt.
  [4 <./figures/intro/received1.pdf> <./figures/intro/packetSturcture.pdf>] [5 <
 ./figures/systemOverview/hardwareblock.pdf>] [6 <./figures/systemOverview/HostS
 ystem.jpg>]
-<figures/intro/estimators.pdf, id=528, 3959.4524pt x 1028.45227pt>
-File: figures/intro/estimators.pdf Graphic file (type pdf)
+<figures/eq_equations/fullSystem.pdf, id=618, 7105.78738pt x 2592.95728pt>
+File: figures/eq_equations/fullSystem.pdf Graphic file (type pdf)
 
-<use figures/intro/estimators.pdf>
-Package pdftex.def Info: figures/intro/estimators.pdf used on input line 115.
-(pdftex.def)             Requested size: 347.7993pt x 90.32831pt.
+<use figures/eq_equations/fullSystem.pdf>
+Package pdftex.def Info: figures/eq_equations/fullSystem.pdf used on input line
+ 118.
+(pdftex.def)             Requested size: 624.84619pt x 227.9752pt.
 
-<figures/intro/thisThesisBlock5.pdf, id=531, 4727.40176pt x 4043.77744pt>
+<figures/intro/thisThesisBlock5.pdf, id=620, 4162.7321pt x 4043.77744pt>
 File: figures/intro/thisThesisBlock5.pdf Graphic file (type pdf)
 
 <use figures/intro/thisThesisBlock5.pdf>
 Package pdftex.def Info: figures/intro/thisThesisBlock5.pdf used on input line 
-128.
-(pdftex.def)             Requested size: 415.37102pt x 355.28584pt.
- [7 <./figures/intro/estimators.pdf>]
-[8 <./figures/intro/thisThesisBlock5.pdf>] [9] [10]
-<figures/intro/channelExample.pdf, id=584, 2493.57599pt x 806.34648pt>
+136.
+(pdftex.def)             Requested size: 415.37102pt x 403.47589pt.
+ [7] [8 <./figures/eq_equations/fullSystem.pdf>] [9 <./figures/intro/thisThesis
+Block5.pdf>] [10] [11]
+<figures/intro/channelExample.pdf, id=680, 2493.57599pt x 806.34648pt>
 File: figures/intro/channelExample.pdf Graphic file (type pdf)
 
 <use figures/intro/channelExample.pdf>
-Package pdftex.def Info: figures/intro/channelExample.pdf used on input line 29
+Package pdftex.def Info: figures/intro/channelExample.pdf used on input line 28
 5.
 (pdftex.def)             Requested size: 218.6161pt x 70.68556pt.
- [11] [12 <./figures/intro/channelExample.pdf>] [13] [14]
-<figures/eq_equations/cyclicPrefix.pdf, id=647, 4815.49063pt x 2416.77907pt>
+ [12] [13 <./figures/intro/channelExample.pdf>] [14] [15]
+<figures/eq_equations/cyclicPrefix.pdf, id=741, 4815.49063pt x 2601.23822pt>
 File: figures/eq_equations/cyclicPrefix.pdf Graphic file (type pdf)
 
 <use figures/eq_equations/cyclicPrefix.pdf>
 Package pdftex.def Info: figures/eq_equations/cyclicPrefix.pdf used on input li
-ne 433.
-(pdftex.def)             Requested size: 376.418pt x 188.88416pt.
- [15]
+ne 441.
+(pdftex.def)             Requested size: 422.52632pt x 228.22697pt.
+ [16] [17 <./figures/eq_equations/cyclicPrefix.pdf>]
 Package epstopdf Info: Source file: <figures/eq_equations/FDE2_spectrum_PSI.eps
 >
-(epstopdf)                    date: 2017-04-11 06:23:13
-(epstopdf)                    size: 437409 bytes
+(epstopdf)                    date: 2017-04-13 08:49:51
+(epstopdf)                    size: 500442 bytes
 (epstopdf)             Output file: <figures/eq_equations/FDE2_spectrum_PSI-eps
 -converted-to.pdf>
-(epstopdf)                    date: 2017-04-11 06:27:40
-(epstopdf)                    size: 87130 bytes
+(epstopdf)                    date: 2017-04-13 08:50:09
+(epstopdf)                    size: 87978 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/eq_equations/FDE2_s
 pectrum_PSI-eps-converted-to.pdf figures/eq_equations/FDE2_spectrum_PSI.eps>
-(epstopdf)             \includegraphics on input line 468.
+(epstopdf)             \includegraphics on input line 476.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=669, 320.19624
+<figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf, id=774, 320.19624
 pt x 273.02pt>
 File: figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf Graphic file 
 (type pdf)
 
 <use figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf>
 Package pdftex.def Info: figures/eq_equations/FDE2_spectrum_PSI-eps-converted-t
-o.pdf used on input line 468.
+o.pdf used on input line 476.
 (pdftex.def)             Requested size: 361.34999pt x 308.1174pt.
 Package epstopdf Info: Source file: <figures/eq_equations/df.eps>
-(epstopdf)                    date: 2017-04-12 15:03:10
-(epstopdf)                    size: 181427 bytes
+(epstopdf)                    date: 2017-04-13 08:59:06
+(epstopdf)                    size: 102069 bytes
 (epstopdf)             Output file: <figures/eq_equations/df-eps-converted-to.p
 df>
-(epstopdf)                    date: 2017-04-12 15:31:45
-(epstopdf)                    size: 6302 bytes
+(epstopdf)                    date: 2017-04-13 08:59:33
+(epstopdf)                    size: 5373 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/eq_equations/df-eps
 -converted-to.pdf figures/eq_equations/df.eps>
-(epstopdf)             \includegraphics on input line 480.
+(epstopdf)             \includegraphics on input line 490.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/eq_equations/df-eps-converted-to.pdf, id=672, 319.1925pt x 273.02pt>
+<figures/eq_equations/df-eps-converted-to.pdf, id=779, 319.1925pt x 273.02pt>
 File: figures/eq_equations/df-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/eq_equations/df-eps-converted-to.pdf>
 Package pdftex.def Info: figures/eq_equations/df-eps-converted-to.pdf used on i
-nput line 480.
-(pdftex.def)             Requested size: 361.34999pt x 309.07974pt.
+nput line 490.
+(pdftex.def)             Requested size: 307.14749pt x 262.71695pt.
 
-<figures/systemOverview/OQPSK.pdf, id=675, 4122.08023pt x 2380.64406pt>
+<figures/systemOverview/OQPSK.pdf, id=781, 5377.14903pt x 2192.42084pt>
 File: figures/systemOverview/OQPSK.pdf Graphic file (type pdf)
 
 <use figures/systemOverview/OQPSK.pdf>
-Package pdftex.def Info: figures/systemOverview/OQPSK.pdf used on input line 48
-7.
-(pdftex.def)             Requested size: 362.10823pt x 209.1268pt.
- [16 <./figures/eq_equations/cyclicPrefix.pdf>] [17 <./figures/eq_equations/FDE
-2_spectrum_PSI-eps-converted-to.pdf>]
-[18 <./figures/eq_equations/df-eps-converted-to.pdf> <./figures/systemOverview/
-OQPSK.pdf>]) [19] (signalProcessingInGPUs.tex [20
-
-
-
-]
+Package pdftex.def Info: figures/systemOverview/OQPSK.pdf used on input line 49
+6.
+(pdftex.def)             Requested size: 470.22415pt x 191.72261pt.
+ [18] [19 <./figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf> <./fi
+gures/eq_equations/df-eps-converted-to.pdf>]) [20 <./figures/systemOverview/OQP
+SK.pdf>] (signalProcessingInGPUs.tex
 Chapter 3.
-<figures/gpu_intro/k40c_k20c.jpg, id=732, 542.025pt x 440.847pt>
+<figures/gpu_intro/k40c_k20c.jpg, id=827, 542.025pt x 440.847pt>
 File: figures/gpu_intro/k40c_k20c.jpg Graphic file (type jpg)
 
 <use figures/gpu_intro/k40c_k20c.jpg>
 Package pdftex.def Info: figures/gpu_intro/k40c_k20c.jpg used on input line 8.
 (pdftex.def)             Requested size: 361.34999pt x 293.90623pt.
- [21] [22 <./figures/gpu_intro/k40c_k20c.jpg>]
-<figures/gpu_intro/CPUaddBlockDiagram.pdf, id=747, 1505.78563pt x 1465.87653pt>
+ [21
+
+
+
+] [22 <./figures/gpu_intro/k40c_k20c.jpg>]
+<figures/gpu_intro/CPUaddBlockDiagram.pdf, id=841, 1505.78563pt x 1465.87653pt>
 File: figures/gpu_intro/CPUaddBlockDiagram.pdf Graphic file (type pdf)
 <use figures/gpu_intro/CPUaddBlockDiagram.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUaddBlockDiagram.pdf used on input
  line 50.
 (pdftex.def)             Requested size: 126.0025pt x 122.6407pt.
 
-<figures/gpu_intro/GPUaddBlockDiagram.pdf, id=748, 2194.67928pt x 1791.8844pt>
+<figures/gpu_intro/GPUaddBlockDiagram.pdf, id=842, 2194.67928pt x 1791.8844pt>
 File: figures/gpu_intro/GPUaddBlockDiagram.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/GPUaddBlockDiagram.pdf>
@@ -890,7 +859,7 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [24
 
 ] [25]
-<figures/gpu_intro/threadsBlocks32.pdf, id=878, 1866.41284pt x 516.4836pt>
+<figures/gpu_intro/threadsBlocks32.pdf, id=972, 1866.41284pt x 516.4836pt>
 File: figures/gpu_intro/threadsBlocks32.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/threadsBlocks32.pdf>
@@ -898,7 +867,7 @@ Package pdftex.def Info: figures/gpu_intro/threadsBlocks32.pdf used on input li
 ne 187.
 (pdftex.def)             Requested size: 158.9936pt x 43.99115pt.
 
-<figures/gpu_intro/threadsBlocks36.pdf, id=879, 2321.91464pt x 516.4836pt>
+<figures/gpu_intro/threadsBlocks36.pdf, id=973, 2321.91464pt x 516.4836pt>
 File: figures/gpu_intro/threadsBlocks36.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/threadsBlocks36.pdf>
@@ -906,7 +875,7 @@ Package pdftex.def Info: figures/gpu_intro/threadsBlocks36.pdf used on input li
 ne 192.
 (pdftex.def)             Requested size: 198.74222pt x 44.20393pt.
 
-<figures/gpu_intro/MemoryPyramid.pdf, id=881, 3831.46422pt x 1823.50253pt>
+<figures/gpu_intro/MemoryPyramid.pdf, id=975, 3831.46422pt x 1823.50253pt>
 File: figures/gpu_intro/MemoryPyramid.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/MemoryPyramid.pdf>
@@ -915,7 +884,7 @@ Package pdftex.def Info: figures/gpu_intro/MemoryPyramid.pdf used on input line
 (pdftex.def)             Requested size: 332.29698pt x 158.1259pt.
  [26 <./figures/gpu_intro/threadsBlocks32.pdf> <./figures/gpu_intro/threadsBloc
 ks36.pdf>]
-<figures/gpu_intro/Kepler_box.png, id=899, 681.2652pt x 305.943pt>
+<figures/gpu_intro/Kepler_box.png, id=993, 681.2652pt x 305.943pt>
 File: figures/gpu_intro/Kepler_box.png Graphic file (type png)
 
 <use figures/gpu_intro/Kepler_box.png>
@@ -923,7 +892,7 @@ Package pdftex.def Info: figures/gpu_intro/Kepler_box.png used on input line 22
 1.
 (pdftex.def)             Requested size: 469.75499pt x 210.96083pt.
 
-<figures/gpu_intro/fullGPUmemBlockDiagram.pdf, id=902, 4463.13419pt x 3373.7042
+<figures/gpu_intro/fullGPUmemBlockDiagram.pdf, id=996, 4463.13419pt x 3373.7042
 2pt>
 File: figures/gpu_intro/fullGPUmemBlockDiagram.pdf Graphic file (type pdf)
  <use figures/gpu_intro/fullGPUmemBlockDiagram.pdf>
@@ -943,17 +912,17 @@ taps-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/ConvGPU_s
 hared_12672_186taps-eps-converted-to.pdf figures/gpu_intro/ConvGPU_shared_12672
 _186taps.eps>
-(epstopdf)             \includegraphics on input line 318.
+(epstopdf)             \includegraphics on input line 317.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-converted-to.pdf, id=935, 3
-31.2375pt x 266.9975pt>
+<figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-converted-to.pdf, id=1039, 
+331.2375pt x 266.9975pt>
 File: figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-converted-to.pdf Graph
 ic file (type pdf)
 
 <use figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-con
-verted-to.pdf used on input line 318.
+verted-to.pdf used on input line 317.
 (pdftex.def)             Requested size: 361.34999pt x 291.28223pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/ConvGPU_global_12672_186
 taps.eps>
@@ -966,127 +935,124 @@ taps-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/ConvGPU_g
 lobal_12672_186taps-eps-converted-to.pdf figures/gpu_intro/ConvGPU_global_12672
 _186taps.eps>
-(epstopdf)             \includegraphics on input line 324.
+(epstopdf)             \includegraphics on input line 323.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/ConvGPU_global_12672_186taps-eps-converted-to.pdf, id=936, 3
-31.2375pt x 266.9975pt>
+<figures/gpu_intro/ConvGPU_global_12672_186taps-eps-converted-to.pdf, id=1040, 
+331.2375pt x 266.9975pt>
 File: figures/gpu_intro/ConvGPU_global_12672_186taps-eps-converted-to.pdf Graph
 ic file (type pdf)
 
 <use figures/gpu_intro/ConvGPU_global_12672_186taps-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/ConvGPU_global_12672_186taps-eps-con
-verted-to.pdf used on input line 324.
+verted-to.pdf used on input line 323.
 (pdftex.def)             Requested size: 361.34999pt x 291.28223pt.
 
-[30
-
-]
-<figures/gpu_intro/concurrentCPU_blocking.pdf, id=971, 4012.1593pt x 1243.77675
-pt>
+[30]
+<figures/gpu_intro/concurrentCPU_blocking.pdf, id=1065, 4012.1593pt x 1243.7767
+5pt>
 File: figures/gpu_intro/concurrentCPU_blocking.pdf Graphic file (type pdf)
  <use figures/gpu_intro/concurrentCPU_blocking.pdf>
 Package pdftex.def Info: figures/gpu_intro/concurrentCPU_blocking.pdf used on i
-nput line 349.
+nput line 348.
 (pdftex.def)             Requested size: 348.59406pt x 108.06346pt.
- [31 <./figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-converted-to.pdf>]
-<figures/gpu_intro/concurrentCPU_nonBlocking.pdf, id=982, 4554.23479pt x 1541.1
-6782pt>
+
+<figures/gpu_intro/concurrentCPU_nonBlocking.pdf, id=1069, 4554.23479pt x 1541.
+16782pt>
 File: figures/gpu_intro/concurrentCPU_nonBlocking.pdf Graphic file (type pdf)
  <use figures/gpu_intro/concurrentCPU_nonBlocking.pdf>
 Package pdftex.def Info: figures/gpu_intro/concurrentCPU_nonBlocking.pdf used o
-n input line 362.
+n input line 361.
 (pdftex.def)             Requested size: 396.29189pt x 134.08992pt.
-
-<figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf, id=986, 5200.97081pt
- x 2257.16272pt>
+ [31 <./figures/gpu_intro/ConvGPU_shared_12672_186taps-eps-converted-to.pdf>] [
+32 <./figures/gpu_intro/ConvGPU_global_12672_186taps-eps-converted-to.pdf> <./f
+igures/gpu_intro/concurrentCPU_blocking.pdf>]
+<figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf, id=1093, 5200.97081p
+t x 2257.16272pt>
 File: figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf Graphic file (ty
 pe pdf)
 
 <use figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.pdf>
 Package pdftex.def Info: figures/gpu_intro/concurrentCPU_nonBlocking_multiGPU.p
-df used on input line 371.
+df used on input line 370.
 (pdftex.def)             Requested size: 453.13232pt x 196.62643pt.
- [32 <./figures/gpu_intro/ConvGPU_global_12672_186taps-eps-converted-to.pdf>] [
-33 <./figures/gpu_intro/concurrentCPU_blocking.pdf> <./figures/gpu_intro/concur
-rentCPU_nonBlocking.pdf>] [34 <./figures/gpu_intro/concurrentCPU_nonBlocking_mu
-ltiGPU.pdf>]
-[35
+ [33 <./figures/gpu_intro/concurrentCPU_nonBlocking.pdf>] [34 <./figures/gpu_in
+tro/concurrentCPU_nonBlocking_multiGPU.pdf>] [35
 
 ]
-<figures/gpu_convolution/convBlock.pdf, id=1071, 4648.34616pt x 3208.81819pt>
+<figures/gpu_convolution/convBlock.pdf, id=1164, 4648.34616pt x 3208.81819pt>
 File: figures/gpu_convolution/convBlock.pdf Graphic file (type pdf)
 
 <use figures/gpu_convolution/convBlock.pdf>
 Package pdftex.def Info: figures/gpu_convolution/convBlock.pdf used on input li
-ne 459.
+ne 458.
 (pdftex.def)             Requested size: 408.61435pt x 282.0733pt.
  [36
 
 ] [37 <./figures/gpu_convolution/convBlock.pdf>]
 Package epstopdf Info: Source file: <figures/gpu_intro/Theory186Tap_flops.eps>
-(epstopdf)                    date: 2017-04-05 11:41:59
+(epstopdf)                    date: 2017-05-04 07:36:40
 (epstopdf)                    size: 725019 bytes
 (epstopdf)             Output file: <figures/gpu_intro/Theory186Tap_flops-eps-c
 onverted-to.pdf>
-(epstopdf)                    date: 2017-04-05 11:42:25
+(epstopdf)                    date: 2017-05-04 07:37:25
 (epstopdf)                    size: 105924 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/Theory186
 Tap_flops-eps-converted-to.pdf figures/gpu_intro/Theory186Tap_flops.eps>
-(epstopdf)             \includegraphics on input line 502.
+(epstopdf)             \includegraphics on input line 501.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/Theory186Tap_flops-eps-converted-to.pdf, id=1098, 320.19624p
+<figures/gpu_intro/Theory186Tap_flops-eps-converted-to.pdf, id=1192, 320.19624p
 t x 282.05376pt>
 File: figures/gpu_intro/Theory186Tap_flops-eps-converted-to.pdf Graphic file (t
 ype pdf)
 
 <use figures/gpu_intro/Theory186Tap_flops-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/Theory186Tap_flops-eps-converted-to.
-pdf used on input line 502.
+pdf used on input line 501.
 (pdftex.def)             Requested size: 361.34999pt x 318.31245pt.
-Package epstopdf Info: Source file: <figures/gpu_intro/Theory21Tap_flops.eps>
-(epstopdf)                    date: 2017-04-05 11:41:59
-(epstopdf)                    size: 729631 bytes
-(epstopdf)             Output file: <figures/gpu_intro/Theory21Tap_flops-eps-co
+Package epstopdf Info: Source file: <figures/gpu_intro/Theory23Tap_flops.eps>
+(epstopdf)                    date: 2017-05-04 07:36:41
+(epstopdf)                    size: 729661 bytes
+(epstopdf)             Output file: <figures/gpu_intro/Theory23Tap_flops-eps-co
 nverted-to.pdf>
-(epstopdf)                    date: 2017-04-05 11:42:26
-(epstopdf)                    size: 103252 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/Theory21T
-ap_flops-eps-converted-to.pdf figures/gpu_intro/Theory21Tap_flops.eps>
-(epstopdf)             \includegraphics on input line 507.
+(epstopdf)                    date: 2017-05-04 07:37:42
+(epstopdf)                    size: 101485 bytes
+(epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/Theory23T
+ap_flops-eps-converted-to.pdf figures/gpu_intro/Theory23Tap_flops.eps>
+(epstopdf)             \includegraphics on input line 506.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/Theory21Tap_flops-eps-converted-to.pdf, id=1099, 313.17pt x 
+<figures/gpu_intro/Theory23Tap_flops-eps-converted-to.pdf, id=1193, 313.17pt x 
 282.05376pt>
-File: figures/gpu_intro/Theory21Tap_flops-eps-converted-to.pdf Graphic file (ty
+File: figures/gpu_intro/Theory23Tap_flops-eps-converted-to.pdf Graphic file (ty
 pe pdf)
- <use figures/gpu_intro/Theory21Tap_flops-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu_intro/Theory21Tap_flops-eps-converted-to.p
-df used on input line 507.
+ <use figures/gpu_intro/Theory23Tap_flops-eps-converted-to.pdf>
+Package pdftex.def Info: figures/gpu_intro/Theory23Tap_flops-eps-converted-to.p
+df used on input line 506.
 (pdftex.def)             Requested size: 361.34999pt x 325.45676pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/Theory12672signal_flops.
 eps>
-(epstopdf)                    date: 2017-04-05 11:42:00
+(epstopdf)                    date: 2017-05-04 07:36:41
 (epstopdf)                    size: 95600 bytes
 (epstopdf)             Output file: <figures/gpu_intro/Theory12672signal_flops-
 eps-converted-to.pdf>
-(epstopdf)                    date: 2017-04-05 11:42:24
+(epstopdf)                    date: 2017-05-04 07:37:43
 (epstopdf)                    size: 7543 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/Theory126
 72signal_flops-eps-converted-to.pdf figures/gpu_intro/Theory12672signal_flops.e
 ps>
-(epstopdf)             \includegraphics on input line 512.
+(epstopdf)             \includegraphics on input line 511.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/Theory12672signal_flops-eps-converted-to.pdf, id=1100, 314.1
+<figures/gpu_intro/Theory12672signal_flops-eps-converted-to.pdf, id=1194, 314.1
 7375pt x 282.05376pt>
 File: figures/gpu_intro/Theory12672signal_flops-eps-converted-to.pdf Graphic fi
 le (type pdf)
 
 <use figures/gpu_intro/Theory12672signal_flops-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/Theory12672signal_flops-eps-converte
-d-to.pdf used on input line 512.
+d-to.pdf used on input line 511.
 (pdftex.def)             Requested size: 361.34999pt x 324.42384pt.
  [38]
 [39 <./figures/gpu_intro/Theory186Tap_flops-eps-converted-to.pdf>]
@@ -1101,18 +1067,18 @@ varySignal_noMin-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 1batch_186taps_varySignal_noMin-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU
 _1batch_186taps_varySignal_noMin.eps>
-(epstopdf)             \includegraphics on input line 582.
+(epstopdf)             \includegraphics on input line 581.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_noMin-eps-converted-to.pd
-f, id=1127, 317.185pt x 266.9975pt>
+f, id=1222, 317.185pt x 266.9975pt>
 File: figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_noMin-eps-converted-
 to.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_noMin-eps-converted-t
 o.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal_n
-oMin-eps-converted-to.pdf used on input line 582.
+oMin-eps-converted-to.pdf used on input line 581.
 (pdftex.def)             Requested size: 361.34999pt x 304.20103pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_1batch_186taps_
 varySignal.eps>
@@ -1125,70 +1091,70 @@ varySignal-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 1batch_186taps_varySignal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_1batc
 h_186taps_varySignal.eps>
-(epstopdf)             \includegraphics on input line 587.
+(epstopdf)             \includegraphics on input line 586.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal-eps-converted-to.pdf, id=
-1128, 313.17pt x 266.9975pt>
+1223, 313.17pt x 266.9975pt>
 File: figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal-eps-converted-to.pdf
  Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal-eps-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal-e
-ps-converted-to.pdf used on input line 587.
+ps-converted-to.pdf used on input line 586.
 (pdftex.def)             Requested size: 361.34999pt x 308.08359pt.
-Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_1batch_21taps_v
+Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_1batch_23taps_v
 arySignal.eps>
-(epstopdf)                    date: 2017-04-05 15:42:03
-(epstopdf)                    size: 40138 bytes
-(epstopdf)             Output file: <figures/gpu_intro/CPUvsGPU_1batch_21taps_v
+(epstopdf)                    date: 2017-05-04 09:42:17
+(epstopdf)                    size: 40198 bytes
+(epstopdf)             Output file: <figures/gpu_intro/CPUvsGPU_1batch_23taps_v
 arySignal-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-04-05 15:42:33
-(epstopdf)                    size: 11425 bytes
+(epstopdf)                    date: 2017-05-04 09:43:00
+(epstopdf)                    size: 11303 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
-1batch_21taps_varySignal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_1batch
-_21taps_varySignal.eps>
-(epstopdf)             \includegraphics on input line 592.
+1batch_23taps_varySignal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_1batch
+_23taps_varySignal.eps>
+(epstopdf)             \includegraphics on input line 591.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal-eps-converted-to.pdf, id=1
-129, 320.19624pt x 266.9975pt>
-File: figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal-eps-converted-to.pdf 
+<figures/gpu_intro/CPUvsGPU_1batch_23taps_varySignal-eps-converted-to.pdf, id=1
+224, 320.19624pt x 266.9975pt>
+File: figures/gpu_intro/CPUvsGPU_1batch_23taps_varySignal-eps-converted-to.pdf 
 Graphic file (type pdf)
 
-<use figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal-eps-converted-to.pdf>
-Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal-ep
-s-converted-to.pdf used on input line 592.
+<use figures/gpu_intro/CPUvsGPU_1batch_23taps_varySignal-eps-converted-to.pdf>
+Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_1batch_23taps_varySignal-ep
+s-converted-to.pdf used on input line 591.
 (pdftex.def)             Requested size: 361.34999pt x 301.32068pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_1batch_12672sig
 nal_varyFilter.eps>
-(epstopdf)                    date: 2017-04-05 11:31:09
-(epstopdf)                    size: 36912 bytes
+(epstopdf)                    date: 2017-05-04 13:34:31
+(epstopdf)                    size: 36914 bytes
 (epstopdf)             Output file: <figures/gpu_intro/CPUvsGPU_1batch_12672sig
 nal_varyFilter-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-04-05 11:40:45
-(epstopdf)                    size: 8892 bytes
+(epstopdf)                    date: 2017-05-04 13:34:46
+(epstopdf)                    size: 8893 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 1batch_12672signal_varyFilter-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_1
 batch_12672signal_varyFilter.eps>
-(epstopdf)             \includegraphics on input line 597.
+(epstopdf)             \includegraphics on input line 596.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter-eps-converted-to.pdf,
- id=1130, 311.1625pt x 266.9975pt>
+ id=1225, 311.1625pt x 266.9975pt>
 File: figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter-eps-converted-to
 .pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter-eps-converted-to.
 pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilt
-er-eps-converted-to.pdf used on input line 597.
+er-eps-converted-to.pdf used on input line 596.
 (pdftex.def)             Requested size: 361.34999pt x 310.06358pt.
- [40 <./figures/gpu_intro/Theory21Tap_flops-eps-converted-to.pdf>] [41 <./figur
+ [40 <./figures/gpu_intro/Theory23Tap_flops-eps-converted-to.pdf>] [41 <./figur
 es/gpu_intro/Theory12672signal_flops-eps-converted-to.pdf>] [42 <./figures/gpu_
 intro/CPUvsGPU_1batch_186taps_varySignal_noMin-eps-converted-to.pdf>]
 [43 <./figures/gpu_intro/CPUvsGPU_1batch_186taps_varySignal-eps-converted-to.pd
-f>] [44 <./figures/gpu_intro/CPUvsGPU_1batch_21taps_varySignal-eps-converted-to
+f>] [44 <./figures/gpu_intro/CPUvsGPU_1batch_23taps_varySignal-eps-converted-to
 .pdf>] [45 <./figures/gpu_intro/CPUvsGPU_1batch_12672signal_varyFilter-eps-conv
 erted-to.pdf>]
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_varyBatches_186
@@ -1202,18 +1168,18 @@ taps_12672signal-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 varyBatches_186taps_12672signal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU
 _varyBatches_186taps_12672signal.eps>
-(epstopdf)             \includegraphics on input line 671.
+(epstopdf)             \includegraphics on input line 675.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal-eps-converted-to.pd
-f, id=1195, 329.23pt x 266.9975pt>
+f, id=1291, 329.23pt x 266.9975pt>
 File: figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal-eps-converted-
 to.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal-eps-converted-t
 o.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672si
-gnal-eps-converted-to.pdf used on input line 671.
+gnal-eps-converted-to.pdf used on input line 675.
 (pdftex.def)             Requested size: 361.34999pt x 293.05443pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_varyBatches_186
 taps_12672signal_timePerBatch.eps>
@@ -1226,18 +1192,18 @@ taps_12672signal_timePerBatch-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 varyBatches_186taps_12672signal_timePerBatch-eps-converted-to.pdf figures/gpu_i
 ntro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch.eps>
-(epstopdf)             \includegraphics on input line 680.
+(epstopdf)             \includegraphics on input line 684.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch-eps-co
-nverted-to.pdf, id=1198, 328.22626pt x 271.0125pt>
+nverted-to.pdf, id=1294, 328.22626pt x 271.0125pt>
 File: figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch-e
 ps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch-ep
 s-converted-to.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672si
-gnal_timePerBatch-eps-converted-to.pdf used on input line 680.
+gnal_timePerBatch-eps-converted-to.pdf used on input line 684.
 (pdftex.def)             Requested size: 361.34999pt x 298.36691pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_3104batch_186ta
 ps_varySignal.eps>
@@ -1250,43 +1216,43 @@ ps_varySignal-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 3104batch_186taps_varySignal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_31
 04batch_186taps_varySignal.eps>
-(epstopdf)             \includegraphics on input line 693.
+(epstopdf)             \includegraphics on input line 697.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySignal-eps-converted-to.pdf, 
-id=1203, 325.215pt x 266.9975pt>
+id=1299, 325.215pt x 266.9975pt>
 File: figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySignal-eps-converted-to.
 pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySignal-eps-converted-to.p
 df>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_3104batch_186taps_varySigna
-l-eps-converted-to.pdf used on input line 693.
+l-eps-converted-to.pdf used on input line 697.
 (pdftex.def)             Requested size: 361.34999pt x 296.6844pt.
-Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_3104batch_21tap
+Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_3104batch_23tap
 s_varySignal.eps>
-(epstopdf)                    date: 2017-04-05 11:34:30
-(epstopdf)                    size: 48401 bytes
-(epstopdf)             Output file: <figures/gpu_intro/CPUvsGPU_3104batch_21tap
+(epstopdf)                    date: 2017-05-04 11:45:57
+(epstopdf)                    size: 48334 bytes
+(epstopdf)             Output file: <figures/gpu_intro/CPUvsGPU_3104batch_23tap
 s_varySignal-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-04-05 11:40:47
-(epstopdf)                    size: 14570 bytes
+(epstopdf)                    date: 2017-05-04 11:46:18
+(epstopdf)                    size: 14563 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
-3104batch_21taps_varySignal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_310
-4batch_21taps_varySignal.eps>
-(epstopdf)             \includegraphics on input line 698.
+3104batch_23taps_varySignal-eps-converted-to.pdf figures/gpu_intro/CPUvsGPU_310
+4batch_23taps_varySignal.eps>
+(epstopdf)             \includegraphics on input line 702.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal-eps-converted-to.pdf, i
-d=1204, 317.185pt x 266.9975pt>
-File: figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal-eps-converted-to.p
+<figures/gpu_intro/CPUvsGPU_3104batch_23taps_varySignal-eps-converted-to.pdf, i
+d=1300, 318.18875pt x 266.9975pt>
+File: figures/gpu_intro/CPUvsGPU_3104batch_23taps_varySignal-eps-converted-to.p
 df Graphic file (type pdf)
 
-<use figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal-eps-converted-to.pd
+<use figures/gpu_intro/CPUvsGPU_3104batch_23taps_varySignal-eps-converted-to.pd
 f>
-Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_3104batch_21taps_varySignal
--eps-converted-to.pdf used on input line 698.
-(pdftex.def)             Requested size: 361.34999pt x 304.20103pt.
+Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_3104batch_23taps_varySignal
+-eps-converted-to.pdf used on input line 702.
+(pdftex.def)             Requested size: 361.34999pt x 303.2151pt.
 Package epstopdf Info: Source file: <figures/gpu_intro/CPUvsGPU_3104batch_12672
 signal_varyFilter.eps>
 (epstopdf)                    date: 2017-04-06 07:49:32
@@ -1298,31 +1264,31 @@ signal_varyFilter-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=figures/gpu_intro/CPUvsGPU_
 3104batch_12672signal_varyFilter-eps-converted-to.pdf figures/gpu_intro/CPUvsGP
 U_3104batch_12672signal_varyFilter.eps>
-(epstopdf)             \includegraphics on input line 703.
+(epstopdf)             \includegraphics on input line 707.
 Package epstopdf Info: Output file is already uptodate.
 
 <figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyFilter-eps-converted-to.p
-df, id=1205, 319.1925pt x 266.9975pt>
+df, id=1301, 319.1925pt x 266.9975pt>
 File: figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyFilter-eps-converted
 -to.pdf Graphic file (type pdf)
 
 <use figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyFilter-eps-converted-
 to.pdf>
 Package pdftex.def Info: figures/gpu_intro/CPUvsGPU_3104batch_12672signal_varyF
-ilter-eps-converted-to.pdf used on input line 703.
+ilter-eps-converted-to.pdf used on input line 707.
 (pdftex.def)             Requested size: 361.34999pt x 302.26178pt.
  [46] [47 <./figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal-eps-con
 verted-to.pdf>]
-<figures/gpu_convolution/CascadeConvBlock.pdf, id=1223, 4649.09897pt x 3811.138
+<figures/gpu_convolution/CascadeConvBlock.pdf, id=1318, 4649.09897pt x 3811.138
 28pt>
 File: figures/gpu_convolution/CascadeConvBlock.pdf Graphic file (type pdf)
  <use figures/gpu_convolution/CascadeConvBlock.pdf>
 Package pdftex.def Info: figures/gpu_convolution/CascadeConvBlock.pdf used on i
-nput line 748.
+nput line 751.
 (pdftex.def)             Requested size: 408.61435pt x 334.96251pt.
  [48 <./figures/gpu_intro/CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch
 -eps-converted-to.pdf>] [49 <./figures/gpu_intro/CPUvsGPU_3104batch_186taps_var
-ySignal-eps-converted-to.pdf>] [50 <./figures/gpu_intro/CPUvsGPU_3104batch_21ta
+ySignal-eps-converted-to.pdf>] [50 <./figures/gpu_intro/CPUvsGPU_3104batch_23ta
 ps_varySignal-eps-converted-to.pdf>] [51 <./figures/gpu_intro/CPUvsGPU_3104batc
 h_12672signal_varyFilter-eps-converted-to.pdf>] [52 <./figures/gpu_convolution/
 CascadeConvBlock.pdf>]
@@ -1338,172 +1304,285 @@ CascadeConvBlock.pdf>]
 ]
 Chapter 4.
 
-LaTeX Warning: Reference `sec:equalizer_eq' on page 65 undefined on input line 
-73.
-
-
-<figures/eq_GPUimplementation/Conv2.pdf, id=1941, 4646.84053pt x 2496.58723pt>
+<figures/eq_GPUimplementation/Conv2.pdf, id=2038, 3496.42271pt x 2496.58723pt>
 File: figures/eq_GPUimplementation/Conv2.pdf Graphic file (type pdf)
 
 <use figures/eq_GPUimplementation/Conv2.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/Conv2.pdf used on input l
-ine 91.
-(pdftex.def)             Requested size: 408.61435pt x 219.50226pt.
+ine 23.
+(pdftex.def)             Requested size: 307.2551pt x 219.38797pt.
 
-<figures/eq_GPUimplementation/Conv3.pdf, id=1942, 4829.04124pt x 2496.58723pt>
+<figures/eq_GPUimplementation/Conv3.pdf, id=2039, 3522.02838pt x 2496.58723pt>
 File: figures/eq_GPUimplementation/Conv3.pdf Graphic file (type pdf)
 
 <use figures/eq_GPUimplementation/Conv3.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/Conv3.pdf used on input l
-ine 96.
-(pdftex.def)             Requested size: 408.61435pt x 211.23569pt.
+ine 30.
+(pdftex.def)             Requested size: 309.24324pt x 219.19751pt.
  [65] [66 <./figures/eq_GPUimplementation/Conv2.pdf> <./figures/eq_GPUimplement
-ation/Conv3.pdf>]
+ation/Conv3.pdf>] [67
 
-LaTeX Warning: Citation `PAQ-phase1' on page 67 undefined on input line 120.
-
-[67
-
-] [68]
-
-LaTeX Warning: Citation `PAQ-phase1' on page 69 undefined on input line 188.
-
-[69] [70]
-
-LaTeX Warning: Reference `sec:ZFnMMSE' on page 71 undefined on input line 415.
-
-[71]
-<figures/eq_GPUimplementation/blockZF.pdf, id=2013, 3494.91708pt x 2195.4321pt>
+]
+<figures/eq_GPUimplementation/blockZF.pdf, id=2074, 4752.99739pt x 1480.17996pt
+>
 File: figures/eq_GPUimplementation/blockZF.pdf Graphic file (type pdf)
-<use figures/eq_GPUimplementation/blockZF.pdf>
+ <use figures/eq_GPUimplementation/blockZF.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/blockZF.pdf used on input
- line 427.
-(pdftex.def)             Requested size: 298.11333pt x 187.2625pt.
+ line 81.
+(pdftex.def)             Requested size: 417.75612pt x 130.09361pt.
 
-<figures/eq_GPUimplementation/blockMMSE.pdf, id=2014, 3732.83572pt x 2458.94661
-pt>
+<figures/eq_GPUimplementation/blockMMSE.pdf, id=2075, 4813.2322pt x 1750.46979p
+t>
 File: figures/eq_GPUimplementation/blockMMSE.pdf Graphic file (type pdf)
  <use figures/eq_GPUimplementation/blockMMSE.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/blockMMSE.pdf used on inp
-ut line 432.
-(pdftex.def)             Requested size: 317.19246pt x 208.9139pt.
- [72 <./figures/eq_GPUimplementation/blockZF.pdf>]
-
-LaTeX Warning: Citation `PAQ-phase1' on page 73 undefined on input line 724.
-
-[73 <./figures/eq_GPUimplementation/blockMMSE.pdf>] [74] [75]
-<figures/eq_equations/convolutionFigureRice.pdf, id=2064, 4600.16615pt x 3207.3
+ut line 86.
+(pdftex.def)             Requested size: 422.92328pt x 153.79608pt.
+ [68 <./figures/eq_GPUimplementation/blockZF.pdf>] [69 <./figures/eq_GPUimpleme
+ntation/blockMMSE.pdf>]
+[70]
+<figures/eq_equations/convolutionFigureRice.pdf, id=2118, 4600.16615pt x 3207.3
 1256pt>
 File: figures/eq_equations/convolutionFigureRice.pdf Graphic file (type pdf)
  <use figures/eq_equations/convolutionFigureRice.pdf>
 Package pdftex.def Info: figures/eq_equations/convolutionFigureRice.pdf used on
- input line 800.
+ input line 186.
 (pdftex.def)             Requested size: 397.48444pt x 277.09593pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Reference `sec:CMA' on page 76 undefined on input line 838.
-
-[76 <./figures/eq_equations/convolutionFigureRice.pdf>] [77]
-<figures/eq_GPUimplementation/blockCMA.pdf, id=2088, 3595.804pt x 2834.63019pt>
+<figures/eq_GPUimplementation/blockCMA.pdf, id=2122, 4822.26593pt x 1472.65184p
+t>
 File: figures/eq_GPUimplementation/blockCMA.pdf Graphic file (type pdf)
-<use figures/eq_GPUimplementation/blockCMA.pdf>
+ <use figures/eq_GPUimplementation/blockCMA.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/blockCMA.pdf used on inpu
-t line 878.
-(pdftex.def)             Requested size: 331.50223pt x 261.29088pt.
- [78]
+t line 226.
+(pdftex.def)             Requested size: 423.71887pt x 129.38702pt.
 
-LaTeX Warning: Citation `coon2006channel' on page 79 undefined on input line 90
-1.
-
-File: figures/eq_equations/cyclicPrefix.pdf Graphic file (type pdf)
-<use figures/eq_equations/cyclicPrefix.pdf>
-Package pdftex.def Info: figures/eq_equations/cyclicPrefix.pdf used on input li
-ne 908.
-(pdftex.def)             Requested size: 376.418pt x 188.88416pt.
- [79 <./figures/eq_GPUimplementation/blockCMA.pdf>] [80]
-Package epstopdf Info: Source file: <figures/eq_equations/FDE2_spectrum_PSI.eps
->
-(epstopdf)                    date: 2017-04-11 06:23:13
-(epstopdf)                    size: 437409 bytes
-(epstopdf)             Output file: <figures/eq_equations/FDE2_spectrum_PSI-eps
--converted-to.pdf>
-(epstopdf)                    date: 2017-04-11 06:27:40
-(epstopdf)                    size: 87130 bytes
-(epstopdf)             Command: <epstopdf --outfile=figures/eq_equations/FDE2_s
-pectrum_PSI-eps-converted-to.pdf figures/eq_equations/FDE2_spectrum_PSI.eps>
-(epstopdf)             \includegraphics on input line 974.
-Package epstopdf Info: Output file is already uptodate.
-File: figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf Graphic file 
-(type pdf)
-
-<use figures/eq_equations/FDE2_spectrum_PSI-eps-converted-to.pdf>
-Package pdftex.def Info: figures/eq_equations/FDE2_spectrum_PSI-eps-converted-t
-o.pdf used on input line 974.
-(pdftex.def)             Requested size: 361.34999pt x 308.1174pt.
- [81]
-<figures/eq_GPUimplementation/blockFDE1.pdf, id=2134, 4588.12115pt x 1480.17996
+<figures/eq_GPUimplementation/blockCMA_apply.pdf, id=2123, 1790.37878pt x 577.4
+674pt>
+File: figures/eq_GPUimplementation/blockCMA_apply.pdf Graphic file (type pdf)
+ <use figures/eq_GPUimplementation/blockCMA_apply.pdf>
+Package pdftex.def Info: figures/eq_GPUimplementation/blockCMA_apply.pdf used o
+n input line 231.
+(pdftex.def)             Requested size: 157.0063pt x 50.6393pt.
+ [71] [72 <./figures/eq_equations/convolutionFigureRice.pdf>] [73 <./figures/eq
+_GPUimplementation/blockCMA.pdf> <./figures/eq_GPUimplementation/blockCMA_apply
+.pdf>]
+<figures/eq_GPUimplementation/blockFDE1.pdf, id=2167, 3525.03963pt x 1480.17996
 pt>
 File: figures/eq_GPUimplementation/blockFDE1.pdf Graphic file (type pdf)
  <use figures/eq_GPUimplementation/blockFDE1.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/blockFDE1.pdf used on inp
-ut line 1016.
-(pdftex.def)             Requested size: 386.75232pt x 124.7634pt.
+ut line 291.
+(pdftex.def)             Requested size: 309.6402pt x 130.00328pt.
 
-<figures/eq_GPUimplementation/blockFDE2.pdf, id=2135, 4727.40176pt x 1480.17996
+<figures/eq_GPUimplementation/blockFDE2.pdf, id=2168, 3784.02698pt x 1480.17996
 pt>
 File: figures/eq_GPUimplementation/blockFDE2.pdf Graphic file (type pdf)
  <use figures/eq_GPUimplementation/blockFDE2.pdf>
 Package pdftex.def Info: figures/eq_GPUimplementation/blockFDE2.pdf used on inp
-ut line 1021.
-(pdftex.def)             Requested size: 398.67699pt x 124.80856pt.
-) [82] [83 <./figures/eq_GPUimplementation/blockFDE1.pdf> <./figures/eq_GPUimpl
-ementation/blockFDE2.pdf>]
-(final_summary.tex [84
+ut line 296.
+(pdftex.def)             Requested size: 332.29698pt x 129.98068pt.
 
+<figures/eq_equations/GPUpipeLines.pdf, id=2172, 6961.2273pt x 2257.16272pt>
+File: figures/eq_equations/GPUpipeLines.pdf Graphic file (type pdf)
 
+<use figures/eq_equations/GPUpipeLines.pdf>
+Package pdftex.def Info: figures/eq_equations/GPUpipeLines.pdf used on input li
+ne 334.
+(pdftex.def)             Requested size: 609.34387pt x 197.55635pt.
+ [74 <./figures/eq_GPUimplementation/blockFDE1.pdf>] [75 <./figures/eq_GPUimple
+mentation/blockFDE2.pdf>] [76 <./figures/eq_equations/GPUpipeLines.pdf>] [77]
+<figures/eq_GPUimplementation/MDRsystem.pdf, id=2210, 7092.98958pt x 2778.92206
+pt>
+File: figures/eq_GPUimplementation/MDRsystem.pdf Graphic file (type pdf)
+ <use figures/eq_GPUimplementation/MDRsystem.pdf>
+Package pdftex.def Info: figures/eq_GPUimplementation/MDRsystem.pdf used on inp
+ut line 375.
+(pdftex.def)             Requested size: 650.43pt x 254.79892pt.
 
-]
+<figures/eq_GPUimplementation/BER1.jpg, id=2221, 343.5234pt x 257.763pt>
+File: figures/eq_GPUimplementation/BER1.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/BER1.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/BER1.jpg used on input li
+ne 546.
+(pdftex.def)             Requested size: 289.07999pt x 216.92456pt.
+Package epstopdf Info: Source file: <figures/eq_GPUimplementation/BER1.eps>
+(epstopdf)                    date: 2017-04-13 14:56:54
+(epstopdf)                    size: 32914 bytes
+(epstopdf)             Output file: <figures/eq_GPUimplementation/BER1-eps-conv
+erted-to.pdf>
+(epstopdf)                    date: 2017-04-13 14:57:07
+(epstopdf)                    size: 6067 bytes
+(epstopdf)             Command: <epstopdf --outfile=figures/eq_GPUimplementatio
+n/BER1-eps-converted-to.pdf figures/eq_GPUimplementation/BER1.eps>
+(epstopdf)             \includegraphics on input line 548.
+Package epstopdf Info: Output file is already uptodate.
+
+<figures/eq_GPUimplementation/BER1-eps-converted-to.pdf, id=2222, 326.21875pt x
+ 268.00125pt>
+File: figures/eq_GPUimplementation/BER1-eps-converted-to.pdf Graphic file (type
+ pdf)
+ <use figures/eq_GPUimplementation/BER1-eps-converted-to.pdf>
+Package pdftex.def Info: figures/eq_GPUimplementation/BER1-eps-converted-to.pdf
+ used on input line 548.
+(pdftex.def)             Requested size: 289.07999pt x 237.51027pt.
+
+<figures/eq_GPUimplementation/BER2.jpg, id=2223, 343.5234pt x 258.2448pt>
+File: figures/eq_GPUimplementation/BER2.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/BER2.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/BER2.jpg used on input li
+ne 572.
+(pdftex.def)             Requested size: 289.07999pt x 217.33pt.
+Package epstopdf Info: Source file: <figures/eq_GPUimplementation/BER2.eps>
+(epstopdf)                    date: 2017-04-13 14:56:54
+(epstopdf)                    size: 30549 bytes
+(epstopdf)             Output file: <figures/eq_GPUimplementation/BER2-eps-conv
+erted-to.pdf>
+(epstopdf)                    date: 2017-04-13 14:57:08
+(epstopdf)                    size: 5590 bytes
+(epstopdf)             Command: <epstopdf --outfile=figures/eq_GPUimplementatio
+n/BER2-eps-converted-to.pdf figures/eq_GPUimplementation/BER2.eps>
+(epstopdf)             \includegraphics on input line 574.
+Package epstopdf Info: Output file is already uptodate.
+
+<figures/eq_GPUimplementation/BER2-eps-converted-to.pdf, id=2224, 326.21875pt x
+ 268.00125pt>
+File: figures/eq_GPUimplementation/BER2-eps-converted-to.pdf Graphic file (type
+ pdf)
+ <use figures/eq_GPUimplementation/BER2-eps-converted-to.pdf>
+Package pdftex.def Info: figures/eq_GPUimplementation/BER2-eps-converted-to.pdf
+ used on input line 574.
+(pdftex.def)             Requested size: 289.07999pt x 237.51027pt.
+
+<figures/eq_GPUimplementation/BER3.jpg, id=2225, 343.5234pt x 257.2812pt>
+File: figures/eq_GPUimplementation/BER3.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/BER3.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/BER3.jpg used on input li
+ne 599.
+(pdftex.def)             Requested size: 289.07999pt x 216.51909pt.
+Package epstopdf Info: Source file: <figures/eq_GPUimplementation/BER3.eps>
+(epstopdf)                    date: 2017-04-13 14:56:55
+(epstopdf)                    size: 33630 bytes
+(epstopdf)             Output file: <figures/eq_GPUimplementation/BER3-eps-conv
+erted-to.pdf>
+(epstopdf)                    date: 2017-04-13 14:57:08
+(epstopdf)                    size: 5751 bytes
+(epstopdf)             Command: <epstopdf --outfile=figures/eq_GPUimplementatio
+n/BER3-eps-converted-to.pdf figures/eq_GPUimplementation/BER3.eps>
+(epstopdf)             \includegraphics on input line 601.
+Package epstopdf Info: Output file is already uptodate.
+
+<figures/eq_GPUimplementation/BER3-eps-converted-to.pdf, id=2226, 326.21875pt x
+ 268.00125pt>
+File: figures/eq_GPUimplementation/BER3-eps-converted-to.pdf Graphic file (type
+ pdf)
+ <use figures/eq_GPUimplementation/BER3-eps-converted-to.pdf>
+Package pdftex.def Info: figures/eq_GPUimplementation/BER3-eps-converted-to.pdf
+ used on input line 601.
+(pdftex.def)             Requested size: 289.07999pt x 237.51027pt.
+)
+[78
+
+] [79 <./figures/eq_GPUimplementation/MDRsystem.pdf>] [80 <./figures/eq_GPUimpl
+ementation/BER1.jpg> <./figures/eq_GPUimplementation/BER1-eps-converted-to.pdf>
+] [81 <./figures/eq_GPUimplementation/BER2.jpg> <./figures/eq_GPUimplementation
+/BER2-eps-converted-to.pdf>] [82 <./figures/eq_GPUimplementation/BER3.jpg> <./f
+igures/eq_GPUimplementation/BER3-eps-converted-to.pdf>] (final_summary.tex
 Chapter 5.
-[85]) [86] (master.bbl (master.brf)
-\tf@brf=\write7
- [87
+[83
+
+
+
+]) [84] (appendixa.tex
+Appendix A.
+[85
+
+
+
+] <figures/eq_GPUimplementation/trans.jpg, id=2297, 385.44pt x 234.6366pt>
+File: figures/eq_GPUimplementation/trans.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/trans.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/trans.jpg used on input l
+ine 16.
+(pdftex.def)             Requested size: 192.71953pt x 117.31801pt.
+
+<figures/eq_GPUimplementation/emu.jpg, id=2298, 415.7934pt x 409.53pt>
+File: figures/eq_GPUimplementation/emu.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/emu.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/emu.jpg used on input lin
+e 21.
+(pdftex.def)             Requested size: 207.89618pt x 204.7645pt.
+
+<figures/eq_GPUimplementation/noise.jpg, id=2299, 427.8384pt x 433.62pt>
+File: figures/eq_GPUimplementation/noise.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/noise.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/noise.jpg used on input l
+ine 26.
+(pdftex.def)             Requested size: 213.91867pt x 216.80946pt.
+
+<figures/eq_GPUimplementation/splitter.jpg, id=2300, 409.53pt x 512.1534pt>
+File: figures/eq_GPUimplementation/splitter.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/splitter.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/splitter.jpg used on inpu
+t line 31.
+(pdftex.def)             Requested size: 204.7645pt x 256.07607pt.
+
+<figures/eq_GPUimplementation/specAn.jpg, id=2301, 602.25pt x 392.667pt>
+File: figures/eq_GPUimplementation/specAn.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/specAn.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/specAn.jpg used on input 
+line 36.
+(pdftex.def)             Requested size: 301.12425pt x 196.33302pt.
+
+<figures/eq_GPUimplementation/scrubber.jpg, id=2302, 391.2216pt x 349.305pt>
+File: figures/eq_GPUimplementation/scrubber.jpg Graphic file (type jpg)
+
+<use figures/eq_GPUimplementation/scrubber.jpg>
+Package pdftex.def Info: figures/eq_GPUimplementation/scrubber.jpg used on inpu
+t line 41.
+(pdftex.def)             Requested size: 195.61032pt x 174.65207pt.
+) [86 <./figures/eq_GPUimplementation/trans.jpg> <./figures/eq_GPUimplementatio
+n/emu.jpg> <./figures/eq_GPUimplementation/noise.jpg>] [87 <./figures/eq_GPUimp
+lementation/splitter.jpg> <./figures/eq_GPUimplementation/specAn.jpg>] [88 <./f
+igures/eq_GPUimplementation/scrubber.jpg>] (master.bbl (master.brf)
+\tf@brf=\write8
+ [89
+
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 298.
- [88]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 298.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 300.
+ [90]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 300.
  (master.aux
 (intro-problemStatement.aux) (systemOverview.aux) (signalProcessingInGPUs.aux)
-(equalizer_implementation_performance.aux) (final_summary.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 298.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 298.
+(equalizer_implementation_performance.aux) (final_summary.aux) (appendixa.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 300.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 300.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: 31DA698BA8D5FC2A574C48C2CC815B19;3064.
+(rerunfilecheck)             Checksum: DF5923D536EF58B8E67DA259A2EBEEFF;3269.
 Package rerunfilecheck Info: File `master.brf' has not changed.
-(rerunfilecheck)             Checksum: BE494477DE06230BAC7C9E2C135015A2;1949.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 298.
+(rerunfilecheck)             Checksum: CAD0DA2505437F7D3BA243B81DD9CF4F;1673.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 300.
  )
-(\end occurred when \iffalse on line 256 was incomplete)
-(\end occurred when \iffalse on line 256 was incomplete) 
+(\end occurred when \iffalse on line 257 was incomplete)
+(\end occurred when \iffalse on line 257 was incomplete) 
 Here is how much of TeX's memory you used:
- 12494 strings out of 493636
- 194136 string characters out of 3141310
- 479954 words of memory out of 3000000
- 14412 multiletter control sequences out of 15000+200000
- 28176 words of font info for 80 fonts, out of 3000000 for 9000
+ 12515 strings out of 493636
+ 197057 string characters out of 3141310
+ 478934 words of memory out of 3000000
+ 14417 multiletter control sequences out of 15000+200000
+ 27862 words of font info for 79 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 73i,17n,149p,404b,1998s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 73i,21n,149p,593b,1989s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)
 /MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
@@ -1524,9 +1603,9 @@ Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/
 fonts/type1/urw/times/utmri8a.pfb>
-Output written on master.pdf (102 pages, 13668559 bytes).
+Output written on master.pdf (109 pages, 17091453 bytes).
 PDF statistics:
- 2525 PDF objects out of 2984 (max. 8388607)
- 1128 named destinations out of 1200 (max. 500000)
- 564 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2659 PDF objects out of 2984 (max. 8388607)
+ 1119 named destinations out of 1200 (max. 500000)
+ 663 words of extra memory for PDF output out of 10000 (max. 10000000)
 

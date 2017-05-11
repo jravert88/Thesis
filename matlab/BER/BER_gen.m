@@ -61,17 +61,32 @@ BER_awgn = [
  	14,	4.9e-8,     4.88e-8,	1.37e-8,	4.67e-8,	5.22e-8,	0e0;...
  	15,	7.65e-9,	7.45e-9,	2.35e-9,	6.86e-9,	6.67e-9,	0e0;...
 ];
+latexWidth = 5;
+latexHeight = 4;
+lowerbound = 1e-10;
 
 
 
 figure(1); clf;
-semilogy(BER1(:,1),BER1(:,2:end));
+ff2 = semilogy(BER1(:,1),BER1(:,2:end));
 grid on;
 marge = axis;
-axis([marge(1)-1 marge(2)+1  1e-9 1e-1]);
+axis([marge(1)-1 marge(2)+1  lowerbound 1e-1]);
 
-latexWidth = 5;
-latexHeight = 4;
+ff2(1).Marker = 's';
+ff2(1).Color = 'k';
+ff2(2).Marker = 'd';
+ff2(2).Color = 'k';
+ff2(3).Marker = '*';
+ff2(3).Color = 'k';
+ff2(4).Marker = '^';
+ff2(4).Color = 'k';
+ff2(5).Marker = 'v';
+ff2(5).Color = 'k';
+ff2(6).Marker = 'p';
+ff2(6).Color = 'k';
+
+
 ff = gcf;
 homer = ff.Units;
 ff.Units = 'inches';
@@ -79,13 +94,114 @@ bart = ff.Position;
 ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
-xlabel('cycles/sample')
-% ylabel('\Psi (dB)')
+xlabel('Eb/N0 (dB)')
 ylabel('BER')
-% title('SOQPSK-TG Constellation')
-% legend('SOQPSK-TG Power Spectrum','Location','Best')
-print(ff, '-depsc', ['FDE2_spectrum_PSI']) %save as eps a 
 
-% figure(11);
-% stem(-max_lag:max_lag,abs(R));
-% grid on;
+legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
+print(ff, '-depsc', ['BER1']) %save as eps a 
+
+
+figure(2); clf;
+ff2 = semilogy(BER2(:,1),BER2(:,2:end));
+grid on;
+marge = axis;
+axis([marge(1)-1 marge(2)+1  lowerbound 1e-1]);
+
+ff2(1).Marker = 's';
+ff2(1).Color = 'k';
+ff2(2).Marker = 'd';
+ff2(2).Color = 'k';
+ff2(3).Marker = '*';
+ff2(3).Color = 'k';
+ff2(4).Marker = '^';
+ff2(4).Color = 'k';
+ff2(5).Marker = 'v';
+ff2(5).Color = 'k';
+ff2(6).Marker = 'p';
+ff2(6).Color = 'k';
+
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+xlabel('Eb/N0 (dB)')
+ylabel('BER')
+
+legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
+print(ff, '-depsc', ['BER2']) %save as eps a 
+
+
+
+
+figure(3); clf;
+ff2 = semilogy(BER3(:,1),BER3(:,2:end));
+grid on;
+marge = axis;
+axis([marge(1)-1 marge(2)+1  lowerbound 1e-1]);
+
+ff2(1).Marker = 's';
+ff2(1).Color = 'k';
+ff2(2).Marker = 'd';
+ff2(2).Color = 'k';
+ff2(3).Marker = '*';
+ff2(3).Color = 'k';
+ff2(4).Marker = '^';
+ff2(4).Color = 'k';
+ff2(5).Marker = 'v';
+ff2(5).Color = 'k';
+ff2(6).Marker = 'p';
+ff2(6).Color = 'k';
+
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+xlabel('Eb/N0 (dB)')
+ylabel('BER')
+
+legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
+print(ff, '-depsc', ['BER3']) %save as eps a 
+
+
+
+
+figure(4); clf;
+ff2 = semilogy(BER_awgn(:,1),BER_awgn(:,2:end));
+grid on;
+marge = axis;
+axis([3 marge(2)+1  lowerbound 1e-1]);
+
+ff2(1).Marker = 's';
+ff2(1).Color = 'k';
+ff2(2).Marker = 'd';
+ff2(2).Color = 'k';
+ff2(3).Marker = '*';
+ff2(3).Color = 'k';
+ff2(4).Marker = '^';
+ff2(4).Color = 'k';
+ff2(5).Marker = 'v';
+ff2(5).Color = 'k';
+ff2(6).Marker = 'p';
+ff2(6).Color = 'k';
+
+
+ff = gcf;
+homer = ff.Units;
+ff.Units = 'inches';
+bart = ff.Position;
+ff.Position = [bart(1:2) latexWidth latexHeight];
+ff.PaperPositionMode = 'auto';
+ff.Units = homer;
+xlabel('Eb/N0 (dB)')
+ylabel('BER')
+
+legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
+print(ff, '-depsc', ['BER_awgn']) %save as eps a 
