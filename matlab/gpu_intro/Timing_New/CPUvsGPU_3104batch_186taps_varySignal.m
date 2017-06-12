@@ -1070,6 +1070,7 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
 print(ff, '-depsc', ['CPUvsGPU_3104batch_186taps_varySignal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_3104batch_186taps_varySignal']) %save as eps a
 
 
 figure(2); clf;
@@ -1119,3 +1120,4 @@ drawnow
 
 
 print(ff, '-depsc', ['CPUvsGPU_3104batch_186taps_varySignal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_3104batch_186taps_varySignal']) %save as eps a

@@ -46,7 +46,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['taps10CPUvsGPU']) %save as eps a 
+print(ff, '-dpng', ['taps10CPUvsGPU']) %save as eps a 
 
 
 figure(2); clf
@@ -69,7 +69,7 @@ ff.Units = homer;
 marge = axis;
 axis([0 cpux(min(find(cpux>7e3))) marge(3) 0.25])
 drawnow
-print(ff, '-depsc', ['taps10CPUvsGPU_CPUtoGPU']) %save as eps a 
+print(ff, '-dpng', ['taps10CPUvsGPU_CPUtoGPU']) %save as eps a 
 
 
 
@@ -93,7 +93,7 @@ ff.Units = homer;
 marge = axis;
 axis([0 cpux(min(find(cpux>3e4))) marge(3) 0.6])
 drawnow
-print(ff, '-depsc', ['taps10CPUvsGPU_GPUtoGPU']) %save as eps a 
+print(ff, '-dpng', ['taps10CPUvsGPU_GPUtoGPU']) %save as eps a 
 
 figure(4); clf
 plot(x,cpu1,x,direct1,x,shared1,x,myfft1); grid on;
@@ -113,4 +113,4 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['taps10CPUvsGPU_spikes']) %save as eps a 
+print(ff, '-dpng', ['taps10CPUvsGPU_spikes']) %save as eps a 

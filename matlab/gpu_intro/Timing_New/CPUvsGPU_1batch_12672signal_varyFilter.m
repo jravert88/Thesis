@@ -478,3 +478,4 @@ ax2.XTick = [150 175 200];
 
 
 print(ff, '-depsc', ['CPUvsGPU_1batch_12672signal_varyFilter']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_1batch_12672signal_varyFilter']) %save as eps a

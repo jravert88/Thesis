@@ -19,4 +19,4 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 axis tight
 
-print(ff, '-depsc', ['CPUvsGPU_CPUtoGPU']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPU_CPUtoGPU']) %save as eps a 

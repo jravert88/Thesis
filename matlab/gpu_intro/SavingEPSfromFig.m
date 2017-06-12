@@ -14,7 +14,7 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 axis tight
 xlabel('numPoints')
-print(ff, '-depsc', ['CPUvsGPUwithMemcpy']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPUwithMemcpy']) %save as eps a 
 
 close all
 
@@ -29,7 +29,7 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 axis tight
 xlabel('numPoints')
-print(ff, '-depsc', ['CPUvsGPU']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPU']) %save as eps a 
 
 close all
 
@@ -44,4 +44,4 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 axis tight
 xlabel('numPoints')
-print(ff, '-depsc', ['CPUvsGPUzoomed']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPUzoomed']) %save as eps a 

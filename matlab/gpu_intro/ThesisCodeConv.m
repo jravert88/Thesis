@@ -44,7 +44,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['CPUvsGPU']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPU']) %save as eps a 
 
 
 figure(2); clf
@@ -66,7 +66,7 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 axis([29 600 0 0.3])
 drawnow
-print(ff, '-depsc', ['CPUvsGPU_CPUtoGPU']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPU_CPUtoGPU']) %save as eps a 
 
 
 
@@ -90,7 +90,7 @@ ff.Units = homer;
 marge = axis;
 axis([marge(1:2) 0 1.1])
 drawnow
-print(ff, '-depsc', ['CPUvsGPU_GPUtoGPU']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPU_GPUtoGPU']) %save as eps a 
 
 figure(4); clf
 plot(x,cpu1,x,direct1,x,shared1,x,myfft1); grid on;
@@ -110,4 +110,4 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['CPUvsGPU_spikes']) %save as eps a 
+print(ff, '-dpng', ['CPUvsGPU_spikes']) %save as eps a 

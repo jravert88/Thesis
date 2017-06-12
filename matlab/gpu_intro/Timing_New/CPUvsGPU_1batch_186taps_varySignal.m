@@ -1181,3 +1181,4 @@ ax2.XTickLabel = {'9000','12000','15000'};
 
 
 print(ff, '-depsc', ['CPUvsGPU_1batch_186taps_varySignal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_1batch_186taps_varySignal']) %save as eps a

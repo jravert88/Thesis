@@ -33,7 +33,7 @@ xlabel('cycles/sample')
 ylabel('$|\mathbf{\Psi}|$ (dB)','Interpreter','latex')
 % title('SOQPSK-TG Constellation')
 % legend('SOQPSK-TG Power Spectrum','Location','Best')
-print(ff, '-depsc', ['FDE2_spectrum_PSI']) %save as eps a 
+print(ff, '-dpng', ['FDE2_spectrum_PSI']) %save as eps a 
 
 % figure(11);
 % stem(-max_lag:max_lag,abs(R));

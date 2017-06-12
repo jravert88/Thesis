@@ -4134,7 +4134,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['ConvGPU_global_12672_186taps']) %save as eps a 
+print(ff, '-dpng', ['ConvGPU_global_12672_186taps']) %save as eps a 
 
 % return
 
@@ -4164,7 +4164,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['ConvGPU_shared_12672_186taps']) %save as eps a 
+print(ff, '-dpng', ['ConvGPU_shared_12672_186taps']) %save as eps a 
 
 
 
@@ -4195,7 +4195,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['PointToPointMultiply_12672_186taps']) %save as eps a 
+print(ff, '-dpng', ['PointToPointMultiply_12672_186taps']) %save as eps a 
 
 
 
@@ -4224,4 +4224,4 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['ScalarMultiply_12672_186taps']) %save as eps a 
+print(ff, '-dpng', ['ScalarMultiply_12672_186taps']) %save as eps a 

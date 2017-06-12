@@ -99,6 +99,7 @@ ylabel('BER')
 
 legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
 print(ff, '-depsc', ['BER1']) %save as eps a 
+print(ff, '-dpng', ['BER1']) %save as eps a 
 
 
 figure(2); clf;
@@ -133,6 +134,7 @@ ylabel('BER')
 
 legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
 print(ff, '-depsc', ['BER2']) %save as eps a 
+print(ff, '-dpng', ['BER2']) %save as eps a 
 
 
 
@@ -169,6 +171,7 @@ ylabel('BER')
 
 legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
 print(ff, '-depsc', ['BER3']) %save as eps a 
+print(ff, '-dpng', ['BER3']) %save as eps a 
 
 
 
@@ -205,3 +208,4 @@ ylabel('BER')
 
 legend('ZF','MMSE','MMSE+CMA','FDE1','FDE2','NO EQ','Location','SouthWest')
 print(ff, '-depsc', ['BER_awgn']) %save as eps a 
+print(ff, '-dpng', ['BER_awgn']) %save as eps a 

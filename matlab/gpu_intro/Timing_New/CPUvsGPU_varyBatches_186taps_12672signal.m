@@ -4264,7 +4264,8 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['CPUvsGPU_varyBatches_186taps_12672signal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_varyBatches_186taps_12672signal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_varyBatches_186taps_12672signal']) %save as eps a
 
 
 figure(2); clf;
@@ -4315,7 +4316,7 @@ drawnow
 % % ax2.XTickLabel = {'9000','12000','15000'};
 
 
-print(ff, '-depsc', ['CPUvsGPU_varyBatches_186taps_12672signal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_varyBatches_186taps_12672signal']) %save as eps a
 
 
 
@@ -4354,7 +4355,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch']) %save as eps a
 
 
 figure(4); clf;
@@ -4403,4 +4404,4 @@ drawnow
 % % ax2.XTickLabel = {'9000','12000','15000'};
 
 
-print(ff, '-depsc', ['CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_varyBatches_186taps_12672signal_timePerBatch']) %save as eps a

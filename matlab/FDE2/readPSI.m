@@ -39,7 +39,7 @@ xlabel('cycles/bit')
 ylabel('Magintude (dB)')
 % title('SOQPSK-TG Constellation')
 legend('\Psi','SOQPSK Power Spectrum','Location','NorthWest')
-% print(ff, '-depsc', ['FDE2_spectrum_PSI']) %save as eps a 
+% print(ff, '-dpng', ['FDE2_spectrum_PSI']) %save as eps a 
 
 
 

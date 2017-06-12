@@ -424,4 +424,4 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['CPUvsGPU_varyFilter_12672signal_1batch']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_varyFilter_12672signal_1batch']) %save as eps a

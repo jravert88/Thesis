@@ -40,7 +40,7 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['Theory' num2str(L) 'Tap_flops']) %save as eps a 
+print(ff, '-dpng', ['Theory' num2str(L) 'Tap_flops']) %save as eps a 
 end
 
 
@@ -81,5 +81,5 @@ ff.Position = [bart(1:2) latexWidth latexHeight];
 ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
-print(ff, '-depsc', ['Theory' num2str(N) 'signal_flops']) %save as eps a 
+print(ff, '-dpng', ['Theory' num2str(N) 'signal_flops']) %save as eps a 
 

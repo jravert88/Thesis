@@ -2915,3 +2915,4 @@ drawnow
 
 
 print(ff, '-depsc', ['CPUvsGPU_1batch_23taps_varySignal']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_1batch_23taps_varySignal']) %save as eps a

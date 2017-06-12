@@ -423,6 +423,7 @@ ff.PaperPositionMode = 'auto';
 ff.Units = homer;
 drawnow
 print(ff, '-depsc', ['CPUvsGPU_3104batch_12672signal_varyFilter']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_3104batch_12672signal_varyFilter']) %save as eps a
 
 figure(2); clf;
 plot(xgpu,gpu,'k-',xgpu_shared,gpu_shared,'k--',xgpu_fft,gpu_fft,'k-.');
@@ -471,3 +472,4 @@ ax2.FontName = 'Times New Roman';
 
 
 print(ff, '-depsc', ['CPUvsGPU_3104batch_12672signal_varyFilter']) %save as eps a
+print(ff, '-dpng', ['CPUvsGPU_3104batch_12672signal_varyFilter']) %save as eps a
